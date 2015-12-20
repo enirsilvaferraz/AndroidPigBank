@@ -2,7 +2,7 @@
     <string name="app_name">Android Pig Bank</string>
     <string name="action_settings">Settings</string>
     <string name="action_done">Done</string>
-    <string name="title_activity_transaction_history">History</string>
+    <string name="title_activity_transaction_history">Pig Bank</string>
     <string name="title_activity_transaction_manager">Manager</string>
     <string name="title_activity_transaction_detail">Detail</string>
 </resources>

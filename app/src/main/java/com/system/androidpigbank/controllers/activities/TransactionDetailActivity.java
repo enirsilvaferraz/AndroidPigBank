@@ -18,6 +18,7 @@ import com.system.androidpigbank.models.entities.Category;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class TransactionDetailActivity extends BaseActivity<List<Category>> {
 
     private View container;
     private BarChart chart;
+    private int month;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +36,10 @@ public class TransactionDetailActivity extends BaseActivity<List<Category>> {
         setSupportActionBar(toolbar);
 
         container = findViewById(R.id.transaction_detail_container);
-
         chart = (BarChart) findViewById(R.id.chart);
+
+        month = getIntent().getIntExtra("MONTH", 0);
+
         getSupportLoaderManager().initLoader(Constants.LOADER_CATEGORY, null, this);
     }
 
@@ -47,7 +51,7 @@ public class TransactionDetailActivity extends BaseActivity<List<Category>> {
 
     @Override
     public Loader<LoaderResult<List<Category>>> onCreateLoader(int id, Bundle args) {
-        return new CategoryManager(this).getCurrentMonth();
+        return new CategoryManager(this).getChartDataByMonth(month);
     }
 
     @Override
@@ -55,8 +59,11 @@ public class TransactionDetailActivity extends BaseActivity<List<Category>> {
 
         if (data.isSuccess()) {
 
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.MONTH, month);
+
             BarData barData = new BarData();
-            barData.addXValue(new SimpleDateFormat("MMMM").format(new Date()));
+            barData.addXValue(new SimpleDateFormat("MMMM").format(cal.getTime()));
 
             for (Category category : data.getData()) {
                 barData.addDataSet(getData(new BarEntry(category.getAmount(), 0), category.getName()));

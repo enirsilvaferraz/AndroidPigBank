@@ -31,11 +31,11 @@ public class CategoryBusiness extends DaoAbs {
         }
     }
 
-    public List<Category> getCurrentMonth() throws Exception {
+    public List<Category> getChartDataByMonth(int month) throws Exception {
 
         List<Category> categories = findAll();
         for (Category category : categories) {
-            List<Transaction> transactions = new TransactionBusiness(getContext()).findByCategory(category);
+            List<Transaction> transactions = new TransactionBusiness(getContext()).findByCategory(category, month);
 
             Double amount = 0d;
             for (Transaction transaction : transactions) {

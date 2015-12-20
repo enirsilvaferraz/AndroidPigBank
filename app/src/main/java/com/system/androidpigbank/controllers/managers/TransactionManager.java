@@ -41,7 +41,7 @@ public class TransactionManager extends ManagerAbs {
         };
     }
 
-    public Loader<LoaderResult<List<Transaction>>> getCurrentMonth() {
+    public Loader<LoaderResult<List<Transaction>>> getTransactionByMonth(final int month) {
         return new AsyncTaskLoader<LoaderResult<List<Transaction>>>(getContext()) {
 
             @Override
@@ -54,7 +54,7 @@ public class TransactionManager extends ManagerAbs {
             public LoaderResult<List<Transaction>> loadInBackground() {
 
                 try {
-                    return new LoaderResult<>(new TransactionBusiness(getContext()).getCurrentMonth());
+                    return new LoaderResult<>(new TransactionBusiness(getContext()).getTransactionByMonth(month));
                 } catch (Throwable e) {
                     return new LoaderResult<>(e);
                 }

@@ -18,7 +18,7 @@ public class CategoryManager extends ManagerAbs {
         super(context);
     }
 
-    public Loader<LoaderResult<List<Category>>> getCurrentMonth() {
+    public Loader<LoaderResult<List<Category>>> getChartDataByMonth(final int month) {
         return new AsyncTaskLoader<LoaderResult<List<Category>>>(getContext()) {
 
             @Override
@@ -31,7 +31,7 @@ public class CategoryManager extends ManagerAbs {
             public LoaderResult<List<Category>> loadInBackground() {
 
                 try {
-                    return new LoaderResult<>(new CategoryBusiness(getContext()).getCurrentMonth());
+                    return new LoaderResult<>(new CategoryBusiness(getContext()).getChartDataByMonth(month));
                 } catch (Throwable e) {
                     return new LoaderResult<>(e);
                 }

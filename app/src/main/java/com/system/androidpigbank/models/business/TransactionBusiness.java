@@ -13,6 +13,8 @@ import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.models.persistences.DaoAbs;
 
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -48,33 +50,65 @@ public class TransactionBusiness extends DaoAbs {
         return transaction;
     }
 
-    public List<Transaction> getCurrentMonth() throws Exception {
+    public List<Transaction> getTransactionByMonth(int month) throws Exception {
 
-        ConnectionSource connectionSource = new AndroidConnectionSource(db);
-        Dao<Transaction, String> accountDao = DaoManager.createDao(connectionSource, Transaction.class);
-        QueryBuilder<Transaction, String> aqb = accountDao.queryBuilder();
+        ConnectionSource connection = new AndroidConnectionSource(db);
+        Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);
+        QueryBuilder<Transaction, String> queryTransaction = dao.queryBuilder();
 
-        Dao<Category, String> accountDao2 = DaoManager.createDao(connectionSource, Category.class);
-        QueryBuilder<Category, String> bqb = accountDao2.queryBuilder();
+        Calendar cInit = Calendar.getInstance();
+        cInit.set(Calendar.MONTH, month);
+        cInit.set(Calendar.DATE, cInit.getActualMinimum(Calendar.DATE));
+        cInit.set(Calendar.HOUR, cInit.getActualMinimum(Calendar.HOUR));
+        cInit.set(Calendar.MINUTE, cInit.getActualMinimum(Calendar.MINUTE));
+        cInit.set(Calendar.SECOND, cInit.getActualMinimum(Calendar.SECOND));
 
-        List<Transaction> results = aqb.join(bqb).query();
-        connectionSource.close();
+        Calendar cEnd = Calendar.getInstance();
+        cEnd.set(Calendar.MONTH, month);
+        cEnd.set(Calendar.DATE, cEnd.getActualMaximum(Calendar.DATE));
+        cEnd.set(Calendar.HOUR, cEnd.getActualMaximum(Calendar.HOUR));
+        cEnd.set(Calendar.MINUTE, cEnd.getActualMaximum(Calendar.MINUTE));
+        cEnd.set(Calendar.SECOND, cEnd.getActualMaximum(Calendar.SECOND));
+
+        queryTransaction.where().between("date", cInit.getTime(), cEnd.getTime());
+
+        Dao<Category, String> categoryDao = DaoManager.createDao(connection, Category.class);
+        QueryBuilder<Category, String> queryCategory = categoryDao.queryBuilder();
+
+        List<Transaction> results = queryTransaction.join(queryCategory).query();
+        connection.close();
 
         return results;
     }
 
-    public List<Transaction> findByCategory(Category category) throws SQLException {
+    public List<Transaction> findByCategory(Category category, int month) throws SQLException {
 
-        ConnectionSource connectionSource = new AndroidConnectionSource(db);
-        Dao<Transaction, String> accountDao = DaoManager.createDao(connectionSource, Transaction.class);
-        QueryBuilder<Transaction, String> aqb = accountDao.queryBuilder();
+        ConnectionSource connection = new AndroidConnectionSource(db);
+        Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);
+        QueryBuilder<Transaction, String> queryTransaction = dao.queryBuilder();
 
-        Dao<Category, String> accountDao2 = DaoManager.createDao(connectionSource, Category.class);
-        QueryBuilder<Category, String> bqb = accountDao2.queryBuilder();
-        bqb.where().eq("id", category.getId());
+        Calendar cInit = Calendar.getInstance();
+        cInit.set(Calendar.MONTH, month);
+        cInit.set(Calendar.DATE, cInit.getActualMinimum(Calendar.DATE));
+        cInit.set(Calendar.HOUR, cInit.getActualMinimum(Calendar.HOUR));
+        cInit.set(Calendar.MINUTE, cInit.getActualMinimum(Calendar.MINUTE));
+        cInit.set(Calendar.SECOND, cInit.getActualMinimum(Calendar.SECOND));
 
-        List<Transaction> results = aqb.join(bqb).query();
-        connectionSource.close();
+        Calendar cEnd = Calendar.getInstance();
+        cEnd.set(Calendar.MONTH, month);
+        cEnd.set(Calendar.DATE, cEnd.getActualMaximum(Calendar.DATE));
+        cEnd.set(Calendar.HOUR, cEnd.getActualMaximum(Calendar.HOUR));
+        cEnd.set(Calendar.MINUTE, cEnd.getActualMaximum(Calendar.MINUTE));
+        cEnd.set(Calendar.SECOND, cEnd.getActualMaximum(Calendar.SECOND));
+
+        queryTransaction.where().between("date", cInit.getTime(), cEnd.getTime());
+
+        Dao<Category, String> categoryDao = DaoManager.createDao(connection, Category.class);
+        QueryBuilder<Category, String> queryCategory = categoryDao.queryBuilder();
+        queryCategory.where().eq("id", category.getId());
+
+        List<Transaction> results = queryTransaction.join(queryCategory).query();
+        connection.close();
 
         return results;
     }

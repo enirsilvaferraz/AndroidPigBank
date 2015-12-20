@@ -9,7 +9,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".controllers.activities.TransactionHistoryActivity"
+            android:name=".controllers.activities.TransactionManagerActivity"
+            android:label="@string/title_activity_transaction_manager"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".controllers.activities.TransactionDetailActivity"
+            android:label="@string/title_activity_transaction_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".controllers.activities.TransactionHistoryTabActivity"
             android:label="@string/title_activity_transaction_history"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -18,14 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".controllers.activities.TransactionManagerActivity"
-            android:label="@string/title_activity_transaction_manager"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".controllers.activities.TransactionDetailActivity"
-            android:label="@string/title_activity_transaction_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

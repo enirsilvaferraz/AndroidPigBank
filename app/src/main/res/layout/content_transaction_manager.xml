@@ -30,8 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Transaction date"
-                android:inputType="date"
-                android:text="09/10/2015" />
+                android:inputType="date" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -48,8 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Value (R$)"
-                android:inputType="numberDecimal"
-                android:text="10.00" />
+                android:inputType="numberDecimal" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -66,8 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Category"
-                android:inputType="textCapCharacters"
-                android:text="Dinner" />
+                android:inputType="textCapCharacters" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -84,8 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Content"
-                android:inputType="textCapCharacters"
-                android:text="Jantar na casa do zé" />
+                android:inputType="textCapCharacters" />
 
         </android.support.design.widget.TextInputLayout>
 

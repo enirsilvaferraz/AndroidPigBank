@@ -37,8 +37,7 @@ proguard/
 captures/
 
 # IntelliJ files
-/.idea/workspace.xml
-/.idea/libraries
+.idea/
 
 
 # Crashlytics plugin (for Android Studio and IntelliJ)

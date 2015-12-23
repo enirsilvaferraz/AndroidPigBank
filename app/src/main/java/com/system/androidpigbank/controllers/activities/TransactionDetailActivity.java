@@ -18,8 +18,8 @@ import com.system.androidpigbank.models.entities.Category;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class TransactionDetailActivity extends BaseActivity<List<Category>> {
@@ -59,6 +59,10 @@ public class TransactionDetailActivity extends BaseActivity<List<Category>> {
 
         if (data.isSuccess()) {
 
+//            final int[] intArray = getResources().getIntArray(R.array.material_colors);
+            final int[] intArray = {R.color.material_blue, R.color.material_red, R.color.material_light_green};
+            Arrays.sort(intArray);
+
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.MONTH, month);
 
@@ -66,7 +70,9 @@ public class TransactionDetailActivity extends BaseActivity<List<Category>> {
             barData.addXValue(new SimpleDateFormat("MMMM").format(cal.getTime()));
 
             for (Category category : data.getData()) {
-                barData.addDataSet(getData(new BarEntry(category.getAmount(), 0), category.getName()));
+                final BarDataSet dataSet = getData(new BarEntry(category.getAmount(), 0), category.getName());
+                dataSet.setColors(intArray);
+                barData.addDataSet(dataSet);
             }
 
             chart.setData(barData);

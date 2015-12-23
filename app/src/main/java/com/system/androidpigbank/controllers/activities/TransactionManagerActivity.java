@@ -22,6 +22,7 @@ import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.models.entities.Transaction;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class TransactionManagerActivity extends BaseActivity<Transaction> {
@@ -47,7 +48,10 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
         editCategory = (AutoCompleteTextView) findViewById(R.id.transaction_manager_category);
         editContent = (EditText) findViewById(R.id.transaction_manager_content);
 
-        getSupportLoaderManager().initLoader(Constants.LOADER_CATEGORY, null, new LoaderManager.LoaderCallbacks<LoaderResult<List<Category>>>() {
+        editDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()));
+
+        LoaderManager.LoaderCallbacks<LoaderResult<List<Category>>> categoryCallback;
+        categoryCallback = new LoaderManager.LoaderCallbacks<LoaderResult<List<Category>>>() {
 
             @Override
             public Loader<LoaderResult<List<Category>>> onCreateLoader(int id, Bundle args) {
@@ -56,29 +60,34 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
 
             @Override
             public void onLoadFinished(Loader<LoaderResult<List<Category>>> loader, LoaderResult<List<Category>> data) {
-
-                if (data.isSuccess()) {
-
-                    categories = data.getData();
-                    String[] categoriesArray = new String[categories.size()];
-                    for (int i = 0; i < categories.size(); i++) {
-                        categoriesArray[i] = categories.get(i).getName();
-                    }
-
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(TransactionManagerActivity.this,
-                            android.R.layout.simple_list_item_1, categoriesArray);
-                    editCategory.setAdapter(adapter);
-
-                } else {
-                    Snackbar.make(container, data.getException().getMessage(), Snackbar.LENGTH_LONG).show();
-                }
+                autocompleteCategory(data);
             }
 
             @Override
             public void onLoaderReset(Loader<LoaderResult<List<Category>>> loader) {
-
             }
-        });
+        };
+
+        getSupportLoaderManager().initLoader(Constants.LOADER_CATEGORY, null, categoryCallback);
+    }
+
+    private void autocompleteCategory(LoaderResult<List<Category>> data) {
+
+        if (data.isSuccess()) {
+
+            categories = data.getData();
+            String[] categoriesArray = new String[categories.size()];
+            for (int i = 0; i < categories.size(); i++) {
+                categoriesArray[i] = categories.get(i).getName();
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(TransactionManagerActivity.this,
+                    android.R.layout.simple_list_item_1, categoriesArray);
+            editCategory.setAdapter(adapter);
+
+        } else {
+            Snackbar.make(container, data.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+        }
     }
 
     public void save() {
@@ -95,13 +104,13 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
             final Category category = new Category(editCategory.getText().toString());
             if (categories.contains(category)) {
                 model.setCategory(categories.get(categories.indexOf(category)));
-            }else{
+            } else {
                 model.setCategory(category);
             }
 
             Bundle args = new Bundle();
             args.putParcelable(Constants.BUNDLE_TRANSACTION, model);
-            getSupportLoaderManager().initLoader(Constants.LOADER_TRANSACTION, args, this);
+            getSupportLoaderManager().restartLoader(Constants.LOADER_TRANSACTION, args, this);
 
         } catch (Exception e) {
             Snackbar.make(container, e.getMessage(), Snackbar.LENGTH_LONG).show();

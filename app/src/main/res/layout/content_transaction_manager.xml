@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Category"
-                android:inputType="textCapCharacters" />
+                android:inputType="textCapWords" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Content"
-                android:inputType="textCapCharacters" />
+                android:inputType="textCapWords" />
 
         </android.support.design.widget.TextInputLayout>
 

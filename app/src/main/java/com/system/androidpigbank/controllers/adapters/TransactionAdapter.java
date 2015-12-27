@@ -1,104 +1,111 @@
 package com.system.androidpigbank.controllers.adapters;
 
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.controllers.activities.BaseActivity;
+import com.system.androidpigbank.controllers.vIewHolders.DateSectionViewHolder;
+import com.system.androidpigbank.controllers.vIewHolders.TransactionViewHolder;
+import com.system.androidpigbank.controllers.vIewHolders.ViewHolderAbs;
+import com.system.androidpigbank.controllers.vos.DateSection;
 import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.entities.Transaction;
 
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+enum TransactionViewType {
+    CARD, SECTION;
+}
 
 /**
  * Created by eferraz on 05/12/15.
  */
-public class TransactionAdapter extends AdapterAbs {
+public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private AppCompatActivity activity;
+    private List<EntityAbs> itens;
+
+    public TransactionAdapter(AppCompatActivity activity) {
+        this.itens = new ArrayList<>();
+        this.activity = activity;
+    }
 
     @Override
     @SuppressWarnings("ResourceType")
-    protected int getResourceId() {
-        return R.layout.view_holder_transaction;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+
+        int resId = 0;
+        if (TransactionViewType.SECTION.ordinal() == viewType) {
+            resId = R.layout.item_view_holder_date_section;
+        } else {
+            resId = R.layout.item_view_holder_transaction;
+        }
+
+        View v = layoutInflater.inflate(resId, parent, false);
+        return getViewHolderInstance(v, viewType);
     }
 
     @Override
-    protected ViewHolderAbs getViewHolderInstance(View v) {
-        return new TransactionViewHolder(v);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        ((ViewHolderAbs) holder).bind(itens.get(position));
     }
 
-    private class TransactionViewHolder extends ViewHolderAbs {
+    @Override
+    public int getItemCount() {
+        return itens.size();
+    }
 
-        private TextView textDate;
-        private TextView textDateLabel;
-        private TextView textValue;
-        private TextView textValueLabel;
-        private TextView textCategory;
-        private TextView textCategoryLabel;
-        private TextView textContent;
-        private TextView textContentLabel;
+    public void addItens(List<Transaction> itens) {
+        this.itens.clear();
+        this.itens.addAll(organizeItens(itens));
+        notifyDataSetChanged();
+    }
 
-        public TransactionViewHolder(View v) {
-            super(v);
+    public List<EntityAbs> getItens() {
+        return itens;
+    }
 
-            textDate = (TextView) v.findViewById(R.id.item_transaction_date);
-            textDateLabel = (TextView) v.findViewById(R.id.item_transaction_date_label);
-            textValue = (TextView) v.findViewById(R.id.item_transaction_value);
-            textValueLabel = (TextView) v.findViewById(R.id.item_transaction_value_label);
-            textCategory = (TextView) v.findViewById(R.id.item_transaction_category);
-            textCategoryLabel = (TextView) v.findViewById(R.id.item_transaction_category_label);
-            textContent = (TextView) v.findViewById(R.id.item_transaction_content);
-            textContentLabel = (TextView) v.findViewById(R.id.item_transaction_content_label);
+    protected List<EntityAbs> organizeItens(List<Transaction> itens) {
 
-            v.setOnClickListener(new View.OnClickListener() {
+        List<EntityAbs> newList = new ArrayList<>();
 
-                boolean clicked = true;
-
-                @Override
-                public void onClick(View v) {
-
-                    if(clicked){
-
-                        textDateLabel.setVisibility(View.VISIBLE);
-                        textValueLabel.setVisibility(View.VISIBLE);
-                        textCategoryLabel.setVisibility(View.VISIBLE);
-
-                        if(!textContent.getText().toString().trim().isEmpty()) {
-                            textContent.setVisibility(View.VISIBLE);
-                            textContentLabel.setVisibility(View.VISIBLE);
-                        }
-                    }
-
-                    else {
-
-                        textDateLabel.setVisibility(View.GONE);
-                        textValueLabel.setVisibility(View.GONE);
-                        textCategoryLabel.setVisibility(View.GONE);
-                        textContent.setVisibility(View.GONE);
-                        textContentLabel.setVisibility(View.GONE);
-                    }
-
-                    clicked = !clicked;
-                }
-            });
+        Date date = null;
+        for (Transaction transaction : itens) {
+            if (date == null || date.before(transaction.getDate())) {
+                date = transaction.getDate();
+                newList.add(new DateSection(date));
+            }
+            newList.add(transaction);
         }
 
-        @Override
-        public void bind(EntityAbs model) {
+        return newList;
+    }
 
-            Transaction transaction = (Transaction) model;
-            final NumberFormat numberFormat = NumberFormat.getInstance();
-            numberFormat.setMinimumFractionDigits(2);
+    @Override
+    public int getItemViewType(int position) {
+        return getItens().get(position) instanceof Transaction ? TransactionViewType.CARD.ordinal() : TransactionViewType.SECTION.ordinal();
+    }
 
-            textDate.setText(new SimpleDateFormat("d MMMM, yyyy").format(transaction.getDate()));
-            textValue.setText("R$ " + numberFormat.format(transaction.getValue()));
-            textCategory.setText(transaction.getCategory().getName());
-            textContent.setText(transaction.getContent());
+    protected ViewHolderAbs getViewHolderInstance(View v, int viewType) {
 
-            textDateLabel.setVisibility(View.GONE);
-            textValueLabel.setVisibility(View.GONE);
-            textCategoryLabel.setVisibility(View.GONE);
-            textContent.setVisibility(View.GONE);
-            textContentLabel.setVisibility(View.GONE);
+        if (TransactionViewType.SECTION.ordinal() == viewType) {
+            return new DateSectionViewHolder(v);
+        } else {
+            return new TransactionViewHolder(v, activity, this);
         }
+    }
+
+    public void removeItem(Transaction data) {
+        int index = getItens().indexOf(data);
+        getItens().remove(index);
+        notifyItemRemoved(index);
+        ((BaseActivity)activity).showMessage("Transaction removed!");
     }
 }

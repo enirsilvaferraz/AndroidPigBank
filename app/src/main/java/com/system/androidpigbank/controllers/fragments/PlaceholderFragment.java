@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,13 +50,13 @@ public class PlaceholderFragment extends Fragment implements LoaderManager.Loade
         recyclerView = (RecyclerView) view.findViewById(R.id.transaction_history_recycleView);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(new TransactionAdapter());
+        recyclerView.setAdapter(new TransactionAdapter((AppCompatActivity) getActivity()));
 
         final int position = getArguments().getInt("POSITION");
 
         Bundle args = new Bundle();
         args.putInt("MONTH", position);
-        getLoaderManager().initLoader(Constants.LOADER_TRANSACTION + position, args, this);
+        getLoaderManager().initLoader(Constants.LOADER_TRANSACTION_SAVE + position, args, this);
     }
 
     @Override

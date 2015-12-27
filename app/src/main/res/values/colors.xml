@@ -30,6 +30,8 @@
     <color name="material_black">#000000</color>
     <color name="material_white">#FFFFFF</color>
 
+    <color name="material_gray_300">#E0E0E0</color>
+
     <array name="material_colors">
         <item>@color/material_red</item>
         <item>@color/material_pink</item>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,7 +17,7 @@ import com.system.androidpigbank.controllers.adapters.SectionsPagerAdapter;
 
 import java.util.Calendar;
 
-public class TransactionHistoryTabActivity extends AppCompatActivity {
+public class TransactionHistoryTabActivity extends BaseActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -68,5 +69,8 @@ public class TransactionHistoryTabActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    @Override
+    protected View getContainer() {
+        return mViewPager;
+    }
 }

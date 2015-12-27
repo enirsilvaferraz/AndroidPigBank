@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
@@ -14,7 +15,6 @@ import android.text.style.StyleSpan;
 import android.view.View;
 
 import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -32,13 +32,11 @@ import com.system.androidpigbank.helpers.Constants;
 import com.system.androidpigbank.models.entities.Category;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TransactionDetailActivity extends BaseActivity<List<Category>> {
 
     private View container;
-    private BarChart chart;
     private int month;
 
     @Override
@@ -53,49 +51,43 @@ public class TransactionDetailActivity extends BaseActivity<List<Category>> {
 
         month = getIntent().getIntExtra("MONTH", 0);
 
-        getSupportLoaderManager().restartLoader(Constants.LOADER_CATEGORY, null, this);
-    }
+        getSupportLoaderManager().restartLoader(Constants.LOADER_CATEGORY, null, new LoaderManager.LoaderCallbacks<LoaderResult<List<Category>>>() {
+            @Override
+            public Loader<LoaderResult<List<Category>>> onCreateLoader(int id, Bundle args) {
+                return new CategoryManager(TransactionDetailActivity.this).getChartDataByMonth(month);
+            }
 
-    private BarDataSet getData(BarEntry object, String x) {
-        List<BarEntry> list = new ArrayList<>();
-        list.add(object);
-        return new BarDataSet(list, x);
-    }
+            @Override
+            public void onLoadFinished(Loader<LoaderResult<List<Category>>> loader, LoaderResult<List<Category>> data) {
 
-    @Override
-    public Loader<LoaderResult<List<Category>>> onCreateLoader(int id, Bundle args) {
-        return new CategoryManager(this).getChartDataByMonth(month);
-    }
+                PieChart mChart = (PieChart) findViewById(R.id.chart);
+                if (data.isSuccess()) {
 
-    @Override
-    public void onLoadFinished(Loader<LoaderResult<List<Category>>> loader, LoaderResult<List<Category>> data) {
+                    mChart.setUsePercentValues(true);
+                    mChart.setDescription("");
+                    mChart.setRotationEnabled(true);
 
-        if (data.isSuccess()) {
+                    setData(data.getData(), 100, mChart);
 
-            PieChart mChart = (PieChart) findViewById(R.id.chart);
-            mChart.setUsePercentValues(true);
-            mChart.setDescription("");
-            mChart.setRotationEnabled(true);
+                    mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
 
-            setData(data.getData(), 100, mChart);
+                    Legend legend = mChart.getLegend();
+                    legend.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+                    legend.setXEntrySpace(7f);
+                    legend.setYEntrySpace(0f);
+                    legend.setYOffset(0f);
 
-            mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+                } else {
+                    mChart.setVisibility(View.GONE);
+                    Snackbar.make(container, data.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+                }
+            }
 
-            Legend legend = mChart.getLegend();
-            legend.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
-            legend.setXEntrySpace(7f);
-            legend.setYEntrySpace(0f);
-            legend.setYOffset(0f);
+            @Override
+            public void onLoaderReset(Loader<LoaderResult<List<Category>>> loader) {
 
-        } else {
-            chart.setVisibility(View.GONE);
-            Snackbar.make(container, data.getException().getMessage(), Snackbar.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<LoaderResult<List<Category>>> loader) {
-
+            }
+        });
     }
 
     private SpannableString generateCenterSpannableText() {
@@ -116,8 +108,11 @@ public class TransactionDetailActivity extends BaseActivity<List<Category>> {
         ArrayList<String> xVals = new ArrayList<>();
 
         for (int i = 0; i < categories.size(); i++) {
-            yVals1.add(new Entry(categories.get(i).getAmount(), i));
-            xVals.add(categories.get(i).getName());
+            final Category category = categories.get(i);
+            if (category.getAmount() > 0) {
+                yVals1.add(new Entry(category.getAmount(), i));
+                xVals.add(category.getName());
+            }
         }
 
         PieDataSet dataSet = new PieDataSet(yVals1, "");
@@ -159,5 +154,10 @@ public class TransactionDetailActivity extends BaseActivity<List<Category>> {
 
         colors.add(ColorTemplate.getHoloBlue());
         return colors;
+    }
+
+    @Override
+    protected View getContainer() {
+        return container;
     }
 }

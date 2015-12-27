@@ -61,4 +61,46 @@ public class TransactionManager extends ManagerAbs {
             }
         };
     }
+
+    public Loader<LoaderResult<Transaction>> delete(final Transaction transaction) {
+        return new AsyncTaskLoader<LoaderResult<Transaction>>(getContext()) {
+
+            @Override
+            protected void onStartLoading() {
+                super.onStartLoading();
+                forceLoad();
+            }
+
+            @Override
+            public LoaderResult<Transaction> loadInBackground() {
+
+                try {
+                    return new LoaderResult<>(new TransactionBusiness(getContext()).delete(transaction));
+                } catch (Throwable e) {
+                    return new LoaderResult<>(e);
+                }
+            }
+        };
+    }
+
+    public Loader<LoaderResult<Transaction>> edit(final Transaction transaction) {
+        return new AsyncTaskLoader<LoaderResult<Transaction>>(getContext()) {
+
+            @Override
+            protected void onStartLoading() {
+                super.onStartLoading();
+                forceLoad();
+            }
+
+            @Override
+            public LoaderResult<Transaction> loadInBackground() {
+
+                try {
+                    return new LoaderResult<>(new TransactionBusiness(getContext()).edit(transaction));
+                } catch (Throwable e) {
+                    return new LoaderResult<>(e);
+                }
+            }
+        };
+    }
 }

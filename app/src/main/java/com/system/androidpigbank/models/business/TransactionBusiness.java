@@ -14,7 +14,6 @@ import com.system.androidpigbank.models.persistences.DaoAbs;
 
 import java.sql.SQLException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,7 +43,7 @@ public class TransactionBusiness extends DaoAbs {
         ConnectionSource connectionSource = new AndroidConnectionSource(db);
         Dao<Transaction, String> accountDao = DaoManager.createDao(connectionSource, Transaction.class);
 
-        accountDao.create(transaction);
+        accountDao.createOrUpdate(transaction);
         connectionSource.close();
 
         return transaction;
@@ -111,5 +110,19 @@ public class TransactionBusiness extends DaoAbs {
         connection.close();
 
         return results;
+    }
+
+    public Transaction delete(Transaction transaction) throws SQLException {
+        ConnectionSource connection = new AndroidConnectionSource(db);
+        Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);
+        dao.delete(transaction);
+        return transaction;
+    }
+
+    public Transaction edit(Transaction transaction) throws SQLException {
+        ConnectionSource connection = new AndroidConnectionSource(db);
+        Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);
+        dao.update(transaction);
+        return transaction;
     }
 }

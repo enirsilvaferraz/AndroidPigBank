@@ -6,24 +6,23 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:supportsRtl="true">
 
         <activity
             android:name=".controllers.activities.TransactionManagerActivity"
             android:label="@string/title_activity_transaction_manager"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.Red"
             android:windowSoftInputMode="stateVisible" />
 
         <activity
             android:name=".controllers.activities.TransactionDetailActivity"
             android:label="@string/title_activity_transaction_detail"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.Green" />
 
         <activity
             android:name=".controllers.activities.TransactionHistoryTabActivity"
             android:label="@string/title_activity_transaction_history"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.Blue">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

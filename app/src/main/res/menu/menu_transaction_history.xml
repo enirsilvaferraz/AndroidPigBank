@@ -4,8 +4,8 @@
     tools:context="com.system.androidpigbank.TransactionHistoryActivity">
     <item
         android:id="@+id/transaction_history_act_detail"
+        android:icon="@drawable/ic_assessment_white"
         android:orderInCategory="100"
         android:title="Detail"
-        android:icon="@drawable/ic_graphic"
         app:showAsAction="always" />
 </menu>

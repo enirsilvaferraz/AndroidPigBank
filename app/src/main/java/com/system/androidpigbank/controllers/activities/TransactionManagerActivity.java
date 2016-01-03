@@ -1,6 +1,7 @@
 package com.system.androidpigbank.controllers.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -49,6 +50,16 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
         editValue = (EditText) findViewById(R.id.transaction_manager_value);
         editCategory = (AutoCompleteTextView) findViewById(R.id.transaction_manager_category);
         editContent = (EditText) findViewById(R.id.transaction_manager_content);
+
+        editValue.requestFocus();
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                save();
+            }
+        });
 
         editDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()));
 
@@ -165,24 +176,24 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_transaction_manager, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.transaction_manager_act_done:
-                save();
-                return true;
-        }
-
-        return false;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu_transaction_manager, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        switch (item.getItemId()) {
+//            case R.id.transaction_manager_act_done:
+//                save();
+//                return true;
+//        }
+//
+//        return false;
+//    }
 
     @Override
     public View getContainer() {

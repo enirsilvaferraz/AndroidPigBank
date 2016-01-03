@@ -13,78 +13,82 @@
     tools:context=".controllers.activities.TransactionManagerActivity"
     tools:showIn="@layout/activity_transaction_manager">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/transaction_manager_date_ic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="13dp"
+        android:src="@drawable/ic_today_black" />
+
+    <EditText
+        android:id="@+id/transaction_manager_date"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/transaction_manager_date_ic"
+        android:inputType="date" />
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp">
+    <ImageView
+        android:id="@+id/transaction_manager_value_ic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/transaction_manager_date_ic"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="34dp"
+        android:src="@drawable/ic_attach_money_black" />
 
-            <EditText
-                android:id="@+id/transaction_manager_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Transaction date"
-                android:inputType="date" />
+    <EditText
+        android:id="@+id/transaction_manager_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/transaction_manager_date"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/transaction_manager_value_ic"
+        android:inputType="numberDecimal" />
 
-        </android.support.design.widget.TextInputLayout>
+    <ImageView
+        android:id="@+id/transaction_manager_category_ic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/transaction_manager_value_ic"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="34dp"
+        android:src="@drawable/ic_loyalty_black" />
 
+    <AutoCompleteTextView
+        android:id="@+id/transaction_manager_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/transaction_manager_value"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/transaction_manager_category_ic"
+        android:inputType="textCapWords" />
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp">
+    <ImageView
+        android:id="@+id/transaction_manager_content_ic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/transaction_manager_category_ic"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="34dp"
+        android:src="@drawable/ic_description_black" />
 
-            <EditText
-                android:id="@+id/transaction_manager_value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Value (R$)"
-                android:inputType="numberDecimal" />
-
-        </android.support.design.widget.TextInputLayout>
-
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp">
-
-            <AutoCompleteTextView
-                android:id="@+id/transaction_manager_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Category"
-                android:inputType="textCapWords" />
-
-        </android.support.design.widget.TextInputLayout>
-
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp">
-
-            <EditText
-                android:id="@+id/transaction_manager_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Content"
-                android:inputType="textCapWords" />
-
-        </android.support.design.widget.TextInputLayout>
-
-    </LinearLayout>
+    <EditText
+        android:id="@+id/transaction_manager_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/transaction_manager_category"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/transaction_manager_content_ic"
+        android:inputType="textCapWords" />
 
 </RelativeLayout>

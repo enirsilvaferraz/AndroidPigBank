@@ -90,14 +90,14 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_mode_edit" />
+                android:src="@drawable/ic_mode_edit_black" />
 
             <ImageButton
                 android:id="@+id/item_transaction_act_delete"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_delete" />
+                android:src="@drawable/ic_delete_black" />
 
         </LinearLayout>
 

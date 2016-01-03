@@ -50,6 +50,6 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         app:layout_behavior="com.system.androidpigbank.controllers.behaviors.ScrollAwareFABBehavior"
-        android:src="@drawable/ic_attach_money" />
+        android:src="@drawable/ic_attach_money_white" />
 
 </android.support.design.widget.CoordinatorLayout>

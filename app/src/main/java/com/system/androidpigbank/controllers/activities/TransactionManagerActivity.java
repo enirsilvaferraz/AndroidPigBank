@@ -6,12 +6,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.system.androidpigbank.R;
@@ -73,6 +71,18 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
             editContent.setText(transaction.getContent());
         }
 
+        Button btnDelete = (Button) findViewById(R.id.transaction_manager_delete);
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                delete();
+            }
+        });
+
+        if(transaction == null || transaction.getId() == null){
+            btnDelete.setVisibility(View.GONE);
+        }
+
         LoaderManager.LoaderCallbacks<LoaderResult<List<Category>>> categoryCallback;
         categoryCallback = new LoaderManager.LoaderCallbacks<LoaderResult<List<Category>>>() {
 
@@ -92,25 +102,6 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
         };
 
         getSupportLoaderManager().initLoader(Constants.LOADER_CATEGORY, null, categoryCallback);
-    }
-
-    private void autocompleteCategory(LoaderResult<List<Category>> data) {
-
-        if (data.isSuccess()) {
-
-            categories = data.getData();
-            String[] categoriesArray = new String[categories.size()];
-            for (int i = 0; i < categories.size(); i++) {
-                categoriesArray[i] = categories.get(i).getName();
-            }
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(TransactionManagerActivity.this,
-                    android.R.layout.simple_list_item_1, categoriesArray);
-            editCategory.setAdapter(adapter);
-
-        } else {
-            Snackbar.make(container, data.getException().getMessage(), Snackbar.LENGTH_LONG).show();
-        }
     }
 
     public void save() {
@@ -167,6 +158,52 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
         }
     }
 
+    private void delete() {
+
+        LoaderManager.LoaderCallbacks<LoaderResult<Transaction>> callback = new LoaderManager.LoaderCallbacks<LoaderResult<Transaction>>() {
+
+            @Override
+            public Loader<LoaderResult<Transaction>> onCreateLoader(int id, Bundle args) {
+                return new TransactionManager(TransactionManagerActivity.this).delete(transaction);
+            }
+
+            @Override
+            public void onLoadFinished(Loader<LoaderResult<Transaction>> loader, LoaderResult<Transaction> data) {
+                if (data.isSuccess()) {
+                    Snackbar.make(container, "Saved!", Snackbar.LENGTH_LONG).show();
+                    TransactionManagerActivity.this.finish();
+                } else {
+                    Snackbar.make(container, data.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onLoaderReset(Loader loader) {
+            }
+        };
+
+        getSupportLoaderManager().restartLoader(Constants.LOADER_TRANSACTION_DELETE, null, callback);
+    }
+
+    private void autocompleteCategory(LoaderResult<List<Category>> data) {
+
+        if (data.isSuccess()) {
+
+            categories = data.getData();
+            String[] categoriesArray = new String[categories.size()];
+            for (int i = 0; i < categories.size(); i++) {
+                categoriesArray[i] = categories.get(i).getName();
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(TransactionManagerActivity.this,
+                    android.R.layout.simple_list_item_1, categoriesArray);
+            editCategory.setAdapter(adapter);
+
+        } else {
+            Snackbar.make(container, data.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+        }
+    }
+
     private void validateFields() throws Exception {
         if (editDate.getText().toString().trim().isEmpty() ||
                 editValue.getText().toString().trim().isEmpty() ||
@@ -175,25 +212,6 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
             throw new Exception("Campo obrigatório!");
         }
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_transaction_manager, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        switch (item.getItemId()) {
-//            case R.id.transaction_manager_act_done:
-//                save();
-//                return true;
-//        }
-//
-//        return false;
-//    }
 
     @Override
     public View getContainer() {

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/transaction_manager_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".controllers.activities.TransactionManagerActivity"
-    tools:showIn="@layout/activity_transaction_manager">
+<RelativeLayout android:id="@+id/transaction_manager_container"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:context=".controllers.activities.TransactionManagerActivity"
+                tools:showIn="@layout/activity_transaction_manager">
 
     <ImageView
         android:id="@+id/transaction_manager_date_ic"
@@ -20,7 +20,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="13dp"
-        android:src="@drawable/ic_today_black" />
+        android:src="@drawable/ic_today_black"/>
 
     <EditText
         android:id="@+id/transaction_manager_date"
@@ -29,7 +29,7 @@
         android:layout_marginEnd="40dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/transaction_manager_date_ic"
-        android:inputType="date" />
+        android:inputType="date"/>
 
     <ImageView
         android:id="@+id/transaction_manager_value_ic"
@@ -38,8 +38,8 @@
         android:layout_below="@+id/transaction_manager_date_ic"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="34dp"
-        android:src="@drawable/ic_attach_money_black" />
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_attach_money_black"/>
 
     <EditText
         android:id="@+id/transaction_manager_value"
@@ -49,7 +49,7 @@
         android:layout_marginEnd="40dp"
         android:layout_marginTop="15dp"
         android:layout_toRightOf="@+id/transaction_manager_value_ic"
-        android:inputType="numberDecimal" />
+        android:inputType="numberDecimal"/>
 
     <ImageView
         android:id="@+id/transaction_manager_category_ic"
@@ -58,8 +58,8 @@
         android:layout_below="@+id/transaction_manager_value_ic"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="34dp"
-        android:src="@drawable/ic_loyalty_black" />
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_loyalty_black"/>
 
     <AutoCompleteTextView
         android:id="@+id/transaction_manager_category"
@@ -69,7 +69,7 @@
         android:layout_marginEnd="40dp"
         android:layout_marginTop="15dp"
         android:layout_toRightOf="@+id/transaction_manager_category_ic"
-        android:inputType="textCapWords" />
+        android:inputType="textCapWords"/>
 
     <ImageView
         android:id="@+id/transaction_manager_content_ic"
@@ -78,8 +78,8 @@
         android:layout_below="@+id/transaction_manager_category_ic"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="34dp"
-        android:src="@drawable/ic_description_black" />
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_description_black"/>
 
     <EditText
         android:id="@+id/transaction_manager_content"
@@ -89,6 +89,15 @@
         android:layout_marginEnd="40dp"
         android:layout_marginTop="15dp"
         android:layout_toRightOf="@+id/transaction_manager_content_ic"
-        android:inputType="textCapWords" />
+        android:inputType="textCapWords"/>
+
+    <Button
+        android:layout_alignParentBottom="true"
+        android:id="@+id/transaction_manager_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:text="Delete"
+        android:layout_marginStart="30dp"/>
 
 </RelativeLayout>

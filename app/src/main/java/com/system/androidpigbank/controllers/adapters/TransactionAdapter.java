@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.activities.BaseActivity;
 import com.system.androidpigbank.controllers.vIewHolders.DateSectionViewHolder;
+import com.system.androidpigbank.controllers.vIewHolders.FooterViewHolder;
 import com.system.androidpigbank.controllers.vIewHolders.TransactionViewHolder;
 import com.system.androidpigbank.controllers.vIewHolders.ViewHolderAbs;
 import com.system.androidpigbank.controllers.vos.DateSection;
+import com.system.androidpigbank.controllers.vos.TotalFooter;
 import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.entities.Transaction;
 
@@ -20,8 +22,9 @@ import java.util.Date;
 import java.util.List;
 
 enum TransactionViewType {
-    CARD, SECTION;
+    CARD, SECTION, FOOTER;
 }
+
 
 /**
  * Created by eferraz on 05/12/15.
@@ -44,6 +47,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         int resId = 0;
         if (TransactionViewType.SECTION.ordinal() == viewType) {
             resId = R.layout.item_view_holder_date_section;
+        } else if (TransactionViewType.FOOTER.ordinal() == viewType) {
+            resId = R.layout.item_view_holder_total;
         } else {
             resId = R.layout.item_view_holder_transaction;
         }
@@ -58,8 +63,35 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
+    public int getItemViewType(int position) {
+
+        if (getItens().get(position) instanceof Transaction) {
+            return TransactionViewType.CARD.ordinal();
+        } else if (getItens().get(position) instanceof DateSection) {
+            return TransactionViewType.SECTION.ordinal();
+        } else {
+            return TransactionViewType.FOOTER.ordinal();
+        }
+    }
+
+    @Override
     public int getItemCount() {
         return itens.size();
+    }
+
+    public List<EntityAbs> getItens() {
+        return itens;
+    }
+
+    protected ViewHolderAbs getViewHolderInstance(View v, int viewType) {
+
+        if (TransactionViewType.SECTION.ordinal() == viewType) {
+            return new DateSectionViewHolder(v);
+        } else if (TransactionViewType.FOOTER.ordinal() == viewType) {
+            return new FooterViewHolder(v);
+        } else {
+            return new TransactionViewHolder(v, activity, this);
+        }
     }
 
     public void addItens(List<Transaction> itens) {
@@ -68,44 +100,33 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         notifyDataSetChanged();
     }
 
-    public List<EntityAbs> getItens() {
-        return itens;
-    }
-
     protected List<EntityAbs> organizeItens(List<Transaction> itens) {
 
         List<EntityAbs> newList = new ArrayList<>();
 
+        Double total = 0d;
         Date date = null;
         for (Transaction transaction : itens) {
             if (date == null || date.before(transaction.getDate())) {
                 date = transaction.getDate();
                 newList.add(new DateSection(date));
             }
+
+            total += transaction.getValue();
             newList.add(transaction);
         }
 
+        TotalFooter footer = new TotalFooter();
+        footer.setTotal(total);
+        newList.add(footer);
+
         return newList;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return getItens().get(position) instanceof Transaction ? TransactionViewType.CARD.ordinal() : TransactionViewType.SECTION.ordinal();
-    }
-
-    protected ViewHolderAbs getViewHolderInstance(View v, int viewType) {
-
-        if (TransactionViewType.SECTION.ordinal() == viewType) {
-            return new DateSectionViewHolder(v);
-        } else {
-            return new TransactionViewHolder(v, activity, this);
-        }
     }
 
     public void removeItem(Transaction data) {
         int index = getItens().indexOf(data);
         getItens().remove(index);
         notifyItemRemoved(index);
-        ((BaseActivity)activity).showMessage("Transaction removed!");
+        ((BaseActivity) activity).showMessage("Transaction removed!");
     }
 }

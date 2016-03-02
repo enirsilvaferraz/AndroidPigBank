@@ -5,4 +5,6 @@
     <string name="title_activity_transaction_history">Pig Bank</string>
     <string name="title_activity_transaction_manager">Despesas</string>
     <string name="title_activity_transaction_detail">Detail</string>
+
+    <string name="item_transaction_footer_value">Total R$ %s</string>
 </resources>

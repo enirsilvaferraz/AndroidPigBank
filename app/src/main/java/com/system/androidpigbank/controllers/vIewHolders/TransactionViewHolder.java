@@ -1,5 +1,6 @@
 package com.system.androidpigbank.controllers.vIewHolders;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -40,6 +41,8 @@ public class TransactionViewHolder extends ViewHolderAbs {
         final NumberFormat numberFormat = NumberFormat.getInstance();
         numberFormat.setMinimumFractionDigits(2);
 
+        roundedView.setTransitionName("TRNAME"+((Transaction) model).getId());
+
         textValue.setText("R$ " + numberFormat.format(transaction.getValue()));
         textCategory.setText(transaction.getCategory().getName());
         roundedView.setTextView(transaction.getCategory().getName());
@@ -56,6 +59,10 @@ public class TransactionViewHolder extends ViewHolderAbs {
     private void editCard(final Transaction transaction) {
         final Intent intent = new Intent(getActivity(), TransactionManagerActivity.class);
         intent.putExtra(Constants.BUNDLE_TRANSACTION, transaction);
-        getActivity().startActivityForResult(intent, Constants.REQUEST_TRANSACTION_EDIT);
+        intent.putExtra("TR_NAME", roundedView.getTransitionName());
+
+//        getActivity().startActivityForResult(intent, Constants.REQUEST_TRANSACTION_EDIT);
+
+        getActivity().startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(), roundedView, roundedView.getTransitionName()).toBundle());
     }
 }

@@ -18,7 +18,6 @@ public class FooterViewHolder extends ViewHolderAbs {
 
     public FooterViewHolder(final View v) {
         super(v, null, null);
-
         total = (TextView) v.findViewById(R.id.item_footer_total);
     }
 
@@ -31,6 +30,6 @@ public class FooterViewHolder extends ViewHolderAbs {
         instance.setMinimumFractionDigits(2);
         instance.setMinimumIntegerDigits(1);
 
-        total.setText(instance.format(totalFooter.getTotal()));
+        total.setText(itemView.getContext().getString(R.string.item_transaction_footer_value, instance.format(totalFooter.getTotal())));
     }
 }

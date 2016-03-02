@@ -12,14 +12,15 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
+import android.transition.ChangeBounds;
+import android.transition.Explode;
 import android.view.View;
+import android.view.Window;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -41,6 +42,11 @@ public class TransactionDetailActivity extends BaseActivity<List<Category>> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        getWindow().setExitTransition(new Explode());
+        //getWindow().setSharedElementExitTransition(new ChangeBounds());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

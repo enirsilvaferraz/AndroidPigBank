@@ -1,16 +1,17 @@
 package com.system.androidpigbank.controllers.activities;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.ChangeBounds;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.SectionsPagerAdapter;
@@ -24,6 +25,11 @@ public class TransactionHistoryTabActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        //getWindow().setExitTransition(new Explode());
+        getWindow().setSharedElementExitTransition(new ChangeBounds());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_history_tab);
 
@@ -46,6 +52,8 @@ public class TransactionHistoryTabActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(TransactionHistoryTabActivity.this, TransactionManagerActivity.class));
+
+                //new TransactionManagerDialog().show(getSupportFragmentManager(), "TAG");
             }
         });
     }
@@ -63,7 +71,7 @@ public class TransactionHistoryTabActivity extends BaseActivity {
         if (id == R.id.transaction_history_act_detail) {
             final Intent intent = new Intent(this, TransactionDetailActivity.class);
             intent.putExtra("MONTH", mViewPager.getCurrentItem());
-            startActivity(intent);
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
             return true;
         }
         return super.onOptionsItemSelected(item);

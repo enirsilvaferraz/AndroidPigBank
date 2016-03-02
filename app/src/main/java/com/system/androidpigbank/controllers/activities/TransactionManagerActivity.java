@@ -6,7 +6,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.Toolbar;
+import android.transition.ChangeBounds;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -38,10 +42,20 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+//        getWindow().setEnterTransition(new Explode());
+        getWindow().setSharedElementEnterTransition(new ChangeBounds());
+//        getWindow().setAllowEnterTransitionOverlap(true);
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_manager);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        findViewById(R.id.app_bar).setTransitionName(getIntent().getStringExtra("TR_NAME"));
 
         container = findViewById(R.id.transaction_manager_container);
         editDate = (EditText) findViewById(R.id.transaction_manager_date);
@@ -50,14 +64,6 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
         editContent = (EditText) findViewById(R.id.transaction_manager_content);
 
         editValue.requestFocus();
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                save();
-            }
-        });
 
         editDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()));
 
@@ -79,7 +85,7 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
             }
         });
 
-        if(transaction == null || transaction.getId() == null){
+        if (transaction == null || transaction.getId() == null) {
             btnDelete.setVisibility(View.GONE);
         }
 
@@ -122,7 +128,7 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
                 public void onLoadFinished(Loader<LoaderResult<Transaction>> loader, LoaderResult<Transaction> data) {
                     if (data.isSuccess()) {
                         Snackbar.make(container, "Saved!", Snackbar.LENGTH_LONG).show();
-                        TransactionManagerActivity.this.finish();
+                        TransactionManagerActivity.this.finishAfterTransition();
                     } else {
                         Snackbar.make(container, data.getException().getMessage(), Snackbar.LENGTH_LONG).show();
                     }
@@ -171,7 +177,7 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
             public void onLoadFinished(Loader<LoaderResult<Transaction>> loader, LoaderResult<Transaction> data) {
                 if (data.isSuccess()) {
                     Snackbar.make(container, "Saved!", Snackbar.LENGTH_LONG).show();
-                    TransactionManagerActivity.this.finish();
+                    TransactionManagerActivity.this.finishAfterTransition();
                 } else {
                     Snackbar.make(container, data.getException().getMessage(), Snackbar.LENGTH_LONG).show();
                 }
@@ -216,5 +222,21 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
     @Override
     public View getContainer() {
         return container;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_transaction_manager, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.transaction_manager_act_save) {
+            save();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

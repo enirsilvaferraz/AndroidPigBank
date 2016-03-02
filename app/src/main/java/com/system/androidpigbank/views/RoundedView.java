@@ -18,10 +18,6 @@ public class RoundedView extends LinearLayout {
     public RoundedView(final Context context, AttributeSet attrs) {
         super(context, attrs);
 
-//        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View v = inflater.inflate(R.layout.component_rounded, this, true);
-//        this.textView = (TextView) v.findViewById(R.id.component_rounded_textview);
-
         setBackgroundResource(R.drawable.drawable_rounded);
         setGravity(Gravity.CENTER);
 

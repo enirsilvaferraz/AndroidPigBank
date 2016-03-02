@@ -5,9 +5,19 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <!--<item name="android:windowContentTransitions">true</item>-->
+        <!--<item name="android:windowEnterTransition">@transition/explode</item>-->
+        <!--<item name="android:windowExitTransition">@transition/explode</item>-->
+        <!--<item name="android:windowSharedElementEnterTransition">@transition/change_image_transform</item>-->
+        <!--<item name="android:windowSharedElementExitTransition">@transition/change_image_transform</item>-->
     </style>
 
-    <style name="AppTheme.Red" parent="AppTheme">
+    <style name="AppTheme.Dialog" parent="Base.Theme.AppCompat.Light.Dialog">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Red" parent="AppTheme.Dialog">
         <item name="colorPrimary">@color/theme_red_primary</item>
         <item name="colorPrimaryDark">@color/theme_red_primary_dark</item>
         <item name="colorAccent">@color/theme_red_accent</item>
@@ -28,22 +38,22 @@
     <!-- COMPONENTS THEME -->
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="AppTheme.TextView.Subtitle" parent="TextAppearance.AppCompat.Medium">
         <item name="android:textColor">@color/primary_text</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:layout_marginRight">10dp</item>
-        <item name="android:layout_marginLeft">10dp</item>
     </style>
 
-    <style name="AppTheme.TextView.Content" parent="TextAppearance.AppCompat.Small">
+    <style name="AppTheme.TextView.Card.Subtitle" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="AppTheme.TextView.Card.Content" parent="TextAppearance.AppCompat.Small">
         <item name="android:textColor">@color/secondary_text</item>
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:layout_marginRight">10dp</item>
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
 </resources>

@@ -48,7 +48,6 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
         getWindow().setSharedElementEnterTransition(new ChangeBounds());
 //        getWindow().setAllowEnterTransitionOverlap(true);
 
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_manager);
 

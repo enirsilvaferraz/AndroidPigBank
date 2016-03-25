@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical">
 
-        <com.system.androidpigbank.views.RoundedView
+        <com.system.androidpigbank.views.RoundedTextView
             android:id="@+id/item_transaction_rounded_view"
             android:layout_width="40dp"
             android:layout_height="40dp"

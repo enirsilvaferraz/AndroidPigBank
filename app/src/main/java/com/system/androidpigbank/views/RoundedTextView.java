@@ -11,11 +11,11 @@ import com.system.androidpigbank.R;
 /**
  * Created by eferraz on 03/01/16.
  */
-public class RoundedView extends LinearLayout {
+public class RoundedTextView extends LinearLayout {
     
     private final TextView textView;
 
-    public RoundedView(final Context context, AttributeSet attrs) {
+    public RoundedTextView(final Context context, AttributeSet attrs) {
         super(context, attrs);
 
         setBackgroundResource(R.drawable.drawable_rounded);

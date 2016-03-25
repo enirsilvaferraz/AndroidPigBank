@@ -12,7 +12,7 @@ import com.system.androidpigbank.controllers.activities.TransactionManagerActivi
 import com.system.androidpigbank.helpers.Constants;
 import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.entities.Transaction;
-import com.system.androidpigbank.views.RoundedView;
+import com.system.androidpigbank.views.RoundedTextView;
 
 import java.text.NumberFormat;
 
@@ -22,7 +22,7 @@ public class TransactionViewHolder extends ViewHolderAbs {
     private TextView textValue;
     private TextView textCategory;
     private TextView textContent;
-    private RoundedView roundedView;
+    private RoundedTextView roundedTextView;
 
     public TransactionViewHolder(View v, AppCompatActivity activity, RecyclerView.Adapter adapter) {
         super(v, activity, adapter);
@@ -31,7 +31,7 @@ public class TransactionViewHolder extends ViewHolderAbs {
         textCategory = (TextView) v.findViewById(R.id.item_transaction_category);
         textContent = (TextView) v.findViewById(R.id.item_transaction_content);
 
-        roundedView = (RoundedView) v.findViewById(R.id.item_transaction_rounded_view);
+        roundedTextView = (RoundedTextView) v.findViewById(R.id.item_transaction_rounded_view);
     }
 
     @Override
@@ -41,11 +41,11 @@ public class TransactionViewHolder extends ViewHolderAbs {
         final NumberFormat numberFormat = NumberFormat.getInstance();
         numberFormat.setMinimumFractionDigits(2);
 
-        roundedView.setTransitionName("TRNAME"+((Transaction) model).getId());
+        roundedTextView.setTransitionName("TRNAME"+((Transaction) model).getId());
 
         textValue.setText("R$ " + numberFormat.format(transaction.getValue()));
         textCategory.setText(transaction.getCategory().getName());
-        roundedView.setTextView(transaction.getCategory().getName());
+        roundedTextView.setTextView(transaction.getCategory().getName());
         textContent.setText(transaction.getContent());
 
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -59,10 +59,10 @@ public class TransactionViewHolder extends ViewHolderAbs {
     private void editCard(final Transaction transaction) {
         final Intent intent = new Intent(getActivity(), TransactionManagerActivity.class);
         intent.putExtra(Constants.BUNDLE_TRANSACTION, transaction);
-        intent.putExtra("TR_NAME", roundedView.getTransitionName());
+        intent.putExtra("TR_NAME", roundedTextView.getTransitionName());
 
 //        getActivity().startActivityForResult(intent, Constants.REQUEST_TRANSACTION_EDIT);
 
-        getActivity().startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(), roundedView, roundedView.getTransitionName()).toBundle());
+        getActivity().startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(), roundedTextView, roundedTextView.getTransitionName()).toBundle());
     }
 }

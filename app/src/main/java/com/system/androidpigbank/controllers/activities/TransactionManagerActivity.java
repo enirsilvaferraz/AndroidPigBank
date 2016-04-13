@@ -1,7 +1,6 @@
 package com.system.androidpigbank.controllers.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -77,12 +76,7 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
         }
 
         Button btnDelete = (Button) findViewById(R.id.transaction_manager_delete);
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                delete();
-            }
-        });
+        btnDelete.setOnClickListener(v -> delete());
 
         if (transaction == null || transaction.getId() == null) {
             btnDelete.setVisibility(View.GONE);

@@ -12,7 +12,6 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
-import android.transition.ChangeBounds;
 import android.transition.Explode;
 import android.view.View;
 import android.view.Window;
@@ -166,4 +165,6 @@ public class TransactionDetailActivity extends BaseActivity<List<Category>> {
     protected View getContainer() {
         return container;
     }
+
+
 }

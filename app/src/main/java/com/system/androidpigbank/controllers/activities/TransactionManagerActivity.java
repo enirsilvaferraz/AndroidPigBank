@@ -76,7 +76,12 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
         }
 
         Button btnDelete = (Button) findViewById(R.id.transaction_manager_delete);
-        btnDelete.setOnClickListener(v -> delete());
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                delete();
+            }
+        });
 
         if (transaction == null || transaction.getId() == null) {
             btnDelete.setVisibility(View.GONE);

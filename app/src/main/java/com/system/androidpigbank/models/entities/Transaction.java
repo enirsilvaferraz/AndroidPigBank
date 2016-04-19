@@ -29,6 +29,9 @@ public class Transaction extends EntityAbs implements Parcelable {
     @DatabaseField
     private String content;
 
+    @DatabaseField
+    private boolean alreadySync;
+
     public Date getDate() {
         return date;
     }
@@ -69,6 +72,14 @@ public class Transaction extends EntityAbs implements Parcelable {
         this.id = id;
     }
 
+    public boolean isAlreadySync() {
+        return alreadySync;
+    }
+
+    public void setAlreadySync(boolean alreadySync) {
+        this.alreadySync = alreadySync;
+    }
+
     public Transaction() {
     }
 
@@ -82,8 +93,9 @@ public class Transaction extends EntityAbs implements Parcelable {
         dest.writeValue(this.id);
         dest.writeLong(date != null ? date.getTime() : -1);
         dest.writeValue(this.value);
-        dest.writeParcelable(this.category, 0);
+        dest.writeParcelable(this.category, flags);
         dest.writeString(this.content);
+        dest.writeByte(alreadySync ? (byte) 1 : (byte) 0);
     }
 
     protected Transaction(Parcel in) {
@@ -93,13 +105,16 @@ public class Transaction extends EntityAbs implements Parcelable {
         this.value = (Double) in.readValue(Double.class.getClassLoader());
         this.category = in.readParcelable(Category.class.getClassLoader());
         this.content = in.readString();
+        this.alreadySync = in.readByte() != 0;
     }
 
     public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
+        @Override
         public Transaction createFromParcel(Parcel source) {
             return new Transaction(source);
         }
 
+        @Override
         public Transaction[] newArray(int size) {
             return new Transaction[size];
         }

@@ -45,4 +45,14 @@ public class TotalFooter extends EntityAbs implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(this.total);
     }
+
+    @Override
+    public Long getId() {
+        return null;
+    }
+
+    @Override
+    public boolean isAlreadySync() {
+        return false;
+    }
 }

@@ -5,19 +5,14 @@ def supportLibraryVersion = '23.3.0'
 android {
 
     compileSdkVersion 23
-    //buildToolsVersion "23.0.3"
-    buildToolsVersion '24.0.0-rc1'
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.system.androidpigbank"
-        minSdkVersion 22
+        minSdkVersion 23
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-
-        jackOptions {
-            enabled true
-        }
     }
 
     buildTypes {
@@ -32,17 +27,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    productFlavors {
-        dev {
-            applicationId 'com.system.androidpigbank.dev'
-        }
-        prd {
-
-        }
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 }
 
@@ -58,4 +44,6 @@ dependencies {
 
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
     compile 'com.j256.ormlite:ormlite-android:4.48'
+    compile 'com.firebase:firebase-client-android:2.5.2'
+    compile 'com.google.code.gson:gson:2.6.2'
 }

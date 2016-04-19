@@ -12,6 +12,18 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "category")
 public class Category extends EntityAbs implements Parcelable {
 
+    public static final Creator<Category> CREATOR = new Creator<Category>() {
+        @Override
+        public Category createFromParcel(Parcel source) {
+            return new Category(source);
+        }
+
+        @Override
+        public Category[] newArray(int size) {
+            return new Category[size];
+        }
+    };
+
     @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
     private Long id;
 
@@ -20,6 +32,9 @@ public class Category extends EntityAbs implements Parcelable {
 
     //@DatabaseField
     private Float amount;
+
+    @DatabaseField
+    private boolean alreadySync;
 
     public Category() {
     }
@@ -31,6 +46,13 @@ public class Category extends EntityAbs implements Parcelable {
 
     public Category(String name) {
         this.name = name;
+    }
+
+    protected Category(Parcel in) {
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
+        this.name = in.readString();
+        this.amount = (Float) in.readValue(Float.class.getClassLoader());
+        this.alreadySync = in.readByte() != 0;
     }
 
     public String getName() {
@@ -45,6 +67,11 @@ public class Category extends EntityAbs implements Parcelable {
         return amount;
     }
 
+    public void setAmount(Float amount) {
+        this.amount = amount;
+
+    }
+
     public Long getId() {
         return id;
     }
@@ -53,38 +80,13 @@ public class Category extends EntityAbs implements Parcelable {
         this.id = id;
     }
 
-    public void setAmount(Float amount) {
-        this.amount = amount;
-
+    public boolean isAlreadySync() {
+        return alreadySync;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setAlreadySync(boolean alreadySync) {
+        this.alreadySync = alreadySync;
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(this.id);
-        dest.writeString(this.name);
-        dest.writeValue(this.amount);
-    }
-
-    protected Category(Parcel in) {
-        this.id = (Long) in.readValue(Long.class.getClassLoader());
-        this.name = in.readString();
-        this.amount = (Float) in.readValue(Float.class.getClassLoader());
-    }
-
-    public static final Creator<Category> CREATOR = new Creator<Category>() {
-        public Category createFromParcel(Parcel source) {
-            return new Category(source);
-        }
-
-        public Category[] newArray(int size) {
-            return new Category[size];
-        }
-    };
 
     @Override
     public boolean equals(Object o) {
@@ -100,5 +102,18 @@ public class Category extends EntityAbs implements Parcelable {
     @Override
     public int hashCode() {
         return getName() != null ? getName().hashCode() : 0;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
+        dest.writeString(this.name);
+        dest.writeValue(this.amount);
+        dest.writeByte(alreadySync ? (byte) 1 : (byte) 0);
     }
 }

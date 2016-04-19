@@ -14,13 +14,13 @@ import android.view.View;
 import android.view.Window;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.controllers.BackupService;
 import com.system.androidpigbank.controllers.adapters.SectionsPagerAdapter;
 
 import java.util.Calendar;
 
 public class TransactionHistoryTabActivity extends BaseActivity {
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
     @Override
@@ -36,7 +36,7 @@ public class TransactionHistoryTabActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -48,16 +48,25 @@ public class TransactionHistoryTabActivity extends BaseActivity {
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(view -> {
+//            startActivity(new Intent(TransactionHistoryTabActivity.this, TransactionManagerActivity.class));
+//
+//            //new TransactionManagerDialog().show(getSupportFragmentManager(), "TAG");
+//        });
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 startActivity(new Intent(TransactionHistoryTabActivity.this, TransactionManagerActivity.class));
-
-                //new TransactionManagerDialog().show(getSupportFragmentManager(), "TAG");
             }
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startService(new Intent(this, BackupService.class));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -112,6 +112,16 @@ public class TransactionBusiness extends DaoAbs {
         return results;
     }
 
+    public List<Transaction> findAll() throws SQLException {
+        ConnectionSource connectionSource = new AndroidConnectionSource(db);
+        Dao<Transaction, String> accountDao = DaoManager.createDao(connectionSource, Transaction.class);
+
+        List<Transaction> list = accountDao.queryForAll();
+        connectionSource.close();
+
+        return list;
+    }
+
     public Transaction delete(Transaction transaction) throws SQLException {
         ConnectionSource connection = new AndroidConnectionSource(db);
         Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);

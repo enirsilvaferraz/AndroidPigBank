@@ -66,6 +66,16 @@ public class DateSection extends EntityAbs implements Parcelable {
         dest.writeLong(date != null ? date.getTime() : -1);
         dest.writeString(this.title);
     }
+
+    @Override
+    public Long getId() {
+        return null;
+    }
+
+    @Override
+    public boolean isAlreadySync() {
+        return false;
+    }
 }
 
 

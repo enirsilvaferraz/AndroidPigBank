@@ -34,4 +34,5 @@ public abstract class DaoAbs<T extends EntityAbs> {
     public abstract T edit(T entity) throws SQLException;
     public abstract T deleteLogic(T entity) throws SQLException;
     public abstract List<T> findAll() throws Exception;
+    public abstract T save(T entity) throws Exception;
 }

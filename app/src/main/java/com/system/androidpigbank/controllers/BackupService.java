@@ -3,8 +3,10 @@ package com.system.androidpigbank.controllers;
 import android.app.IntentService;
 import android.content.Intent;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.firebase.client.annotations.Nullable;
 import com.google.gson.Gson;
 import com.system.androidpigbank.helpers.FirebaseInstance;
@@ -90,7 +92,7 @@ public class BackupService extends IntentService {
                 firebase.updateChildren(map, new Firebase.CompletionListener() {
 
                     @Override
-                    public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+                    public void onComplete(FirebaseError firebaseError, final Firebase firebase) {
 
                         try {
 
@@ -106,11 +108,39 @@ public class BackupService extends IntentService {
                                 business.deleteLogic(entity);
                             }
 
+                            firebase.addValueEventListener(new ValueEventListener() {
+
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                    try {
+
+                                        for (DataSnapshot child : dataSnapshot.getChildren()){
+
+                                            final Class<?> classOfT = Class.forName(firebase.getKey().replace("_", "."));
+                                            EntityAbs entity = (EntityAbs) new Gson().fromJson(child.getValue().toString(), classOfT);
+
+                                            if (!entityList.contains(entity)){
+                                                business.save(entity);
+                                            }
+                                        }
+
+                                        executeNext(ObserverImpl.this);
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(FirebaseError firebaseError) {
+
+                                }
+                            });
+
                         } catch (SQLException | ClassNotFoundException e) {
                             e.printStackTrace();
                         }
-
-                        executeNext(ObserverImpl.this);
                     }
                 });
 

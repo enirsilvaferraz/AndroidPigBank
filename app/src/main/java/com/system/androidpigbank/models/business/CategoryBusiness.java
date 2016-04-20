@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Created by eferraz on 05/12/15.
  */
-public class CategoryBusiness extends DaoAbs<Category> {
+public class CategoryBusiness extends DaoAbs {
 
     public CategoryBusiness(Context context) {
         super(context);
@@ -35,21 +35,6 @@ public class CategoryBusiness extends DaoAbs<Category> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public Category deleteLogic(Category entity) throws SQLException {
-        ConnectionSource connection = new AndroidConnectionSource(db);
-        Dao<Category, String> dao = DaoManager.createDao(connection, Category.class);
-        dao.delete(entity);
-        return entity;
-    }
-
-    public Category edit(Category entity) throws SQLException {
-        ConnectionSource connection = new AndroidConnectionSource(db);
-        Dao<Category, String> dao = DaoManager.createDao(connection, Category.class);
-        dao.update(entity);
-        return entity;
     }
 
     public List<Category> getChartDataByMonth(int month) throws Exception {
@@ -70,20 +55,15 @@ public class CategoryBusiness extends DaoAbs<Category> {
 
     public List<Category> findAll() throws Exception {
         ConnectionSource connectionSource = new AndroidConnectionSource(db);
-        Dao<Category, String> dao = DaoManager.createDao(connectionSource, Category.class);
+        Dao<Category, String> accountDao = DaoManager.createDao(connectionSource, Category.class);
 
-        QueryBuilder<Category, String> queryBuilder = dao.queryBuilder();
-        queryBuilder.where().eq("alreadySync", false);
-
-        List<Category> list = queryBuilder.query();
+        List<Category> list = accountDao.queryForAll();
         connectionSource.close();
 
         return list;
     }
 
     public Category save(Category category) throws SQLException {
-
-        category.setActive(true);
 
         ConnectionSource connectionSource = new AndroidConnectionSource(db);
         Dao<Category, String> accountDao = DaoManager.createDao(connectionSource, Category.class);

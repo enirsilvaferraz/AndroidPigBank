@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.Window;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.BackupService;
 import com.system.androidpigbank.controllers.adapters.SectionsPagerAdapter;
 
 import java.util.Calendar;

@@ -30,6 +30,16 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
+    productFlavors {
+        dev {
+            applicationId "com.system.androidpigbank.dev"
+            buildConfigField 'String', 'FIREBASE_FLAVOR', '"dev"'
+        }
+        prd{
+            buildConfigField 'String', 'FIREBASE_FLAVOR', '"prd"'
+        }
+    }
 }
 
 dependencies {

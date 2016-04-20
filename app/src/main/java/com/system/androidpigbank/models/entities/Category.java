@@ -30,11 +30,13 @@ public class Category extends EntityAbs implements Parcelable {
     @DatabaseField
     private String name;
 
-    //@DatabaseField
-    private Float amount;
-
     @DatabaseField
     private boolean alreadySync;
+
+    @DatabaseField
+    private boolean active;
+
+    private Float amount;
 
     public Category() {
     }
@@ -51,8 +53,9 @@ public class Category extends EntityAbs implements Parcelable {
     protected Category(Parcel in) {
         this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.name = in.readString();
-        this.amount = (Float) in.readValue(Float.class.getClassLoader());
         this.alreadySync = in.readByte() != 0;
+        this.active = in.readByte() != 0;
+        this.amount = (Float) in.readValue(Float.class.getClassLoader());
     }
 
     public String getName() {
@@ -89,6 +92,16 @@ public class Category extends EntityAbs implements Parcelable {
     }
 
     @Override
+    public boolean isActive() {
+        return active;
+    }
+
+    @Override
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -113,7 +126,8 @@ public class Category extends EntityAbs implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(this.id);
         dest.writeString(this.name);
-        dest.writeValue(this.amount);
         dest.writeByte(alreadySync ? (byte) 1 : (byte) 0);
+        dest.writeByte(active ? (byte) 1 : (byte) 0);
+        dest.writeValue(this.amount);
     }
 }

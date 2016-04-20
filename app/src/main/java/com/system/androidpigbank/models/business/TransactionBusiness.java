@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by eferraz on 05/12/15.
  */
-public class TransactionBusiness extends DaoAbs {
+public class TransactionBusiness extends DaoAbs<Transaction> {
 
     public TransactionBusiness(Context context) {
         super(context);
@@ -34,6 +34,8 @@ public class TransactionBusiness extends DaoAbs {
     }
 
     public Transaction save(Transaction transaction) throws Exception {
+
+        transaction.setActive(true);
 
         if (transaction.getCategory().getId() == null) {
             Category category = new CategoryBusiness(getContext()).save(transaction.getCategory());
@@ -100,7 +102,7 @@ public class TransactionBusiness extends DaoAbs {
         cEnd.set(Calendar.MINUTE, cEnd.getActualMaximum(Calendar.MINUTE));
         cEnd.set(Calendar.SECOND, cEnd.getActualMaximum(Calendar.SECOND));
 
-        queryTransaction.where().between("date", cInit.getTime(), cEnd.getTime());
+        queryTransaction.where().eq("active", true).between("date", cInit.getTime(), cEnd.getTime());
 
         Dao<Category, String> categoryDao = DaoManager.createDao(connection, Category.class);
         QueryBuilder<Category, String> queryCategory = categoryDao.queryBuilder();
@@ -114,19 +116,28 @@ public class TransactionBusiness extends DaoAbs {
 
     public List<Transaction> findAll() throws SQLException {
         ConnectionSource connectionSource = new AndroidConnectionSource(db);
-        Dao<Transaction, String> accountDao = DaoManager.createDao(connectionSource, Transaction.class);
+        Dao<Transaction, String> dao = DaoManager.createDao(connectionSource, Transaction.class);
 
-        List<Transaction> list = accountDao.queryForAll();
+        QueryBuilder<Transaction, String> queryBuilder = dao.queryBuilder();
+        queryBuilder.where().eq("alreadySync", false);
+
+        List<Transaction> list = queryBuilder.query();
         connectionSource.close();
 
         return list;
     }
 
-    public Transaction delete(Transaction transaction) throws SQLException {
+    @Override
+    public Transaction deleteLogic(Transaction transaction) throws SQLException {
         ConnectionSource connection = new AndroidConnectionSource(db);
         Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);
         dao.delete(transaction);
         return transaction;
+    }
+
+    public Transaction delete(Transaction transaction) throws SQLException {
+        transaction.setActive(false);
+        return edit(transaction);
     }
 
     public Transaction edit(Transaction transaction) throws SQLException {

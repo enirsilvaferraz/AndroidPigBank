@@ -11,7 +11,9 @@ import com.system.androidpigbank.helpers.FirebaseInstance;
 import com.system.androidpigbank.models.business.CategoryBusiness;
 import com.system.androidpigbank.models.business.TransactionBusiness;
 import com.system.androidpigbank.models.entities.EntityAbs;
+import com.system.androidpigbank.models.persistences.DaoAbs;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,8 +33,9 @@ public class BackupService extends IntentService {
         try {
 
             listObserver = new ArrayList<>();
-            listObserver.add(new ObserverImpl<>(FirebaseInstance.getInstance(this).getCategoryChild(), new CategoryBusiness(this).findAll()));
-            listObserver.add(new ObserverImpl<>(FirebaseInstance.getInstance(this).getTransactionChild(), new TransactionBusiness(this).findAll()));
+
+            listObserver.add(new ObserverImpl<>(FirebaseInstance.getInstance(this).getCategoryChild(), new CategoryBusiness(this)));
+            listObserver.add(new ObserverImpl<>(FirebaseInstance.getInstance(this).getTransactionChild(), new TransactionBusiness(this)));
 
             executeNext(null);
 
@@ -60,27 +63,60 @@ public class BackupService extends IntentService {
     private class ObserverImpl<T extends EntityAbs> {
 
         final private Firebase firebase;
-        final private List<T> entityList;
+        final private DaoAbs business;
 
-        public ObserverImpl(Firebase firebase, List<T> entityList) {
+        public ObserverImpl(Firebase firebase, DaoAbs business) {
             this.firebase = firebase;
-            this.entityList = entityList;
+            this.business = business;
         }
 
         public void onFinish() {
 
-            final Map<String, Object> map = new HashMap<>();
-            for (EntityAbs entityAbs : entityList) {
-                map.put(entityAbs.getId().toString(), new Gson().toJson(entityAbs));
-            }
+            try {
 
-            firebase.updateChildren(map, new Firebase.CompletionListener() {
+                final List<EntityAbs> entityList = business.findAll();
+                final List<EntityAbs> removeList = new ArrayList<>();
 
-                @Override
-                public void onComplete(FirebaseError firebaseError, Firebase firebase) {
-                    executeNext(ObserverImpl.this);
+                final Map<String, Object> map = new HashMap<>();
+                for (EntityAbs entityAbs : entityList) {
+
+                    if (entityAbs.isActive()) {
+                        map.put(entityAbs.getId().toString(), new Gson().toJson(entityAbs));
+                    } else {
+                        removeList.add(entityAbs);
+                    }
                 }
-            });
+
+                firebase.updateChildren(map, new Firebase.CompletionListener() {
+
+                    @Override
+                    public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+
+                        try {
+
+                            final Class<?> classOfT = Class.forName(firebase.getKey().replace("_", "."));
+                            for (Object entityString : map.values()) {
+                                EntityAbs entity = (EntityAbs) new Gson().fromJson(entityString.toString(), classOfT);
+                                entity.setAlreadySync(true);
+                                business.edit(entity);
+                            }
+
+                            for (EntityAbs entity : removeList) {
+                                firebase.child(entity.getId().toString()).setValue(null);
+                                business.deleteLogic(entity);
+                            }
+
+                        } catch (SQLException | ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
+                        executeNext(ObserverImpl.this);
+                    }
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

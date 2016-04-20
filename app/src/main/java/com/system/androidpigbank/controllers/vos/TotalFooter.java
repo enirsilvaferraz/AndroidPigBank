@@ -55,4 +55,19 @@ public class TotalFooter extends EntityAbs implements Parcelable {
     public boolean isAlreadySync() {
         return false;
     }
+
+    @Override
+    public void setAlreadySync(boolean alreadySync) {
+
+    }
+
+    @Override
+    public boolean isActive() {
+        return false;
+    }
+
+    @Override
+    public void setActive(boolean active) {
+
+    }
 }

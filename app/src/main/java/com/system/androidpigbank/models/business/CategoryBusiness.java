@@ -7,9 +7,11 @@ import com.google.gson.Gson;
 import com.j256.ormlite.android.AndroidConnectionSource;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.system.androidpigbank.models.entities.Category;
+import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.models.persistences.DaoAbs;
 
@@ -22,7 +24,7 @@ import java.util.List;
 /**
  * Created by eferraz on 05/12/15.
  */
-public class CategoryBusiness extends DaoAbs {
+public class CategoryBusiness extends DaoAbs<Category> {
 
     public CategoryBusiness(Context context) {
         super(context);
@@ -33,6 +35,21 @@ public class CategoryBusiness extends DaoAbs {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Category deleteLogic(Category entity) throws SQLException {
+        ConnectionSource connection = new AndroidConnectionSource(db);
+        Dao<Category, String> dao = DaoManager.createDao(connection, Category.class);
+        dao.delete(entity);
+        return entity;
+    }
+
+    public Category edit(Category entity) throws SQLException {
+        ConnectionSource connection = new AndroidConnectionSource(db);
+        Dao<Category, String> dao = DaoManager.createDao(connection, Category.class);
+        dao.update(entity);
+        return entity;
     }
 
     public List<Category> getChartDataByMonth(int month) throws Exception {
@@ -53,9 +70,12 @@ public class CategoryBusiness extends DaoAbs {
 
     public List<Category> findAll() throws Exception {
         ConnectionSource connectionSource = new AndroidConnectionSource(db);
-        Dao<Category, String> accountDao = DaoManager.createDao(connectionSource, Category.class);
+        Dao<Category, String> dao = DaoManager.createDao(connectionSource, Category.class);
 
-        List<Category> list = accountDao.queryForAll();
+        QueryBuilder<Category, String> queryBuilder = dao.queryBuilder();
+        queryBuilder.where().eq("alreadySync", false);
+
+        List<Category> list = queryBuilder.query();
         connectionSource.close();
 
         return list;
@@ -63,15 +83,13 @@ public class CategoryBusiness extends DaoAbs {
 
     public Category save(Category category) throws SQLException {
 
+        category.setActive(true);
+
         ConnectionSource connectionSource = new AndroidConnectionSource(db);
         Dao<Category, String> accountDao = DaoManager.createDao(connectionSource, Category.class);
 
         accountDao.create(category);
         connectionSource.close();
-
-//        Firebase myFirebaseRef = new Firebase("https://pig-bank-dev.firebaseio.com/");
-//        myFirebaseRef.child("database").child("category")
-//                .push().child(category.getId().toString()).setValue(new Gson().toJson(category));
 
         return category;
     }

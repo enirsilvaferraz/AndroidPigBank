@@ -4,6 +4,9 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.firebase.client.Firebase;
+import com.system.androidpigbank.BuildConfig;
+import com.system.androidpigbank.models.entities.Category;
+import com.system.androidpigbank.models.entities.Transaction;
 
 /**
  * Created by eferraz on 18/04/16.
@@ -12,8 +15,8 @@ public class FirebaseInstance {
 
     private static FirebaseInstance instance;
 
-    private Firebase firebaseCategory;
-    private Firebase firebaseTransaction;
+    //private Firebase firebaseCategory;
+    private Firebase firebase;
 
     private FirebaseInstance(Context context) {
         Firebase.setAndroidContext(context);
@@ -27,17 +30,17 @@ public class FirebaseInstance {
     }
 
     public Firebase getCategoryChild() {
-        if (firebaseCategory == null) {
-            firebaseCategory = getFirebaseInstance();
+        if (firebase == null) {
+            firebase = getFirebaseInstance();
         }
-        return firebaseCategory.child("database").child("category");
+        return firebase.child(BuildConfig.FIREBASE_FLAVOR).child("database").child(Category.class.getName().replace(".", "_"));
     }
 
     public Firebase getTransactionChild() {
-        if (firebaseTransaction == null) {
-            firebaseTransaction = getFirebaseInstance();
+        if (firebase == null) {
+            firebase = getFirebaseInstance();
         }
-        return firebaseTransaction.child("database").child("transaction");
+        return firebase.child(BuildConfig.FIREBASE_FLAVOR).child("database").child(Transaction.class.getName().replace(".", "_"));
     }
 
     @NonNull

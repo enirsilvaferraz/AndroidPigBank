@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Created by eferraz on 05/12/15.
  */
-public class CategoryBusiness extends DaoAbs {
+public class CategoryBusiness extends DaoAbs<Category> {
 
     public CategoryBusiness(Context context) {
         super(context);
@@ -53,15 +53,15 @@ public class CategoryBusiness extends DaoAbs {
         return categories;
     }
 
-    public List<Category> findAll() throws Exception {
-        ConnectionSource connectionSource = new AndroidConnectionSource(db);
-        Dao<Category, String> accountDao = DaoManager.createDao(connectionSource, Category.class);
-
-        List<Category> list = accountDao.queryForAll();
-        connectionSource.close();
-
-        return list;
-    }
+//    public List<Category> findAll() throws Exception {
+//        ConnectionSource connectionSource = new AndroidConnectionSource(db);
+//        Dao<Category, String> accountDao = DaoManager.createDao(connectionSource, Category.class);
+//
+//        List<Category> list = accountDao.queryForAll();
+//        connectionSource.close();
+//
+//        return list;
+//    }
 
     public Category save(Category category) throws SQLException {
 

@@ -15,6 +15,7 @@ import android.view.Window;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.SectionsPagerAdapter;
+import com.system.androidpigbank.models.business.BackupService;
 
 import java.util.Calendar;
 
@@ -64,7 +65,7 @@ public class TransactionHistoryTabActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //startService(new Intent(this, BackupService.class));
+        startService(new Intent(this, BackupService.class));
     }
 
     @Override

@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by eferraz on 05/12/15.
  */
-public class TransactionBusiness extends DaoAbs {
+public class TransactionBusiness extends DaoAbs<Transaction> {
 
     public TransactionBusiness(Context context) {
         super(context);

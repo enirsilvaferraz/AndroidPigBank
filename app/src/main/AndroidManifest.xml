@@ -3,6 +3,7 @@
     package="com.system.androidpigbank">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -30,7 +31,7 @@
         </activity>
 
         <service
-            android:name=".controllers.BackupService"
+            android:name=".models.business.BackupService"
             android:exported="false"></service>
     </application>
 

@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.system.androidpigbank.controllers.fragments.PlaceholderFragment;
+import com.system.androidpigbank.controllers.fragments.TransactionListFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,7 +17,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return PlaceholderFragment.newInstance(position);
+        return TransactionListFragment.newInstance(position);
     }
 
     @Override

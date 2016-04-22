@@ -21,11 +21,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-enum TransactionViewType {
-    CARD, SECTION, FOOTER;
-}
-
-
 /**
  * Created by eferraz on 05/12/15.
  */
@@ -128,5 +123,20 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         getItens().remove(index);
         notifyItemRemoved(index);
         ((BaseActivity) activity).showMessage("Transaction removed!");
+    }
+
+    public enum TransactionViewType {
+
+        CARD(false), SECTION(true), FOOTER(true);
+
+        private boolean fullSpan;
+
+        TransactionViewType(boolean fullSpan) {
+            this.fullSpan = fullSpan;
+        }
+
+        public boolean isFullSpan() {
+            return fullSpan;
+        }
     }
 }

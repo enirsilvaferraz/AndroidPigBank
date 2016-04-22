@@ -23,15 +23,16 @@ import com.system.androidpigbank.models.entities.Transaction;
 
 import java.util.List;
 
-public class PlaceholderFragment extends Fragment implements LoaderManager.LoaderCallbacks<LoaderResult<List<Transaction>>> {
+public class TransactionListFragment extends Fragment implements LoaderManager.LoaderCallbacks<LoaderResult<List<Transaction>>> {
 
+    private static final int SPAN_COUNT = 1;
     private RecyclerView recyclerView;
 
-    public PlaceholderFragment() {
+    public TransactionListFragment() {
     }
 
-    public static PlaceholderFragment newInstance(int position) {
-        PlaceholderFragment fragment = new PlaceholderFragment();
+    public static TransactionListFragment newInstance(int position) {
+        TransactionListFragment fragment = new TransactionListFragment();
         Bundle args = new Bundle();
         args.putInt("POSITION", position);
         fragment.setArguments(args);
@@ -47,10 +48,22 @@ public class PlaceholderFragment extends Fragment implements LoaderManager.Loade
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final TransactionAdapter adapter = new TransactionAdapter((AppCompatActivity) getActivity());
+
+        final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT, GridLayoutManager.VERTICAL, false);
+//        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+//            @Override
+//            public int getSpanSize(int position) {
+//                TransactionAdapter.TransactionViewType type = TransactionAdapter.TransactionViewType.values()[adapter.getItemViewType(position)];
+//                return type.isFullSpan() ? SPAN_COUNT : 1;
+//            }
+//        });
+
         recyclerView = (RecyclerView) view.findViewById(R.id.transaction_history_recycleView);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(new TransactionAdapter((AppCompatActivity) getActivity()));
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
 
         final int position = getArguments().getInt("POSITION");
 

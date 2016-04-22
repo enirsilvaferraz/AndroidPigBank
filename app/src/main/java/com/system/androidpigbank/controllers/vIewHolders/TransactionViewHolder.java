@@ -59,10 +59,11 @@ public class TransactionViewHolder extends ViewHolderAbs {
     private void editCard(final Transaction transaction) {
         final Intent intent = new Intent(getActivity(), TransactionManagerActivity.class);
         intent.putExtra(Constants.BUNDLE_TRANSACTION, transaction);
-        intent.putExtra("TR_NAME", roundedTextView.getTransitionName());
+//        intent.putExtra("TR_NAME", roundedTextView.getTransitionName());
 
 //        getActivity().startActivityForResult(intent, Constants.REQUEST_TRANSACTION_EDIT);
 
-        getActivity().startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(), roundedTextView, roundedTextView.getTransitionName()).toBundle());
+//        getActivity().startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(), roundedTextView, roundedTextView.getTransitionName()).toBundle());
+        getActivity().startActivity(intent);
     }
 }

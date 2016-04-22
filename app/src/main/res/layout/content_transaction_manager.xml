@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:inputType="textCapWords"
+            android:inputType="textAutoCorrect|textCapWords"
             android:isScrollContainer="true" />
 
     </LinearLayout>
@@ -105,7 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:inputType="textCapWords"
+            android:inputType="textAutoCorrect|textCapSentences"
             android:isScrollContainer="true" />
 
     </LinearLayout>

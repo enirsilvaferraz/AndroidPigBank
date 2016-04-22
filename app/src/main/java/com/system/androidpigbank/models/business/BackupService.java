@@ -43,7 +43,7 @@ public class BackupService extends IntentService {
 
         public BackupImpl(DaoAbs business) {
             this.business = business;
-            FILE_NAME = business.getClass().getSimpleName().replace("business", "") + ".txt";
+            FILE_NAME = business.getClass().getSimpleName().replace("Business", "") + ".txt";
             DIR_NAME = Environment.getExternalStorageDirectory().toString() + "/Unidade/AndroidPigBank/" + BuildConfig.FLAVOR;
         }
 

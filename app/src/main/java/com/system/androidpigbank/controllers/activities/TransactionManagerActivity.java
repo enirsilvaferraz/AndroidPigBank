@@ -77,18 +77,6 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
             editContent.setText(transaction.getContent());
         }
 
-        Button btnDelete = (Button) findViewById(R.id.transaction_manager_delete);
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                delete();
-            }
-        });
-
-        if (transaction == null || transaction.getId() == null) {
-            btnDelete.setVisibility(View.GONE);
-        }
-
         LoaderManager.LoaderCallbacks<LoaderResult<List<Category>>> categoryCallback;
         categoryCallback = new LoaderManager.LoaderCallbacks<LoaderResult<List<Category>>>() {
 
@@ -229,6 +217,10 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_transaction_manager, menu);
+        if (transaction == null || transaction.getId() == null) {
+            menu.getItem(1).setVisible(false);
+        }
+
         return true;
     }
 
@@ -237,6 +229,10 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
         int id = item.getItemId();
         if (id == R.id.transaction_manager_act_save) {
             save();
+            return true;
+        }
+        else if (id == R.id.transaction_manager_act_delete) {
+            delete();
             return true;
         }
         return super.onOptionsItemSelected(item);

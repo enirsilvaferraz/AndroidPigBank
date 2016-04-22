@@ -10,4 +10,12 @@
         android:title="Save"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/transaction_manager_act_delete"
+        android:icon="@drawable/ic_delete_white"
+        android:orderInCategory="100"
+        android:title="Save"
+        android:visible="true"
+        app:showAsAction="always" />
+
 </menu>

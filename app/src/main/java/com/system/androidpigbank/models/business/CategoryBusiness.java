@@ -2,23 +2,16 @@ package com.system.androidpigbank.models.business;
 
 import android.content.Context;
 
-import com.firebase.client.Firebase;
-import com.google.gson.Gson;
 import com.j256.ormlite.android.AndroidConnectionSource;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.system.androidpigbank.models.entities.Category;
-import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.models.persistences.DaoAbs;
 
-import org.json.JSONObject;
-
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

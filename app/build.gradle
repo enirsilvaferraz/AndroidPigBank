@@ -3,39 +3,42 @@ apply plugin: 'com.android.application'
 def supportLibraryVersion = '23.3.0'
 
 android {
-
+    signingConfigs {
+        config {
+            keyAlias 'AndroidPigBank'
+            keyPassword 'android'
+            storeFile file('/Users/eferraz/AndroidStudioProjects/Personal/AndroidPigBank/keystore.jks')
+            storePassword 'android'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
-
     defaultConfig {
         applicationId "com.system.androidpigbank"
         minSdkVersion 23
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        signingConfig signingConfigs.config
     }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     dexOptions {
         incremental true
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
-
     productFlavors {
         dev {
             applicationId "com.system.androidpigbank.dev"
         }
-        prd{
+        prd {
         }
     }
 }
@@ -52,6 +55,5 @@ dependencies {
 
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
     compile 'com.j256.ormlite:ormlite-android:4.48'
-    compile 'com.firebase:firebase-client-android:2.5.2'
     compile 'com.google.code.gson:gson:2.6.2'
 }

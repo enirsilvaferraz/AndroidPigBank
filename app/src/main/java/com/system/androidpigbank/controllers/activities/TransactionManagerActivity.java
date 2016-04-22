@@ -1,5 +1,6 @@
 package com.system.androidpigbank.controllers.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
@@ -20,6 +21,7 @@ import com.system.androidpigbank.controllers.managers.CategoryManager;
 import com.system.androidpigbank.controllers.managers.LoaderResult;
 import com.system.androidpigbank.controllers.managers.TransactionManager;
 import com.system.androidpigbank.helpers.Constants;
+import com.system.androidpigbank.models.business.BackupService;
 import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.models.entities.Transaction;
 
@@ -126,6 +128,7 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
                 public void onLoadFinished(Loader<LoaderResult<Transaction>> loader, LoaderResult<Transaction> data) {
                     if (data.isSuccess()) {
                         Snackbar.make(container, "Saved!", Snackbar.LENGTH_LONG).show();
+                        startService(new Intent(TransactionManagerActivity.this, BackupService.class));
                         TransactionManagerActivity.this.finishAfterTransition();
                     } else {
                         Snackbar.make(container, data.getException().getMessage(), Snackbar.LENGTH_LONG).show();
@@ -175,6 +178,7 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
             public void onLoadFinished(Loader<LoaderResult<Transaction>> loader, LoaderResult<Transaction> data) {
                 if (data.isSuccess()) {
                     Snackbar.make(container, "Saved!", Snackbar.LENGTH_LONG).show();
+                    startService(new Intent(TransactionManagerActivity.this, BackupService.class));
                     TransactionManagerActivity.this.finishAfterTransition();
                 } else {
                     Snackbar.make(container, data.getException().getMessage(), Snackbar.LENGTH_LONG).show();

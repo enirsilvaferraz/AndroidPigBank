@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.system.androidpigbank">
+    package="com.system.androidpigbank" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -9,7 +9,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true">
+        android:supportsRtl="true" >
         <activity
             android:name=".controllers.activities.TransactionManagerActivity"
             android:label="@string/title_activity_transaction_manager"
@@ -22,7 +22,7 @@
         <activity
             android:name=".controllers.activities.TransactionHistoryTabActivity"
             android:label="@string/title_activity_transaction_history"
-            android:theme="@style/AppTheme.Blue">
+            android:theme="@style/AppTheme.Blue" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,7 +32,7 @@
 
         <service
             android:name=".models.business.BackupService"
-            android:exported="false"></service>
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -65,7 +65,6 @@ public class TransactionHistoryTabActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        startService(new Intent(this, BackupService.class));
     }
 
     @Override

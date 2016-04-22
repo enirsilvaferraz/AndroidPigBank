@@ -33,14 +33,14 @@ public class FirebaseInstance {
         if (firebase == null) {
             firebase = getFirebaseInstance();
         }
-        return firebase.child(BuildConfig.FIREBASE_FLAVOR).child("database").child(Category.class.getName().replace(".", "_"));
+        return firebase.child(BuildConfig.FLAVOR).child("database").child(Category.class.getName().replace(".", "_"));
     }
 
     public Firebase getTransactionChild() {
         if (firebase == null) {
             firebase = getFirebaseInstance();
         }
-        return firebase.child(BuildConfig.FIREBASE_FLAVOR).child("database").child(Transaction.class.getName().replace(".", "_"));
+        return firebase.child(BuildConfig.FLAVOR).child("database").child(Transaction.class.getName().replace(".", "_"));
     }
 
     @NonNull

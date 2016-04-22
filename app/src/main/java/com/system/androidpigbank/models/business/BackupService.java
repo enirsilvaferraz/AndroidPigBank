@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Environment;
 
 import com.google.gson.Gson;
+import com.system.androidpigbank.BuildConfig;
 import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.persistences.DaoAbs;
 
@@ -48,7 +49,7 @@ public class BackupService extends IntentService {
 
                 StringBuilder sb = new StringBuilder();
 
-                File dir = new File(Environment.getExternalStorageDirectory().toString() + "/Unidade/AndroidPigBank/");
+                File dir = new File(Environment.getExternalStorageDirectory().toString() + "/Unidade/AndroidPigBank/" + BuildConfig.FLAVOR);
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }

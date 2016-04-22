@@ -26,15 +26,9 @@ public class TransactionHistoryTabActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        //getWindow().setExitTransition(new Explode());
-        getWindow().setSharedElementExitTransition(new ChangeBounds());
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_history_tab);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -47,14 +41,7 @@ public class TransactionHistoryTabActivity extends BaseActivity {
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(view -> {
-//            startActivity(new Intent(TransactionHistoryTabActivity.this, TransactionManagerActivity.class));
-//
-//            //new TransactionManagerDialog().show(getSupportFragmentManager(), "TAG");
-//        });
-
-        fab.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(TransactionHistoryTabActivity.this, TransactionManagerActivity.class));

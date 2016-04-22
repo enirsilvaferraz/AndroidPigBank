@@ -42,10 +42,6 @@ public class TransactionDetailActivity extends BaseActivity<List<Category>> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        getWindow().setExitTransition(new Explode());
-        //getWindow().setSharedElementExitTransition(new ChangeBounds());
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

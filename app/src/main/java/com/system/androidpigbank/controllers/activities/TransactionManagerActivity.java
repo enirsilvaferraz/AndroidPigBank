@@ -44,11 +44,6 @@ public class TransactionManagerActivity extends BaseActivity<Transaction> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-//        getWindow().setEnterTransition(new Explode());
-        getWindow().setSharedElementEnterTransition(new ChangeBounds());
-//        getWindow().setAllowEnterTransitionOverlap(true);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_manager);
 

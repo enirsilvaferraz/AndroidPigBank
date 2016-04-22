@@ -14,6 +14,18 @@ import java.util.Date;
 @DatabaseTable(tableName = "transaction")
 public class Transaction extends EntityAbs implements Parcelable {
 
+    public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
+        @Override
+        public Transaction createFromParcel(Parcel source) {
+            return new Transaction(source);
+        }
+
+        @Override
+        public Transaction[] newArray(int size) {
+            return new Transaction[size];
+        }
+    };
+
     @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
     private Long id;
 
@@ -29,13 +41,16 @@ public class Transaction extends EntityAbs implements Parcelable {
     @DatabaseField
     private String content;
 
-    @DatabaseField
-    private boolean alreadySync;
-
-    @DatabaseField
-    private boolean active;
-
     public Transaction() {
+    }
+
+    protected Transaction(Parcel in) {
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
+        long tmpDate = in.readLong();
+        this.date = tmpDate == -1 ? null : new Date(tmpDate);
+        this.value = (Double) in.readValue(Double.class.getClassLoader());
+        this.category = in.readParcelable(Category.class.getClassLoader());
+        this.content = in.readString();
     }
 
     public Date getDate() {
@@ -78,22 +93,6 @@ public class Transaction extends EntityAbs implements Parcelable {
         this.id = id;
     }
 
-    public boolean isAlreadySync() {
-        return alreadySync;
-    }
-
-    public void setAlreadySync(boolean alreadySync) {
-        this.alreadySync = alreadySync;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -106,30 +105,5 @@ public class Transaction extends EntityAbs implements Parcelable {
         dest.writeValue(this.value);
         dest.writeParcelable(this.category, flags);
         dest.writeString(this.content);
-        dest.writeByte(alreadySync ? (byte) 1 : (byte) 0);
-        dest.writeByte(active ? (byte) 1 : (byte) 0);
     }
-
-    protected Transaction(Parcel in) {
-        this.id = (Long) in.readValue(Long.class.getClassLoader());
-        long tmpDate = in.readLong();
-        this.date = tmpDate == -1 ? null : new Date(tmpDate);
-        this.value = (Double) in.readValue(Double.class.getClassLoader());
-        this.category = in.readParcelable(Category.class.getClassLoader());
-        this.content = in.readString();
-        this.alreadySync = in.readByte() != 0;
-        this.active = in.readByte() != 0;
-    }
-
-    public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
-        @Override
-        public Transaction createFromParcel(Parcel source) {
-            return new Transaction(source);
-        }
-
-        @Override
-        public Transaction[] newArray(int size) {
-            return new Transaction[size];
-        }
-    };
 }

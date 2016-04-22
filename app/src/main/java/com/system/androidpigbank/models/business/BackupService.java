@@ -17,7 +17,6 @@ import java.util.List;
 
 public class BackupService extends IntentService {
 
-
     public BackupService() {
         super(BackupService.class.getSimpleName());
     }
@@ -37,10 +36,15 @@ public class BackupService extends IntentService {
 
     private class BackupImpl {
 
-        final private DaoAbs business;
+        private final String FILE_NAME;
+        private final String DIR_NAME;
+
+        private final DaoAbs business;
 
         public BackupImpl(DaoAbs business) {
             this.business = business;
+            FILE_NAME = business.getClass().getSimpleName().replace("business", "") + ".txt";
+            DIR_NAME = Environment.getExternalStorageDirectory().toString() + "/Unidade/AndroidPigBank/" + BuildConfig.FLAVOR;
         }
 
         public void backupData() throws SQLException {
@@ -49,12 +53,14 @@ public class BackupService extends IntentService {
 
                 StringBuilder sb = new StringBuilder();
 
-                File dir = new File(Environment.getExternalStorageDirectory().toString() + "/Unidade/AndroidPigBank/" + BuildConfig.FLAVOR);
+                File dir = new File(DIR_NAME);
                 if (!dir.exists()) {
-                    dir.mkdirs();
+                    if (!dir.mkdirs()) {
+                        return;
+                    }
                 }
 
-                File file = new File(dir, business.getClass().getSimpleName().replace("business", "") + ".txt");
+                File file = new File(dir, FILE_NAME);
 
                 FileOutputStream fos = new FileOutputStream(file);
 

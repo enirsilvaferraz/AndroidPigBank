@@ -7,4 +7,7 @@
     <string name="title_activity_transaction_detail">Detail</string>
 
     <string name="item_transaction_footer_value">Total R$ %s</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

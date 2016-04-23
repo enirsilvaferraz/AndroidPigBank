@@ -33,20 +33,14 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         }
     }
 
-    public Transaction save(Transaction transaction) throws Exception {
+    public Transaction save(Transaction transaction) throws SQLException {
 
         if (transaction.getCategory().getId() == null) {
             Category category = new CategoryBusiness(getContext()).save(transaction.getCategory());
             transaction.setCategory(category);
         }
 
-        ConnectionSource connectionSource = new AndroidConnectionSource(db);
-        Dao<Transaction, String> accountDao = DaoManager.createDao(connectionSource, Transaction.class);
-
-        accountDao.createOrUpdate(transaction);
-        connectionSource.close();
-
-        return transaction;
+        return super.save(transaction);
     }
 
     public List<Transaction> getTransactionByMonth(int month) throws Exception {
@@ -70,6 +64,7 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         cEnd.set(Calendar.SECOND, cEnd.getActualMaximum(Calendar.SECOND));
 
         queryTransaction.where().between("date", cInit.getTime(), cEnd.getTime());
+        queryTransaction.orderBy("date", true);
 
         Dao<Category, String> categoryDao = DaoManager.createDao(connection, Category.class);
         QueryBuilder<Category, String> queryCategory = categoryDao.queryBuilder();

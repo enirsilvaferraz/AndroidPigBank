@@ -3,19 +3,16 @@ package com.system.androidpigbank.controllers.activities;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.transition.ChangeBounds;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.SectionsPagerAdapter;
-import com.system.androidpigbank.models.business.BackupService;
+import com.system.androidpigbank.models.business.RecoverService;
 
 import java.util.Calendar;
 
@@ -69,6 +66,11 @@ public class TransactionHistoryTabActivity extends BaseActivity {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
             return true;
         }
+
+        if (id == R.id.transaction_history_act_recover) {
+            startService(new Intent(this, RecoverService.class));
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

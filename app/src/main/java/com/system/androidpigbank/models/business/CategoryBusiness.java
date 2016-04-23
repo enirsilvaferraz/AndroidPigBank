@@ -56,14 +56,14 @@ public class CategoryBusiness extends DaoAbs<Category> {
 //        return list;
 //    }
 
-    public Category save(Category category) throws SQLException {
-
-        ConnectionSource connectionSource = new AndroidConnectionSource(db);
-        Dao<Category, String> accountDao = DaoManager.createDao(connectionSource, Category.class);
-
-        accountDao.create(category);
-        connectionSource.close();
-
-        return category;
-    }
+//    public Category save(Category category) throws SQLException {
+//
+//        ConnectionSource connectionSource = new AndroidConnectionSource(db);
+//        Dao<Category, String> accountDao = DaoManager.createDao(connectionSource, Category.class);
+//
+//        accountDao.create(category);
+//        connectionSource.close();
+//
+//        return category;
+//    }
 }

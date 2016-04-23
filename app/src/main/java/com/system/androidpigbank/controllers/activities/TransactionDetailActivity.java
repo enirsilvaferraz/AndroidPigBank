@@ -34,7 +34,7 @@ import com.system.androidpigbank.models.entities.Category;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransactionDetailActivity extends BaseActivity<List<Category>> {
+public class TransactionDetailActivity extends BaseActivity {
 
     private View container;
     private int month;

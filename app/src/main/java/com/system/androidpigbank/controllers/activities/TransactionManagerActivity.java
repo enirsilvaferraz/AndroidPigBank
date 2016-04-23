@@ -29,7 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-public class TransactionManagerActivity extends BaseActivity<Transaction> {
+public class TransactionManagerActivity extends BaseActivity {
 
     private Transaction transaction;
 

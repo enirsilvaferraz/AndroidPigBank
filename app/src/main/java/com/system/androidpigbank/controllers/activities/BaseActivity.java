@@ -10,7 +10,7 @@ import com.system.androidpigbank.controllers.managers.LoaderResult;
 /**
  * Created by eferraz on 05/12/15.
  */
-public abstract class BaseActivity<T> extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     public void showMessage(Throwable e) {
         showMessage(e.getMessage());

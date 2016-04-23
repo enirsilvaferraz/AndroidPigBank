@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_manage"
+            android:visible="false"
+            android:icon="@drawable/ic_event_black"
+            android:title="2016" />
+    </group>
+
+    <item android:title="Menu">
+        <menu>
+            <item
+                android:id="@+id/nav_act_detail"
+                android:icon="@drawable/ic_assessment_white"
+                android:title="Details" />
+        </menu>
+    </item>
+
+</menu>

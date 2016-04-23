@@ -10,11 +10,4 @@
         android:title="Recover"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/transaction_history_act_detail"
-        android:icon="@drawable/ic_assessment_white"
-        android:orderInCategory="100"
-        android:title="Detail"
-        app:showAsAction="always" />
-
 </menu>

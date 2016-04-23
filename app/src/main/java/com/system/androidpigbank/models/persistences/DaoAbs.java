@@ -9,10 +9,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.system.androidpigbank.helpers.JavaHelper;
 import com.system.androidpigbank.models.entities.EntityAbs;
-import com.system.androidpigbank.models.entities.Transaction;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -45,11 +42,6 @@ public abstract class DaoAbs<T extends EntityAbs> {
 
         return list;
     }
-
-    /*private Class<T> getTClass() {
-        final ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
-        return (Class<T>) (type).getActualTypeArguments()[0];
-    }*/
 
     public T save(T entity) throws SQLException {
 

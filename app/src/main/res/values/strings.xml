@@ -2,12 +2,18 @@
     <string name="app_name">Android Pig Bank</string>
     <string name="action_settings">Settings</string>
     <string name="action_done">Done</string>
+
     <string name="title_activity_transaction_history">M4</string>
     <string name="title_activity_transaction_manager">Despesas</string>
     <string name="title_activity_transaction_detail">Detail</string>
+    <string name="title_activity_category_manager">Categorias</string>
 
     <string name="item_transaction_footer_value">Total R$ %s</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="message_saved_sucess">Saved!</string>
+    <string name="message_delete_sucess">Deleted!</string>
+
 </resources>

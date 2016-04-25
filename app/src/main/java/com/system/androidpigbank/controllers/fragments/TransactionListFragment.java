@@ -2,10 +2,7 @@ package com.system.androidpigbank.controllers.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,15 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.controllers.activities.BaseActivity;
 import com.system.androidpigbank.controllers.adapters.TransactionAdapter;
 import com.system.androidpigbank.controllers.managers.LoaderResult;
-import com.system.androidpigbank.controllers.managers.TransactionManager;
+import com.system.androidpigbank.controllers.managers.ManagerHelper;
 import com.system.androidpigbank.helpers.Constants;
+import com.system.androidpigbank.models.business.TransactionBusiness;
 import com.system.androidpigbank.models.entities.Transaction;
 
 import java.util.List;
 
-public class TransactionListFragment extends Fragment implements LoaderManager.LoaderCallbacks<LoaderResult<List<Transaction>>> {
+public class TransactionListFragment extends Fragment {
 
     private static final int SPAN_COUNT = 1;
     private RecyclerView recyclerView;
@@ -64,29 +63,28 @@ public class TransactionListFragment extends Fragment implements LoaderManager.L
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-
         final int position = getArguments().getInt("POSITION");
 
-        Bundle args = new Bundle();
-        args.putInt("MONTH", position);
-        getLoaderManager().initLoader(Constants.LOADER_TRANSACTION_SAVE + position, args, this);
-    }
+        ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<List<Transaction>>() {
 
-    @Override
-    public Loader<LoaderResult<List<Transaction>>> onCreateLoader(int id, Bundle args) {
-        return new TransactionManager(getContext()).getTransactionByMonth(args.getInt("MONTH"));
-    }
+            @Override
+            public List<Transaction> executeAction() throws Exception {
+                return new TransactionBusiness(getContext()).getTransactionByMonth(position);
+            }
 
-    @Override
-    public void onLoadFinished(Loader<LoaderResult<List<Transaction>>> loader, LoaderResult<List<Transaction>> data) {
-        if (data.isSuccess()) {
-            ((TransactionAdapter) recyclerView.getAdapter()).addItens(data.getData());
-        } else {
-            Snackbar.make(recyclerView, data.getException().getMessage(), Snackbar.LENGTH_LONG).show();
-        }
-    }
+            @Override
+            public int loaderId() {
+                return Constants.LOADER_TRANSACTION_SAVE + position;
+            }
 
-    @Override
-    public void onLoaderReset(Loader<LoaderResult<List<Transaction>>> loader) {
+            @Override
+            public void onComplete(LoaderResult<List<Transaction>> data) {
+                if (data.isSuccess()) {
+                    ((TransactionAdapter) recyclerView.getAdapter()).addItens(data.getData());
+                } else {
+                    ((BaseActivity) getActivity()).showMessage(data.getException());
+                }
+            }
+        });
     }
 }

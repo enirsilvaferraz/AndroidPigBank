@@ -80,6 +80,11 @@ public class TransactionHistoryDrawerActivity extends BaseActivity implements Na
                 intent.putExtra("MONTH", mViewPager.getCurrentItem());
                 startActivity(intent);
                 break;
+
+            case R.id.nav_act_category:
+                startActivity(new Intent(this, CategoryManagerActivity.class));
+                break;
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

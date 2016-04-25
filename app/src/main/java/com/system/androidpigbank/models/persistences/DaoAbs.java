@@ -53,4 +53,8 @@ public abstract class DaoAbs<T extends EntityAbs> {
 
         return entity;
     }
+
+    public T delete(T entity) throws SQLException {
+        throw new RuntimeException("Not implemented");
+    }
 }

@@ -1,11 +1,8 @@
 package com.system.androidpigbank.controllers.activities;
 
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.LoaderManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-
-import com.system.androidpigbank.controllers.managers.LoaderResult;
 
 /**
  * Created by eferraz on 05/12/15.
@@ -13,10 +10,10 @@ import com.system.androidpigbank.controllers.managers.LoaderResult;
 public abstract class BaseActivity extends AppCompatActivity {
 
     public void showMessage(Throwable e) {
-        showMessage(e.getMessage());
+        Snackbar.make(getContainer(), e.getMessage(), Snackbar.LENGTH_LONG).show();
     }
 
-    public void showMessage(String message) {
+    public void showMessage(int message) {
         Snackbar.make(getContainer(), message, Snackbar.LENGTH_LONG).show();
     }
 

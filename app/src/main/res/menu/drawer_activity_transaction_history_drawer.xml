@@ -4,9 +4,9 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_manage"
-            android:visible="false"
             android:icon="@drawable/ic_event_black"
-            android:title="2016" />
+            android:title="2016"
+            android:visible="false" />
     </group>
 
     <item android:title="Menu">
@@ -14,7 +14,13 @@
             <item
                 android:id="@+id/nav_act_detail"
                 android:icon="@drawable/ic_assessment_white"
-                android:title="Details" />
+                android:title="@string/title_activity_transaction_detail" />
+
+            <item
+                android:id="@+id/nav_act_category"
+                android:icon="@drawable/ic_palette_black"
+                android:title="@string/title_activity_category_manager" />
+
         </menu>
     </item>
 

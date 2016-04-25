@@ -5,16 +5,12 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
-import android.transition.Explode;
 import android.view.View;
-import android.view.Window;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.Chart;
@@ -26,9 +22,10 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.managers.CategoryManager;
 import com.system.androidpigbank.controllers.managers.LoaderResult;
+import com.system.androidpigbank.controllers.managers.ManagerHelper;
 import com.system.androidpigbank.helpers.Constants;
+import com.system.androidpigbank.models.business.CategoryBusiness;
 import com.system.androidpigbank.models.entities.Category;
 
 import java.util.ArrayList;
@@ -52,15 +49,20 @@ public class TransactionDetailActivity extends BaseActivity {
 
         month = getIntent().getIntExtra("MONTH", 0);
 
-        getSupportLoaderManager().restartLoader(Constants.LOADER_CATEGORY, null, new LoaderManager.LoaderCallbacks<LoaderResult<List<Category>>>() {
+
+        ManagerHelper.execute(this, new ManagerHelper.LoaderResultInterface<List<Category>>() {
             @Override
-            public Loader<LoaderResult<List<Category>>> onCreateLoader(int id, Bundle args) {
-                return new CategoryManager(TransactionDetailActivity.this).getChartDataByMonth(month);
+            public List<Category> executeAction() throws Exception {
+                return new CategoryBusiness(TransactionDetailActivity.this).getChartDataByMonth(month);
             }
 
             @Override
-            public void onLoadFinished(Loader<LoaderResult<List<Category>>> loader, LoaderResult<List<Category>> data) {
+            public int loaderId() {
+                return Constants.LOADER_DEFAULT_ID;
+            }
 
+            @Override
+            public void onComplete(LoaderResult<List<Category>> data) {
                 PieChart mChart = (PieChart) findViewById(R.id.chart);
                 if (data.isSuccess()) {
 
@@ -82,11 +84,6 @@ public class TransactionDetailActivity extends BaseActivity {
                     mChart.setVisibility(View.GONE);
                     Snackbar.make(container, data.getException().getMessage(), Snackbar.LENGTH_LONG).show();
                 }
-            }
-
-            @Override
-            public void onLoaderReset(Loader<LoaderResult<List<Category>>> loader) {
-
             }
         });
     }

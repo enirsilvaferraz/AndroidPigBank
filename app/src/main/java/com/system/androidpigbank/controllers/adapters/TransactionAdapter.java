@@ -39,7 +39,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
 
-        int resId = 0;
+        int resId;
         if (TransactionViewType.SECTION.ordinal() == viewType) {
             resId = R.layout.item_view_holder_date_section;
         } else if (TransactionViewType.FOOTER.ordinal() == viewType) {
@@ -122,7 +122,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         int index = getItens().indexOf(data);
         getItens().remove(index);
         notifyItemRemoved(index);
-        ((BaseActivity) activity).showMessage("Transaction removed!");
+        ((BaseActivity) activity).showMessage(R.string.message_delete_sucess);
     }
 
     public enum TransactionViewType {

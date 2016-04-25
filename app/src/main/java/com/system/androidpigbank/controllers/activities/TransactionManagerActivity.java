@@ -1,37 +1,28 @@
 package com.system.androidpigbank.controllers.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v7.widget.Toolbar;
-import android.transition.ChangeBounds;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.managers.CategoryManager;
 import com.system.androidpigbank.controllers.managers.LoaderResult;
-import com.system.androidpigbank.controllers.managers.TransactionManager;
+import com.system.androidpigbank.controllers.managers.ManagerHelper;
 import com.system.androidpigbank.helpers.Constants;
-import com.system.androidpigbank.models.business.BackupService;
+import com.system.androidpigbank.models.business.CategoryBusiness;
+import com.system.androidpigbank.models.business.TransactionBusiness;
 import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.models.entities.Transaction;
+import com.system.androidpigbank.models.persistences.DaoAbs;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-public class TransactionManagerActivity extends BaseActivity {
-
-    private Transaction transaction;
+public class TransactionManagerActivity extends BaseManagerActivity<Transaction> {
 
     private View container;
     private EditText editDate;
@@ -50,8 +41,6 @@ public class TransactionManagerActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        findViewById(R.id.app_bar).setTransitionName(getIntent().getStringExtra("TR_NAME"));
-
         container = findViewById(R.id.transaction_manager_container);
         editDate = (EditText) findViewById(R.id.transaction_manager_date);
         editValue = (EditText) findViewById(R.id.transaction_manager_value);
@@ -64,116 +53,58 @@ public class TransactionManagerActivity extends BaseActivity {
 
         if (getIntent() != null && getIntent().getExtras() != null) {
 
-            transaction = getIntent().getExtras().getParcelable(Constants.BUNDLE_TRANSACTION);
+            model = getIntent().getExtras().getParcelable(Constants.BUNDLE_TRANSACTION);
 
-            editDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(transaction.getDate()));
-            editValue.setText(transaction.getValue().toString());
-            editCategory.setText(transaction.getCategory().getName());
-            editContent.setText(transaction.getContent());
+            editDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(model.getDate()));
+            editValue.setText(model.getValue().toString());
+            editCategory.setText(model.getCategory().getName());
+            editContent.setText(model.getContent());
         }
 
-        LoaderManager.LoaderCallbacks<LoaderResult<List<Category>>> categoryCallback;
-        categoryCallback = new LoaderManager.LoaderCallbacks<LoaderResult<List<Category>>>() {
+
+        ManagerHelper.execute(this, new ManagerHelper.LoaderResultInterface<List<Category>>() {
 
             @Override
-            public Loader<LoaderResult<List<Category>>> onCreateLoader(int id, Bundle args) {
-                return new CategoryManager(TransactionManagerActivity.this).findAll();
+            public List<Category> executeAction() throws Exception {
+                return new CategoryBusiness(TransactionManagerActivity.this).findAll();
             }
 
             @Override
-            public void onLoadFinished(Loader<LoaderResult<List<Category>>> loader, LoaderResult<List<Category>> data) {
+            public int loaderId() {
+                return Constants.LOADER_DEFAULT_ID;
+            }
+
+            @Override
+            public void onComplete(LoaderResult<List<Category>> data) {
                 autocompleteCategory(data);
             }
-
-            @Override
-            public void onLoaderReset(Loader<LoaderResult<List<Category>>> loader) {
-            }
-        };
-
-        getSupportLoaderManager().initLoader(Constants.LOADER_CATEGORY, null, categoryCallback);
+        });
     }
 
-    public void save() {
+    @Override
+    protected DaoAbs<Transaction> getBusinessInstance() {
+        return new TransactionBusiness(this);
+    }
 
-        try {
+    @Override
+    protected void prepareToPersist() throws Exception {
 
-            validateFields();
+        validateFields();
 
-            final LoaderManager.LoaderCallbacks<LoaderResult<Transaction>> callback;
-            callback = new LoaderManager.LoaderCallbacks<LoaderResult<Transaction>>() {
-                @Override
-                public Loader<LoaderResult<Transaction>> onCreateLoader(int id, Bundle args) {
-                    Transaction model = args.getParcelable(Constants.BUNDLE_TRANSACTION);
-                    return new TransactionManager(TransactionManagerActivity.this).save(model);
-                }
-
-                @Override
-                public void onLoadFinished(Loader<LoaderResult<Transaction>> loader, LoaderResult<Transaction> data) {
-                    if (data.isSuccess()) {
-                        Snackbar.make(container, "Saved!", Snackbar.LENGTH_LONG).show();
-                        startService(new Intent(TransactionManagerActivity.this, BackupService.class));
-                        TransactionManagerActivity.this.finishAfterTransition();
-                    } else {
-                        Snackbar.make(container, data.getException().getMessage(), Snackbar.LENGTH_LONG).show();
-                    }
-                }
-
-                @Override
-                public void onLoaderReset(Loader<LoaderResult<Transaction>> loader) {
-
-                }
-            };
-
-            if (transaction == null) {
-                transaction = new Transaction();
-            }
-
-            transaction.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(editDate.getText().toString()));
-            transaction.setValue(Double.parseDouble(editValue.getText().toString()));
-            transaction.setContent(editContent.getText().toString());
-
-            final Category category = new Category(editCategory.getText().toString());
-            if (categories.contains(category)) {
-                transaction.setCategory(categories.get(categories.indexOf(category)));
-            } else {
-                transaction.setCategory(category);
-            }
-
-            Bundle args = new Bundle();
-            args.putParcelable(Constants.BUNDLE_TRANSACTION, transaction);
-            getSupportLoaderManager().restartLoader(Constants.LOADER_TRANSACTION_SAVE, args, callback);
-
-        } catch (Exception e) {
-            Snackbar.make(container, e.getMessage(), Snackbar.LENGTH_LONG).show();
+        if (model == null) {
+            model = new Transaction();
         }
-    }
 
-    private void delete() {
+        model.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(editDate.getText().toString()));
+        model.setValue(Double.parseDouble(editValue.getText().toString()));
+        model.setContent(editContent.getText().toString());
 
-        LoaderManager.LoaderCallbacks<LoaderResult<Transaction>> callback = new LoaderManager.LoaderCallbacks<LoaderResult<Transaction>>() {
-
-            @Override
-            public Loader<LoaderResult<Transaction>> onCreateLoader(int id, Bundle args) {
-                return new TransactionManager(TransactionManagerActivity.this).delete(transaction);
-            }
-
-            @Override
-            public void onLoadFinished(Loader<LoaderResult<Transaction>> loader, LoaderResult<Transaction> data) {
-                if (data.isSuccess()) {
-                    Snackbar.make(container, "Saved!", Snackbar.LENGTH_LONG).show();
-                    startService(new Intent(TransactionManagerActivity.this, BackupService.class));
-                    TransactionManagerActivity.this.finishAfterTransition();
-                } else {
-                    Snackbar.make(container, data.getException().getMessage(), Snackbar.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onLoaderReset(Loader loader) {
-            }
-        };
-
-        getSupportLoaderManager().restartLoader(Constants.LOADER_TRANSACTION_DELETE, null, callback);
+        final Category category = new Category(editCategory.getText().toString());
+        if (categories.contains(category)) {
+            model.setCategory(categories.get(categories.indexOf(category)));
+        } else {
+            model.setCategory(category);
+        }
     }
 
     private void autocompleteCategory(LoaderResult<List<Category>> data) {
@@ -207,29 +138,5 @@ public class TransactionManagerActivity extends BaseActivity {
     @Override
     public View getContainer() {
         return container;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_transaction_manager, menu);
-        if (transaction == null || transaction.getId() == null) {
-            menu.getItem(1).setVisible(false);
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.transaction_manager_act_save) {
-            save();
-            return true;
-        }
-        else if (id == R.id.transaction_manager_act_delete) {
-            delete();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

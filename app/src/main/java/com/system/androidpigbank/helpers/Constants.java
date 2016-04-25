@@ -7,7 +7,7 @@ public interface Constants {
 
     int LOADER_TRANSACTION_SAVE = 1001;
     int LOADER_CATEGORY = 1002;
-    int LOADER_TRANSACTION_DELETE = 1003;
+    int LOADER_DEFAULT_ID = 1003;
 
     int REQUEST_TRANSACTION_EDIT = 2001;
 

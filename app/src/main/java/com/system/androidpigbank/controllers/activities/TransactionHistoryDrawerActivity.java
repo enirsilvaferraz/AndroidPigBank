@@ -82,7 +82,7 @@ public class TransactionHistoryDrawerActivity extends BaseActivity implements Na
                 break;
 
             case R.id.nav_act_category:
-                startActivity(new Intent(this, CategoryManagerActivity.class));
+                startActivity(new Intent(this, CategoryListActivity.class));
                 break;
 
         }

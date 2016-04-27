@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.helpers.constants.Colors;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +18,7 @@ import java.util.Arrays;
 /**
  * Created by eferraz on 25/04/16.
  */
-public class CategoryColorsArrayAdapter extends ArrayAdapter<String> {
+public class CategoryColorsArrayAdapter extends ArrayAdapter<Colors> {
 
     LayoutInflater inflater;
     private Activity activity;
@@ -53,48 +54,15 @@ public class CategoryColorsArrayAdapter extends ArrayAdapter<String> {
 
         if (position == 0) {
             //color.setBackgroundColor(R.colorEnum.material_white);
-            name.setText("Please select the colorEnum");
+            name.setText("Please select the color");
         } else {
-            color.setBackgroundColor(colorEnum.getColorId());
-            name.setText(colorEnum.name());
+            color.setBackgroundResource(colorEnum.getColorId());
+
+            int resourceId = activity.getResources().getIdentifier(colorEnum.getClass().getName() + "." + colorEnum.name(), "string", activity.getPackageName());
+            name.setText(activity.getString(resourceId));
         }
 
         return row;
     }
-
-    private enum Colors {
-
-        RED(R.color.material_red),
-        PINK(R.color.material_pink),
-        PURPLE(R.color.material_purple),
-        DEEP_PURPLE(R.color.material_deep_purple),
-        INDIGO(R.color.material_indigo),
-        BLUE(R.color.material_blue),
-        LIGHT_BLUE(R.color.material_light_blue),
-        CYAN(R.color.material_cyan),
-        GREEN(R.color.material_green),
-        LIGHT_GREEN(R.color.material_light_green),
-        LIME(R.color.material_lime),
-        YELLOW(R.color.material_yellow),
-        AMBER(R.color.material_amber),
-        ORANGE(R.color.material_orange),
-        DEEP_ORANGE(R.color.material_deep_orange),
-        BROWN(R.color.material_brown),
-        GRAY(R.color.material_gray),
-        BLUE_GRAY(R.color.material_blue_gray),
-        BLACK(R.color.material_black),
-        WHITE(R.color.material_white);
-
-        private int colorId;
-
-        Colors(int colorId) {
-            this.colorId = colorId;
-        }
-
-        public int getColorId() {
-            return colorId;
-        }
-    }
-
 }
 

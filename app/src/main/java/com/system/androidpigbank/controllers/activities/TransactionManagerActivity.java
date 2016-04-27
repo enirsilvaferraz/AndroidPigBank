@@ -11,7 +11,7 @@ import android.widget.EditText;
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.managers.LoaderResult;
 import com.system.androidpigbank.controllers.managers.ManagerHelper;
-import com.system.androidpigbank.helpers.Constants;
+import com.system.androidpigbank.helpers.constants.Constants;
 import com.system.androidpigbank.models.business.CategoryBusiness;
 import com.system.androidpigbank.models.business.TransactionBusiness;
 import com.system.androidpigbank.models.entities.Category;

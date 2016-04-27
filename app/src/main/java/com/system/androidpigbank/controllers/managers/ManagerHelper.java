@@ -6,8 +6,6 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 
-import com.system.androidpigbank.helpers.Constants;
-
 /**
  * Created by eferraz on 05/12/15.
  * Classe implementacao do manager abs

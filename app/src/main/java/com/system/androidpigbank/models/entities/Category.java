@@ -3,8 +3,10 @@ package com.system.androidpigbank.models.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.system.androidpigbank.helpers.constants.Colors;
 
 /**
  * Created by eferraz on 05/12/15.
@@ -30,6 +32,9 @@ public class Category extends EntityAbs implements Parcelable {
     @DatabaseField
     private String name;
 
+    @DatabaseField(dataType = DataType.ENUM_INTEGER)
+    private Colors color;
+
     private Float amount;
 
     public Category() {
@@ -47,6 +52,8 @@ public class Category extends EntityAbs implements Parcelable {
     protected Category(Parcel in) {
         this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.name = in.readString();
+        int tmpColor = in.readInt();
+        this.color = tmpColor == -1 ? null : Colors.values()[tmpColor];
         this.amount = (Float) in.readValue(Float.class.getClassLoader());
     }
 
@@ -91,6 +98,14 @@ public class Category extends EntityAbs implements Parcelable {
         return getName() != null ? getName().hashCode() : 0;
     }
 
+    public Colors getColor() {
+        return color;
+    }
+
+    public void setColor(Colors color) {
+        this.color = color;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -100,6 +115,7 @@ public class Category extends EntityAbs implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(this.id);
         dest.writeString(this.name);
+        dest.writeInt(this.color == null ? -1 : this.color.ordinal());
         dest.writeValue(this.amount);
     }
 }

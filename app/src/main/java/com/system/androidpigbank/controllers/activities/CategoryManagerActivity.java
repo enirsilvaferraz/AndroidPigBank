@@ -1,8 +1,10 @@
 package com.system.androidpigbank.controllers.activities;
 
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -12,13 +14,13 @@ import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.CategoryColorsArrayAdapter;
 import com.system.androidpigbank.controllers.managers.LoaderResult;
 import com.system.androidpigbank.controllers.managers.ManagerHelper;
-import com.system.androidpigbank.helpers.Constants;
+import com.system.androidpigbank.helpers.JavaHelper;
+import com.system.androidpigbank.helpers.constants.Colors;
+import com.system.androidpigbank.helpers.constants.Constants;
 import com.system.androidpigbank.models.business.CategoryBusiness;
 import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.models.persistences.DaoAbs;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CategoryManagerActivity extends BaseManagerActivity<Category> {
@@ -55,6 +57,18 @@ public class CategoryManagerActivity extends BaseManagerActivity<Category> {
         });
 
         editCategory = (AutoCompleteTextView) findViewById(R.id.category_manager_category);
+        editCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                model = new Category(((AppCompatTextView) view).getText().toString());
+                if (categories.contains(model)) {
+                    int itemId = ((CategoryColorsArrayAdapter) spColor.getAdapter()).getPosition(model.getColor());
+                    if (itemId != -1) {
+                        spColor.setSelection(itemId);
+                    }
+                }
+            }
+        });
 
         ManagerHelper.execute(this, new ManagerHelper.LoaderResultInterface<List<Category>>() {
 
@@ -77,7 +91,7 @@ public class CategoryManagerActivity extends BaseManagerActivity<Category> {
 
     @Override
     protected View getContainer() {
-        return null;
+        return (ViewGroup) getWindow().getDecorView().findViewById(android.R.id.content);
     }
 
     @Override
@@ -86,8 +100,18 @@ public class CategoryManagerActivity extends BaseManagerActivity<Category> {
     }
 
     @Override
-    protected void prepareToPersist() {
+    protected void prepareToPersist() throws Exception {
 
+        if (JavaHelper.isEmpty(editCategory.getText().toString()) || JavaHelper.isEmpty(spColor.getSelectedItem())) {
+            throw new Exception("Campo obrigatório!");
+        }
+
+        if (model == null) {
+            model = new Category();
+            model.setName(editCategory.getText().toString());
+        }
+
+        model.setColor((Colors) spColor.getSelectedItem());
     }
 
     private void autocompleteCategory(LoaderResult<List<Category>> data) {

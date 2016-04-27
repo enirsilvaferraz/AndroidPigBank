@@ -11,4 +11,15 @@ public class JavaHelper {
         final ParameterizedType type = (ParameterizedType) object.getClass().getGenericSuperclass();
         return (Class) (type).getActualTypeArguments()[0];
     }
+
+    public static boolean isEmpty(Object object) {
+
+        if (object == null) {
+            return true;
+        } else if (object instanceof String) {
+            return ((String) object).isEmpty();
+        }
+
+        return false;
+    }
 }

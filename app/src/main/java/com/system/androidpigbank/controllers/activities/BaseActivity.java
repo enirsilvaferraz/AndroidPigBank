@@ -17,5 +17,5 @@ public abstract class BaseActivity extends AppCompatActivity {
         Snackbar.make(getContainer(), message, Snackbar.LENGTH_LONG).show();
     }
 
-    protected abstract View getContainer();
+    public abstract View getContainer();
 }

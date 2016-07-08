@@ -155,7 +155,7 @@ public class TransactionDetailActivity extends BaseActivity {
     }
 
     @Override
-    protected View getContainer() {
+    public View getContainer() {
         return container;
     }
 

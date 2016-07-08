@@ -56,7 +56,7 @@ public class CategoryListActivity extends BaseActivity {
     }
 
     @Override
-    protected View getContainer() {
+    public View getContainer() {
         return (ViewGroup) getWindow().getDecorView().findViewById(android.R.id.content);
     }
 }

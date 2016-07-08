@@ -76,7 +76,7 @@ public class TransactionHistoryDrawerActivity extends BaseNavigationDrawerActivi
     }
 
     @Override
-    protected View getContainer() {
+    public View getContainer() {
         return mViewPager;
     }
 }

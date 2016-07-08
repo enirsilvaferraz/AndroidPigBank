@@ -90,7 +90,7 @@ public class CategoryManagerActivity extends BaseManagerActivity<Category> {
     }
 
     @Override
-    protected View getContainer() {
+    public View getContainer() {
         return (ViewGroup) getWindow().getDecorView().findViewById(android.R.id.content);
     }
 

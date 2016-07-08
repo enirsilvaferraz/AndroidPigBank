@@ -19,26 +19,15 @@ import com.system.androidpigbank.models.business.RecoverService;
 
 import java.util.Calendar;
 
-public class TransactionHistoryDrawerActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class TransactionHistoryDrawerActivity extends BaseNavigationDrawerActivity {
 
     private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_transaction_history_drawer);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        super.onCreate(savedInstanceState);
 
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -67,29 +56,6 @@ public class TransactionHistoryDrawerActivity extends BaseActivity implements Na
         } else {
             super.onBackPressed();
         }
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-
-            case R.id.nav_act_detail:
-                final Intent intent = new Intent(this, TransactionDetailActivity.class);
-                intent.putExtra("MONTH", mViewPager.getCurrentItem());
-                startActivity(intent);
-                break;
-
-            case R.id.nav_act_category:
-                startActivity(new Intent(this, CategoryListActivity.class));
-                break;
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
     @Override

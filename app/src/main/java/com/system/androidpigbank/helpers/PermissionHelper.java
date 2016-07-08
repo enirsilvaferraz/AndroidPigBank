@@ -34,20 +34,18 @@ public class PermissionHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && permissions != null) {
             List<String> permissionsToRequest = new ArrayList<>();
 
-            if (permissions != null) {
-                /**
-                 * Add not granted permissions to {@link permissionsToRequest}
-                 */
-                for (String permission : permissions) {
-                    if (activity.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
-                        permissionsToRequest.add(permission);
-                    }
+            /**
+             * Add not granted permissions to {@link permissionsToRequest}
+             */
+            for (String permission : permissions) {
+                if (activity.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+                    permissionsToRequest.add(permission);
                 }
+            }
 
-                if (!permissionsToRequest.isEmpty()) {
-                    final String[] array = permissionsToRequest.toArray(new String[permissionsToRequest.size()]);
-                    activity.requestPermissions(array, requestCode);
-                }
+            if (!permissionsToRequest.isEmpty()) {
+                final String[] array = permissionsToRequest.toArray(new String[permissionsToRequest.size()]);
+                activity.requestPermissions(array, requestCode);
             }
         }
     }
@@ -61,7 +59,7 @@ public class PermissionHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && permissions != null) {
             // For all permissions
             for (int iterator = 0; iterator < permissions.length; iterator++) {
-                // Possui permissao
+                // Has permission
                 if (grantResults[iterator] == PackageManager.PERMISSION_GRANTED) {
                     // Permission is granted
                     permissionCallback.onSuccess(permissions[iterator]);
@@ -96,20 +94,14 @@ public class PermissionHelper {
     }
 
     public static boolean checkForPermission(Context context, String permission) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && permission != null) {
-            return context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
-        } else {
-            return true;
-        }
+        return !(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && permission != null) || context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
     }
 
     public static boolean checkForPermissions(Context context, List<String> permissions) {
-
         return checkForPermissions(context, permissions != null ? permissions.toArray(new String[permissions.size()]) : null);
     }
 
-    public static boolean checkForPermissions(Context context, String[] permissions) {
+    private static boolean checkForPermissions(Context context, String[] permissions) {
 
         if (permissions != null) {
             for (String permission : permissions) {

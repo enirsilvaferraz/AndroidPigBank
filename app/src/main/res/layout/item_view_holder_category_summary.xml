@@ -10,16 +10,17 @@
         android:layout_height="match_parent">
 
         <TextView
+            style="@style/AppTheme.TextView.Card.Subtitle"
             android:id="@+id/item_category_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:textSize="17sp"
             tools:text="Category Name" />
 
         <TextView
             android:id="@+id/item_category_range"
+            style="@style/AppTheme.TextView.Card.Content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/item_category_name"
@@ -32,7 +33,9 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_alignParentEnd="true"
-            android:layout_margin="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="10dp"
             android:visibility="visible">
 
             <ProgressBar

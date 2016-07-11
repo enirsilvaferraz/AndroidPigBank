@@ -1,7 +1,7 @@
 package com.system.androidpigbank.controllers.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -47,10 +47,12 @@ public class CategorySummaryFragment extends Fragment {
         recyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false));
         recyclerview.setAdapter(adapter);
 
+        final int month = getArguments().getInt("MONTH");
+
         ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<List<Category>>() {
             @Override
             public List<Category> executeAction() throws Exception {
-                return new CategoryBusiness(getActivity()).getChartDataByMonth(Calendar.getInstance().get(Calendar.MONTH));
+                return new CategoryBusiness(getActivity()).getChartDataByMonth(month);
             }
 
             @Override
@@ -67,14 +69,13 @@ public class CategorySummaryFragment extends Fragment {
                 }
             }
         });
+    }
 
-//        Category c = new Category();
-//        c.setName("Category 1");
-//        c.setAmount(100F);
-//
-//        List<Category> list = new ArrayList<>();
-//        list.add(c);
-//
-//        adapter.addItens(list);
+    public static CategorySummaryFragment newInstance(int month) {
+        CategorySummaryFragment fragment = new CategorySummaryFragment();
+        Bundle args = new Bundle();
+        args.putInt("MONTH", month);
+        fragment.setArguments(args);
+        return fragment;
     }
 }

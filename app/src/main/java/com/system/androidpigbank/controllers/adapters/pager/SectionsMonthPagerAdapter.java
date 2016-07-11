@@ -9,9 +9,9 @@ import com.system.androidpigbank.controllers.fragments.TransactionListFragment;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class SectionsMonthPagerAdapter extends FragmentPagerAdapter {
 
-    public SectionsPagerAdapter(FragmentManager fm) {
+    public SectionsMonthPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

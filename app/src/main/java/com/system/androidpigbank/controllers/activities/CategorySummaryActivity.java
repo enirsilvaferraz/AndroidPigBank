@@ -1,22 +1,66 @@
 package com.system.androidpigbank.controllers.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.architecture.activities.BaseActivity;
+import com.system.androidpigbank.controllers.adapters.pager.SectionsCurrentMonthPagerAdapter;
+import com.system.androidpigbank.models.business.RecoverService;
 
-public class CategorySummaryActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class CategorySummaryActivity extends BaseActivity {
+
+    @BindView(R.id.container)
+    ViewPager mViewPager;
+
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_category_summary);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
+
+        mViewPager.setAdapter(new SectionsCurrentMonthPagerAdapter(getSupportFragmentManager()));
+        mViewPager.setOffscreenPageLimit(0);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CategorySummaryActivity.this, TransactionManagerActivity.class));
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_transaction_history, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.transaction_history_act_recover) {
+            startService(new Intent(this, RecoverService.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public View getContainer() {
+        return mViewPager;
     }
 
 }

@@ -2,6 +2,7 @@ package com.system.androidpigbank.controllers.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -12,33 +13,43 @@ import android.view.View;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.architecture.activities.BaseNavigationDrawerActivity;
-import com.system.androidpigbank.controllers.adapters.pager.SectionsPagerAdapter;
+import com.system.androidpigbank.controllers.adapters.pager.SectionsMonthPagerAdapter;
 import com.system.androidpigbank.models.business.RecoverService;
 
 import java.util.Calendar;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class TransactionHistoryActivity extends BaseNavigationDrawerActivity {
 
-    private ViewPager mViewPager;
+    @BindView(R.id.tabs)
+    TabLayout tabLayout;
+
+    @BindView(R.id.container)
+    ViewPager mViewPager;
+
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         setContentView(R.layout.activity_transaction_history_drawer);
+        ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
 
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setAdapter(new SectionsMonthPagerAdapter(getSupportFragmentManager()));
         mViewPager.setOffscreenPageLimit(0);
         mViewPager.setCurrentItem(Calendar.getInstance().get(Calendar.MONTH));
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(TransactionHistoryActivity.this, TransactionManagerActivity.class));
@@ -48,9 +59,8 @@ public class TransactionHistoryActivity extends BaseNavigationDrawerActivity {
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -69,7 +79,6 @@ public class TransactionHistoryActivity extends BaseNavigationDrawerActivity {
             startService(new Intent(this, RecoverService.class));
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

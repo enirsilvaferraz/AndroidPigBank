@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
 
 def supportLibraryVersion = '23.3.0'
 
@@ -52,9 +53,12 @@ dependencies {
     compile "com.android.support:recyclerview-v7:${supportLibraryVersion}"
     compile "com.android.support:support-v4:${supportLibraryVersion}"
 
+
+    compile 'com.jakewharton:butterknife:8.1.0'
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha1'
     testCompile 'junit:junit:4.12'
+    apt 'com.jakewharton:butterknife-compiler:8.1.0'
 }

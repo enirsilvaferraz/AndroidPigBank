@@ -21,6 +21,11 @@
                 android:icon="@drawable/ic_palette_black"
                 android:title="@string/title_activity_category_manager" />
 
+            <item
+                android:id="@+id/nav_act_category_summary"
+                android:icon="@drawable/ic_palette_black"
+                android:title="@string/title_activity_category_summary" />
+
         </menu>
     </item>
 

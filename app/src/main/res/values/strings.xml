@@ -44,5 +44,9 @@
     <string name="message_saved_sucess">Saved!</string>
     <string name="message_delete_sucess">Deleted!</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_category_summary">Category Summary</string>
+
 
 </resources>

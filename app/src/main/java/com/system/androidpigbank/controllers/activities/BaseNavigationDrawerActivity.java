@@ -65,6 +65,9 @@ public abstract class BaseNavigationDrawerActivity extends BaseActivity implemen
                 startActivity(new Intent(this, CategoryListActivity.class));
                 break;
 
+            case R.id.nav_act_category_summary:
+                startActivity(new Intent(this, CategorySummaryActivity.class));
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

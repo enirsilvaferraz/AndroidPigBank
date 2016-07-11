@@ -25,7 +25,7 @@
             android:label="@string/title_activity_category_manager"
             android:theme="@style/AppTheme.Green" />
         <activity
-            android:name=".controllers.activities.TransactionHistoryDrawerActivity"
+            android:name=".controllers.activities.TransactionHistoryActivity"
             android:label="@string/title_activity_transaction_history"
             android:theme="@style/AppTheme.Blue">
             <intent-filter>
@@ -46,6 +46,11 @@
             android:name=".controllers.activities.CategoryListActivity"
             android:label="@string/title_activity_category_manager"
             android:theme="@style/AppTheme.Green" />
+        <activity android:name=".controllers.activities.CategoryByMonthActivity" />
+        <activity
+            android:name=".controllers.activities.CategorySummaryActivity"
+            android:label="@string/title_activity_category_summary"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

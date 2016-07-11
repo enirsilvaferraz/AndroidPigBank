@@ -9,33 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            style="@style/AppTheme.TextView.Card.Subtitle"
-            android:id="@+id/item_category_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            tools:text="Category Name" />
-
-        <TextView
-            android:id="@+id/item_category_range"
-            style="@style/AppTheme.TextView.Card.Content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/item_category_name"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            tools:text="R$ 500,00 de R$ 780.00" />
-
         <RelativeLayout
+            android:id="@+id/item_category_progress_component"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="10dp"
+            android:layout_margin="5dp"
             android:visibility="visible">
 
             <ProgressBar
@@ -60,6 +38,29 @@
                 tools:text="25%" />
 
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/item_category_name"
+            style="@style/AppTheme.TextView.Card.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/item_category_progress_component"
+            tools:text="Category Name" />
+
+        <TextView
+            android:id="@+id/item_category_range"
+            style="@style/AppTheme.TextView.Card.Content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_category_name"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/item_category_progress_component"
+            tools:text="R$ 500,00 de R$ 780.00" />
+
 
     </RelativeLayout>
 

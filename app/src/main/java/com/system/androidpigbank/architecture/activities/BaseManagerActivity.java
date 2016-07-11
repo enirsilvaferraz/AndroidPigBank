@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.activities;
+package com.system.androidpigbank.architecture.activities;
 
 import android.Manifest;
 import android.content.DialogInterface;

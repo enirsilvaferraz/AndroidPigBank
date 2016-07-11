@@ -11,6 +11,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.architecture.activities.BaseManagerActivity;
 import com.system.androidpigbank.controllers.adapters.CategoryColorsArrayAdapter;
 import com.system.androidpigbank.controllers.managers.LoaderResult;
 import com.system.androidpigbank.controllers.managers.ManagerHelper;

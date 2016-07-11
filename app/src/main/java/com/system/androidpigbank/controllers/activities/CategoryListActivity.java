@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.architecture.activities.BaseActivity;
 import com.system.androidpigbank.controllers.adapters.CategoryAdapter;
 import com.system.androidpigbank.controllers.managers.LoaderResult;
 import com.system.androidpigbank.controllers.managers.ManagerHelper;

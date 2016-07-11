@@ -14,7 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.activities.BaseActivity;
+import com.system.androidpigbank.architecture.activities.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;

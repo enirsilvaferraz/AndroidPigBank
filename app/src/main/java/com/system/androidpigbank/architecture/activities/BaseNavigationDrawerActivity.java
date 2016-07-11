@@ -1,27 +1,23 @@
-package com.system.androidpigbank.controllers.activities;
+package com.system.androidpigbank.architecture.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.adapters.SectionsPagerAdapter;
-
-import java.util.Calendar;
+import com.system.androidpigbank.controllers.activities.CategoryListActivity;
+import com.system.androidpigbank.controllers.activities.CategorySummaryActivity;
 
 /**
  * Created by eferraz on 08/07/16.
  */
 
-public abstract class BaseNavigationDrawerActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener  {
+public abstract class BaseNavigationDrawerActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

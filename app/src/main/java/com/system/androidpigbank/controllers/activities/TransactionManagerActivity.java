@@ -9,6 +9,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.architecture.activities.BaseManagerActivity;
 import com.system.androidpigbank.controllers.managers.LoaderResult;
 import com.system.androidpigbank.controllers.managers.ManagerHelper;
 import com.system.androidpigbank.helpers.constants.Constants;

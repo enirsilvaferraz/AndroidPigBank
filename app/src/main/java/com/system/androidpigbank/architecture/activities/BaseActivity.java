@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.activities;
+package com.system.androidpigbank.architecture.activities;
 
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;

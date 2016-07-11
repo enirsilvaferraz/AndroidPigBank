@@ -11,10 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.activities.BaseActivity;
-import com.system.androidpigbank.controllers.activities.CategoryListActivity;
-import com.system.androidpigbank.controllers.activities.CategorySummaryActivity;
-import com.system.androidpigbank.controllers.adapters.CategoryAdapter;
+import com.system.androidpigbank.architecture.activities.BaseActivity;
 import com.system.androidpigbank.controllers.adapters.CategorySummaryAdapter;
 import com.system.androidpigbank.controllers.managers.LoaderResult;
 import com.system.androidpigbank.controllers.managers.ManagerHelper;
@@ -22,7 +19,6 @@ import com.system.androidpigbank.helpers.constants.Constants;
 import com.system.androidpigbank.models.business.CategoryBusiness;
 import com.system.androidpigbank.models.entities.Category;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 

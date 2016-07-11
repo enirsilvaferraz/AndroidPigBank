@@ -7,11 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.activities.BaseActivity;
-import com.system.androidpigbank.controllers.vIewHolders.DateSectionViewHolder;
-import com.system.androidpigbank.controllers.vIewHolders.FooterViewHolder;
-import com.system.androidpigbank.controllers.vIewHolders.TransactionViewHolder;
-import com.system.androidpigbank.controllers.vIewHolders.ViewHolderAbs;
+import com.system.androidpigbank.architecture.activities.BaseActivity;
+import com.system.androidpigbank.controllers.viewHolders.DateSectionViewHolder;
+import com.system.androidpigbank.controllers.viewHolders.FooterViewHolder;
+import com.system.androidpigbank.controllers.viewHolders.TransactionViewHolder;
+import com.system.androidpigbank.architecture.viewHolders.ViewHolderAbs;
 import com.system.androidpigbank.controllers.vos.DateSection;
 import com.system.androidpigbank.controllers.vos.TotalFooter;
 import com.system.androidpigbank.models.entities.EntityAbs;

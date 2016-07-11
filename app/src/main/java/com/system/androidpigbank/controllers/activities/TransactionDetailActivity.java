@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.architecture.activities.BaseActivity;
 import com.system.androidpigbank.controllers.managers.LoaderResult;
 import com.system.androidpigbank.controllers.managers.ManagerHelper;
 import com.system.androidpigbank.helpers.constants.Constants;

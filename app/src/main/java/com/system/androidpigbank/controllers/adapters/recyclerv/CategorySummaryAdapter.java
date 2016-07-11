@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.adapters;
+package com.system.androidpigbank.controllers.adapters.recyclerv;
 
 import android.content.Context;
 import android.content.res.Resources;

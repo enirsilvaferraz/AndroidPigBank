@@ -46,7 +46,6 @@
             android:name=".controllers.activities.CategoryListActivity"
             android:label="@string/title_activity_category_manager"
             android:theme="@style/AppTheme.Green" />
-        <activity android:name=".controllers.activities.CategoryByMonthActivity" />
         <activity
             android:name=".controllers.activities.CategorySummaryActivity"
             android:label="@string/title_activity_category_summary"

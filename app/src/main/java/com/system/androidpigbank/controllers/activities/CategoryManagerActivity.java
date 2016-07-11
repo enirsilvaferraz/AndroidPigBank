@@ -12,7 +12,7 @@ import android.widget.Spinner;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.architecture.activities.BaseManagerActivity;
-import com.system.androidpigbank.controllers.adapters.CategoryColorsArrayAdapter;
+import com.system.androidpigbank.controllers.adapters.array.CategoryColorsArrayAdapter;
 import com.system.androidpigbank.controllers.managers.LoaderResult;
 import com.system.androidpigbank.controllers.managers.ManagerHelper;
 import com.system.androidpigbank.helpers.JavaHelper;

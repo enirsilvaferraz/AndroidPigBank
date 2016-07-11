@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.adapters;
+package com.system.androidpigbank.controllers.adapters.recyclerv;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

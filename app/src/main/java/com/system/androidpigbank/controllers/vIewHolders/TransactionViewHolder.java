@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.vIewHolders;
+package com.system.androidpigbank.controllers.viewHolders;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.architecture.viewHolders.ViewHolderAbs;
 import com.system.androidpigbank.controllers.activities.TransactionManagerActivity;
 import com.system.androidpigbank.helpers.constants.Constants;
 import com.system.androidpigbank.models.entities.EntityAbs;

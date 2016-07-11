@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.adapters;
+package com.system.androidpigbank.controllers.adapters.array;
 
 import android.app.Activity;
 import android.content.Context;

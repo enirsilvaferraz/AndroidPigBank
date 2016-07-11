@@ -1,8 +1,6 @@
 package com.system.androidpigbank.controllers.adapters.recyclerv;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,7 +63,7 @@ public class CategorySummaryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         TextView tvRange;
 
         @BindView(R.id.item_category_progress)
-        ProgressBar tvProgress;
+        ProgressBar progressBar;
 
         @BindView(R.id.item_category_progress_value)
         TextView tvProgressValue;
@@ -81,16 +79,10 @@ public class CategorySummaryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         private void bind(Category item) {
             tvName.setText(item.getName());
 
-            //Locale locale = new Locale("en", "US");
-            Locale locale = new Locale("pt", "BR");
-            NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
-            tvRange.setText(currencyFormatter.format(item.getAmount()));
-
-            tvProgressValue.setText("50%");
-
-            tvProgress.setSecondaryProgress(100);
-            tvProgress.setProgress(70);
-
+            NumberFormat cf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+            tvRange.setText(cf.format(item.getAmount()) + " de " + cf.format(0));
+            tvProgressValue.setText("N/A");
+            progressBar.setProgress(0);
         }
     }
 }

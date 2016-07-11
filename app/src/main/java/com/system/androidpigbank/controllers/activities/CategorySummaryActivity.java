@@ -9,14 +9,14 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.architecture.activities.BaseActivity;
+import com.system.androidpigbank.architecture.activities.BaseNavigationDrawerActivity;
 import com.system.androidpigbank.controllers.adapters.pager.SectionsCurrentMonthPagerAdapter;
 import com.system.androidpigbank.models.business.RecoverService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CategorySummaryActivity extends BaseActivity {
+public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
 
     @BindView(R.id.container)
     ViewPager mViewPager;
@@ -27,7 +27,7 @@ public class CategorySummaryActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        setContentView(R.layout.activity_category_summary);
+        setContentView(R.layout.activity_category_summary_drawer);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
 

@@ -27,13 +27,7 @@
         <activity
             android:name=".controllers.activities.TransactionHistoryActivity"
             android:label="@string/title_activity_transaction_history"
-            android:theme="@style/AppTheme.Blue">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.Blue" />
 
         <service
             android:name=".models.business.BackupService"
@@ -50,8 +44,16 @@
 
         <activity
             android:name=".controllers.activities.CategorySummaryActivity"
-            android:label="@string/title_activity_category_summary"
-            android:theme="@style/AppTheme.Blue" />
+            android:label="@string/title_app"
+            android:theme="@style/AppTheme.Blue">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
 
     </application>
 

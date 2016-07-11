@@ -1,4 +1,6 @@
 <resources>
+
+    <string name="title_app">M4</string>
     <string name="app_name">Android Pig Bank</string>
 
     <string name="com.system.androidpigbank.helpers.constants.Colors.RED">Red</string>
@@ -31,7 +33,7 @@
     <string name="permission_required_message">Permission required. Please change your app\'s settings to continue.</string>
     <string name="system_permission_required">Permission required</string>
 
-    <string name="title_activity_transaction_history">M4</string>
+    <string name="title_activity_transaction_history">Transaction History</string>
     <string name="title_activity_transaction_manager">Despesas</string>
     <string name="title_activity_transaction_detail">Detail</string>
     <string name="title_activity_category_manager">Categorias</string>
@@ -43,10 +45,5 @@
 
     <string name="message_saved_sucess">Saved!</string>
     <string name="message_delete_sucess">Deleted!</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_category_summary">Category Summary</string>
-
 
 </resources>

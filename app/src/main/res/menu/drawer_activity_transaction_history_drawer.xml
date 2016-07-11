@@ -22,9 +22,9 @@
                 android:title="@string/title_activity_category_manager" />
 
             <item
-                android:id="@+id/nav_act_category_summary"
+                android:id="@+id/nav_act_transaction_history"
                 android:icon="@drawable/ic_palette_black"
-                android:title="@string/title_activity_category_summary" />
+                android:title="@string/title_activity_transaction_history" />
 
         </menu>
     </item>

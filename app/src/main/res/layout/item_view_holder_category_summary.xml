@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
     android:background="@color/material_white">
 
     <RelativeLayout
@@ -24,16 +23,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/item_category_name"
+            android:layout_marginBottom="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             tools:text="R$ 500,00 de R$ 780.00" />
 
         <RelativeLayout
-            android:visibility="gone"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_alignParentEnd="true"
-            android:layout_margin="3dp">
+            android:layout_margin="3dp"
+            android:visibility="visible">
 
             <ProgressBar
                 android:id="@+id/item_category_progress"
@@ -43,9 +43,9 @@
                 android:layout_centerInParent="true"
                 android:indeterminate="false"
                 android:max="100"
-                android:progress="70"
                 android:progressDrawable="@drawable/circular"
-                android:secondaryProgress="100" />
+                android:secondaryProgress="100"
+                tools:progress="70" />
 
             <TextView
                 android:id="@+id/item_category_progress_value"
@@ -53,8 +53,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:gravity="center"
-                android:text="25%"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:text="25%" />
 
         </RelativeLayout>
 

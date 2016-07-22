@@ -5,8 +5,10 @@ import android.content.Context;
 import com.j256.ormlite.android.AndroidConnectionSource;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import com.system.androidpigbank.helpers.JavaHelper;
 import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.models.persistences.DaoAbs;
@@ -46,7 +48,22 @@ public class CategoryBusiness extends DaoAbs<Category> {
         return categories;
     }
 
-//    public List<Category> findAll() throws Exception {
+    @Override
+    public List<Category> findAll() throws SQLException {
+
+        ConnectionSource connectionSource = new AndroidConnectionSource(db);
+        Dao<Category, String> dao = DaoManager.createDao(connectionSource, JavaHelper.getTClass(this));
+
+        QueryBuilder<Category, String> queryBuilder = dao.queryBuilder();
+        queryBuilder.orderBy("name", true);
+
+        List<Category> list = queryBuilder.query();
+        connectionSource.close();
+
+        return list;
+    }
+
+    //    public List<Category> findAll() throws Exception {
 //        ConnectionSource connectionSource = new AndroidConnectionSource(db);
 //        Dao<Category, String> accountDao = DaoManager.createDao(connectionSource, Category.class);
 //

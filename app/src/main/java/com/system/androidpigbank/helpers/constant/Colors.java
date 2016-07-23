@@ -1,4 +1,4 @@
-package com.system.androidpigbank.helpers.constants;
+package com.system.androidpigbank.helpers.constant;
 
 import com.system.androidpigbank.R;
 

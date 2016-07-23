@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.viewHolders;
+package com.system.androidpigbank.controllers.viewHolder;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.architecture.viewHolders.ViewHolderAbs;
 import com.system.androidpigbank.controllers.activities.TransactionManagerActivity;
-import com.system.androidpigbank.helpers.constants.Constants;
+import com.system.androidpigbank.helpers.constant.Constants;
 import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.views.RoundedTextView;

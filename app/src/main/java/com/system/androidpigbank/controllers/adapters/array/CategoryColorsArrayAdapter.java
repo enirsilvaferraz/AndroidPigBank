@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.helpers.constants.Colors;
+import com.system.androidpigbank.helpers.constant.Colors;
 
 import java.util.ArrayList;
 import java.util.Arrays;

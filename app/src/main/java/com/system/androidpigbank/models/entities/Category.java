@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.system.androidpigbank.helpers.constants.Colors;
+import com.system.androidpigbank.helpers.constant.Colors;
 
 /**
  * Created by eferraz on 05/12/15.

@@ -8,12 +8,14 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import com.system.androidpigbank.controllers.vos.Month;
 import com.system.androidpigbank.helpers.JavaHelper;
 import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.models.persistences.DaoAbs;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,6 +61,28 @@ public class CategoryBusiness extends DaoAbs<Category> {
 
         List<Category> list = queryBuilder.query();
         connectionSource.close();
+
+        return list;
+    }
+
+    public List<Month> getMonthWithTransaction() {
+
+        List<Month> list = new ArrayList<>();
+        list.add(new Month());
+        list.add(new Month());
+        list.add(new Month());
+
+        list.get(0).setMonth(0);
+        list.get(0).setYear(2016);
+        list.get(0).setValue(400D);
+
+        list.get(1).setMonth(1);
+        list.get(1).setYear(2016);
+        list.get(1).setValue(150.50);
+
+        list.get(2).setMonth(2);
+        list.get(2).setYear(2016);
+        list.get(2).setValue(600D);
 
         return list;
     }

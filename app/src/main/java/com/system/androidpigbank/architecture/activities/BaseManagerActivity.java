@@ -12,7 +12,7 @@ import com.system.androidpigbank.controllers.managers.LoaderResult;
 import com.system.androidpigbank.controllers.managers.ManagerHelper;
 import com.system.androidpigbank.helpers.IntentRouter;
 import com.system.androidpigbank.helpers.PermissionHelper;
-import com.system.androidpigbank.helpers.constants.Constants;
+import com.system.androidpigbank.helpers.constant.Constants;
 import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.persistences.DaoAbs;
 

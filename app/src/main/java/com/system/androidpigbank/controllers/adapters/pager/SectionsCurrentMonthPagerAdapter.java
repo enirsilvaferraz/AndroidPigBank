@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.system.androidpigbank.controllers.fragments.CategorySummaryFragment;
+import com.system.androidpigbank.controllers.fragments.MonthFragment;
 import com.system.androidpigbank.controllers.fragments.TransactionListFragment;
 
 import java.util.Calendar;
@@ -28,6 +29,10 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 fragment = TransactionListFragment.newInstance(Calendar.getInstance().get(Calendar.MONTH));
                 break;
+
+            case 2:
+                fragment = MonthFragment.newInstance();
+                break;
         }
 
         return fragment;
@@ -35,7 +40,7 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.system.androidpigbank.helpers.constants;
+package com.system.androidpigbank.helpers.constant;
 
 /**
  * Created by eferraz on 05/12/15.

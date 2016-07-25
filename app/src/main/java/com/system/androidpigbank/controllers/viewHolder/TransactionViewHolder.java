@@ -15,6 +15,7 @@ import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.views.RoundedTextView;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 
 public class TransactionViewHolder extends ViewHolderAbs {
 
@@ -22,6 +23,7 @@ public class TransactionViewHolder extends ViewHolderAbs {
     private TextView textValue;
     private TextView textCategory;
     private TextView textContent;
+    private TextView textDate;
     private RoundedTextView roundedTextView;
 
     public TransactionViewHolder(View v, AppCompatActivity activity, RecyclerView.Adapter adapter) {
@@ -30,6 +32,7 @@ public class TransactionViewHolder extends ViewHolderAbs {
         textValue = (TextView) v.findViewById(R.id.item_transaction_value);
         textCategory = (TextView) v.findViewById(R.id.item_transaction_category);
         textContent = (TextView) v.findViewById(R.id.item_transaction_content);
+        textDate = (TextView) v.findViewById(R.id.item_transaction_date);
 
         roundedTextView = (RoundedTextView) v.findViewById(R.id.item_transaction_rounded_view);
     }
@@ -41,12 +44,11 @@ public class TransactionViewHolder extends ViewHolderAbs {
         final NumberFormat numberFormat = NumberFormat.getInstance();
         numberFormat.setMinimumFractionDigits(2);
 
-        roundedTextView.setTransitionName("TRNAME"+((Transaction) model).getId());
-
         textValue.setText("R$ " + numberFormat.format(transaction.getValue()));
         textCategory.setText(transaction.getCategory().getName());
         roundedTextView.setTextView(transaction.getCategory().getName());
         textContent.setText(transaction.getContent());
+        textDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(transaction.getDate()));
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

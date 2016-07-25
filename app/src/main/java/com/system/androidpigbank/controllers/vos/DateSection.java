@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.system.androidpigbank.models.entities.EntityAbs;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -31,7 +32,8 @@ public class DateSection extends EntityAbs implements Parcelable {
 
     public DateSection(Date date) {
         this.date = date;
-        this.title = new SimpleDateFormat("dd MMMM, yyyy").format(date);
+        this.title = DateFormat.getDateInstance(DateFormat.FULL).format(date);
+        //this.title = new SimpleDateFormat("dd MMMM, yyyy").format(date);
     }
 
     protected DateSection(Parcel in) {

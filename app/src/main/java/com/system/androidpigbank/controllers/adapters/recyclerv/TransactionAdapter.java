@@ -104,7 +104,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         for (Transaction transaction : itens) {
             if (date == null || date.before(transaction.getDate())) {
                 date = transaction.getDate();
-                newList.add(new DateSection(date));
+                //newList.add(new DateSection(date));
             }
 
             total += transaction.getValue();

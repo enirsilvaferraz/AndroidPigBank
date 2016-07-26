@@ -1,18 +1,19 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 
-def supportLibraryVersion = '23.3.0'
+def supportLibraryVersion = '24.1.1'
 
 android {
     signingConfigs {
         config {
             keyAlias 'AndroidPigBank'
             keyPassword 'android'
-            storeFile file('/Users/eferraz/AndroidStudioProjects/Personal/AndroidPigBank/keystore.jks')
+            /*storeFile file('/Users/eferraz/AndroidStudioProjects/Personal/AndroidPigBank/keystore.jks')*/
+            storeFile file('C:\\Ambiente\\Android\\Projetos\\AndroidPigBank\\keystore.jks')
             storePassword 'android'
         }
     }
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion "23.0.3"
     defaultConfig {
         applicationId "com.system.androidpigbank"
@@ -55,7 +56,7 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'com.google.code.gson:gson:2.6.2'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha4'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
 }

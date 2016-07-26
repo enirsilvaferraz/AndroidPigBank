@@ -59,6 +59,9 @@ public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(date);
 
+                final String title = new SimpleDateFormat("MMMM 'de' yyyy").format(calendar.getTime());
+                setTitle(title.substring(0, 1).toUpperCase() + title.substring(1));
+
                 ((SectionsCurrentMonthPagerAdapter)mViewPager.getAdapter())
                         .setCurrentTime(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
 

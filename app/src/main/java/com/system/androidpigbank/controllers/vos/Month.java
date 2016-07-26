@@ -16,6 +16,12 @@ public class Month implements Parcelable {
 
     private Double value;
 
+    public Month(Integer month, Integer year, Double value) {
+        this.month = month;
+        this.year = year;
+        this.value = value;
+    }
+
     public Integer getMonth() {
         return month;
     }

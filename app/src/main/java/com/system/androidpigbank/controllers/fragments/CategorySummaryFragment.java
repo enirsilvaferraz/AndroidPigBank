@@ -47,16 +47,31 @@ public class CategorySummaryFragment extends Fragment {
         recyclerview.setAdapter(adapter);
 
         final int month = getArguments().getInt("MONTH");
+        final int year = getArguments().getInt("YEAR");
+
+        update(month, year);
+    }
+
+    public static CategorySummaryFragment newInstance(int month, int year) {
+        CategorySummaryFragment fragment = new CategorySummaryFragment();
+        Bundle args = new Bundle();
+        args.putInt("MONTH", month);
+        args.putInt("YEAR", year);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public void update(final int month, final int year) {
 
         ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<List<Category>>() {
             @Override
             public List<Category> executeAction() throws Exception {
-                return new CategoryBusiness(getActivity()).getChartDataByMonth(month);
+                return new CategoryBusiness(getActivity()).getChartDataByMonth(month, year);
             }
 
             @Override
             public int loaderId() {
-                return Constants.LOADER_DEFAULT_ID;
+                return Constants.LOADER_CATEGORY;
             }
 
             @Override
@@ -68,13 +83,5 @@ public class CategorySummaryFragment extends Fragment {
                 }
             }
         });
-    }
-
-    public static CategorySummaryFragment newInstance(int month) {
-        CategorySummaryFragment fragment = new CategorySummaryFragment();
-        Bundle args = new Bundle();
-        args.putInt("MONTH", month);
-        fragment.setArguments(args);
-        return fragment;
     }
 }

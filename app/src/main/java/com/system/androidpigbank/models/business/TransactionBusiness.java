@@ -5,14 +5,18 @@ import android.content.Context;
 import com.j256.ormlite.android.AndroidConnectionSource;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import com.system.androidpigbank.controllers.vos.Month;
+import com.system.androidpigbank.helpers.JavaHelper;
 import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.models.persistences.DaoAbs;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -43,13 +47,14 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         return super.save(transaction);
     }
 
-    public List<Transaction> getTransactionByMonth(int month) throws Exception {
+    public List<Transaction> getTransactionByMonth(int month, int year) throws SQLException {
 
         ConnectionSource connection = new AndroidConnectionSource(db);
         Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);
         QueryBuilder<Transaction, String> queryTransaction = dao.queryBuilder();
 
         Calendar cInit = Calendar.getInstance();
+        cInit.set(Calendar.YEAR, year);
         cInit.set(Calendar.MONTH, month);
         cInit.set(Calendar.DATE, cInit.getActualMinimum(Calendar.DATE));
         cInit.set(Calendar.HOUR, cInit.getActualMinimum(Calendar.HOUR));
@@ -57,6 +62,7 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         cInit.set(Calendar.SECOND, cInit.getActualMinimum(Calendar.SECOND));
 
         Calendar cEnd = Calendar.getInstance();
+        cEnd.set(Calendar.YEAR, year);
         cEnd.set(Calendar.MONTH, month);
         cEnd.set(Calendar.DATE, cEnd.getActualMaximum(Calendar.DATE));
         cEnd.set(Calendar.HOUR, cEnd.getActualMaximum(Calendar.HOUR));
@@ -75,13 +81,14 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         return results;
     }
 
-    public List<Transaction> findByCategory(Category category, int month) throws SQLException {
+    public List<Transaction> findByCategory(Category category, int month, int year) throws SQLException {
 
         ConnectionSource connection = new AndroidConnectionSource(db);
         Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);
         QueryBuilder<Transaction, String> queryTransaction = dao.queryBuilder();
 
         Calendar cInit = Calendar.getInstance();
+        cInit.set(Calendar.YEAR, year);
         cInit.set(Calendar.MONTH, month);
         cInit.set(Calendar.DATE, cInit.getActualMinimum(Calendar.DATE));
         cInit.set(Calendar.HOUR, cInit.getActualMinimum(Calendar.HOUR));
@@ -89,6 +96,7 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         cInit.set(Calendar.SECOND, cInit.getActualMinimum(Calendar.SECOND));
 
         Calendar cEnd = Calendar.getInstance();
+        cEnd.set(Calendar.YEAR, year);
         cEnd.set(Calendar.MONTH, month);
         cEnd.set(Calendar.DATE, cEnd.getActualMaximum(Calendar.DATE));
         cEnd.set(Calendar.HOUR, cEnd.getActualMaximum(Calendar.HOUR));
@@ -119,5 +127,25 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);
         dao.update(transaction);
         return transaction;
+    }
+
+    public List<Month> getMonthWithTransaction(int year) throws SQLException  {
+
+        List<Month> list = new ArrayList<>();
+
+        for(int month = 0; month < 12; month++) {
+            List<Transaction> transactions = getTransactionByMonth(month, year);
+
+            Double amount = 0D;
+            for (Transaction transaction : transactions) {
+                amount += transaction.getValue();
+            }
+
+            if (amount > 0){
+                list.add(new Month(month, year, amount));
+            }
+        }
+
+        return list;
     }
 }

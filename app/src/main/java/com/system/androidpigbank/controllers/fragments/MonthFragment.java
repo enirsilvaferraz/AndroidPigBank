@@ -18,7 +18,9 @@ import com.system.androidpigbank.controllers.managers.ManagerHelper;
 import com.system.androidpigbank.controllers.vos.Month;
 import com.system.androidpigbank.helpers.constant.Constants;
 import com.system.androidpigbank.models.business.CategoryBusiness;
+import com.system.androidpigbank.models.business.TransactionBusiness;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,6 +30,8 @@ import butterknife.ButterKnife;
  * Created by Enir on 22/07/2016.
  */
 public class MonthFragment extends Fragment {
+
+    private MonthAdapter.OnItemClicked onItemClicked;
 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
@@ -46,16 +50,19 @@ public class MonthFragment extends Fragment {
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         recyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false));
         recyclerview.setAdapter(new MonthAdapter());
+        ((MonthAdapter)recyclerview.getAdapter()).setOnItemClicked(onItemClicked);
+
+        final int year = getArguments().getInt("YEAR");
 
         ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<List<Month>>() {
             @Override
             public List<Month> executeAction() throws Exception {
-                return new CategoryBusiness(getActivity()).getMonthWithTransaction();
+                return new TransactionBusiness(getActivity()).getMonthWithTransaction(year);
             }
 
             @Override
             public int loaderId() {
-                return Constants.LOADER_DEFAULT_ID;
+                return Constants.LOADER_MONTH;
             }
 
             @Override
@@ -69,11 +76,15 @@ public class MonthFragment extends Fragment {
         });
     }
 
-    public static MonthFragment newInstance() {
+    public static MonthFragment newInstance(int year) {
         MonthFragment fragment = new MonthFragment();
         Bundle args = new Bundle();
-        //args.putInt("MONTH", month);
+        args.putInt("YEAR", year);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void setOnItemClicked(MonthAdapter.OnItemClicked onItemClicked) {
+        this.onItemClicked = onItemClicked;
     }
 }

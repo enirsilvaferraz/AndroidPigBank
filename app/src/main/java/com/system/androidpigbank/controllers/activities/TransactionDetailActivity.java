@@ -54,7 +54,7 @@ public class TransactionDetailActivity extends BaseActivity {
         ManagerHelper.execute(this, new ManagerHelper.LoaderResultInterface<List<Category>>() {
             @Override
             public List<Category> executeAction() throws Exception {
-                return new CategoryBusiness(TransactionDetailActivity.this).getChartDataByMonth(month);
+                return new CategoryBusiness(TransactionDetailActivity.this).getChartDataByMonth(month, 2016);
             }
 
             @Override

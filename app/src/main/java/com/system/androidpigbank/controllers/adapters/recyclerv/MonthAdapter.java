@@ -14,6 +14,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -23,6 +24,8 @@ import butterknife.ButterKnife;
  * Created by Enir on 22/07/2016.
  */
 public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private OnItemClicked onItemClicked;
 
     private List<Month> itens;
 
@@ -52,6 +55,10 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         notifyDataSetChanged();
     }
 
+    public void setOnItemClicked(OnItemClicked onItemClicked) {
+        this.onItemClicked = onItemClicked;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.item_month)
@@ -70,7 +77,7 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         private void bind(Month item) {
 
-            Calendar calendar = Calendar.getInstance();
+            final Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.MONTH, item.getMonth());
             calendar.set(Calendar.YEAR, item.getYear());
 
@@ -80,6 +87,19 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             tvMonth.setText(new SimpleDateFormat("MMMM").format(calendar.getTime()) + " / " + new SimpleDateFormat("yyyy").format(calendar.getTime()));
             tvTotal.setText("R$ " + instance.format(item.getValue()));
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onItemClicked != null){
+                        onItemClicked.onClick(calendar.getTime());
+                    }
+                }
+            });
         }
+    }
+
+    public interface OnItemClicked {
+        void onClick(Date date);
     }
 }

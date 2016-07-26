@@ -5,9 +5,10 @@ package com.system.androidpigbank.helpers.constant;
  */
 public interface Constants {
 
-    int LOADER_TRANSACTION_SAVE = 1001;
+    int LOADER_DEFAULT_ID = 1000;
+    int LOADER_TRANSACTION = 1001;
     int LOADER_CATEGORY = 1002;
-    int LOADER_DEFAULT_ID = 1003;
+    int LOADER_MONTH = 1002;
 
     int REQUEST_PERMISSION_DEFAULT_ID = 2000;
     int REQUEST_TRANSACTION_EDIT = 2001;

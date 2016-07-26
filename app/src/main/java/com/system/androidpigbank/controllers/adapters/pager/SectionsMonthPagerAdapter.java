@@ -17,7 +17,7 @@ public class SectionsMonthPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return TransactionListFragment.newInstance(position);
+        return TransactionListFragment.newInstance(position, 2016);
     }
 
     @Override

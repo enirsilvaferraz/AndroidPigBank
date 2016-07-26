@@ -34,11 +34,11 @@ public class CategoryBusiness extends DaoAbs<Category> {
         }
     }
 
-    public List<Category> getChartDataByMonth(int month) throws Exception {
+    public List<Category> getChartDataByMonth(int month, int year) throws Exception {
 
         List<Category> categories = findAll();
         for (Category category : categories) {
-            List<Transaction> transactions = new TransactionBusiness(getContext()).findByCategory(category, month);
+            List<Transaction> transactions = new TransactionBusiness(getContext()).findByCategory(category, month, year);
 
             Double amount = 0d;
             for (Transaction transaction : transactions) {
@@ -61,28 +61,6 @@ public class CategoryBusiness extends DaoAbs<Category> {
 
         List<Category> list = queryBuilder.query();
         connectionSource.close();
-
-        return list;
-    }
-
-    public List<Month> getMonthWithTransaction() {
-
-        List<Month> list = new ArrayList<>();
-        list.add(new Month());
-        list.add(new Month());
-        list.add(new Month());
-
-        list.get(0).setMonth(0);
-        list.get(0).setYear(2016);
-        list.get(0).setValue(400D);
-
-        list.get(1).setMonth(1);
-        list.get(1).setYear(2016);
-        list.get(1).setValue(150.50);
-
-        list.get(2).setMonth(2);
-        list.get(2).setYear(2016);
-        list.get(2).setValue(600D);
 
         return list;
     }

@@ -16,6 +16,7 @@ import com.system.androidpigbank.R;
 import com.system.androidpigbank.architecture.activities.BaseManagerActivity;
 import com.system.androidpigbank.architecture.activities.BaseNavigationDrawerActivity;
 import com.system.androidpigbank.controllers.adapters.pager.SectionsCurrentMonthPagerAdapter;
+import com.system.androidpigbank.controllers.adapters.recyclerv.MonthAdapter;
 import com.system.androidpigbank.helpers.PermissionHelper;
 import com.system.androidpigbank.helpers.constant.Constants;
 import com.system.androidpigbank.models.business.RecoverService;
@@ -23,6 +24,7 @@ import com.system.androidpigbank.models.business.RecoverService;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,13 +32,14 @@ import butterknife.ButterKnife;
 
 public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
 
+    private static final List<String> ACCESS_PERMISSIONS = Arrays.asList(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE});
+    private static final int HOME_INDICATOR = 1;
+
     @BindView(R.id.container)
     ViewPager mViewPager;
 
     @BindView(R.id.fab)
     FloatingActionButton fab;
-
-    private static final List<String> ACCESS_PERMISSIONS = Arrays.asList(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE});
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +51,24 @@ public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
         final String title = new SimpleDateFormat("MMMM 'de' yyyy").format(Calendar.getInstance().getTime());
         setTitle(title.substring(0, 1).toUpperCase() + title.substring(1));
 
-        mViewPager.setAdapter(new SectionsCurrentMonthPagerAdapter(getSupportFragmentManager()));
-        mViewPager.setOffscreenPageLimit(0);
+        SectionsCurrentMonthPagerAdapter adapter = new SectionsCurrentMonthPagerAdapter(getSupportFragmentManager());
+        adapter.setOnItemClicked(new MonthAdapter.OnItemClicked() {
+            @Override
+            public void onClick(Date date) {
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+
+                ((SectionsCurrentMonthPagerAdapter)mViewPager.getAdapter())
+                        .setCurrentTime(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+
+                mViewPager.setCurrentItem(HOME_INDICATOR);
+            }
+        });
+
+        mViewPager.setAdapter(adapter);
+        //mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setCurrentItem(HOME_INDICATOR);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

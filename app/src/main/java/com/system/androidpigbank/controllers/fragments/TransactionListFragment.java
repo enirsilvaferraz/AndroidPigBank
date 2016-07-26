@@ -30,10 +30,11 @@ public class TransactionListFragment extends Fragment {
     public TransactionListFragment() {
     }
 
-    public static TransactionListFragment newInstance(int position) {
+    public static TransactionListFragment newInstance(int month, int year) {
         TransactionListFragment fragment = new TransactionListFragment();
         Bundle args = new Bundle();
-        args.putInt("POSITION", position);
+        args.putInt("MONTH", month);
+        args.putInt("YEAR", year);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,18 +64,24 @@ public class TransactionListFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        final int position = getArguments().getInt("POSITION");
+        final int month = getArguments().getInt("MONTH");
+        final int year = getArguments().getInt("YEAR");
+
+        update(month, year);
+    }
+
+    public void update(final int month, final int year) {
 
         ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<List<Transaction>>() {
 
             @Override
             public List<Transaction> executeAction() throws Exception {
-                return new TransactionBusiness(getContext()).getTransactionByMonth(position);
+                return new TransactionBusiness(getContext()).getTransactionByMonth(month, year);
             }
 
             @Override
             public int loaderId() {
-                return Constants.LOADER_TRANSACTION_SAVE + position;
+                return Constants.LOADER_TRANSACTION;
             }
 
             @Override

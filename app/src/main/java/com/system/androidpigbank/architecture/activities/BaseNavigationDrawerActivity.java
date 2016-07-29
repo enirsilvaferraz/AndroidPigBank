@@ -11,7 +11,6 @@ import android.view.MenuItem;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.activities.CategoryListActivity;
-import com.system.androidpigbank.controllers.activities.TransactionHistoryActivity;
 
 /**
  * Created by eferraz on 08/07/16.
@@ -59,10 +58,6 @@ public abstract class BaseNavigationDrawerActivity extends BaseActivity implemen
 
             case R.id.nav_act_category:
                 startActivity(new Intent(this, CategoryListActivity.class));
-                break;
-
-            case R.id.nav_act_transaction_history:
-                startActivity(new Intent(this, TransactionHistoryActivity.class));
                 break;
         }
 

@@ -45,43 +45,16 @@ public class CategorySummaryFragment extends Fragment {
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         recyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false));
         recyclerview.setAdapter(adapter);
-
-        final int month = getArguments().getInt("MONTH");
-        final int year = getArguments().getInt("YEAR");
-
-        update(month, year);
     }
 
-    public static CategorySummaryFragment newInstance(int month, int year) {
+    public static CategorySummaryFragment newInstance() {
         CategorySummaryFragment fragment = new CategorySummaryFragment();
         Bundle args = new Bundle();
-        args.putInt("MONTH", month);
-        args.putInt("YEAR", year);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public void update(final int month, final int year) {
-
-        ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<List<Category>>() {
-            @Override
-            public List<Category> executeAction() throws Exception {
-                return new CategoryBusiness(getActivity()).getChartDataByMonth(month, year);
-            }
-
-            @Override
-            public int loaderId() {
-                return Constants.LOADER_CATEGORY;
-            }
-
-            @Override
-            public void onComplete(LoaderResult<List<Category>> data) {
-                if (data.isSuccess()) {
-                    ((CategorySummaryAdapter) recyclerview.getAdapter()).addItens(data.getData());
-                } else {
-                    ((BaseActivity) getActivity()).showMessage(data.getException());
-                }
-            }
-        });
+    public void update(List<Category> listCategorySummary) {
+        ((CategorySummaryAdapter) recyclerview.getAdapter()).addItens(listCategorySummary);
     }
 }

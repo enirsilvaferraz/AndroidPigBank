@@ -8,18 +8,28 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.architecture.activities.BaseActivity;
 import com.system.androidpigbank.architecture.activities.BaseManagerActivity;
 import com.system.androidpigbank.architecture.activities.BaseNavigationDrawerActivity;
 import com.system.androidpigbank.controllers.adapters.pager.SectionsCurrentMonthPagerAdapter;
+import com.system.androidpigbank.controllers.adapters.recyclerv.CategorySummaryAdapter;
 import com.system.androidpigbank.controllers.adapters.recyclerv.MonthAdapter;
+import com.system.androidpigbank.controllers.managers.LoaderResult;
+import com.system.androidpigbank.controllers.managers.ManagerHelper;
+import com.system.androidpigbank.controllers.vos.HomeObject;
+import com.system.androidpigbank.helpers.IntentRouter;
 import com.system.androidpigbank.helpers.PermissionHelper;
 import com.system.androidpigbank.helpers.constant.Constants;
+import com.system.androidpigbank.models.business.CategoryBusiness;
 import com.system.androidpigbank.models.business.RecoverService;
+import com.system.androidpigbank.models.business.TransactionBusiness;
+import com.system.androidpigbank.models.entities.Category;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -51,34 +61,29 @@ public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
         final String title = new SimpleDateFormat("MMMM 'de' yyyy").format(Calendar.getInstance().getTime());
         setTitle(title.substring(0, 1).toUpperCase() + title.substring(1));
 
-        SectionsCurrentMonthPagerAdapter adapter = new SectionsCurrentMonthPagerAdapter(getSupportFragmentManager());
-        adapter.setOnItemClicked(new MonthAdapter.OnItemClicked() {
-            @Override
-            public void onClick(Date date) {
-
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(date);
-
-                final String title = new SimpleDateFormat("MMMM 'de' yyyy").format(calendar.getTime());
-                setTitle(title.substring(0, 1).toUpperCase() + title.substring(1));
-
-                ((SectionsCurrentMonthPagerAdapter)mViewPager.getAdapter())
-                        .setCurrentTime(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
-
-                mViewPager.setCurrentItem(HOME_INDICATOR);
-            }
-        });
-
-        mViewPager.setAdapter(adapter);
-        //mViewPager.setOffscreenPageLimit(2);
-        mViewPager.setCurrentItem(HOME_INDICATOR);
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CategorySummaryActivity.this, TransactionManagerActivity.class));
+                startActivity(IntentRouter.startTransactionManager(getBaseContext()));
             }
         });
+
+        SectionsCurrentMonthPagerAdapter adapter = new SectionsCurrentMonthPagerAdapter(getSupportFragmentManager());
+        adapter.setOnItemClicked(new OnItemClickedListener());
+
+        mViewPager.setAdapter(adapter);
+        mViewPager.setCurrentItem(HOME_INDICATOR);
+        mViewPager.setOffscreenPageLimit(2);
+
+    }
+
+    @Override
+    protected void onStart() {
+
+        Calendar calendar = Calendar.getInstance();
+        update(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+
+        super.onStart();
     }
 
     @Override
@@ -136,9 +141,55 @@ public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
         });
     }
 
+    private void update(final int month, final int year) {
+
+        ManagerHelper.execute(this, new ManagerHelper.LoaderResultInterface<HomeObject>() {
+
+            @Override
+            public HomeObject executeAction() throws Exception {
+
+                HomeObject object = new HomeObject();
+                object.setListCategorySummary(new CategoryBusiness(CategorySummaryActivity.this).getChartDataByMonth(month, year));
+                object.setListTransaction(new TransactionBusiness(CategorySummaryActivity.this).getTransactionByMonth(month, year));
+                object.setListMonth(new TransactionBusiness(CategorySummaryActivity.this).getMonthWithTransaction(year));
+                return object;
+            }
+
+            @Override
+            public int loaderId() {
+                return Constants.LOADER_CATEGORY;
+            }
+
+            @Override
+            public void onComplete(LoaderResult<HomeObject> data) {
+                if (data.isSuccess()) {
+                    ((SectionsCurrentMonthPagerAdapter)mViewPager.getAdapter()).update(data.getData());
+                    mViewPager.setCurrentItem(HOME_INDICATOR);
+                } else {
+                    showMessage(data.getException());
+                }
+            }
+        });
+    }
+
     @Override
     public View getContainer() {
         return mViewPager;
+    }
+
+    private class OnItemClickedListener implements MonthAdapter.OnItemClicked {
+
+        @Override
+        public void onClick(Date date) {
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+
+            final String title = new SimpleDateFormat("MMMM 'de' yyyy").format(calendar.getTime());
+            setTitle(title.substring(0, 1).toUpperCase() + title.substring(1));
+
+            update(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+        }
     }
 
 }

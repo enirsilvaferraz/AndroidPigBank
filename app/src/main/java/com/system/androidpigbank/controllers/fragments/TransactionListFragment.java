@@ -12,12 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.architecture.activities.BaseActivity;
 import com.system.androidpigbank.controllers.adapters.recyclerv.TransactionAdapter;
-import com.system.androidpigbank.controllers.managers.LoaderResult;
-import com.system.androidpigbank.controllers.managers.ManagerHelper;
-import com.system.androidpigbank.helpers.constant.Constants;
-import com.system.androidpigbank.models.business.TransactionBusiness;
 import com.system.androidpigbank.models.entities.Transaction;
 
 import java.util.List;
@@ -30,11 +25,9 @@ public class TransactionListFragment extends Fragment {
     public TransactionListFragment() {
     }
 
-    public static TransactionListFragment newInstance(int month, int year) {
+    public static TransactionListFragment newInstance() {
         TransactionListFragment fragment = new TransactionListFragment();
         Bundle args = new Bundle();
-        args.putInt("MONTH", month);
-        args.putInt("YEAR", year);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,47 +44,15 @@ public class TransactionListFragment extends Fragment {
         final TransactionAdapter adapter = new TransactionAdapter((AppCompatActivity) getActivity());
 
         final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT, GridLayoutManager.VERTICAL, false);
-//        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-//            @Override
-//            public int getSpanSize(int position) {
-//                TransactionAdapter.TransactionViewType type = TransactionAdapter.TransactionViewType.values()[adapter.getItemViewType(position)];
-//                return type.isFullSpan() ? SPAN_COUNT : 1;
-//            }
-//        });
 
         recyclerView = (RecyclerView) view.findViewById(R.id.transaction_history_recycleView);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        final int month = getArguments().getInt("MONTH");
-        final int year = getArguments().getInt("YEAR");
-
-        update(month, year);
     }
 
-    public void update(final int month, final int year) {
-
-        ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<List<Transaction>>() {
-
-            @Override
-            public List<Transaction> executeAction() throws Exception {
-                return new TransactionBusiness(getContext()).getTransactionByMonth(month, year);
-            }
-
-            @Override
-            public int loaderId() {
-                return Constants.LOADER_TRANSACTION;
-            }
-
-            @Override
-            public void onComplete(LoaderResult<List<Transaction>> data) {
-                if (data.isSuccess()) {
-                    ((TransactionAdapter) recyclerView.getAdapter()).addItens(data.getData());
-                } else {
-                    ((BaseActivity) getActivity()).showMessage(data.getException());
-                }
-            }
-        });
+    public void update(List<Transaction> listTransaction) {
+        ((TransactionAdapter) recyclerView.getAdapter()).addItens(listTransaction);
     }
 }

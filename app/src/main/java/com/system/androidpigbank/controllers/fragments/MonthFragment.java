@@ -51,40 +51,20 @@ public class MonthFragment extends Fragment {
         recyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false));
         recyclerview.setAdapter(new MonthAdapter());
         ((MonthAdapter)recyclerview.getAdapter()).setOnItemClicked(onItemClicked);
-
-        final int year = getArguments().getInt("YEAR");
-
-        ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<List<Month>>() {
-            @Override
-            public List<Month> executeAction() throws Exception {
-                return new TransactionBusiness(getActivity()).getMonthWithTransaction(year);
-            }
-
-            @Override
-            public int loaderId() {
-                return Constants.LOADER_MONTH;
-            }
-
-            @Override
-            public void onComplete(LoaderResult<List<Month>> data) {
-                if (data.isSuccess()) {
-                    ((MonthAdapter) recyclerview.getAdapter()).addItens(data.getData());
-                } else {
-                    ((BaseActivity) getActivity()).showMessage(data.getException());
-                }
-            }
-        });
     }
 
-    public static MonthFragment newInstance(int year) {
+    public static MonthFragment newInstance() {
         MonthFragment fragment = new MonthFragment();
         Bundle args = new Bundle();
-        args.putInt("YEAR", year);
         fragment.setArguments(args);
         return fragment;
     }
 
     public void setOnItemClicked(MonthAdapter.OnItemClicked onItemClicked) {
         this.onItemClicked = onItemClicked;
+    }
+
+    public void update(List<Month> listMonth) {
+        ((MonthAdapter) recyclerview.getAdapter()).addItens(listMonth);
     }
 }

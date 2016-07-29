@@ -8,6 +8,8 @@ import com.system.androidpigbank.controllers.adapters.recyclerv.MonthAdapter;
 import com.system.androidpigbank.controllers.fragments.CategorySummaryFragment;
 import com.system.androidpigbank.controllers.fragments.MonthFragment;
 import com.system.androidpigbank.controllers.fragments.TransactionListFragment;
+import com.system.androidpigbank.controllers.managers.LoaderResult;
+import com.system.androidpigbank.controllers.vos.HomeObject;
 
 import java.util.Calendar;
 
@@ -26,19 +28,16 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        Integer month = Calendar.getInstance().get(Calendar.MONTH);
-        Integer year = Calendar.getInstance().get(Calendar.YEAR);
-
         if (categoryFragment == null) {
-            categoryFragment = CategorySummaryFragment.newInstance(month, year);
+            categoryFragment = CategorySummaryFragment.newInstance();
         }
 
         if (transactionFragment == null) {
-            transactionFragment = TransactionListFragment.newInstance(month, year);
+            transactionFragment = TransactionListFragment.newInstance();
         }
 
         if (monthFragment == null) {
-            monthFragment = MonthFragment.newInstance(year);
+            monthFragment = MonthFragment.newInstance();
             monthFragment.setOnItemClicked(onItemClicked);
         }
 
@@ -75,8 +74,18 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentPagerAdapter {
         this.onItemClicked = onItemClicked;
     }
 
-    public void setCurrentTime(int month, int year) {
-        categoryFragment.update(month, year);
-        transactionFragment.update(month, year);
+    public void update(HomeObject data) {
+
+        if (categoryFragment != null) {
+            categoryFragment.update(data.getListCategorySummary());
+        }
+
+        if (categoryFragment != null) {
+            transactionFragment.update(data.getListTransaction());
+        }
+
+        if (categoryFragment != null) {
+            monthFragment.update(data.getListMonth());
+        }
     }
 }

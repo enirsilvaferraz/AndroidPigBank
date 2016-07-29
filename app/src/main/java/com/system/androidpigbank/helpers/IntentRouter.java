@@ -3,6 +3,7 @@ package com.system.androidpigbank.helpers;
 import android.content.Context;
 import android.content.Intent;
 
+import com.system.androidpigbank.controllers.activities.TransactionManagerActivity;
 import com.system.androidpigbank.models.business.BackupService;
 
 /**
@@ -10,7 +11,11 @@ import com.system.androidpigbank.models.business.BackupService;
  */
 public final class IntentRouter {
 
-    public static void startServiceBackup(Context context){
+    public static void startServiceBackup(Context context) {
         context.startService(new Intent(context, BackupService.class));
+    }
+
+    public static Intent startTransactionManager(Context context) {
+        return new Intent(context, TransactionManagerActivity.class);
     }
 }

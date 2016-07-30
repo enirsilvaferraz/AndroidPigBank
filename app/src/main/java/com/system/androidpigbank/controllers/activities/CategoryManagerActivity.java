@@ -49,18 +49,8 @@ public class CategoryManagerActivity extends BaseManagerActivity<Category> {
 
         spColor = (Spinner) findViewById(R.id.category_manager_color);
         spColor.setAdapter(new CategoryColorsArrayAdapter(this, R.layout.item_view_holder_category_colors));
-        spColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        spColor.setSelection(Colors.GRAY_300.ordinal());
+        spColor.setSelected(true);
 
         editCategory = (AutoCompleteTextView) findViewById(R.id.category_manager_category);
         editCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -83,7 +73,8 @@ public class CategoryManagerActivity extends BaseManagerActivity<Category> {
             editCategory.setText(model.getName());
 
             if (model.getColor() != null) {
-                spColor.setSelection(Colors.valueOf(model.getColor().name()).ordinal());
+                spColor.setSelection(model.getColor().ordinal());
+                spColor.setSelected(true);
             }
         }
 

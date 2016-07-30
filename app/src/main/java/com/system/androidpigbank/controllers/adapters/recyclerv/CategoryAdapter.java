@@ -1,6 +1,5 @@
 package com.system.androidpigbank.controllers.adapters.recyclerv;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.widget.TextView;
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.helpers.IntentRouter;
 import com.system.androidpigbank.models.entities.Category;
+import com.system.androidpigbank.views.RoundedTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +56,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         @BindView(R.id.item_category_name)
         TextView name;
 
+        @BindView(R.id.item_category_rounded_view)
+        RoundedTextView roundedView;
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -64,10 +67,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private void bind(final Category item) {
 
             name.setText(item.getName());
-
-            if (item.getColor() != null) {
-                itemView.setBackgroundResource(item.getColor().getColorId());
-            }
+            roundedView.setColor(item.getColor());
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -8,28 +8,23 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.architecture.activities.BaseActivity;
-import com.system.androidpigbank.architecture.activities.BaseManagerActivity;
 import com.system.androidpigbank.architecture.activities.BaseNavigationDrawerActivity;
 import com.system.androidpigbank.controllers.adapters.pager.SectionsCurrentMonthPagerAdapter;
-import com.system.androidpigbank.controllers.adapters.recyclerv.CategorySummaryAdapter;
 import com.system.androidpigbank.controllers.adapters.recyclerv.MonthAdapter;
-import com.system.androidpigbank.controllers.managers.LoaderResult;
-import com.system.androidpigbank.controllers.managers.ManagerHelper;
+import com.system.androidpigbank.architecture.managers.LoaderResult;
+import com.system.androidpigbank.architecture.managers.ManagerHelper;
 import com.system.androidpigbank.controllers.vos.HomeObject;
 import com.system.androidpigbank.helpers.IntentRouter;
-import com.system.androidpigbank.helpers.PermissionHelper;
+import com.system.androidpigbank.architecture.helpers.PermissionHelper;
 import com.system.androidpigbank.helpers.constant.Constants;
 import com.system.androidpigbank.models.business.CategoryBusiness;
 import com.system.androidpigbank.models.business.RecoverService;
 import com.system.androidpigbank.models.business.TransactionBusiness;
-import com.system.androidpigbank.models.entities.Category;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -168,11 +163,6 @@ public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
                 }
             }
         });
-    }
-
-    @Override
-    public View getContainer() {
-        return mViewPager;
     }
 
     private class OnItemClickedListener implements MonthAdapter.OnItemClicked {

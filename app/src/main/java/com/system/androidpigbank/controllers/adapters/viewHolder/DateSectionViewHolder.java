@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.viewHolder;
+package com.system.androidpigbank.controllers.adapters.viewHolder;
 
 import android.view.View;
 import android.widget.TextView;

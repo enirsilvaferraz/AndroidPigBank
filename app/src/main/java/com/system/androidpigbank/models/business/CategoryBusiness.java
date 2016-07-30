@@ -8,14 +8,12 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import com.system.androidpigbank.controllers.vos.Month;
-import com.system.androidpigbank.helpers.JavaHelper;
+import com.system.androidpigbank.architecture.helpers.JavaHelper;
 import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.models.persistences.DaoAbs;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

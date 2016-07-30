@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.managers;
+package com.system.androidpigbank.architecture.managers;
 
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;

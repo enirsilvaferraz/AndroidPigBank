@@ -23,7 +23,9 @@ public enum Colors {
     GRAY(R.color.material_gray),
     BLUE_GRAY(R.color.material_blue_gray),
     BLACK(R.color.material_black),
-    WHITE(R.color.material_white);
+    WHITE(R.color.material_white),
+
+    GRAY_300(R.color.material_gray_300);
 
     private int colorId;
 

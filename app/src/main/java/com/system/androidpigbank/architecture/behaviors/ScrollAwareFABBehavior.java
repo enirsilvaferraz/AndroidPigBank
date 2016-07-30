@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.behaviors;
+package com.system.androidpigbank.architecture.behaviors;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;

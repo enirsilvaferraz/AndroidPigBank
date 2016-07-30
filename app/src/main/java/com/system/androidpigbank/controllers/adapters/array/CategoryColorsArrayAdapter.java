@@ -58,7 +58,7 @@ public class CategoryColorsArrayAdapter extends ArrayAdapter<Colors> {
         } else {
             color.setBackgroundResource(colorEnum.getColorId());
 
-            int resourceId = activity.getResources().getIdentifier(colorEnum.getClass().getName() + "." + colorEnum.name(), "string", activity.getPackageName());
+            int resourceId = activity.getResources().getIdentifier(colorEnum.getClass().getSimpleName() + "." + colorEnum.name(), "string", activity.getPackageName());
             name.setText(activity.getString(resourceId));
         }
 

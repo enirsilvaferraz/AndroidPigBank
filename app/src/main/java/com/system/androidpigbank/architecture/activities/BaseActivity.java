@@ -13,9 +13,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         Snackbar.make(getContainer(), e.getMessage(), Snackbar.LENGTH_LONG).show();
     }
 
+    public View getContainer() {
+        return getWindow().getDecorView().findViewById(android.R.id.content);
+    }
+
     public void showMessage(int message) {
         Snackbar.make(getContainer(), message, Snackbar.LENGTH_LONG).show();
     }
-
-    public abstract View getContainer();
 }

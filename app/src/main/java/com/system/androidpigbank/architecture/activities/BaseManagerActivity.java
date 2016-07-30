@@ -8,10 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.managers.LoaderResult;
-import com.system.androidpigbank.controllers.managers.ManagerHelper;
+import com.system.androidpigbank.architecture.managers.LoaderResult;
+import com.system.androidpigbank.architecture.managers.ManagerHelper;
 import com.system.androidpigbank.helpers.IntentRouter;
-import com.system.androidpigbank.helpers.PermissionHelper;
+import com.system.androidpigbank.architecture.helpers.PermissionHelper;
 import com.system.androidpigbank.helpers.constant.Constants;
 import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.persistences.DaoAbs;

@@ -1,5 +1,6 @@
 package com.system.androidpigbank.controllers.adapters.recyclerv;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,12 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.helpers.IntentRouter;
 import com.system.androidpigbank.models.entities.Category;
-import com.system.androidpigbank.models.entities.EntityAbs;
-import com.system.androidpigbank.models.entities.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by eferraz on 27/04/16.
@@ -48,22 +51,30 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView name;
+        @BindView(R.id.item_category_name)
+        TextView name;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.item_category_name);
+            ButterKnife.bind(this, itemView);
         }
 
-        private void bind(Category item) {
+        private void bind(final Category item) {
 
             name.setText(item.getName());
 
             if (item.getColor() != null) {
                 itemView.setBackgroundResource(item.getColor().getColorId());
             }
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    IntentRouter.startCategoryManager(view.getContext(), item);
+                }
+            });
         }
     }
 }

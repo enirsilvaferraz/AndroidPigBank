@@ -5,36 +5,43 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.architecture.activities.BaseActivity;
 import com.system.androidpigbank.controllers.adapters.recyclerv.CategoryAdapter;
-import com.system.androidpigbank.controllers.managers.LoaderResult;
-import com.system.androidpigbank.controllers.managers.ManagerHelper;
+import com.system.androidpigbank.architecture.managers.LoaderResult;
+import com.system.androidpigbank.architecture.managers.ManagerHelper;
 import com.system.androidpigbank.helpers.constant.Constants;
 import com.system.androidpigbank.models.business.CategoryBusiness;
 import com.system.androidpigbank.models.entities.Category;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class CategoryListActivity extends BaseActivity {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.category_manager_list)
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_list);
+        ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.category_manager_list);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new CategoryAdapter());
 
         ManagerHelper.execute(this, new ManagerHelper.LoaderResultInterface<List<Category>>() {
+
             @Override
             public List<Category> executeAction() throws Exception {
                 return new CategoryBusiness(CategoryListActivity.this).findAll();
@@ -54,10 +61,5 @@ public class CategoryListActivity extends BaseActivity {
                 }
             }
         });
-    }
-
-    @Override
-    public View getContainer() {
-        return (ViewGroup) getWindow().getDecorView().findViewById(android.R.id.content);
     }
 }

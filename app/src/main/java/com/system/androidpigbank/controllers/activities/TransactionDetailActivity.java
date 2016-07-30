@@ -23,8 +23,8 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.architecture.activities.BaseActivity;
-import com.system.androidpigbank.controllers.managers.LoaderResult;
-import com.system.androidpigbank.controllers.managers.ManagerHelper;
+import com.system.androidpigbank.architecture.managers.LoaderResult;
+import com.system.androidpigbank.architecture.managers.ManagerHelper;
 import com.system.androidpigbank.helpers.constant.Constants;
 import com.system.androidpigbank.models.business.CategoryBusiness;
 import com.system.androidpigbank.models.entities.Category;
@@ -154,11 +154,4 @@ public class TransactionDetailActivity extends BaseActivity {
         colors.add(ColorTemplate.getHoloBlue());
         return colors;
     }
-
-    @Override
-    public View getContainer() {
-        return container;
-    }
-
-
 }

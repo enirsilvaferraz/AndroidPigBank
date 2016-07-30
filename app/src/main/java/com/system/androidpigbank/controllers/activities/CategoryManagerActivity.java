@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -13,9 +12,9 @@ import android.widget.Spinner;
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.architecture.activities.BaseManagerActivity;
 import com.system.androidpigbank.controllers.adapters.array.CategoryColorsArrayAdapter;
-import com.system.androidpigbank.controllers.managers.LoaderResult;
-import com.system.androidpigbank.controllers.managers.ManagerHelper;
-import com.system.androidpigbank.helpers.JavaHelper;
+import com.system.androidpigbank.architecture.managers.LoaderResult;
+import com.system.androidpigbank.architecture.managers.ManagerHelper;
+import com.system.androidpigbank.architecture.helpers.JavaHelper;
 import com.system.androidpigbank.helpers.constant.Colors;
 import com.system.androidpigbank.helpers.constant.Constants;
 import com.system.androidpigbank.models.business.CategoryBusiness;
@@ -24,10 +23,19 @@ import com.system.androidpigbank.models.persistences.DaoAbs;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class CategoryManagerActivity extends BaseManagerActivity<Category> {
 
-    private AutoCompleteTextView editCategory;
-    private Spinner spColor;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.category_manager_category)
+    AutoCompleteTextView editCategory;
+
+    @BindView(R.id.category_manager_color)
+    Spinner spColor;
 
     private List<Category> categories;
 
@@ -35,15 +43,12 @@ public class CategoryManagerActivity extends BaseManagerActivity<Category> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_manager);
+        ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        CategoryColorsArrayAdapter adapter = new CategoryColorsArrayAdapter(this,
-                R.layout.item_view_holder_category_colors);
-
         spColor = (Spinner) findViewById(R.id.category_manager_color);
-        spColor.setAdapter(adapter);
+        spColor.setAdapter(new CategoryColorsArrayAdapter(this, R.layout.item_view_holder_category_colors));
         spColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -71,6 +76,17 @@ public class CategoryManagerActivity extends BaseManagerActivity<Category> {
             }
         });
 
+        if (getIntent() != null && getIntent().getExtras() != null) {
+
+            model = getIntent().getExtras().getParcelable(Constants.BUNDLE_MODEL_DEFAULT);
+
+            editCategory.setText(model.getName());
+
+            if (model.getColor() != null) {
+                spColor.setSelection(Colors.valueOf(model.getColor().name()).ordinal());
+            }
+        }
+
         ManagerHelper.execute(this, new ManagerHelper.LoaderResultInterface<List<Category>>() {
 
             @Override
@@ -88,11 +104,6 @@ public class CategoryManagerActivity extends BaseManagerActivity<Category> {
                 autocompleteCategory(data);
             }
         });
-    }
-
-    @Override
-    public View getContainer() {
-        return (ViewGroup) getWindow().getDecorView().findViewById(android.R.id.content);
     }
 
     @Override

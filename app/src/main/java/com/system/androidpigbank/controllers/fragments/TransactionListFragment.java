@@ -49,7 +49,6 @@ public class TransactionListFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
     }
 
     public void update(List<Transaction> listTransaction) {

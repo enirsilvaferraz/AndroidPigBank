@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.architecture.activities.BaseActivity;
-import com.system.androidpigbank.controllers.viewHolder.DateSectionViewHolder;
-import com.system.androidpigbank.controllers.viewHolder.FooterViewHolder;
-import com.system.androidpigbank.controllers.viewHolder.TransactionViewHolder;
+import com.system.androidpigbank.controllers.adapters.viewHolder.DateSectionViewHolder;
+import com.system.androidpigbank.controllers.adapters.viewHolder.FooterViewHolder;
+import com.system.androidpigbank.controllers.adapters.viewHolder.TransactionViewHolder;
 import com.system.androidpigbank.architecture.viewHolders.ViewHolderAbs;
 import com.system.androidpigbank.controllers.vos.DateSection;
 import com.system.androidpigbank.controllers.vos.TotalFooter;

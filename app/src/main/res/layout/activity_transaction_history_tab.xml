@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
-        app:layout_behavior="com.system.androidpigbank.controllers.behaviors.ScrollAwareFABBehavior"
+        app:layout_behavior="com.system.androidpigbank.architecture.behaviors.ScrollAwareFABBehavior"
         android:src="@drawable/ic_attach_money_white" />
 
 </android.support.design.widget.CoordinatorLayout>

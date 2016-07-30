@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.viewHolder;
+package com.system.androidpigbank.controllers.adapters.viewHolder;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -50,6 +50,8 @@ public class TransactionViewHolder extends ViewHolderAbs {
         textContent.setText(transaction.getContent());
         textDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(transaction.getDate()));
 
+        roundedTextView.setColor(((Transaction) model).getCategory().getColor());
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -60,12 +62,7 @@ public class TransactionViewHolder extends ViewHolderAbs {
 
     private void editCard(final Transaction transaction) {
         final Intent intent = new Intent(getActivity(), TransactionManagerActivity.class);
-        intent.putExtra(Constants.BUNDLE_TRANSACTION, transaction);
-//        intent.putExtra("TR_NAME", roundedTextView.getTransitionName());
-
-//        getActivity().startActivityForResult(intent, Constants.REQUEST_TRANSACTION_EDIT);
-
-//        getActivity().startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(), roundedTextView, roundedTextView.getTransitionName()).toBundle());
+        intent.putExtra(Constants.BUNDLE_MODEL_DEFAULT, transaction);
         getActivity().startActivity(intent);
     }
 }

@@ -1,12 +1,15 @@
 package com.system.androidpigbank.views;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.helpers.constant.Colors;
 
 /**
  * Created by eferraz on 03/01/16.
@@ -25,11 +28,19 @@ public class RoundedTextView extends LinearLayout {
         textView.setTextSize(20);
 
         addView(textView);
-
     }
 
     public void setTextView(final String text) {
         int size = text.length() > 2 ? 2 : text.length();
         textView.setText(text.substring(0, size));
+    }
+
+    public void setColor(Colors color){
+        if (getBackground() instanceof GradientDrawable){
+            if (color == null)
+                ((GradientDrawable) getBackground()).setColor(getContext().getColor(Colors.GRAY_300.getColorId()));
+            else
+                ((GradientDrawable) getBackground()).setColor(getContext().getColor(color.getColorId()));
+        }
     }
 }

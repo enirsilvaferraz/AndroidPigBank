@@ -1,8 +1,6 @@
-package com.system.androidpigbank.controllers.managers;
+package com.system.androidpigbank.architecture.managers;
 
 import android.support.annotation.NonNull;
-
-import com.system.androidpigbank.models.entities.EntityAbs;
 
 /**
  * Created by andersonr on 18/11/15.

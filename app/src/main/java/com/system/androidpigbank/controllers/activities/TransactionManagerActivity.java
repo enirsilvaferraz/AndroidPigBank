@@ -10,8 +10,8 @@ import android.widget.EditText;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.architecture.activities.BaseManagerActivity;
-import com.system.androidpigbank.controllers.managers.LoaderResult;
-import com.system.androidpigbank.controllers.managers.ManagerHelper;
+import com.system.androidpigbank.architecture.managers.LoaderResult;
+import com.system.androidpigbank.architecture.managers.ManagerHelper;
 import com.system.androidpigbank.helpers.constant.Constants;
 import com.system.androidpigbank.models.business.CategoryBusiness;
 import com.system.androidpigbank.models.business.TransactionBusiness;
@@ -54,7 +54,7 @@ public class TransactionManagerActivity extends BaseManagerActivity<Transaction>
 
         if (getIntent() != null && getIntent().getExtras() != null) {
 
-            model = getIntent().getExtras().getParcelable(Constants.BUNDLE_TRANSACTION);
+            model = getIntent().getExtras().getParcelable(Constants.BUNDLE_MODEL_DEFAULT);
 
             editDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(model.getDate()));
             editValue.setText(model.getValue().toString());
@@ -134,10 +134,5 @@ public class TransactionManagerActivity extends BaseManagerActivity<Transaction>
                 editContent.getText().toString().trim().isEmpty()) {
             throw new Exception("Campo obrigatório!");
         }
-    }
-
-    @Override
-    public View getContainer() {
-        return container;
     }
 }

@@ -2,17 +2,13 @@ package com.system.androidpigbank.controllers.adapters.pager;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.system.androidpigbank.controllers.adapters.recyclerv.MonthAdapter;
 import com.system.androidpigbank.controllers.fragments.CategorySummaryFragment;
 import com.system.androidpigbank.controllers.fragments.MonthFragment;
 import com.system.androidpigbank.controllers.fragments.TransactionListFragment;
-import com.system.androidpigbank.controllers.managers.LoaderResult;
 import com.system.androidpigbank.controllers.vos.HomeObject;
-
-import java.util.Calendar;
 
 public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter {
 

@@ -6,11 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import com.j256.ormlite.android.AndroidConnectionSource;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
-import com.system.androidpigbank.helpers.JavaHelper;
+import com.system.androidpigbank.architecture.helpers.JavaHelper;
 import com.system.androidpigbank.models.entities.EntityAbs;
-import com.system.androidpigbank.models.entities.Transaction;
 
 import java.sql.SQLException;
 import java.util.List;

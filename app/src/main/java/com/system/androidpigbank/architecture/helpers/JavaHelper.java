@@ -1,4 +1,4 @@
-package com.system.androidpigbank.helpers;
+package com.system.androidpigbank.architecture.helpers;
 
 import java.lang.reflect.ParameterizedType;
 

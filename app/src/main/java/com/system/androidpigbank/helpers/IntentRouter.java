@@ -15,7 +15,7 @@ public final class IntentRouter {
         context.startService(new Intent(context, BackupService.class));
     }
 
-    public static Intent startTransactionManager(Context context) {
-        return new Intent(context, TransactionManagerActivity.class);
+    public static void startTransactionManager(Context context) {
+        context.startActivity(new Intent(context, TransactionManagerActivity.class));
     }
 }

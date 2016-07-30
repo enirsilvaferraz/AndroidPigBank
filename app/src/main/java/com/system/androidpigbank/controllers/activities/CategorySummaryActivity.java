@@ -42,7 +42,7 @@ import butterknife.ButterKnife;
 
 public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
 
-    private static final List<String> ACCESS_PERMISSIONS = Arrays.asList(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE});
+    private static final List<String> ACCESS_PERMISSIONS = Arrays.asList(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     private static final int HOME_INDICATOR = 1;
 
     @BindView(R.id.container)
@@ -64,7 +64,7 @@ public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(IntentRouter.startTransactionManager(getBaseContext()));
+                IntentRouter.startTransactionManager(CategorySummaryActivity.this);
             }
         });
 
@@ -72,17 +72,14 @@ public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
         adapter.setOnItemClicked(new OnItemClickedListener());
 
         mViewPager.setAdapter(adapter);
-        mViewPager.setCurrentItem(HOME_INDICATOR);
         mViewPager.setOffscreenPageLimit(2);
 
+        Calendar calendar = Calendar.getInstance();
+        update(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
     }
 
     @Override
     protected void onStart() {
-
-        Calendar calendar = Calendar.getInstance();
-        update(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
-
         super.onStart();
     }
 
@@ -163,8 +160,9 @@ public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
             @Override
             public void onComplete(LoaderResult<HomeObject> data) {
                 if (data.isSuccess()) {
-                    ((SectionsCurrentMonthPagerAdapter)mViewPager.getAdapter()).update(data.getData());
+                    mViewPager.getAdapter().notifyDataSetChanged();
                     mViewPager.setCurrentItem(HOME_INDICATOR);
+                    ((SectionsCurrentMonthPagerAdapter)mViewPager.getAdapter()).update(data.getData());
                 } else {
                     showMessage(data.getException());
                 }
@@ -191,5 +189,4 @@ public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
             update(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
         }
     }
-
 }

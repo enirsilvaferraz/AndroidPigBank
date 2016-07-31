@@ -8,6 +8,8 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.system.androidpigbank.helpers.constant.Colors;
 
+import java.util.List;
+
 /**
  * Created by eferraz on 05/12/15.
  */
@@ -36,6 +38,10 @@ public class Category extends EntityAbs implements Parcelable {
     private Colors color;
 
     private Float amount;
+
+    private boolean expanded;
+
+    private List<Transaction> transactionList;
 
     public Category() {
     }
@@ -117,5 +123,21 @@ public class Category extends EntityAbs implements Parcelable {
         dest.writeString(this.name);
         dest.writeInt(this.color == null ? -1 : this.color.ordinal());
         dest.writeValue(this.amount);
+    }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
+    }
+
+    public List<Transaction> getTransactionList() {
+        return transactionList;
+    }
+
+    public void setTransactionList(List<Transaction> transactionList) {
+        this.transactionList = transactionList;
     }
 }

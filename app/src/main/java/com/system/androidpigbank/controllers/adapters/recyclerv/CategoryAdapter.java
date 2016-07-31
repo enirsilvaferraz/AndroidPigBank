@@ -68,6 +68,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             name.setText(item.getName());
             roundedView.setColor(item.getColor());
+            roundedView.setTextView(item.getName());
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

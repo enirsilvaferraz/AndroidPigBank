@@ -24,6 +24,8 @@
     <string name="Colors.BLACK">Black</string>
     <string name="Colors.WHITE">White</string>
 
+    <string name="Colors.GRAY_300">Light Gray</string>
+
     <string name="action_settings">Settings</string>
     <string name="action_done">Done</string>
 

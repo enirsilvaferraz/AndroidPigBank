@@ -111,9 +111,9 @@ public class CategoryManagerActivity extends BaseManagerActivity<Category> {
 
         if (model == null) {
             model = new Category();
-            model.setName(editCategory.getText().toString());
         }
 
+        model.setName(editCategory.getText().toString());
         model.setColor((Colors) spColor.getSelectedItem());
     }
 

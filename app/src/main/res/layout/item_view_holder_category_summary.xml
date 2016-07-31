@@ -1,67 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view_container"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="wrap_content"
     android:background="@color/material_white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_vertical">
-
-        <RelativeLayout
-            android:id="@+id/item_category_progress_component"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_margin="5dp"
-            android:visibility="visible">
-
-            <ProgressBar
-                android:id="@+id/item_category_progress"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:indeterminate="false"
-                android:max="100"
-                android:progressDrawable="@drawable/circular"
-                android:secondaryProgress="100"
-                tools:progress="70" />
-
-            <TextView
-                android:id="@+id/item_category_progress_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:textSize="16sp"
-                tools:text="25%" />
-
-        </RelativeLayout>
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_vertical">
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp">
 
-            <TextView
-                android:id="@+id/item_category_name"
-                style="@style/AppTheme.TextView.Card.Subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                tools:text="Category Name" />
+            <RelativeLayout
+                android:id="@+id/item_category_progress_component"
+                android:layout_width="64dp"
+                android:layout_height="64dp">
 
-            <TextView
-                android:id="@+id/item_category_range"
-                style="@style/AppTheme.TextView.Card.Content"
-                android:layout_width="wrap_content"
+                <ProgressBar
+                    android:id="@+id/item_category_progress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progressDrawable="@drawable/circular"
+                    android:secondaryProgress="100"
+                    tools:progress="70" />
+
+                <TextView
+                    android:id="@+id/item_category_progress_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    tools:text="25%" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/item_category_label_container"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/item_category_name"
+                android:layout_alignBottom="@id/item_category_progress_component"
+                android:layout_alignTop="@id/item_category_progress_component"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                tools:text="R$ 500,00 de R$ 780.00" />
+                android:layout_toEndOf="@id/item_category_progress_component"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/item_category_name"
+                    style="@style/AppTheme.TextView.Card.Subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Category Name" />
+
+                <TextView
+                    android:id="@+id/item_category_range"
+                    style="@style/AppTheme.TextView.Card.Content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/item_category_name"
+                    android:layout_marginTop="4dp"
+                    tools:text="R$ 500,00 de R$ 780.00" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/item_category_transaction_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/item_category_label_container"
+                android:layout_below="@id/item_category_label_container"
+                android:layout_marginTop="5dp"
+                android:animateLayoutChanges="true"
+                android:orientation="vertical" />
 
         </RelativeLayout>
 

@@ -78,6 +78,7 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         private void bind(Month item) {
 
             final Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.DATE, 1);
             calendar.set(Calendar.MONTH, item.getMonth());
             calendar.set(Calendar.YEAR, item.getYear());
 

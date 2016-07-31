@@ -42,6 +42,8 @@ public class CategoryBusiness extends DaoAbs<Category> {
             for (Transaction transaction : transactions) {
                 amount += transaction.getValue();
             }
+
+            category.setTransactionList(transactions);
             category.setAmount(amount.floatValue());
         }
 

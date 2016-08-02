@@ -66,7 +66,7 @@ public class CategoryManagerActivity extends BaseManagerActivity<Category> {
             }
         });
 
-        if (getIntent() != null && getIntent().getExtras() != null) {
+        if (getIntent() != null && getIntent().hasExtra(Constants.BUNDLE_MODEL_DEFAULT)) {
 
             model = getIntent().getExtras().getParcelable(Constants.BUNDLE_MODEL_DEFAULT);
 

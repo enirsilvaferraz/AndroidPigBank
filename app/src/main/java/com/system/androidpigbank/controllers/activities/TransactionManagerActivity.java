@@ -23,13 +23,35 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class TransactionManagerActivity extends BaseManagerActivity<Transaction> {
 
-    private View container;
-    private EditText editDate;
-    private EditText editValue;
-    private AutoCompleteTextView editCategory;
-    private EditText editContent;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.transaction_manager_date)
+    EditText editDate;
+
+    @BindView(R.id.transaction_manager_date_payment)
+    EditText editDatePayment;
+
+    @BindView(R.id.transaction_manager_value)
+    EditText editValue;
+
+    @BindView(R.id.transaction_manager_category)
+    AutoCompleteTextView editCategory;
+
+    @BindView(R.id.transaction_manager_category_secondary)
+    AutoCompleteTextView editCategorySecondary;
+
+    @BindView(R.id.transaction_manager_content)
+    EditText editContent;
+
+    @BindView(R.id.transaction_manager_container)
+    View container;
+
 
     private List<Category> categories;
 
@@ -38,15 +60,9 @@ public class TransactionManagerActivity extends BaseManagerActivity<Transaction>
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_manager);
+        ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        container = findViewById(R.id.transaction_manager_container);
-        editDate = (EditText) findViewById(R.id.transaction_manager_date);
-        editValue = (EditText) findViewById(R.id.transaction_manager_value);
-        editCategory = (AutoCompleteTextView) findViewById(R.id.transaction_manager_category);
-        editContent = (EditText) findViewById(R.id.transaction_manager_content);
 
         editValue.requestFocus();
 
@@ -60,8 +76,16 @@ public class TransactionManagerActivity extends BaseManagerActivity<Transaction>
             editValue.setText(model.getValue().toString());
             editCategory.setText(model.getCategory().getName());
             editContent.setText(model.getContent());
-        }
 
+            if (model.getCategorySecondary() != null){
+                editCategorySecondary.setText(model.getCategorySecondary().getName());
+            }
+
+            if (model.getDatePayment() != null) {
+                editDatePayment.setText(new SimpleDateFormat("dd/MM/yyyy").format(model.getDatePayment()));
+            }
+
+        }
 
         ManagerHelper.execute(this, new ManagerHelper.LoaderResultInterface<List<Category>>() {
 
@@ -100,11 +124,22 @@ public class TransactionManagerActivity extends BaseManagerActivity<Transaction>
         model.setValue(Double.parseDouble(editValue.getText().toString()));
         model.setContent(editContent.getText().toString());
 
+        if (!editDatePayment.getText().toString().isEmpty()) {
+            model.setDatePayment(new SimpleDateFormat("dd/MM/yyyy").parse(editDatePayment.getText().toString()));
+        }
+
         final Category category = new Category(editCategory.getText().toString());
         if (categories.contains(category)) {
             model.setCategory(categories.get(categories.indexOf(category)));
         } else {
             model.setCategory(category);
+        }
+
+        final Category categorySecondary = new Category(editCategorySecondary.getText().toString());
+        if (categories.contains(categorySecondary)) {
+            model.setCategorySecondary(categories.get(categories.indexOf(categorySecondary)));
+        } else {
+            model.setCategorySecondary(categorySecondary);
         }
     }
 
@@ -118,9 +153,8 @@ public class TransactionManagerActivity extends BaseManagerActivity<Transaction>
                 categoriesArray[i] = categories.get(i).getName();
             }
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(TransactionManagerActivity.this,
-                    android.R.layout.simple_list_item_1, categoriesArray);
-            editCategory.setAdapter(adapter);
+            editCategory.setAdapter(new ArrayAdapter<>(TransactionManagerActivity.this, android.R.layout.simple_list_item_1, categoriesArray));
+            editCategorySecondary.setAdapter(new ArrayAdapter<>(TransactionManagerActivity.this, android.R.layout.simple_list_item_1, categoriesArray));
 
         } else {
             Snackbar.make(container, data.getException().getMessage(), Snackbar.LENGTH_LONG).show();

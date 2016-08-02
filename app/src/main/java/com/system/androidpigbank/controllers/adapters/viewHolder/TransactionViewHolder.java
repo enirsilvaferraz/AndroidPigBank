@@ -45,12 +45,18 @@ public class TransactionViewHolder extends ViewHolderAbs {
         numberFormat.setMinimumFractionDigits(2);
 
         textValue.setText("R$ " + numberFormat.format(transaction.getValue()));
-        textCategory.setText(transaction.getCategory().getName());
         roundedTextView.setTextView(transaction.getCategory().getName());
         textContent.setText(transaction.getContent());
         textDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(transaction.getDate()));
 
         roundedTextView.setColor(((Transaction) model).getCategory().getColor());
+
+        String categoryName = transaction.getCategory().getName();
+        if (transaction.getCategorySecondary() !=null){
+            categoryName +=  " / " + transaction.getCategorySecondary().getName();
+        }
+
+        textCategory.setText(categoryName);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

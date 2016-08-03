@@ -38,10 +38,9 @@ public class Category extends EntityAbs implements Parcelable {
     private Colors color;
 
     private Float amount;
-
     private boolean expanded;
-
     private List<Transaction> transactionList;
+    private List<Transaction> transactionSecundaryList;
 
     public Category() {
     }
@@ -61,6 +60,9 @@ public class Category extends EntityAbs implements Parcelable {
         int tmpColor = in.readInt();
         this.color = tmpColor == -1 ? null : Colors.values()[tmpColor];
         this.amount = (Float) in.readValue(Float.class.getClassLoader());
+        this.expanded = in.readByte() != 0;
+        this.transactionList = in.createTypedArrayList(Transaction.CREATOR);
+        this.transactionSecundaryList = in.createTypedArrayList(Transaction.CREATOR);
     }
 
     public String getName() {
@@ -96,7 +98,6 @@ public class Category extends EntityAbs implements Parcelable {
         Category category = (Category) o;
 
         return !(getName() != null ? !getName().equals(category.getName()) : category.getName() != null);
-
     }
 
     @Override
@@ -112,17 +113,12 @@ public class Category extends EntityAbs implements Parcelable {
         this.color = color;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public List<Transaction> getTransactionSecundaryList() {
+        return transactionSecundaryList;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(this.id);
-        dest.writeString(this.name);
-        dest.writeInt(this.color == null ? -1 : this.color.ordinal());
-        dest.writeValue(this.amount);
+    public void setTransactionSecundaryList(List<Transaction> transactionSecundaryList) {
+        this.transactionSecundaryList = transactionSecundaryList;
     }
 
     public boolean isExpanded() {
@@ -139,5 +135,21 @@ public class Category extends EntityAbs implements Parcelable {
 
     public void setTransactionList(List<Transaction> transactionList) {
         this.transactionList = transactionList;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
+        dest.writeString(this.name);
+        dest.writeInt(this.color == null ? -1 : this.color.ordinal());
+        dest.writeValue(this.amount);
+        dest.writeByte(this.expanded ? (byte) 1 : (byte) 0);
+        dest.writeTypedList(this.transactionList);
+        dest.writeTypedList(this.transactionSecundaryList);
     }
 }

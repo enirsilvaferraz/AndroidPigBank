@@ -6,6 +6,7 @@ import com.j256.ormlite.android.AndroidConnectionSource;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.system.androidpigbank.controllers.vos.Month;
@@ -83,10 +84,6 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
 
     public List<Transaction> findByCategory(Category category, int month, int year) throws SQLException {
 
-        ConnectionSource connection = new AndroidConnectionSource(db);
-        Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);
-        QueryBuilder<Transaction, String> queryTransaction = dao.queryBuilder();
-
         Calendar cInit = Calendar.getInstance();
         cInit.set(Calendar.YEAR, year);
         cInit.set(Calendar.DATE, 1); // Evita avancar o mes (31)
@@ -105,15 +102,30 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         cEnd.set(Calendar.MINUTE, cEnd.getActualMaximum(Calendar.MINUTE));
         cEnd.set(Calendar.SECOND, cEnd.getActualMaximum(Calendar.SECOND));
 
-        queryTransaction.where().between("date", cInit.getTime(), cEnd.getTime());
+        ConnectionSource connection = new AndroidConnectionSource(db);
 
-        Dao<Category, String> categoryDao = DaoManager.createDao(connection, Category.class);
-        QueryBuilder<Category, String> queryCategory = categoryDao.queryBuilder();
-        queryCategory.where().eq("id", category.getId());
+        Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);
+        QueryBuilder<Transaction, String> queryTransaction = dao.queryBuilder();
+//        queryTransaction.where()
+//                .between("date", cInit.getTime(), cEnd.getTime())
+//                .and().eq("category_id", category.getId())
+//                .or().eq("categorySecondary_id", category.getId());
 
-        List<Transaction> results = queryTransaction.join(queryCategory).query();
+        Where<Transaction, String> where = queryTransaction.where();
+
+        where.and(
+                where.between("date", cInit.getTime(), cEnd.getTime()),
+                where.or(
+                        where.eq("category_id", category.getId()),
+                        where.eq("categorySecondary_id", category.getId())
+                )
+        );
+
+        queryTransaction.orderBy("date", true);
+
+        List<Transaction> results = queryTransaction.query();
+
         connection.close();
-
         return results;
     }
 
@@ -131,11 +143,11 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         return transaction;
     }
 
-    public List<Month> getMonthWithTransaction(int year) throws SQLException  {
+    public List<Month> getMonthWithTransaction(int year) throws SQLException {
 
         List<Month> list = new ArrayList<>();
 
-        for(int month = 11; month >= 0; month--) {
+        for (int month = 11; month >= 0; month--) {
             List<Transaction> transactions = getTransactionByMonth(month, year);
 
             Double amount = 0D;
@@ -143,7 +155,7 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
                 amount += transaction.getValue();
             }
 
-            if (amount > 0){
+            if (amount > 0) {
                 list.add(new Month(month, year, amount));
             }
         }

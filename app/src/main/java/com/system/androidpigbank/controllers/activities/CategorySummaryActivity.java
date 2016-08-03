@@ -141,7 +141,7 @@ public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
             public HomeObject executeAction() throws Exception {
 
                 HomeObject object = new HomeObject();
-                object.setListCategorySummary(new CategoryBusiness(CategorySummaryActivity.this).getChartDataByMonth(month, year));
+                object.setListCategorySummary(new CategoryBusiness(CategorySummaryActivity.this).getSummaryCategoryByMonth(month, year));
                 object.setListTransaction(new TransactionBusiness(CategorySummaryActivity.this).getTransactionByMonth(month, year));
                 object.setListMonth(new TransactionBusiness(CategorySummaryActivity.this).getMonthWithTransaction(year));
                 return object;

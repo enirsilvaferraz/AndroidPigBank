@@ -32,7 +32,7 @@ public class CategoryBusiness extends DaoAbs<Category> {
         }
     }
 
-    public List<Category> getChartDataByMonth(int month, int year) throws Exception {
+    public List<Category> getSummaryCategoryByMonth(int month, int year) throws Exception {
 
         List<Category> categories = findAll();
         for (Category category : categories) {

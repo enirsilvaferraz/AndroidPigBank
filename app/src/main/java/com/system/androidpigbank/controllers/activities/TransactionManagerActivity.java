@@ -12,6 +12,7 @@ import com.system.androidpigbank.R;
 import com.system.androidpigbank.architecture.activities.BaseManagerActivity;
 import com.system.androidpigbank.architecture.managers.LoaderResult;
 import com.system.androidpigbank.architecture.managers.ManagerHelper;
+import com.system.androidpigbank.architecture.utils.JavaUtils;
 import com.system.androidpigbank.helpers.constant.Constants;
 import com.system.androidpigbank.models.business.CategoryBusiness;
 import com.system.androidpigbank.models.business.TransactionBusiness;
@@ -19,7 +20,6 @@ import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.models.persistences.DaoAbs;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -66,23 +66,23 @@ public class TransactionManagerActivity extends BaseManagerActivity<Transaction>
 
         editValue.requestFocus();
 
-        editDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()));
+        editDate.setText(JavaUtils.DateUtil.format(Calendar.getInstance().getTime()));
 
-        if (getIntent() != null && getIntent().getExtras() != null) {
+        if (getIntent() != null && getIntent().hasExtra(Constants.BUNDLE_MODEL_DEFAULT)) {
 
             model = getIntent().getExtras().getParcelable(Constants.BUNDLE_MODEL_DEFAULT);
 
-            editDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(model.getDate()));
+            editDate.setText(JavaUtils.DateUtil.format(model.getDate()));
             editValue.setText(model.getValue().toString());
             editCategory.setText(model.getCategory().getName());
             editContent.setText(model.getContent());
 
-            if (model.getCategorySecondary() != null){
+            if (model.getCategorySecondary() != null) {
                 editCategorySecondary.setText(model.getCategorySecondary().getName());
             }
 
             if (model.getDatePayment() != null) {
-                editDatePayment.setText(new SimpleDateFormat("dd/MM/yyyy").format(model.getDatePayment()));
+                editDatePayment.setText(JavaUtils.DateUtil.format(model.getDatePayment()));
             }
 
         }
@@ -120,12 +120,12 @@ public class TransactionManagerActivity extends BaseManagerActivity<Transaction>
             model = new Transaction();
         }
 
-        model.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(editDate.getText().toString()));
+        model.setDate(JavaUtils.DateUtil.parse(editDate.getText().toString()));
         model.setValue(Double.parseDouble(editValue.getText().toString()));
         model.setContent(editContent.getText().toString());
 
         if (!editDatePayment.getText().toString().isEmpty()) {
-            model.setDatePayment(new SimpleDateFormat("dd/MM/yyyy").parse(editDatePayment.getText().toString()));
+            model.setDatePayment(JavaUtils.DateUtil.parse(editDatePayment.getText().toString()));
         }
 
         final Category category = new Category(editCategory.getText().toString());

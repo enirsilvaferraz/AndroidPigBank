@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.system.androidpigbank.controllers.adapters.recyclerv.MonthAdapter;
 import com.system.androidpigbank.controllers.fragments.CategorySummaryFragment;
+import com.system.androidpigbank.controllers.fragments.ChartFragment;
 import com.system.androidpigbank.controllers.fragments.MonthFragment;
 import com.system.androidpigbank.controllers.fragments.TransactionListFragment;
 import com.system.androidpigbank.controllers.vos.HomeObject;
@@ -15,6 +16,7 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter 
     private CategorySummaryFragment categoryFragment;
     private TransactionListFragment transactionFragment;
     private MonthFragment monthFragment;
+    private ChartFragment chartFragment;
 
     private MonthAdapter.OnItemClicked onItemClicked;
 
@@ -38,6 +40,10 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter 
             monthFragment.setOnItemClicked(onItemClicked);
         }
 
+        if (chartFragment == null){
+            chartFragment = new ChartFragment().newInstance();
+        }
+
         Fragment fragment = null;
 
         switch (position) {
@@ -50,6 +56,10 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter 
                 break;
 
             case 2:
+                fragment = chartFragment;
+                break;
+
+            case 3:
                 fragment = monthFragment;
                 break;
         }
@@ -59,7 +69,7 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter 
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -77,12 +87,16 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter 
             categoryFragment.update(data.getListCategorySummary());
         }
 
-        if (categoryFragment != null) {
+        if (transactionFragment != null) {
             transactionFragment.update(data.getListTransaction());
         }
 
-        if (categoryFragment != null) {
+        if (monthFragment != null) {
             monthFragment.update(data.getListMonth());
+        }
+
+        if (chartFragment != null) {
+            chartFragment.update(data.getListCategorySummary());
         }
     }
 

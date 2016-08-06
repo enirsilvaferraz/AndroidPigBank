@@ -68,7 +68,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
         adapter.setOnItemClicked(new OnItemClickedListener());
 
         mViewPager.setAdapter(adapter);
-        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setOffscreenPageLimit(3);
 
         Calendar calendar = Calendar.getInstance();
         update(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));

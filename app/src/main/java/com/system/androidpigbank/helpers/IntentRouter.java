@@ -3,7 +3,10 @@ package com.system.androidpigbank.helpers;
 import android.content.Context;
 import android.content.Intent;
 
+import com.system.androidpigbank.architecture.activities.BaseNavigationDrawerActivity;
+import com.system.androidpigbank.controllers.activities.CategoryListActivity;
 import com.system.androidpigbank.controllers.activities.CategoryManagerActivity;
+import com.system.androidpigbank.controllers.activities.FixedTransactionManagerActivity;
 import com.system.androidpigbank.controllers.activities.TransactionManagerActivity;
 import com.system.androidpigbank.helpers.constant.Constants;
 import com.system.androidpigbank.models.business.BackupService;
@@ -26,5 +29,13 @@ public final class IntentRouter {
         Intent intent = new Intent(context, CategoryManagerActivity.class);
         intent.putExtra(Constants.BUNDLE_MODEL_DEFAULT, model);
         context.startActivity(intent);
+    }
+
+    public static void startCategoryList(Context context) {
+        context.startActivity(new Intent(context, CategoryListActivity.class));
+    }
+
+    public static void startFixedTransactionManager(Context context) {
+        context.startActivity(new Intent(context, FixedTransactionManagerActivity.class));
     }
 }

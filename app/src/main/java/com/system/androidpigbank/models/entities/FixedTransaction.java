@@ -6,31 +6,25 @@ import android.os.Parcelable;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.util.Date;
-
 /**
  * Created by eferraz on 05/12/15.
  */
-@DatabaseTable(tableName = "transaction")
-public class Transaction extends EntityAbs implements Parcelable {
+@DatabaseTable(tableName = "fixed_transaction")
+public class FixedTransaction extends EntityAbs implements Parcelable {
 
-    public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
+    public static final Creator<FixedTransaction> CREATOR = new Creator<FixedTransaction>() {
         @Override
-        public Transaction createFromParcel(Parcel source) {
-            return new Transaction(source);
+        public FixedTransaction createFromParcel(Parcel source) {
+            return new FixedTransaction(source);
         }
 
         @Override
-        public Transaction[] newArray(int size) {
-            return new Transaction[size];
+        public FixedTransaction[] newArray(int size) {
+            return new FixedTransaction[size];
         }
     };
     @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
     private Long id;
-    @DatabaseField
-    private Date date;
-    @DatabaseField
-    private Date datePayment;
     @DatabaseField
     private Double value;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
@@ -40,27 +34,16 @@ public class Transaction extends EntityAbs implements Parcelable {
     @DatabaseField
     private String content;
 
-    public Transaction() {
+
+    public FixedTransaction() {
     }
 
-    protected Transaction(Parcel in) {
+    protected FixedTransaction(Parcel in) {
         this.id = (Long) in.readValue(Long.class.getClassLoader());
-        long tmpDate = in.readLong();
-        this.date = tmpDate == -1 ? null : new Date(tmpDate);
-        long tmpDatePayment = in.readLong();
-        this.datePayment = tmpDatePayment == -1 ? null : new Date(tmpDatePayment);
         this.value = (Double) in.readValue(Double.class.getClassLoader());
         this.category = in.readParcelable(Category.class.getClassLoader());
         this.categorySecondary = in.readParcelable(Category.class.getClassLoader());
         this.content = in.readString();
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public Double getValue() {
@@ -95,14 +78,6 @@ public class Transaction extends EntityAbs implements Parcelable {
         this.id = id;
     }
 
-    public Date getDatePayment() {
-        return datePayment;
-    }
-
-    public void setDatePayment(Date datePayment) {
-        this.datePayment = datePayment;
-    }
-
     public Category getCategorySecondary() {
         return categorySecondary;
     }
@@ -119,8 +94,6 @@ public class Transaction extends EntityAbs implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(this.id);
-        dest.writeLong(this.date != null ? this.date.getTime() : -1);
-        dest.writeLong(this.datePayment != null ? this.datePayment.getTime() : -1);
         dest.writeValue(this.value);
         dest.writeParcelable(this.category, flags);
         dest.writeParcelable(this.categorySecondary, flags);

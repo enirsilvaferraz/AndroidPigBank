@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.activities.CategoryListActivity;
+import com.system.androidpigbank.helpers.IntentRouter;
 
 /**
  * Created by eferraz on 08/07/16.
@@ -57,7 +58,11 @@ public abstract class BaseNavigationDrawerActivity extends BaseActivity implemen
 //                break;
 
             case R.id.nav_act_category:
-                startActivity(new Intent(this, CategoryListActivity.class));
+                IntentRouter.startCategoryList(this);
+                break;
+
+            case R.id.nav_act_fixed_transaction:
+                IntentRouter.startFixedTransactionManager(this);
                 break;
         }
 

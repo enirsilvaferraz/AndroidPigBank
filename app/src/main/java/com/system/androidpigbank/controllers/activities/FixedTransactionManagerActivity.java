@@ -12,45 +12,38 @@ import com.system.androidpigbank.R;
 import com.system.androidpigbank.architecture.activities.BaseManagerActivity;
 import com.system.androidpigbank.architecture.managers.LoaderResult;
 import com.system.androidpigbank.architecture.managers.ManagerHelper;
-import com.system.androidpigbank.architecture.utils.JavaUtils;
 import com.system.androidpigbank.helpers.constant.Constants;
 import com.system.androidpigbank.models.business.CategoryBusiness;
+import com.system.androidpigbank.models.business.FixedTransactionBusiness;
 import com.system.androidpigbank.models.business.TransactionBusiness;
 import com.system.androidpigbank.models.entities.Category;
-import com.system.androidpigbank.models.entities.Transaction;
+import com.system.androidpigbank.models.entities.FixedTransaction;
 import com.system.androidpigbank.models.persistences.DaoAbs;
 
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TransactionManagerActivity extends BaseManagerActivity<Transaction> {
+public class FixedTransactionManagerActivity extends BaseManagerActivity<FixedTransaction> {
+
+    @BindView(R.id.fixed_transaction_manager_container)
+    View container;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.transaction_manager_date)
-    EditText editDate;
-
-    @BindView(R.id.transaction_manager_date_payment)
-    EditText editDatePayment;
-
-    @BindView(R.id.transaction_manager_value)
+    @BindView(R.id.fixed_transaction_manager_value)
     EditText editValue;
 
-    @BindView(R.id.transaction_manager_category)
+    @BindView(R.id.fixed_transaction_manager_category)
     AutoCompleteTextView editCategory;
 
-    @BindView(R.id.transaction_manager_category_secondary)
+    @BindView(R.id.fixed_transaction_manager_category_secondary)
     AutoCompleteTextView editCategorySecondary;
 
-    @BindView(R.id.transaction_manager_content)
+    @BindView(R.id.fixed_transaction_manager_content)
     EditText editContent;
-
-    @BindView(R.id.transaction_manager_container)
-    View container;
 
     private List<Category> categories;
 
@@ -58,24 +51,19 @@ public class TransactionManagerActivity extends BaseManagerActivity<Transaction>
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transaction_manager);
+        setContentView(R.layout.activity_fixed_transaction_manager);
         ButterKnife.bind(this);
-
         setSupportActionBar(toolbar);
 
         editValue.requestFocus();
 
-        editDate.setText(JavaUtils.DateUtil.format(Calendar.getInstance().getTime()));
-
         if (getIntent() != null && getIntent().hasExtra(Constants.BUNDLE_MODEL_DEFAULT)) {
             model = getIntent().getExtras().getParcelable(Constants.BUNDLE_MODEL_DEFAULT);
             if (model != null) {
-                editDate.setText(JavaUtils.DateUtil.format(model.getDate()));
                 editValue.setText(String.valueOf(model.getValue()));
                 editCategory.setText(model.getCategory().getName());
                 editContent.setText(model.getContent());
                 editCategorySecondary.setText(model.getCategorySecondary() != null ? model.getCategorySecondary().getName() : null);
-                editDatePayment.setText(model.getDatePayment() != null ? JavaUtils.DateUtil.format(model.getDatePayment()) : null);
             }
         }
 
@@ -83,7 +71,7 @@ public class TransactionManagerActivity extends BaseManagerActivity<Transaction>
 
             @Override
             public List<Category> executeAction() throws Exception {
-                return new CategoryBusiness(TransactionManagerActivity.this).findAll();
+                return new CategoryBusiness(FixedTransactionManagerActivity.this).findAll();
             }
 
             @Override
@@ -99,8 +87,8 @@ public class TransactionManagerActivity extends BaseManagerActivity<Transaction>
     }
 
     @Override
-    protected DaoAbs<Transaction> getBusinessInstance() {
-        return new TransactionBusiness(this);
+    protected DaoAbs<FixedTransaction> getBusinessInstance() {
+        return new FixedTransactionBusiness(this);
     }
 
     @Override
@@ -109,16 +97,11 @@ public class TransactionManagerActivity extends BaseManagerActivity<Transaction>
         validateFields();
 
         if (model == null) {
-            model = new Transaction();
+            model = new FixedTransaction();
         }
 
-        model.setDate(JavaUtils.DateUtil.parse(editDate.getText().toString()));
         model.setValue(Double.parseDouble(editValue.getText().toString()));
         model.setContent(editContent.getText().toString());
-
-        if (!editDatePayment.getText().toString().isEmpty()) {
-            model.setDatePayment(JavaUtils.DateUtil.parse(editDatePayment.getText().toString()));
-        }
 
         final Category category = new Category(editCategory.getText().toString());
         if (categories.contains(category)) {
@@ -145,8 +128,8 @@ public class TransactionManagerActivity extends BaseManagerActivity<Transaction>
                 categoriesArray[i] = categories.get(i).getName();
             }
 
-            editCategory.setAdapter(new ArrayAdapter<>(TransactionManagerActivity.this, android.R.layout.simple_list_item_1, categoriesArray));
-            editCategorySecondary.setAdapter(new ArrayAdapter<>(TransactionManagerActivity.this, android.R.layout.simple_list_item_1, categoriesArray));
+            editCategory.setAdapter(new ArrayAdapter<>(FixedTransactionManagerActivity.this, android.R.layout.simple_list_item_1, categoriesArray));
+            editCategorySecondary.setAdapter(new ArrayAdapter<>(FixedTransactionManagerActivity.this, android.R.layout.simple_list_item_1, categoriesArray));
 
         } else {
             Snackbar.make(container, data.getException().getMessage(), Snackbar.LENGTH_LONG).show();
@@ -154,9 +137,7 @@ public class TransactionManagerActivity extends BaseManagerActivity<Transaction>
     }
 
     private void validateFields() throws Exception {
-        if (editDate.getText().toString().trim().isEmpty() ||
-                editValue.getText().toString().trim().isEmpty() ||
-                editCategory.getText().toString().trim().isEmpty() ||
+        if (editCategory.getText().toString().trim().isEmpty() ||
                 editContent.getText().toString().trim().isEmpty()) {
             throw new Exception("Campo obrigatório!");
         }

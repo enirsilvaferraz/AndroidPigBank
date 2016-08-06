@@ -85,7 +85,7 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             calendar.set(Calendar.MONTH, item.getMonth());
             calendar.set(Calendar.YEAR, item.getYear());
 
-            tvMonth.setText(JavaUtils.DateUtil.format(calendar.getTime(), JavaUtils.DateUtil.MMMM_YYYY));
+            tvMonth.setText(JavaUtils.DateUtil.format(calendar.getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));
             tvTotal.setText(JavaUtils.NumberUtil.currencyFormat(item.getValue().toString()));
 
             itemView.setOnClickListener(new View.OnClickListener() {

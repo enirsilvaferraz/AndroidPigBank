@@ -23,13 +23,6 @@ public class CategoryBusiness extends DaoAbs<Category> {
 
     public CategoryBusiness(Context context) {
         super(context);
-
-        try {
-            ConnectionSource connectionSource = new AndroidConnectionSource(db);
-            TableUtils.createTableIfNotExists(connectionSource, Category.class);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public List<Category> getSummaryCategoryByMonth(int month, int year) throws Exception {

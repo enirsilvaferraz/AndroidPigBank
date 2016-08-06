@@ -17,6 +17,12 @@
                 android:icon="@drawable/ic_palette_black"
                 android:title="@string/title_activity_category_manager" />
 
+            <item
+                android:id="@+id/nav_act_fixed_transaction"
+                android:icon="@drawable/ic_palette_black"
+                android:title="@string/title_activity_fixed_transaction_manager"
+                android:visible="false"/>
+
         </menu>
     </item>
 

@@ -1,18 +1,12 @@
 package com.system.androidpigbank.views;
 
 import android.content.Context;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.architecture.utils.JavaUtils;
 import com.system.androidpigbank.models.entities.Transaction;
-
-import java.text.NumberFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

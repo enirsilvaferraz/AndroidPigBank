@@ -26,20 +26,17 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
 
     public TransactionBusiness(Context context) {
         super(context);
-
-        try {
-            ConnectionSource connectionSource = new AndroidConnectionSource(db);
-            TableUtils.createTableIfNotExists(connectionSource, Category.class);
-            TableUtils.createTableIfNotExists(connectionSource, Transaction.class);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public Transaction save(Transaction transaction) throws SQLException {
 
         if (transaction.getCategory().getId() == null) {
             Category category = new CategoryBusiness(getContext()).save(transaction.getCategory());
+            transaction.setCategory(category);
+        }
+
+        if (transaction.getCategorySecondary() != null && transaction.getCategorySecondary().getId() == null) {
+            Category category = new CategoryBusiness(getContext()).save(transaction.getCategorySecondary());
             transaction.setCategory(category);
         }
 

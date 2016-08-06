@@ -47,5 +47,6 @@
 
     <string name="message_saved_sucess">Saved!</string>
     <string name="message_delete_sucess">Deleted!</string>
+    <string name="title_activity_fixed_transaction_manager">Despesas Fixas</string>
 
 </resources>

@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.architecture.activities.BaseNavigationDrawerActivity;
+import com.system.androidpigbank.architecture.utils.JavaUtils;
 import com.system.androidpigbank.controllers.adapters.pager.SectionsCurrentMonthPagerAdapter;
 import com.system.androidpigbank.controllers.adapters.recyclerv.MonthAdapter;
 import com.system.androidpigbank.architecture.managers.LoaderResult;
@@ -35,7 +36,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
+public class HomeActivity extends BaseNavigationDrawerActivity {
 
     private static final List<String> ACCESS_PERMISSIONS = Arrays.asList(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     private static final int HOME_INDICATOR = 1;
@@ -59,7 +60,7 @@ public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentRouter.startTransactionManager(CategorySummaryActivity.this);
+                IntentRouter.startTransactionManager(HomeActivity.this);
             }
         });
 
@@ -123,7 +124,7 @@ public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
 
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                PermissionHelper.callAppSettings(CategorySummaryActivity.this);
+                                PermissionHelper.callAppSettings(HomeActivity.this);
                             }
                         })
                         .setNegativeButton(R.string.system_cancel, null)
@@ -141,9 +142,9 @@ public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
             public HomeObject executeAction() throws Exception {
 
                 HomeObject object = new HomeObject();
-                object.setListCategorySummary(new CategoryBusiness(CategorySummaryActivity.this).getSummaryCategoryByMonth(month, year));
-                object.setListTransaction(new TransactionBusiness(CategorySummaryActivity.this).getTransactionByMonth(month, year));
-                object.setListMonth(new TransactionBusiness(CategorySummaryActivity.this).getMonthWithTransaction(year));
+                object.setListCategorySummary(new CategoryBusiness(HomeActivity.this).getSummaryCategoryByMonth(month, year));
+                object.setListTransaction(new TransactionBusiness(HomeActivity.this).getTransactionByMonth(month, year));
+                object.setListMonth(new TransactionBusiness(HomeActivity.this).getMonthWithTransaction(year));
                 return object;
             }
 
@@ -173,9 +174,7 @@ public class CategorySummaryActivity extends BaseNavigationDrawerActivity {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
 
-            final String title = new SimpleDateFormat("MMMM 'de' yyyy").format(calendar.getTime());
-            setTitle(title.substring(0, 1).toUpperCase() + title.substring(1));
-
+            setTitle(JavaUtils.DateUtil.format(calendar.getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));
             update(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
         }
     }

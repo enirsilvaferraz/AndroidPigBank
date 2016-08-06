@@ -29,6 +29,7 @@ import butterknife.ButterKnife;
  * Created by eferraz on 06/08/16.
  */
 
+@Deprecated
 public class ChartFragment extends Fragment {
 
     @BindView(R.id.chart)

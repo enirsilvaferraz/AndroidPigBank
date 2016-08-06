@@ -27,40 +27,45 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter 
     @Override
     public Fragment getItem(int position) {
 
-        if (categoryFragment == null) {
-            categoryFragment = CategorySummaryFragment.newInstance();
-        }
-
-        if (transactionFragment == null) {
-            transactionFragment = TransactionListFragment.newInstance();
-        }
-
-        if (monthFragment == null) {
-            monthFragment = MonthFragment.newInstance();
-            monthFragment.setOnItemClicked(onItemClicked);
-        }
-
-        if (chartFragment == null){
-            chartFragment = new ChartFragment().newInstance();
-        }
-
         Fragment fragment = null;
 
         switch (position) {
+
             case 0:
+
+                if (categoryFragment == null) {
+                    categoryFragment = CategorySummaryFragment.newInstance();
+                }
+
                 fragment = categoryFragment;
                 break;
 
             case 1:
+
+                if (transactionFragment == null) {
+                    transactionFragment = TransactionListFragment.newInstance();
+                }
+
                 fragment = transactionFragment;
                 break;
 
             case 2:
-                fragment = chartFragment;
+
+                if (monthFragment == null) {
+                    monthFragment = MonthFragment.newInstance();
+                    monthFragment.setOnItemClicked(onItemClicked);
+                }
+
+                fragment = monthFragment;
                 break;
 
             case 3:
-                fragment = monthFragment;
+
+                if (chartFragment == null){
+                    chartFragment = new ChartFragment().newInstance();
+                }
+
+                fragment = chartFragment;
                 break;
         }
 
@@ -69,7 +74,7 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter 
 
     @Override
     public int getCount() {
-        return 4;
+        return 3;
     }
 
     @Override

@@ -32,6 +32,7 @@ import com.system.androidpigbank.models.entities.Category;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class TransactionDetailActivity extends BaseActivity {
 
     private View container;

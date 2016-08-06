@@ -11,20 +11,11 @@
 
     <item android:title="Menu">
         <menu>
-            <item
-                android:id="@+id/nav_act_detail"
-                android:icon="@drawable/ic_assessment_white"
-                android:title="@string/title_activity_transaction_detail" />
 
             <item
                 android:id="@+id/nav_act_category"
                 android:icon="@drawable/ic_palette_black"
                 android:title="@string/title_activity_category_manager" />
-
-            <item
-                android:id="@+id/nav_act_transaction_history"
-                android:icon="@drawable/ic_palette_black"
-                android:title="@string/title_activity_transaction_history" />
 
         </menu>
     </item>

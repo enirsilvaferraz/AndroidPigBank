@@ -8,11 +8,9 @@ import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.architecture.activities.BaseActivity;
-import com.system.androidpigbank.controllers.adapters.viewHolder.DateSectionViewHolder;
 import com.system.androidpigbank.controllers.adapters.viewHolder.FooterViewHolder;
 import com.system.androidpigbank.controllers.adapters.viewHolder.TransactionViewHolder;
 import com.system.androidpigbank.architecture.viewHolders.ViewHolderAbs;
-import com.system.androidpigbank.controllers.vos.DateSection;
 import com.system.androidpigbank.controllers.vos.TotalFooter;
 import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.entities.Transaction;
@@ -40,9 +38,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
 
         int resId;
-        if (TransactionViewType.SECTION.ordinal() == viewType) {
-            resId = R.layout.item_view_holder_date_section;
-        } else if (TransactionViewType.FOOTER.ordinal() == viewType) {
+        if (TransactionViewType.FOOTER.ordinal() == viewType) {
             resId = R.layout.item_view_holder_total;
         } else {
             resId = R.layout.item_view_holder_transaction;
@@ -60,10 +56,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public int getItemViewType(int position) {
 
-        if (getItens().get(position) instanceof Transaction) {
+        if (itens.get(position) instanceof Transaction) {
             return TransactionViewType.CARD.ordinal();
-        } else if (getItens().get(position) instanceof DateSection) {
-            return TransactionViewType.SECTION.ordinal();
         } else {
             return TransactionViewType.FOOTER.ordinal();
         }
@@ -74,15 +68,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return itens.size();
     }
 
-    public List<EntityAbs> getItens() {
-        return itens;
-    }
+    private ViewHolderAbs getViewHolderInstance(View v, int viewType) {
 
-    protected ViewHolderAbs getViewHolderInstance(View v, int viewType) {
-
-        if (TransactionViewType.SECTION.ordinal() == viewType) {
-            return new DateSectionViewHolder(v);
-        } else if (TransactionViewType.FOOTER.ordinal() == viewType) {
+        if (TransactionViewType.FOOTER.ordinal() == viewType) {
             return new FooterViewHolder(v);
         } else {
             return new TransactionViewHolder(v, activity, this);
@@ -95,7 +83,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         notifyDataSetChanged();
     }
 
-    protected List<EntityAbs> organizeItens(List<Transaction> itens) {
+    private List<EntityAbs> organizeItens(List<Transaction> itens) {
 
         List<EntityAbs> newList = new ArrayList<>();
 
@@ -119,15 +107,15 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public void removeItem(Transaction data) {
-        int index = getItens().indexOf(data);
-        getItens().remove(index);
+        int index = itens.indexOf(data);
+        itens.remove(index);
         notifyItemRemoved(index);
         ((BaseActivity) activity).showMessage(R.string.message_delete_sucess);
     }
 
-    public enum TransactionViewType {
+    private enum TransactionViewType {
 
-        CARD(false), SECTION(true), FOOTER(true);
+        CARD(false), FOOTER(true);
 
         private boolean fullSpan;
 

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.architecture.utils.JavaUtils;
 import com.system.androidpigbank.architecture.viewHolders.ViewHolderAbs;
 import com.system.androidpigbank.controllers.activities.TransactionManagerActivity;
 import com.system.androidpigbank.helpers.constant.Constants;
@@ -14,12 +15,8 @@ import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.views.RoundedTextView;
 
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-
 public class TransactionViewHolder extends ViewHolderAbs {
 
-    private View containerAct;
     private TextView textValue;
     private TextView textCategory;
     private TextView textContent;
@@ -41,19 +38,17 @@ public class TransactionViewHolder extends ViewHolderAbs {
     public void bind(final EntityAbs model) {
 
         final Transaction transaction = (Transaction) model;
-        final NumberFormat numberFormat = NumberFormat.getInstance();
-        numberFormat.setMinimumFractionDigits(2);
 
-        textValue.setText("R$ " + numberFormat.format(transaction.getValue()));
+        textValue.setText(JavaUtils.NumberUtil.currencyFormat(transaction.getValue()));
         roundedTextView.setTextView(transaction.getCategory().getName());
         textContent.setText(transaction.getContent());
-        textDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(transaction.getDate()));
+        textDate.setText(JavaUtils.DateUtil.format(transaction.getDate()));
 
         roundedTextView.setColor(((Transaction) model).getCategory().getColor());
 
         String categoryName = transaction.getCategory().getName();
-        if (transaction.getCategorySecondary() !=null){
-            categoryName +=  " / " + transaction.getCategorySecondary().getName();
+        if (transaction.getCategorySecondary() != null) {
+            categoryName += " / " + transaction.getCategorySecondary().getName();
         }
 
         textCategory.setText(categoryName);

@@ -2,7 +2,6 @@ package com.system.androidpigbank.views;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.LinearLayout;
@@ -21,7 +20,7 @@ public class RoundedTextView extends LinearLayout {
     public RoundedTextView(final Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        setBackgroundResource(R.drawable.drawable_rounded);
+        setBackgroundResource(R.drawable.custom_drawable_rounded);
         setGravity(Gravity.CENTER);
 
         textView = new TextView(context);

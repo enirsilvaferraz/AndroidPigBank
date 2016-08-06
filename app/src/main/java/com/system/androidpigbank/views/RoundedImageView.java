@@ -20,7 +20,7 @@ public class RoundedImageView extends LinearLayout {
     public RoundedImageView(final Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        setBackgroundResource(R.drawable.drawable_rounded);
+        setBackgroundResource(R.drawable.custom_drawable_rounded);
         setGravity(Gravity.CENTER);
 
         imageView = new ImageView(context);

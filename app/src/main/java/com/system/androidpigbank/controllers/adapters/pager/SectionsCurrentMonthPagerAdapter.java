@@ -61,8 +61,8 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter 
 
             case 3:
 
-                if (chartFragment == null){
-                    chartFragment = new ChartFragment().newInstance();
+                if (chartFragment == null) {
+                    chartFragment = ChartFragment.newInstance();
                 }
 
                 fragment = chartFragment;

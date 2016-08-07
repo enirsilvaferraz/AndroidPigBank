@@ -60,10 +60,6 @@ public abstract class BaseNavigationDrawerActivity extends BaseActivity implemen
             case R.id.nav_act_category:
                 IntentRouter.startCategoryList(this);
                 break;
-
-            case R.id.nav_act_fixed_transaction:
-                IntentRouter.startFixedTransactionManager(this);
-                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

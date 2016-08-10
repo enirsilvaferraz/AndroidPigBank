@@ -11,7 +11,7 @@ import com.system.androidpigbank.architecture.activities.BaseActivity;
 import com.system.androidpigbank.controllers.adapters.recyclerv.CategoryAdapter;
 import com.system.androidpigbank.architecture.managers.LoaderResult;
 import com.system.androidpigbank.architecture.managers.ManagerHelper;
-import com.system.androidpigbank.helpers.constant.Constants;
+import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.models.business.CategoryBusiness;
 import com.system.androidpigbank.models.entities.Category;
 

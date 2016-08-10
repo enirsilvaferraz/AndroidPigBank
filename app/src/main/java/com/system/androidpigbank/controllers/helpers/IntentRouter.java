@@ -1,4 +1,4 @@
-package com.system.androidpigbank.helpers;
+package com.system.androidpigbank.controllers.helpers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,7 +6,7 @@ import android.content.Intent;
 import com.system.androidpigbank.controllers.activities.CategoryListActivity;
 import com.system.androidpigbank.controllers.activities.CategoryManagerActivity;
 import com.system.androidpigbank.controllers.activities.TransactionManagerActivity;
-import com.system.androidpigbank.helpers.constant.Constants;
+import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.models.business.BackupService;
 import com.system.androidpigbank.models.entities.Category;
 

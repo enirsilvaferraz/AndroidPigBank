@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.helpers.constant.Colors;
+import com.system.androidpigbank.controllers.helpers.constant.Colors;
 
 /**
  * Created by eferraz on 03/01/16.

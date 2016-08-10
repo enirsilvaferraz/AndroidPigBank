@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.helpers.IntentRouter;
+import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.views.RoundedTextView;
 

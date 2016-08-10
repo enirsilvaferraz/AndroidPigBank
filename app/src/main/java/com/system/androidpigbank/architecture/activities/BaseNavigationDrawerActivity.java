@@ -1,6 +1,5 @@
 package com.system.androidpigbank.architecture.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,8 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.activities.CategoryListActivity;
-import com.system.androidpigbank.helpers.IntentRouter;
+import com.system.androidpigbank.controllers.helpers.IntentRouter;
 
 /**
  * Created by eferraz on 08/07/16.

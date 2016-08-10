@@ -2,7 +2,6 @@ package com.system.androidpigbank.controllers.adapters.recyclerv;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.controllers.behaviors.HighlightCardBehavior;
 import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.views.DividerView;
@@ -124,37 +124,35 @@ public class CategorySummaryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             transactionContainer.removeAllViews();
 
-            GridLayoutManager.LayoutParams param = (GridLayoutManager.LayoutParams) cvContainer.getLayoutParams();
             if (item.isExpanded()) {
-                param.setMargins(30, 30, 30, 30);
+
+                HighlightCardBehavior.turnOn(cvContainer);
 
                 if (!item.getTransactionList().isEmpty()) {
 
                     transactionContainer.setVisibility(View.VISIBLE);
-                    transactionContainer.addView(new DividerView(itemView.getContext()));
 
-                    List<Transaction> secundaryList = new ArrayList<>();
-                    for (Transaction transaction : item.getTransactionList()) {
-                        if (transaction.getCategory().getId().equals(item.getId())) {
-                            transactionContainer.addView(new TransactionView(itemView.getContext(), transaction));
-                        } else {
-                            secundaryList.add(transaction);
-                        }
+                    if (!item.getTransactionList().isEmpty()) {
+                        transactionContainer.addView(new DividerView(itemView.getContext()));
                     }
 
-                    if (!secundaryList.isEmpty()) {
+                    for (Transaction transaction : item.getTransactionList()) {
+                        transactionContainer.addView(new TransactionView(itemView.getContext(), transaction));
+                    }
+
+                    if (!item.getTransactionSecundaryList().isEmpty()) {
                         transactionContainer.addView(new DividerView(itemView.getContext()));
-                        for (Transaction transaction : secundaryList) {
-                            transactionContainer.addView(new TransactionView(itemView.getContext(), transaction));
-                        }
+                    }
+
+                    for (Transaction transaction : item.getTransactionSecundaryList()) {
+                        transactionContainer.addView(new TransactionView(itemView.getContext(), transaction));
                     }
                 }
 
             } else {
-                param.setMargins(0, 0, 0, 0);
+                HighlightCardBehavior.turnOff(cvContainer);
                 transactionContainer.setVisibility(View.GONE);
             }
-            cvContainer.setLayoutParams(param);
         }
     }
 }

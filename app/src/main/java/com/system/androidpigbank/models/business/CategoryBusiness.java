@@ -7,13 +7,13 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
-import com.j256.ormlite.table.TableUtils;
 import com.system.androidpigbank.architecture.helpers.JavaHelper;
 import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.models.persistences.DaoAbs;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,14 +29,24 @@ public class CategoryBusiness extends DaoAbs<Category> {
 
         List<Category> categories = findAll();
         for (Category category : categories) {
+
+            category.setTransactionList(new ArrayList<Transaction>());
+            category.setTransactionSecundaryList(new ArrayList<Transaction>());
+
             List<Transaction> transactions = new TransactionBusiness(getContext()).findByCategory(category, month, year);
 
             Double amount = 0d;
             for (Transaction transaction : transactions) {
+
                 amount += transaction.getValue();
+
+                if (transaction.getCategory().getId().equals(category.getId())) {
+                    category.getTransactionList().add(transaction);
+                } else {
+                    category.getTransactionSecundaryList().add(transaction);
+                }
             }
 
-            category.setTransactionList(transactions);
             category.setAmount(amount.floatValue());
         }
 

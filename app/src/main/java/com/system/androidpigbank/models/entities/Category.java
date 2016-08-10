@@ -37,7 +37,7 @@ public class Category extends EntityAbs implements Parcelable {
     @DatabaseField(dataType = DataType.ENUM_INTEGER)
     private Colors color;
 
-    private Float amount;
+    private Double amount;
     private boolean expanded;
     private List<Transaction> transactionList;
     private List<Transaction> transactionSecundaryList;
@@ -45,7 +45,7 @@ public class Category extends EntityAbs implements Parcelable {
     public Category() {
     }
 
-    public Category(String name, Float amount) {
+    public Category(String name, Double amount) {
         this.name = name;
         this.amount = amount;
     }
@@ -59,7 +59,7 @@ public class Category extends EntityAbs implements Parcelable {
         this.name = in.readString();
         int tmpColor = in.readInt();
         this.color = tmpColor == -1 ? null : Colors.values()[tmpColor];
-        this.amount = (Float) in.readValue(Float.class.getClassLoader());
+        this.amount = (Double) in.readValue(Double.class.getClassLoader());
         this.expanded = in.readByte() != 0;
         this.transactionList = in.createTypedArrayList(Transaction.CREATOR);
         this.transactionSecundaryList = in.createTypedArrayList(Transaction.CREATOR);
@@ -73,11 +73,11 @@ public class Category extends EntityAbs implements Parcelable {
         this.name = name;
     }
 
-    public Float getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(Float amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
 
     }

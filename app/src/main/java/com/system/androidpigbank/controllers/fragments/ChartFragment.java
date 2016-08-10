@@ -80,7 +80,7 @@ public class ChartFragment extends Fragment {
         for (int i = 0; i < categories.size(); i++) {
             final Category category = categories.get(i);
             if (category.getAmount() > 0) {
-                yVals1.add(new Entry(category.getAmount(), i));
+                yVals1.add(new Entry(Float.valueOf(category.getAmount().toString()), i));
                 xVals.add(category.getName());
             }
         }

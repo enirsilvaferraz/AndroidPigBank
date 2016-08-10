@@ -47,7 +47,7 @@ public class CategoryBusiness extends DaoAbs<Category> {
                 }
             }
 
-            category.setAmount(amount.floatValue());
+            category.setAmount(amount);
         }
 
         return categories;

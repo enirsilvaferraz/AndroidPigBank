@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.architecture.utils.JavaUtils;
 import com.system.androidpigbank.controllers.behaviors.HighlightCardBehavior;
 import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.models.entities.Transaction;
@@ -104,8 +105,8 @@ public class CategorySummaryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         private void bind(final Category item) {
             tvName.setText(item.getName());
 
-            NumberFormat cf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-            tvRange.setText(cf.format(item.getAmount()) + " de " + cf.format(0));
+            tvRange.setText(JavaUtils.NumberUtil.currencyFormat(item.getAmount()) + " de " +
+                    JavaUtils.NumberUtil.currencyFormat(0D));
             tvProgressValue.setText("N/A");
             progressBar.setProgress(0);
 

@@ -37,7 +37,7 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
 
         if (transaction.getCategorySecondary() != null && transaction.getCategorySecondary().getId() == null) {
             Category category = new CategoryBusiness(getContext()).save(transaction.getCategorySecondary());
-            transaction.setCategory(category);
+            transaction.setCategorySecondary(category);
         }
 
         return super.save(transaction);
@@ -103,10 +103,6 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
 
         Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);
         QueryBuilder<Transaction, String> queryTransaction = dao.queryBuilder();
-//        queryTransaction.where()
-//                .between("date", cInit.getTime(), cEnd.getTime())
-//                .and().eq("category_id", category.getId())
-//                .or().eq("categorySecondary_id", category.getId());
 
         Where<Transaction, String> where = queryTransaction.where();
 

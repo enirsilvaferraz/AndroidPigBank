@@ -16,6 +16,7 @@ import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.entities.Transaction;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -86,22 +87,33 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private List<EntityAbs> organizeItens(List<Transaction> itens) {
 
         List<EntityAbs> newList = new ArrayList<>();
+        List<EntityAbs> newListAfter = new ArrayList<>();
 
         Double total = 0d;
-        Date date = null;
-        for (Transaction transaction : itens) {
-            if (date == null || date.before(transaction.getDate())) {
-                date = transaction.getDate();
-                //newList.add(new DateSection(date));
-            }
+        Double totalAfter = 0d;
 
-            total += transaction.getValue();
-            newList.add(transaction);
+        for (Transaction transaction : itens) {
+
+            if (transaction.getDate().before(Calendar.getInstance().getTime())){
+                total += transaction.getValue();
+                newList.add(transaction);
+            } else {
+                totalAfter += transaction.getValue();
+                newListAfter.add(transaction);
+            }
         }
 
         TotalFooter footer = new TotalFooter();
         footer.setTotal(total);
         newList.add(footer);
+
+        if (!newListAfter.isEmpty()) {
+            newList.addAll(newListAfter);
+
+            TotalFooter footerAfter = new TotalFooter();
+            footerAfter.setTotal(totalAfter + total);
+            newList.add(footerAfter);
+        }
 
         return newList;
     }

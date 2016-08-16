@@ -1,8 +1,11 @@
 package com.system.androidpigbank.controllers.activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -24,7 +27,7 @@ import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.architecture.helpers.PermissionHelper;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.models.business.CategoryBusiness;
-import com.system.androidpigbank.models.business.RecoverService;
+import com.system.androidpigbank.models.business.RecoverBusiness;
 import com.system.androidpigbank.models.business.TransactionBusiness;
 
 import java.text.SimpleDateFormat;
@@ -79,28 +82,6 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
         super.onStart();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_transaction_history, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.transaction_history_act_recover) {
-
-            if (PermissionHelper.checkForPermissions(this, ACCESS_PERMISSIONS)) {
-                startService(new Intent(this, RecoverService.class));
-                return true;
-            } else {
-                PermissionHelper.requestPermissions(this, ACCESS_PERMISSIONS, Constants.REQUEST_PERMISSION_DEFAULT_ID);
-                return false;
-            }
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull int[] grantResults) {
 
         PermissionHelper.verifyPermissionAlert(this, permissions, grantResults, new PermissionHelper.PermissionCallBack() {
@@ -108,7 +89,10 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
             @Override
             public void onSuccess(String permission) {
                 try {
-                    startService(new Intent(getBaseContext(), RecoverService.class));
+
+                    Calendar calendar = Calendar.getInstance();
+                    update(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+
                 } catch (Exception e) {
                     showMessage(e);
                 }
@@ -136,21 +120,39 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
 
     private void update(final int month, final int year) {
 
+        if (PermissionHelper.checkForPermissions(this, ACCESS_PERMISSIONS)) {
+            callApi(month, year);
+        } else {
+            PermissionHelper.requestPermissions(this, ACCESS_PERMISSIONS, Constants.REQUEST_PERMISSION_DEFAULT_ID);
+        }
+    }
+
+    private void callApi(final int month, final int year) {
+
+        final ProgressDialog dialog = ProgressDialog.show(HomeActivity.this, "", "Loading. Please wait...", true);
+
         ManagerHelper.execute(this, new ManagerHelper.LoaderResultInterface<HomeObject>() {
 
             @Override
             public HomeObject executeAction() throws Exception {
+
+                dialog.show();
+
+                SharedPreferences sp = getSharedPreferences("SHARED_APP", Context.MODE_PRIVATE);
+                if (!sp.getBoolean("FIST_ACCESS", false)) {
+
+                    RecoverBusiness.getInstance().execute(HomeActivity.this);
+
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putBoolean("FIST_ACCESS", true);
+                    editor.apply();
+                }
 
                 HomeObject object = new HomeObject();
                 object.setListCategorySummary(new CategoryBusiness(HomeActivity.this).getSummaryCategoryByMonth(month, year));
                 object.setListTransaction(new TransactionBusiness(HomeActivity.this).getTransactionByMonth(month, year));
                 object.setListMonth(new TransactionBusiness(HomeActivity.this).getMonthWithTransaction(year));
                 return object;
-            }
-
-            @Override
-            public int loaderId() {
-                return Constants.LOADER_CATEGORY;
             }
 
             @Override
@@ -162,6 +164,8 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
                 } else {
                     showMessage(data.getException());
                 }
+
+                dialog.hide();
             }
         });
     }

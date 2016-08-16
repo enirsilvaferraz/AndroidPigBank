@@ -87,11 +87,6 @@ public class TransactionManagerActivity extends BaseManagerActivity<Transaction>
             }
 
             @Override
-            public int loaderId() {
-                return Constants.LOADER_DEFAULT_ID;
-            }
-
-            @Override
             public void onComplete(LoaderResult<List<Category>> data) {
                 autocompleteCategory(data);
             }

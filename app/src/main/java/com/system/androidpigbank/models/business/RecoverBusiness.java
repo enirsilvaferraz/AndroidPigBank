@@ -1,7 +1,6 @@
 package com.system.androidpigbank.models.business;
 
-import android.app.IntentService;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Environment;
 
 import com.google.gson.Gson;
@@ -16,18 +15,21 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class RecoverService extends IntentService {
+public class RecoverBusiness {
 
-    public RecoverService() {
-        super(RecoverService.class.getSimpleName());
+    private static RecoverBusiness instance;
+
+    public static RecoverBusiness getInstance() {
+        if (instance == null) {
+            instance = new RecoverBusiness();
+        }
+        return instance;
     }
 
-    @Override
-    protected void onHandleIntent(Intent intent) {
+    public void execute(Context context) {
 
-        new RecoverImpl(new CategoryBusiness(this)).recoverData();
-        new RecoverImpl(new TransactionBusiness(this)).recoverData();
-
+        new RecoverImpl(new CategoryBusiness(context)).recoverData();
+        new RecoverImpl(new TransactionBusiness(context)).recoverData();
     }
 
     private class RecoverImpl {
@@ -37,13 +39,13 @@ public class RecoverService extends IntentService {
 
         private final DaoAbs business;
 
-        public RecoverImpl(DaoAbs business) {
+        RecoverImpl(DaoAbs business) {
             this.business = business;
             FILE_NAME = business.getClass().getSimpleName().replace("Business", "") + ".txt";
             DIR_NAME = Environment.getExternalStorageDirectory().toString() + "/Unidade/AndroidPigBank/" + BuildConfig.FLAVOR;
         }
 
-        public void recoverData() {
+        void recoverData() {
 
             try {
 

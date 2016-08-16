@@ -6,6 +6,8 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 
+import com.system.androidpigbank.controllers.helpers.constant.Constants;
+
 /**
  * Created by eferraz on 05/12/15.
  * Classe implementacao do manager abs
@@ -57,12 +59,15 @@ public final class ManagerHelper {
         context.getSupportLoaderManager().restartLoader(callback.loaderId(), null, loaderCallbacks);
     }
 
-    public interface LoaderResultInterface<T> {
-        T executeAction() throws Exception;
+    public static abstract class LoaderResultInterface<T> {
 
-        int loaderId();
+        public abstract T executeAction() throws Exception;
 
-        void onComplete(LoaderResult<T> data);
+        public int loaderId() {
+            return Constants.LOADER_DEFAULT_ID;
+        }
+
+        public abstract void onComplete(LoaderResult<T> data);
     }
 
 }

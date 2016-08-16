@@ -19,11 +19,6 @@
             android:windowSoftInputMode="stateVisible" />
 
         <activity
-            android:name=".controllers.activities.TransactionDetailActivity"
-            android:label="@string/title_activity_transaction_detail"
-            android:theme="@style/AppTheme.Green" />
-
-        <activity
             android:name=".controllers.activities.CategoryManagerActivity"
             android:label="@string/title_activity_category_manager"
             android:theme="@style/AppTheme.Green" />
@@ -44,18 +39,8 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".controllers.activities.FixedTransactionManagerActivity"
-            android:label="@string/title_activity_fixed_transaction_manager"
-            android:theme="@style/AppTheme.Red"
-            android:windowSoftInputMode="stateVisible" />
-
         <service
             android:name=".models.business.BackupService"
-            android:exported="false" />
-
-        <service
-            android:name=".models.business.RecoverService"
             android:exported="false" />
 
     </application>

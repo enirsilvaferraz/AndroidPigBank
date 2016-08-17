@@ -1,5 +1,8 @@
 package com.system.androidpigbank.controllers.vos;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.models.entities.Transaction;
 
@@ -10,13 +13,13 @@ import java.util.List;
  * Created by eferraz on 29/07/16.
  */
 
-public class HomeObject {
+public class HomeObject implements Parcelable {
 
     private List<Category> listCategorySummary;
     private List<Transaction> listTransaction;
     private List<Month> listMonth;
 
-    public HomeObject (){
+    public HomeObject() {
         listCategorySummary = new ArrayList<>();
         listTransaction = new ArrayList<>();
         listMonth = new ArrayList<>();
@@ -45,4 +48,34 @@ public class HomeObject {
     public void setListMonth(List<Month> listMonth) {
         this.listMonth = listMonth;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(this.listCategorySummary);
+        dest.writeTypedList(this.listTransaction);
+        dest.writeTypedList(this.listMonth);
+    }
+
+    protected HomeObject(Parcel in) {
+        this.listCategorySummary = in.createTypedArrayList(Category.CREATOR);
+        this.listTransaction = in.createTypedArrayList(Transaction.CREATOR);
+        this.listMonth = in.createTypedArrayList(Month.CREATOR);
+    }
+
+    public static final Parcelable.Creator<HomeObject> CREATOR = new Parcelable.Creator<HomeObject>() {
+        @Override
+        public HomeObject createFromParcel(Parcel source) {
+            return new HomeObject(source);
+        }
+
+        @Override
+        public HomeObject[] newArray(int size) {
+            return new HomeObject[size];
+        }
+    };
 }

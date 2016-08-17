@@ -13,6 +13,7 @@ import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.recyclerv.CategorySummaryAdapter;
 import com.system.androidpigbank.models.entities.Category;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,6 +23,8 @@ public class CategorySummaryFragment extends Fragment {
 
     @BindView(R.id.category_recyclerview)
     RecyclerView recyclerview;
+
+    private List<Category> data;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class CategorySummaryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         final CategorySummaryAdapter adapter = new CategorySummaryAdapter();
+        adapter.addItens(getData());
 
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         recyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false));
@@ -48,7 +52,14 @@ public class CategorySummaryFragment extends Fragment {
         return fragment;
     }
 
-    public void update(List<Category> listCategorySummary) {
-        ((CategorySummaryAdapter) recyclerview.getAdapter()).addItens(listCategorySummary);
+    public void setData(List<Category> data) {
+        this.data = data;
+    }
+
+    public List<Category> getData() {
+        if (data == null) {
+            data = new ArrayList<>();
+        }
+        return data;
     }
 }

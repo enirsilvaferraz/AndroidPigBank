@@ -13,6 +13,7 @@ import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.recyclerv.MonthAdapter;
 import com.system.androidpigbank.controllers.vos.Month;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,6 +28,7 @@ public class MonthFragment extends Fragment {
 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
+    private List<Month> data;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,14 +41,18 @@ public class MonthFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        MonthAdapter adapter = new MonthAdapter();
+        adapter.addItens(getData());
+
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         recyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false));
-        recyclerview.setAdapter(new MonthAdapter());
-        ((MonthAdapter)recyclerview.getAdapter()).setOnItemClicked(onItemClicked);
+        recyclerview.setAdapter(adapter);
+        ((MonthAdapter) recyclerview.getAdapter()).setOnItemClicked(onItemClicked);
     }
 
-    public static MonthFragment newInstance() {
+    public static MonthFragment newInstance(MonthAdapter.OnItemClicked onItemClicked) {
         MonthFragment fragment = new MonthFragment();
+        fragment.setOnItemClicked(onItemClicked);
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -56,7 +62,14 @@ public class MonthFragment extends Fragment {
         this.onItemClicked = onItemClicked;
     }
 
-    public void update(List<Month> listMonth) {
-        ((MonthAdapter) recyclerview.getAdapter()).addItens(listMonth);
+    public void setData(List<Month> data) {
+        this.data = data;
+    }
+
+    public List<Month> getData() {
+        if (data == null) {
+            data = new ArrayList<>();
+        }
+        return data;
     }
 }

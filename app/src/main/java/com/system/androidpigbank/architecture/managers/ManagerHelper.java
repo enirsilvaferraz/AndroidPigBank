@@ -26,6 +26,7 @@ public final class ManagerHelper {
             @Override
             protected void onStartLoading() {
                 super.onStartLoading();
+                callback.onPreLoad();
                 forceLoad();
             }
 
@@ -68,6 +69,10 @@ public final class ManagerHelper {
         }
 
         public abstract void onComplete(LoaderResult<T> data);
+
+        public void onPreLoad() {
+
+        }
     }
 
 }

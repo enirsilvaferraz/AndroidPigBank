@@ -1,22 +1,20 @@
 package com.system.androidpigbank.architecture.activities;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.architecture.helpers.PermissionHelper;
 import com.system.androidpigbank.architecture.managers.LoaderResult;
 import com.system.androidpigbank.architecture.managers.ManagerHelper;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
-import com.system.androidpigbank.architecture.helpers.PermissionHelper;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.persistences.DaoAbs;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,7 +23,7 @@ import java.util.List;
  */
 public abstract class BaseManagerActivity<T extends EntityAbs> extends BaseActivity {
 
-    private static final List<String> ACCESS_PERMISSIONS = Arrays.asList(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE});
+    private static final List<String> ACCESS_PERMISSIONS = Collections.singletonList(Manifest.permission.WRITE_EXTERNAL_STORAGE);
     protected T model;
     private Action action;
 
@@ -145,30 +143,12 @@ public abstract class BaseManagerActivity<T extends EntityAbs> extends BaseActiv
         PermissionHelper.verifyPermissionAlert(this, permissions, grantResults, new PermissionHelper.PermissionCallBack() {
 
             @Override
-            public void onSuccess(String permission) {
+            public void executeAction(String permission) {
                 try {
                     execute(action);
                 } catch (Exception e) {
                     showMessage(e);
                 }
-            }
-
-            @Override
-            public void onError(String permission) {
-
-                new AlertDialog.Builder(BaseManagerActivity.this)
-                        .setMessage(BaseManagerActivity.this.getString(R.string.permission_required_message))
-                        .setCancelable(false)
-                        .setPositiveButton(R.string.system_ok, new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                PermissionHelper.callAppSettings(BaseManagerActivity.this);
-                            }
-                        })
-                        .setNegativeButton(R.string.system_cancel, null)
-                        .create()
-                        .show();
             }
         });
     }

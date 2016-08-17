@@ -15,12 +15,14 @@ import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.recyclerv.TransactionAdapter;
 import com.system.androidpigbank.models.entities.Transaction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionListFragment extends Fragment {
 
     private static final int SPAN_COUNT = 1;
     private RecyclerView recyclerView;
+    private List<Transaction> data;
 
     public TransactionListFragment() {
     }
@@ -42,6 +44,7 @@ public class TransactionListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         final TransactionAdapter adapter = new TransactionAdapter((AppCompatActivity) getActivity());
+        adapter.addItens(getData());
 
         final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT, GridLayoutManager.VERTICAL, false);
 
@@ -51,7 +54,14 @@ public class TransactionListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    public void update(List<Transaction> listTransaction) {
-        ((TransactionAdapter) recyclerView.getAdapter()).addItens(listTransaction);
+    public void setData(List<Transaction> data) {
+        this.data = data;
+    }
+
+    public List<Transaction> getData() {
+        if (data == null) {
+            data = new ArrayList<>();
+        }
+        return data;
     }
 }

@@ -29,7 +29,7 @@ public class PermissionHelper {
         requestPermissions(activity, permissions != null ? permissions.toArray(new String[permissions.size()]) : null, requestCode);
     }
 
-    public static void requestPermissions(final Activity activity, final String[] permissions, final int requestCode) {
+    private static void requestPermissions(final Activity activity, final String[] permissions, final int requestCode) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && permissions != null) {
             List<String> permissionsToRequest = new ArrayList<>();
@@ -50,32 +50,30 @@ public class PermissionHelper {
         }
     }
 
-    public static void verifyPermissionAlert(final Activity activity, final List<String> permissions, int[] grantResults, PermissionCallBack permissionCallback) {
-        verifyPermissionAlert(activity, permissions != null ? permissions.toArray(new String[permissions.size()]) : null, grantResults, permissionCallback);
-    }
-
-    public static void verifyPermissionAlert(final Activity activity, final String[] permissions, int[] grantResults, PermissionCallBack permissionCallback) {
+    public static void verifyPermissionAlert(final AppCompatActivity activity, final String[] permissions, int[] grantResults, final PermissionCallBack permissionCallback) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && permissions != null) {
+
             // For all permissions
             for (int iterator = 0; iterator < permissions.length; iterator++) {
                 // Has permission
                 if (grantResults[iterator] == PackageManager.PERMISSION_GRANTED) {
+
                     // Permission is granted
-                    permissionCallback.onSuccess(permissions[iterator]);
+                    permissionCallback.executeAction(permissions[iterator]);
                 }
                 // Permission denied
                 else {
                     // Already denied permission at least one time
                     if (activity.shouldShowRequestPermissionRationale(permissions[iterator])) {
                         // Show fail message on screen
-                        notifyUI(activity);
+                        notifyError(activity, permissions[iterator], permissionCallback);
                     }
 
                     // User did not deny or asked to do not request permission anymore
                     else {
                         // Fail gracefully
-                        permissionCallback.onError(permissions[iterator]);
+                        showDialogMessage(activity);
                     }
 
                     // Fail just once
@@ -85,15 +83,21 @@ public class PermissionHelper {
         }
     }
 
-    private static void notifyUI(final Activity activity) {
-
-        View view = activity instanceof BaseActivity ? ((BaseActivity) activity).getContainer() : ((AppCompatActivity) activity).getSupportFragmentManager().getFragments().get(0).getView();
+    private static void notifyError(AppCompatActivity activity, final String permission, final PermissionCallBack permissionCallback) {
+        View view = activity instanceof BaseActivity ? ((BaseActivity) activity).getContainer() : activity.getSupportFragmentManager().getFragments().get(0).getView();
         if (view != null) {
-            Snackbar.make(view, R.string.system_permission_required, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(view, R.string.system_permission_required, Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Try Again", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            permissionCallback.executeAction(permission);
+                        }
+                    })
+                    .show();
         }
     }
 
-    public static boolean checkForPermission(Context context, String permission) {
+    private static boolean checkForPermission(Context context, String permission) {
         return !(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && permission != null) || context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
     }
 
@@ -128,22 +132,24 @@ public class PermissionHelper {
         activity.startActivityForResult(myAppSettings, REQUEST_APP_SETTINGS);
     }
 
-    public static void showDialogMessage(Context context, DialogInterface.OnClickListener onClickListenerOk, DialogInterface.OnClickListener onClickListenerCancel) {
+    private static void showDialogMessage(final AppCompatActivity context) {
 
         new AlertDialog.Builder(context)
                 .setMessage(context.getString(R.string.permission_required_message))
                 .setCancelable(false)
-                .setPositiveButton(R.string.system_ok, onClickListenerOk)
-                .setNegativeButton(R.string.system_cancel, onClickListenerCancel)
+                .setPositiveButton(R.string.system_ok, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        callAppSettings(context);
+                    }
+                })
                 .create()
                 .show();
 
     }
 
     public interface PermissionCallBack {
-
-        void onSuccess(String permission);
-
-        void onError(String permission);
+        void executeAction(String permission);
     }
 }

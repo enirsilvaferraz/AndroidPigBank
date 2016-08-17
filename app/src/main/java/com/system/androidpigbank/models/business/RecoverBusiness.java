@@ -5,7 +5,7 @@ import android.os.Environment;
 
 import com.google.gson.Gson;
 import com.system.androidpigbank.BuildConfig;
-import com.system.androidpigbank.architecture.helpers.JavaHelper;
+import com.system.architecture.helpers.JavaHelper;
 import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.persistences.DaoAbs;
 

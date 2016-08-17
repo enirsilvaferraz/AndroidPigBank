@@ -12,11 +12,11 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.architecture.activities.BaseNavigationDrawerActivity;
-import com.system.androidpigbank.architecture.helpers.PermissionHelper;
-import com.system.androidpigbank.architecture.managers.LoaderResult;
-import com.system.androidpigbank.architecture.managers.ManagerHelper;
-import com.system.androidpigbank.architecture.utils.JavaUtils;
+import com.system.architecture.activities.BaseNavigationDrawerActivity;
+import com.system.architecture.helpers.PermissionHelper;
+import com.system.architecture.managers.LoaderResult;
+import com.system.architecture.managers.ManagerHelper;
+import com.system.architecture.utils.JavaUtils;
 import com.system.androidpigbank.controllers.adapters.pager.SectionsCurrentMonthPagerAdapter;
 import com.system.androidpigbank.controllers.adapters.recyclerv.MonthAdapter;
 import com.system.androidpigbank.controllers.fragments.CategorySummaryFragment;
@@ -53,7 +53,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        setContentView(R.layout.activity_category_summary_drawer);
+        setContentView(R.layout.activity_home_drawer);
         ButterKnife.bind(this);
 
         setTitle(JavaUtils.DateUtil.format(Calendar.getInstance().getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));

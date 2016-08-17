@@ -10,11 +10,11 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.architecture.activities.BaseManagerActivity;
+import com.system.architecture.activities.BaseManagerActivity;
 import com.system.androidpigbank.controllers.adapters.array.CategoryColorsArrayAdapter;
-import com.system.androidpigbank.architecture.managers.LoaderResult;
-import com.system.androidpigbank.architecture.managers.ManagerHelper;
-import com.system.androidpigbank.architecture.helpers.JavaHelper;
+import com.system.architecture.managers.LoaderResult;
+import com.system.architecture.managers.ManagerHelper;
+import com.system.architecture.helpers.JavaHelper;
 import com.system.androidpigbank.controllers.helpers.constant.Colors;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.models.business.CategoryBusiness;

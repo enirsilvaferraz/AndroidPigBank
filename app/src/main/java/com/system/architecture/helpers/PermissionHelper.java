@@ -1,4 +1,4 @@
-package com.system.androidpigbank.architecture.helpers;
+package com.system.architecture.helpers;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,7 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.architecture.activities.BaseActivity;
+import com.system.architecture.activities.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;

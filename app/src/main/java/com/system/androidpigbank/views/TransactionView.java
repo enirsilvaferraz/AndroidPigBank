@@ -5,7 +5,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.architecture.utils.JavaUtils;
+import com.system.architecture.utils.JavaUtils;
 import com.system.androidpigbank.models.entities.Transaction;
 
 import butterknife.BindView;

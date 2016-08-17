@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.architecture.utils.JavaUtils;
+import com.system.architecture.utils.JavaUtils;
 import com.system.androidpigbank.controllers.vos.Month;
 
 import java.util.ArrayList;

@@ -1,8 +1,4 @@
-package com.system.androidpigbank.architecture.utils;
-
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.RelativeSizeSpan;
+package com.system.architecture.utils;
 
 import java.text.NumberFormat;
 import java.text.ParseException;

@@ -11,17 +11,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.architecture.utils.JavaUtils;
+import com.system.architecture.utils.JavaUtils;
 import com.system.androidpigbank.controllers.behaviors.HighlightCardBehavior;
 import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.views.DividerView;
 import com.system.androidpigbank.views.TransactionView;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

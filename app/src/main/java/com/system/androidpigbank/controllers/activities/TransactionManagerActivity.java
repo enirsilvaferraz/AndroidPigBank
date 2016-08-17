@@ -9,10 +9,10 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.architecture.activities.BaseManagerActivity;
-import com.system.androidpigbank.architecture.managers.LoaderResult;
-import com.system.androidpigbank.architecture.managers.ManagerHelper;
-import com.system.androidpigbank.architecture.utils.JavaUtils;
+import com.system.architecture.activities.BaseManagerActivity;
+import com.system.architecture.managers.LoaderResult;
+import com.system.architecture.managers.ManagerHelper;
+import com.system.architecture.utils.JavaUtils;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.models.business.CategoryBusiness;
 import com.system.androidpigbank.models.business.TransactionBusiness;

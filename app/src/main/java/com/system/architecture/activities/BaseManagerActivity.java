@@ -1,4 +1,4 @@
-package com.system.androidpigbank.architecture.activities;
+package com.system.architecture.activities;
 
 import android.Manifest;
 import android.support.annotation.NonNull;
@@ -6,9 +6,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.architecture.helpers.PermissionHelper;
-import com.system.androidpigbank.architecture.managers.LoaderResult;
-import com.system.androidpigbank.architecture.managers.ManagerHelper;
+import com.system.architecture.helpers.PermissionHelper;
+import com.system.architecture.managers.LoaderResult;
+import com.system.architecture.managers.ManagerHelper;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.models.entities.EntityAbs;

@@ -7,17 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.architecture.activities.BaseActivity;
+import com.system.architecture.activities.BaseActivity;
 import com.system.androidpigbank.controllers.adapters.viewHolder.FooterViewHolder;
 import com.system.androidpigbank.controllers.adapters.viewHolder.TransactionViewHolder;
-import com.system.androidpigbank.architecture.viewHolders.ViewHolderAbs;
+import com.system.architecture.viewHolders.ViewHolderAbs;
 import com.system.androidpigbank.controllers.vos.TotalFooter;
 import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.entities.Transaction;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**

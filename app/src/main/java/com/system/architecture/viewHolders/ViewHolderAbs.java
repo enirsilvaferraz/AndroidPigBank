@@ -1,6 +1,5 @@
-package com.system.androidpigbank.architecture.viewHolders;
+package com.system.architecture.viewHolders;
 
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

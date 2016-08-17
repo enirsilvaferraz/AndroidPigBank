@@ -1,4 +1,4 @@
-package com.system.androidpigbank.architecture.activities;
+package com.system.architecture.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;

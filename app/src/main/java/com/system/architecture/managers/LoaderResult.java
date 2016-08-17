@@ -1,4 +1,4 @@
-package com.system.androidpigbank.architecture.managers;
+package com.system.architecture.managers;
 
 import android.support.annotation.NonNull;
 

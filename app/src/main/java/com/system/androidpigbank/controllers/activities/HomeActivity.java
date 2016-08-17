@@ -175,6 +175,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.setCurrentItem(HOME_INDICATOR);
+        mViewPager.getAdapter().notifyDataSetChanged();
     }
 
     private class OnItemClickedListener implements MonthAdapter.OnItemClicked {
@@ -189,6 +190,4 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
             update(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
         }
     }
-
-
 }

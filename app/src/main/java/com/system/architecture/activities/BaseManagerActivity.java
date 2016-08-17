@@ -1,6 +1,8 @@
 package com.system.architecture.activities;
 
 import android.Manifest;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,9 +67,14 @@ public abstract class BaseManagerActivity<T extends EntityAbs> extends BaseActiv
             @Override
             public void onComplete(LoaderResult<T> data) {
                 if (data.isSuccess()) {
-                    showMessage(R.string.message_saved_sucess);
+
                     IntentRouter.startServiceBackup(BaseManagerActivity.this);
+
+                    Intent intent = new Intent();
+                    intent.putExtra(Constants.BUNDLE_MESSAGE_ID, R.string.message_delete_sucess);
+                    BaseManagerActivity.this.setResult(RESULT_OK, intent);
                     BaseManagerActivity.this.finish();
+
                 } else {
                     showMessage(data.getException());
                 }
@@ -94,9 +101,13 @@ public abstract class BaseManagerActivity<T extends EntityAbs> extends BaseActiv
             @Override
             public void onComplete(LoaderResult<T> data) {
                 if (data.isSuccess()) {
-                    showMessage(R.string.message_saved_sucess);
                     IntentRouter.startServiceBackup(BaseManagerActivity.this);
+
+                    Intent intent = new Intent();
+                    intent.putExtra(Constants.BUNDLE_MESSAGE_ID, R.string.message_saved_sucess);
+                    BaseManagerActivity.this.setResult(RESULT_OK, intent);
                     BaseManagerActivity.this.finish();
+
                 } else {
                     showMessage(data.getException());
                 }

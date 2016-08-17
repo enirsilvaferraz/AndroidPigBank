@@ -10,13 +10,7 @@ import android.view.View;
 public abstract class BaseActivity extends AppCompatActivity {
 
     public void showMessage(Throwable e) {
-        Snackbar.make(getContainer(), e.getMessage(), Snackbar.LENGTH_INDEFINITE)
-                .setAction("Close", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                }).show();
+        showMessage(e.getMessage(), Snackbar.LENGTH_INDEFINITE);
     }
 
     public View getContainer() {
@@ -24,7 +18,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void showMessage(int message) {
-        Snackbar.make(getContainer(), message, Snackbar.LENGTH_INDEFINITE)
+        showMessage(getString(message), Snackbar.LENGTH_LONG);
+    }
+
+    private void showMessage(String message, int timeMessage) {
+        Snackbar.make(getContainer(), message, timeMessage)
                 .setAction("Close", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

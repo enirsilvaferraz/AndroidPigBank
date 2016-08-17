@@ -15,6 +15,8 @@ import java.util.List;
 
 public class HomeObject implements Parcelable {
 
+    private int month;
+    private int year;
     private List<Category> listCategorySummary;
     private List<Transaction> listTransaction;
     private List<Month> listMonth;
@@ -49,6 +51,22 @@ public class HomeObject implements Parcelable {
         this.listMonth = listMonth;
     }
 
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -56,18 +74,22 @@ public class HomeObject implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.month);
+        dest.writeInt(this.year);
         dest.writeTypedList(this.listCategorySummary);
         dest.writeTypedList(this.listTransaction);
         dest.writeTypedList(this.listMonth);
     }
 
     protected HomeObject(Parcel in) {
+        this.month = in.readInt();
+        this.year = in.readInt();
         this.listCategorySummary = in.createTypedArrayList(Category.CREATOR);
         this.listTransaction = in.createTypedArrayList(Transaction.CREATOR);
         this.listMonth = in.createTypedArrayList(Month.CREATOR);
     }
 
-    public static final Parcelable.Creator<HomeObject> CREATOR = new Parcelable.Creator<HomeObject>() {
+    public static final Creator<HomeObject> CREATOR = new Creator<HomeObject>() {
         @Override
         public HomeObject createFromParcel(Parcel source) {
             return new HomeObject(source);

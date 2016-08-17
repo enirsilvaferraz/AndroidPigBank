@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.architecture.utils.JavaUtils;
 import com.system.architecture.viewHolders.ViewHolderAbs;
 import com.system.androidpigbank.controllers.activities.TransactionManagerActivity;
@@ -56,14 +57,8 @@ public class TransactionViewHolder extends ViewHolderAbs {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                editCard((Transaction) model);
+                IntentRouter.startTransactionManager(getActivity(), transaction);
             }
         });
-    }
-
-    private void editCard(final Transaction transaction) {
-        final Intent intent = new Intent(getActivity(), TransactionManagerActivity.class);
-        intent.putExtra(Constants.BUNDLE_MODEL_DEFAULT, transaction);
-        getActivity().startActivity(intent);
     }
 }

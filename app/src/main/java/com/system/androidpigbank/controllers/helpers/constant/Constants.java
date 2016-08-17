@@ -6,12 +6,11 @@ package com.system.androidpigbank.controllers.helpers.constant;
 public interface Constants {
 
     int LOADER_DEFAULT_ID = 1000;
-    int LOADER_TRANSACTION = 1001;
-    int LOADER_CATEGORY = 1002;
-    int LOADER_MONTH = 1002;
 
     int REQUEST_PERMISSION_DEFAULT_ID = 2000;
-    int REQUEST_TRANSACTION_EDIT = 2001;
+    int REQUEST_ACTION_SAVE = 2001;
+    int REQUEST_ACTION_DELETE = 2002;
 
     String BUNDLE_MODEL_DEFAULT = "BUNDLE_MODEL_DEFAULT";
+    String BUNDLE_MESSAGE_ID = "BUNDLE_MESSAGE_ID";
 }

@@ -3,6 +3,7 @@ package com.system.androidpigbank.controllers.activities;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -56,12 +57,10 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
         setContentView(R.layout.activity_home_drawer);
         ButterKnife.bind(this);
 
-        setTitle(JavaUtils.DateUtil.format(Calendar.getInstance().getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentRouter.startTransactionManager(HomeActivity.this);
+                IntentRouter.startTransactionManager(HomeActivity.this, null);
             }
         });
 
@@ -73,7 +72,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
             if (data == null) {
                 data = new HomeObject();
             }
-            configureList(data);
+            configureResult(data);
         }
 
         super.onCreate(savedInstanceState);
@@ -115,6 +114,17 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (RESULT_OK == resultCode && (Constants.REQUEST_ACTION_DELETE == requestCode || Constants.REQUEST_ACTION_SAVE == requestCode)){
+            callApi(this.data.getMonth(), this.data.getYear());
+            showMessage(data.getIntExtra(Constants.BUNDLE_MESSAGE_ID, 0));
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     private void update(final int month, final int year) {
         if (PermissionHelper.checkForPermissions(this, ACCESS_PERMISSIONS)) {
             callApi(month, year);
@@ -148,6 +158,8 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
                 }
 
                 HomeObject object = new HomeObject();
+                object.setMonth(month);
+                object.setYear(year);
                 object.setListCategorySummary(new CategoryBusiness(HomeActivity.this).getSummaryCategoryByMonth(month, year));
                 object.setListTransaction(new TransactionBusiness(HomeActivity.this).getTransactionByMonth(month, year));
                 object.setListMonth(new TransactionBusiness(HomeActivity.this).getMonthWithTransaction(year));
@@ -157,7 +169,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
             @Override
             public void onComplete(LoaderResult<HomeObject> data) {
                 if (data.isSuccess()) {
-                    configureList(data.getData());
+                    configureResult(data.getData());
                 } else {
                     showMessage(data.getException());
                 }
@@ -167,8 +179,13 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
         });
     }
 
-    private void configureList(HomeObject data) {
+    private void configureResult(HomeObject data) {
         this.data = data;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, data.getYear());
+        calendar.set(Calendar.MONTH, data.getMonth());
+        setTitle(JavaUtils.DateUtil.format(calendar.getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));
 
         SectionsCurrentMonthPagerAdapter adapter = new SectionsCurrentMonthPagerAdapter(getSupportFragmentManager());
         adapter.setOnItemClicked(new OnItemClickedListener());

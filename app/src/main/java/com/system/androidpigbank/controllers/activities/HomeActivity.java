@@ -30,6 +30,8 @@ import com.system.androidpigbank.models.business.CategoryBusiness;
 import com.system.androidpigbank.models.business.RecoverBusiness;
 import com.system.androidpigbank.models.business.TransactionBusiness;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -40,7 +42,7 @@ import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseNavigationDrawerActivity {
 
-    private static final List<String> ACCESS_PERMISSIONS = Collections.singletonList(Manifest.permission.READ_EXTERNAL_STORAGE);
+    private static final List<String> ACCESS_PERMISSIONS = Arrays.asList(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     private static final int HOME_INDICATOR = 1;
 
     @BindView(R.id.container)
@@ -105,8 +107,10 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
             @Override
             public void executeAction(String permission) {
                 try {
-                    Calendar calendar = Calendar.getInstance();
-                    update(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+                    if (Manifest.permission.READ_EXTERNAL_STORAGE.equals(permission)) {
+                        Calendar calendar = Calendar.getInstance();
+                        update(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+                    }
                 } catch (Exception e) {
                     showMessage(e);
                 }
@@ -123,6 +127,10 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void callApi(){
+        callApi(this.data.getMonth(), this.data.getYear());
     }
 
     private void update(final int month, final int year) {

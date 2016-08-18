@@ -60,7 +60,7 @@ public class CategoryBusiness extends DaoAbs<Category> {
         Dao<Category, String> dao = DaoManager.createDao(connectionSource, JavaHelper.getTClass(this));
 
         QueryBuilder<Category, String> queryBuilder = dao.queryBuilder();
-        queryBuilder.orderBy("name", true);
+        queryBuilder.orderBy("primary", false).orderBy("name", true);
 
         List<Category> list = queryBuilder.query();
         connectionSource.close();

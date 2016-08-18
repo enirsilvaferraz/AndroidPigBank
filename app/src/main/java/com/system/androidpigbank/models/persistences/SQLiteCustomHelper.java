@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
+import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.system.androidpigbank.models.entities.Category;
@@ -17,7 +18,7 @@ import java.sql.SQLException;
 public class SQLiteCustomHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "m4.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private final Context context;
 
     public SQLiteCustomHelper(Context context) {
@@ -49,6 +50,11 @@ public class SQLiteCustomHelper extends OrmLiteSqliteOpenHelper {
             createTables(connectionSource);
 
             switch (oldVersion) {
+
+                case 1:
+                    DaoManager.createDao(getConnectionSource(), Transaction.class)
+                            .executeRaw("ALTER TABLE 'category' ADD COLUMN 'primary' SMALLINT;");
+
 
 //                case 1:
 //                    DaoManager.createDao(getConnectionSource(), Transaction.class)

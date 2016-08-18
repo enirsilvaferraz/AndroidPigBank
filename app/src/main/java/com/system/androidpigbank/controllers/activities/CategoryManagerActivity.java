@@ -1,6 +1,7 @@
 package com.system.androidpigbank.controllers.activities;
 
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -33,6 +34,9 @@ public class CategoryManagerActivity extends BaseManagerActivity<Category> {
 
     @BindView(R.id.category_manager_category)
     AutoCompleteTextView editCategory;
+
+    @BindView(R.id.category_manager_primary)
+    AppCompatCheckBox chPrimary;
 
     @BindView(R.id.category_manager_color)
     Spinner spColor;
@@ -71,6 +75,7 @@ public class CategoryManagerActivity extends BaseManagerActivity<Category> {
             model = getIntent().getExtras().getParcelable(Constants.BUNDLE_MODEL_DEFAULT);
 
             editCategory.setText(model.getName());
+            chPrimary.setChecked(model.isPrimary());
 
             if (model.getColor() != null) {
                 spColor.setSelection(model.getColor().ordinal());
@@ -115,6 +120,7 @@ public class CategoryManagerActivity extends BaseManagerActivity<Category> {
 
         model.setName(editCategory.getText().toString());
         model.setColor((Colors) spColor.getSelectedItem());
+        model.setPrimary(chPrimary.isChecked());
     }
 
     private void autocompleteCategory(LoaderResult<List<Category>> data) {

@@ -16,23 +16,14 @@ import java.util.List;
 @DatabaseTable(tableName = "category")
 public class Category extends EntityAbs implements Parcelable {
 
-    public static final Creator<Category> CREATOR = new Creator<Category>() {
-        @Override
-        public Category createFromParcel(Parcel source) {
-            return new Category(source);
-        }
-
-        @Override
-        public Category[] newArray(int size) {
-            return new Category[size];
-        }
-    };
-
     @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
     private Long id;
 
     @DatabaseField
     private String name;
+
+    @DatabaseField
+    private boolean primary;
 
     @DatabaseField(dataType = DataType.ENUM_INTEGER)
     private Colors color;
@@ -54,17 +45,6 @@ public class Category extends EntityAbs implements Parcelable {
         this.name = name;
     }
 
-    protected Category(Parcel in) {
-        this.id = (Long) in.readValue(Long.class.getClassLoader());
-        this.name = in.readString();
-        int tmpColor = in.readInt();
-        this.color = tmpColor == -1 ? null : Colors.values()[tmpColor];
-        this.amount = (Double) in.readValue(Double.class.getClassLoader());
-        this.expanded = in.readByte() != 0;
-        this.transactionList = in.createTypedArrayList(Transaction.CREATOR);
-        this.transactionSecundaryList = in.createTypedArrayList(Transaction.CREATOR);
-    }
-
     public String getName() {
         return name;
     }
@@ -79,7 +59,14 @@ public class Category extends EntityAbs implements Parcelable {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
 
+    public boolean isPrimary() {
+        return primary;
+    }
+
+    public void setPrimary(boolean primary) {
+        this.primary = primary;
     }
 
     public Long getId() {
@@ -146,10 +133,35 @@ public class Category extends EntityAbs implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(this.id);
         dest.writeString(this.name);
+        dest.writeByte(this.primary ? (byte) 1 : (byte) 0);
         dest.writeInt(this.color == null ? -1 : this.color.ordinal());
         dest.writeValue(this.amount);
         dest.writeByte(this.expanded ? (byte) 1 : (byte) 0);
         dest.writeTypedList(this.transactionList);
         dest.writeTypedList(this.transactionSecundaryList);
     }
+
+    protected Category(Parcel in) {
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
+        this.name = in.readString();
+        this.primary = in.readByte() != 0;
+        int tmpColor = in.readInt();
+        this.color = tmpColor == -1 ? null : Colors.values()[tmpColor];
+        this.amount = (Double) in.readValue(Double.class.getClassLoader());
+        this.expanded = in.readByte() != 0;
+        this.transactionList = in.createTypedArrayList(Transaction.CREATOR);
+        this.transactionSecundaryList = in.createTypedArrayList(Transaction.CREATOR);
+    }
+
+    public static final Creator<Category> CREATOR = new Creator<Category>() {
+        @Override
+        public Category createFromParcel(Parcel source) {
+            return new Category(source);
+        }
+
+        @Override
+        public Category[] newArray(int size) {
+            return new Category[size];
+        }
+    };
 }

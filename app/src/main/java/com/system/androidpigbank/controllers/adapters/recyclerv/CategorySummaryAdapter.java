@@ -11,12 +11,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
-import com.system.architecture.utils.JavaUtils;
+import com.system.androidpigbank.controllers.adapters.viewHolder.TitleViewHolder;
 import com.system.androidpigbank.controllers.behaviors.HighlightCardBehavior;
+import com.system.androidpigbank.controllers.vos.TitleVO;
 import com.system.androidpigbank.models.entities.Category;
+import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.views.DividerView;
 import com.system.androidpigbank.views.TransactionView;
+import com.system.architecture.utils.JavaUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +34,7 @@ import butterknife.ButterKnife;
 
 public class CategorySummaryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Category> itens;
+    private List<EntityAbs> itens;
 
     public CategorySummaryAdapter() {
         this.itens = new ArrayList<>();
@@ -40,13 +43,30 @@ public class CategorySummaryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View v = layoutInflater.inflate(R.layout.item_view_holder_category_summary, parent, false);
-        return new ViewHolder(v);
+
+        if (Type.CATEGORY.ordinal() == viewType) {
+            return new ViewHolder(layoutInflater.inflate(R.layout.item_view_holder_category_summary, parent, false));
+        } else {
+            return new TitleViewHolder(layoutInflater.inflate(R.layout.item_view_holder_title, parent, false));
+        }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((ViewHolder) holder).bind(itens.get(position));
+        if (itens.get(position) instanceof Category) {
+            ((ViewHolder) holder).bind((Category) itens.get(position));
+        } else {
+            ((TitleViewHolder) holder).bind(itens.get(position));
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (itens.get(position) instanceof Category) {
+            return Type.CATEGORY.ordinal();
+        } else {
+            return Type.TITLE.ordinal();
+        }
     }
 
     @Override
@@ -56,20 +76,38 @@ public class CategorySummaryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public void addItens(List<Category> itens) {
         this.itens.clear();
-        this.itens.addAll(itens);
+
+        boolean alreadyAddedSecoundary = false;
+        this.itens.add(new TitleVO("Primary Categories"));
+
+        for (Category category : itens) {
+            if (!alreadyAddedSecoundary && !category.isPrimary()) {
+                this.itens.add(new TitleVO("Secondary Categories"));
+                alreadyAddedSecoundary = true;
+            }
+            this.itens.add(category);
+        }
+
         notifyDataSetChanged();
     }
 
     private void updateAll(Category item) {
-        for (Category category : itens) {
-            if (!category.equals(item) && category.isExpanded()) {
-                category.setExpanded(false);
-                notifyItemChanged(itens.indexOf(category));
-                break;
+        for (EntityAbs entity : itens) {
+            if (entity instanceof Category) {
+                Category category = (Category) entity;
+                if (!category.equals(item) && category.isExpanded()) {
+                    category.setExpanded(false);
+                    notifyItemChanged(itens.indexOf(category));
+                    break;
+                }
             }
         }
 
         notifyItemChanged(itens.indexOf(item));
+    }
+
+    enum Type {
+        CATEGORY, TITLE
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

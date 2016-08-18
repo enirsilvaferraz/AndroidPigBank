@@ -45,6 +45,11 @@ public class TransactionView extends LinearLayout {
         tvValue.setText(JavaUtils.NumberUtil.currencyFormat(transaction.getValue()));
         tvContent.setText(transaction.getContent());
         tvDate.setText(JavaUtils.DateUtil.format(transaction.getDate()));
-        tvCategory.setText(transaction.getCategory().getName());
+
+        String categoryName = transaction.getCategory().getName();
+        if (transaction.getCategorySecondary() != null) {
+            categoryName += " / " + transaction.getCategorySecondary().getName();
+        }
+        tvCategory.setText(categoryName);
     }
 }

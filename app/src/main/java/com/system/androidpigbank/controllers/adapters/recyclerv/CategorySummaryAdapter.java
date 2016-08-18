@@ -165,24 +165,13 @@ public class CategorySummaryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 HighlightCardBehavior.turnOn(cvContainer);
 
-                if (!item.getTransactionList().isEmpty() || !item.getTransactionSecundaryList().isEmpty()) {
+                if (!item.getTransactionList().isEmpty()) {
 
                     transactionContainer.setVisibility(View.VISIBLE);
+                    transactionContainer.addView(new DividerView(itemView.getContext()));
 
-                    if (!item.getTransactionList().isEmpty()) {
-                        transactionContainer.addView(new DividerView(itemView.getContext()));
-
-                        for (Transaction transaction : item.getTransactionList()) {
-                            transactionContainer.addView(new TransactionView(itemView.getContext(), transaction));
-                        }
-                    }
-
-                    if (!item.getTransactionSecundaryList().isEmpty()) {
-                        transactionContainer.addView(new DividerView(itemView.getContext()));
-
-                        for (Transaction transaction : item.getTransactionSecundaryList()) {
-                            transactionContainer.addView(new TransactionView(itemView.getContext(), transaction));
-                        }
+                    for (Transaction transaction : item.getTransactionList()) {
+                        transactionContainer.addView(new TransactionView(itemView.getContext(), transaction));
                     }
                 }
 

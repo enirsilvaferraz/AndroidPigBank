@@ -30,21 +30,11 @@ public class CategoryBusiness extends DaoAbs<Category> {
         List<Category> categories = findAll();
         for (Category category : categories) {
 
-            category.setTransactionList(new ArrayList<Transaction>());
-            category.setTransactionSecundaryList(new ArrayList<Transaction>());
-
-            List<Transaction> transactions = new TransactionBusiness(getContext()).findByCategory(category, month, year);
+            category.setTransactionList(new TransactionBusiness(getContext()).findByCategory(category, month, year));
 
             Double amount = 0d;
-            for (Transaction transaction : transactions) {
-
+            for (Transaction transaction : category.getTransactionList()) {
                 amount += transaction.getValue();
-
-                if (transaction.getCategory().getId().equals(category.getId())) {
-                    category.getTransactionList().add(transaction);
-                } else {
-                    category.getTransactionSecundaryList().add(transaction);
-                }
             }
 
             category.setAmount(amount);

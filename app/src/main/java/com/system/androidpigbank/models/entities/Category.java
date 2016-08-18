@@ -31,7 +31,6 @@ public class Category extends EntityAbs implements Parcelable {
     private Double amount;
     private boolean expanded;
     private List<Transaction> transactionList;
-    private List<Transaction> transactionSecundaryList;
 
     public Category() {
     }
@@ -100,14 +99,6 @@ public class Category extends EntityAbs implements Parcelable {
         this.color = color;
     }
 
-    public List<Transaction> getTransactionSecundaryList() {
-        return transactionSecundaryList;
-    }
-
-    public void setTransactionSecundaryList(List<Transaction> transactionSecundaryList) {
-        this.transactionSecundaryList = transactionSecundaryList;
-    }
-
     public boolean isExpanded() {
         return expanded;
     }
@@ -138,7 +129,6 @@ public class Category extends EntityAbs implements Parcelable {
         dest.writeValue(this.amount);
         dest.writeByte(this.expanded ? (byte) 1 : (byte) 0);
         dest.writeTypedList(this.transactionList);
-        dest.writeTypedList(this.transactionSecundaryList);
     }
 
     protected Category(Parcel in) {
@@ -150,7 +140,6 @@ public class Category extends EntityAbs implements Parcelable {
         this.amount = (Double) in.readValue(Double.class.getClassLoader());
         this.expanded = in.readByte() != 0;
         this.transactionList = in.createTypedArrayList(Transaction.CREATOR);
-        this.transactionSecundaryList = in.createTypedArrayList(Transaction.CREATOR);
     }
 
     public static final Creator<Category> CREATOR = new Creator<Category>() {

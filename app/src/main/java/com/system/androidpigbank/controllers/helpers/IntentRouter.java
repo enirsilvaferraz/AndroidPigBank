@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.system.androidpigbank.controllers.activities.CategoryListActivity;
 import com.system.androidpigbank.controllers.activities.CategoryManagerActivity;
-import com.system.androidpigbank.controllers.activities.TransactionManagerActivity;
 import com.system.androidpigbank.controllers.activities.TransactionManagerDialog;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.models.business.BackupService;
@@ -24,14 +23,6 @@ public final class IntentRouter {
     }
 
     public static void startTransactionManager(AppCompatActivity context, Transaction model) {
-        final Intent intent = new Intent(context, TransactionManagerActivity.class);
-
-        if (model != null) {
-            intent.putExtra(Constants.BUNDLE_MODEL_DEFAULT, model);
-        }
-
-        //context.startActivityForResult(intent, Constants.REQUEST_ACTION_SAVE);
-
         FragmentManager fm = context.getSupportFragmentManager();
         TransactionManagerDialog dialog = TransactionManagerDialog.newInstance(model);
         dialog.show(fm, TransactionManagerDialog.class.getSimpleName());

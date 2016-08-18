@@ -1,6 +1,5 @@
 package com.system.androidpigbank.controllers.adapters.viewHolder;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,8 +9,6 @@ import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.architecture.utils.JavaUtils;
 import com.system.architecture.viewHolders.ViewHolderAbs;
-import com.system.androidpigbank.controllers.activities.TransactionManagerActivity;
-import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.views.RoundedTextView;

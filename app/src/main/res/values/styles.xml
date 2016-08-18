@@ -21,7 +21,7 @@
     <style name="AppTheme.Blue" parent="AppTheme">
         <item name="colorPrimary">@color/theme_blue_primary</item>
         <item name="colorPrimaryDark">@color/theme_blue_primary_dark</item>
-        <item name="colorAccent">@color/theme_blue_accent</item>
+        <item name="colorAccent">@color/theme_red_primary</item>
     </style>
 
     <style name="AppTheme.Green" parent="AppTheme">

@@ -13,12 +13,6 @@
         android:supportsRtl="true">
 
         <activity
-            android:name=".controllers.activities.TransactionManagerActivity"
-            android:label="@string/title_activity_transaction_manager"
-            android:theme="@style/AppTheme.Red"
-            android:windowSoftInputMode="stateVisible" />
-
-        <activity
             android:name=".controllers.activities.CategoryManagerActivity"
             android:label="@string/title_activity_category_manager"
             android:theme="@style/AppTheme.Green" />

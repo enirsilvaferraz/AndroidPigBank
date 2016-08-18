@@ -32,6 +32,7 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
 
         if (transaction.getCategory().getId() == null) {
             Category category = new CategoryBusiness(getContext()).save(transaction.getCategory());
+            category.setPrimary(true);
             transaction.setCategory(category);
         }
 

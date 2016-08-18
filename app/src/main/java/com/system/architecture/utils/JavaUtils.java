@@ -55,4 +55,11 @@ public final class JavaUtils {
             return "R$ " + instance.format(value);
         }
     }
+
+    public static class StringUtil {
+
+        public static boolean isEmpty(String string) {
+            return string == null || string.trim().isEmpty();
+        }
+    }
 }

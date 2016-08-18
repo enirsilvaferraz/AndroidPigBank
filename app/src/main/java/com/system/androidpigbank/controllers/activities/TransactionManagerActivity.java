@@ -115,6 +115,7 @@ public class TransactionManagerActivity extends BaseManagerActivity<Transaction>
             model.setDatePayment(JavaUtils.DateUtil.parse(editDatePayment.getText().toString()));
         }
 
+
         final Category category = new Category(editCategory.getText().toString());
         if (categories.contains(category)) {
             model.setCategory(categories.get(categories.indexOf(category)));
@@ -122,11 +123,15 @@ public class TransactionManagerActivity extends BaseManagerActivity<Transaction>
             model.setCategory(category);
         }
 
-        final Category categorySecondary = new Category(editCategorySecondary.getText().toString());
-        if (categories.contains(categorySecondary)) {
-            model.setCategorySecondary(categories.get(categories.indexOf(categorySecondary)));
+        if (!JavaUtils.StringUtil.isEmpty(editCategorySecondary.getText().toString())) {
+            final Category categorySecondary = new Category(editCategorySecondary.getText().toString());
+            if (categories.contains(categorySecondary)) {
+                model.setCategorySecondary(categories.get(categories.indexOf(categorySecondary)));
+            } else {
+                model.setCategorySecondary(categorySecondary);
+            }
         } else {
-            model.setCategorySecondary(categorySecondary);
+            model.setCategorySecondary(null);
         }
     }
 

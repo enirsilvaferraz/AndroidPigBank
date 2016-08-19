@@ -1,15 +1,16 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 
-def supportLibraryVersion = '24.1.1'
+def supportLibraryVersion = '24.2.0'
+def keystoreMac = '/Users/eferraz/AndroidStudioProjects/Personal/AndroidPigBank/keystore.jks'
+def keystoreWin = 'C:\\Ambiente\\Android\\Projetos\\AndroidPigBank\\keystore.jks'
 
 android {
     signingConfigs {
         config {
             keyAlias 'AndroidPigBank'
             keyPassword 'android'
-            /*storeFile file('/Users/eferraz/AndroidStudioProjects/Personal/AndroidPigBank/keystore.jks')*/
-            storeFile file('C:\\Ambiente\\Android\\Projetos\\AndroidPigBank\\keystore.jks')
+            storeFile file("${keystoreMac}")
             storePassword 'android'
         }
     }

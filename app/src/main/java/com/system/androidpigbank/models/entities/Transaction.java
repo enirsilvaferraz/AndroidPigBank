@@ -40,6 +40,8 @@ public class Transaction extends EntityAbs implements Parcelable {
     @DatabaseField
     private String content;
 
+    private boolean expanded;
+
     public Transaction() {
     }
 
@@ -109,6 +111,14 @@ public class Transaction extends EntityAbs implements Parcelable {
 
     public void setCategorySecondary(Category categorySecondary) {
         this.categorySecondary = categorySecondary;
+    }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
     }
 
     @Override

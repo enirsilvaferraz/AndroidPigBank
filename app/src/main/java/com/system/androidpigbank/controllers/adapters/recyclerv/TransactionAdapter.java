@@ -1,23 +1,31 @@
 package com.system.androidpigbank.controllers.adapters.recyclerv;
 
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.system.androidpigbank.R;
-import com.system.architecture.activities.BaseActivity;
 import com.system.androidpigbank.controllers.adapters.viewHolder.FooterViewHolder;
-import com.system.androidpigbank.controllers.adapters.viewHolder.TransactionViewHolder;
-import com.system.architecture.viewHolders.ViewHolderAbs;
+import com.system.androidpigbank.controllers.behaviors.HighlightCardBehavior;
+import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.vos.TotalFooter;
 import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.entities.Transaction;
+import com.system.androidpigbank.views.RoundedTextView;
+import com.system.architecture.activities.BaseActivity;
+import com.system.architecture.utils.JavaUtils;
+import com.system.architecture.viewHolders.ViewHolderAbs;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by eferraz on 05/12/15.
@@ -83,6 +91,21 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         notifyDataSetChanged();
     }
 
+    private void updateAll(Transaction item) {
+        for (EntityAbs entity : itens) {
+            if (entity instanceof Transaction) {
+                Transaction category = (Transaction) entity;
+                if (!category.equals(item) && category.isExpanded()) {
+                    category.setExpanded(false);
+                    notifyItemChanged(itens.indexOf(category));
+                    break;
+                }
+            }
+        }
+
+        notifyItemChanged(itens.indexOf(item));
+    }
+
     private List<EntityAbs> organizeItens(List<Transaction> itens) {
 
         List<EntityAbs> newList = new ArrayList<>();
@@ -93,7 +116,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         for (Transaction transaction : itens) {
 
-            if (transaction.getDate().before(Calendar.getInstance().getTime())){
+            if (transaction.getDate().before(Calendar.getInstance().getTime())) {
                 total += transaction.getValue();
                 newList.add(transaction);
             } else {
@@ -122,6 +145,73 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         itens.remove(index);
         notifyItemRemoved(index);
         ((BaseActivity) activity).showMessage(R.string.message_delete_sucess);
+    }
+
+    public class TransactionViewHolder extends ViewHolderAbs {
+
+        @BindView(R.id.card_view_container)
+        CardView cvContainer;
+
+        @BindView(R.id.item_transaction_rounded_view)
+        RoundedTextView roundedTextView;
+
+        @BindView(R.id.item_transaction_content)
+        TextView textContent;
+
+        @BindView(R.id.item_transaction_date)
+        TextView textDate;
+
+        @BindView(R.id.item_transaction_category)
+        TextView textCategory;
+
+        @BindView(R.id.item_transaction_value)
+        TextView textValue;
+
+        public TransactionViewHolder(View v, AppCompatActivity activity, RecyclerView.Adapter adapter) {
+            super(v, activity, adapter);
+            ButterKnife.bind(this, itemView);
+        }
+
+        @Override
+        public void bind(final EntityAbs model) {
+
+            final Transaction transaction = (Transaction) model;
+
+            textValue.setText(JavaUtils.NumberUtil.currencyFormat(transaction.getValue()));
+            roundedTextView.setTextView(transaction.getCategory().getName());
+            textContent.setText(transaction.getContent());
+            textDate.setText(JavaUtils.DateUtil.format(transaction.getDate()));
+
+            roundedTextView.setColor(((Transaction) model).getCategory().getColor());
+
+            String categoryName = transaction.getCategory().getName();
+            if (transaction.getCategorySecondary() != null) {
+                categoryName += " / " + transaction.getCategorySecondary().getName();
+            }
+
+            textCategory.setText(categoryName);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+
+                    transaction.setExpanded(!transaction.isExpanded());
+                    updateAll(transaction);
+
+                    //IntentRouter.startTransactionManager(getActivity(), transaction);
+                }
+            });
+
+            animate(transaction);
+        }
+
+        private void animate(Transaction transaction) {
+            if (transaction.isExpanded()) {
+                HighlightCardBehavior.turnOn(cvContainer);
+            } else {
+                HighlightCardBehavior.turnOff(cvContainer);
+            }
+        }
     }
 
     private enum TransactionViewType {

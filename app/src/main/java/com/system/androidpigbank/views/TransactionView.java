@@ -31,7 +31,7 @@ public class TransactionView extends LinearLayout {
 
     public TransactionView(Context context) {
         super(context);
-        inflate(getContext(), R.layout.view_transaction, this);
+        inflate(getContext(), R.layout.custom_view_transaction, this);
         ButterKnife.bind(this);
     }
 

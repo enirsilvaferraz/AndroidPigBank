@@ -78,7 +78,7 @@ public class CategorySummaryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.itens.clear();
 
         boolean alreadyAddedSecoundary = false;
-        this.itens.add(new TitleVO("Primary Categories"));
+        //this.itens.add(new TitleVO("Primary Categories"));
 
         for (Category category : itens) {
             if (!alreadyAddedSecoundary && !category.isPrimary()) {

@@ -13,7 +13,13 @@ import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.recyclerv.TransactionAdapter;
+import com.system.androidpigbank.controllers.helpers.IntentRouter;
+import com.system.androidpigbank.models.business.TransactionBusiness;
+import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.entities.Transaction;
+import com.system.androidpigbank.views.CardActionBarView;
+import com.system.architecture.managers.LoaderResult;
+import com.system.architecture.managers.ManagerHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +51,33 @@ public class TransactionListFragment extends Fragment {
 
         final TransactionAdapter adapter = new TransactionAdapter((AppCompatActivity) getActivity());
         adapter.addItens(getData());
+        adapter.setOnCardBarClickListener(new CardActionBarView.OnClickListener() {
+            @Override
+            public void onEditClicked(EntityAbs model) {
+                IntentRouter.startTransactionManager((AppCompatActivity) getActivity(), (Transaction) model);
+            }
+
+            @Override
+            public void onDeleteClicked(final EntityAbs model) {
+
+                ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<Transaction>() {
+                    @Override
+                    public Transaction executeAction() throws Exception {
+                        return new TransactionBusiness(getActivity()).delete((Transaction) model);
+                    }
+
+                    @Override
+                    public void onComplete(LoaderResult<Transaction> data) {
+                        if (data.isSuccess()) {
+                            adapter.removeItem(data.getData());
+                        } else {
+                            // TODO Tratar exception
+                        }
+                    }
+                });
+
+            }
+        });
 
         final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT, GridLayoutManager.VERTICAL, false);
 
@@ -54,14 +87,14 @@ public class TransactionListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    public void setData(List<Transaction> data) {
-        this.data = data;
-    }
-
     public List<Transaction> getData() {
         if (data == null) {
             data = new ArrayList<>();
         }
         return data;
+    }
+
+    public void setData(List<Transaction> data) {
+        this.data = data;
     }
 }

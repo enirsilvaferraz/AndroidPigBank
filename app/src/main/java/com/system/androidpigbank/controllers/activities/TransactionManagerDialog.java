@@ -56,8 +56,8 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
     @BindView(R.id.transaction_manager_content)
     EditText editContent;
 
-    @BindView(R.id.transaction_manager_bt_delete)
-    Button btDelete;
+    @BindView(R.id.transaction_manager_bt_cancel)
+    Button btCancel;
 
     @BindView(R.id.transaction_manager_bt_save)
     Button btSave;
@@ -98,29 +98,23 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
             editContent.setText(model.getContent());
             editCategorySecondary.setText(model.getCategorySecondary() != null ? model.getCategorySecondary().getName() : null);
             editDatePayment.setText(model.getDatePayment() != null ? JavaUtils.DateUtil.format(model.getDatePayment()) : null);
-
-            btDelete.setVisibility(View.VISIBLE);
         }
 
         btSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    execute(Action.SAVE);
+                    save();
                 } catch (Exception e) {
                     ((BaseActivity) getActivity()).showMessage(e);
                 }
             }
         });
 
-        btDelete.setOnClickListener(new View.OnClickListener() {
+        btCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    execute(Action.DELETE);
-                } catch (Exception e) {
-                    ((BaseActivity) getActivity()).showMessage(e);
-                }
+                dismiss();
             }
         });
 

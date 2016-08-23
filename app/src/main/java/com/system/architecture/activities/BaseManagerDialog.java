@@ -20,30 +20,16 @@ import com.system.architecture.managers.ManagerHelper;
 public abstract class BaseManagerDialog<T extends EntityAbs> extends DialogFragment {
 
     protected T model;
-    private Action action;
 
-    protected void execute(Action action) throws Exception {
-
-        this.action = action;
+    protected void save() throws Exception {
 
         final AppCompatActivity activity = (AppCompatActivity) getActivity();
         ManagerHelper.execute(activity, new ManagerHelper.LoaderResultInterface<T>() {
 
             @Override
             public T executeAction() throws Exception {
-
-                switch (BaseManagerDialog.this.action) {
-
-                    case SAVE:
                         prepareToPersist();
                         return getBusinessInstance().save(model);
-
-                    case DELETE:
-                        return getBusinessInstance().delete(model);
-
-                }
-
-                return null;
             }
 
             @Override
@@ -75,9 +61,4 @@ public abstract class BaseManagerDialog<T extends EntityAbs> extends DialogFragm
     protected abstract DaoAbs<T> getBusinessInstance();
 
     protected abstract void prepareToPersist() throws Exception;
-
-    public enum Action {
-        SAVE, DELETE
-    }
-
 }

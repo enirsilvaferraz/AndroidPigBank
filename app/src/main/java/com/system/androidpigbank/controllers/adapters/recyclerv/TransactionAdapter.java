@@ -6,15 +6,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.viewHolder.FooterViewHolder;
 import com.system.androidpigbank.controllers.behaviors.HighlightCardBehavior;
-import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.vos.TotalFooter;
 import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.entities.Transaction;
+import com.system.androidpigbank.views.CardActionBarView;
 import com.system.androidpigbank.views.RoundedTextView;
 import com.system.architecture.activities.BaseActivity;
 import com.system.architecture.utils.JavaUtils;
@@ -32,12 +33,18 @@ import butterknife.ButterKnife;
  */
 public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private CardActionBarView.OnClickListener onCardBarClickListener;
+
     private AppCompatActivity activity;
     private List<EntityAbs> itens;
 
     public TransactionAdapter(AppCompatActivity activity) {
         this.itens = new ArrayList<>();
         this.activity = activity;
+    }
+
+    public void setOnCardBarClickListener(CardActionBarView.OnClickListener onCardBarClickListener) {
+        this.onCardBarClickListener = onCardBarClickListener;
     }
 
     @Override
@@ -142,12 +149,39 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public void removeItem(Transaction data) {
         int index = itens.indexOf(data);
+
+        for (TotalFooter item : itens){
+
+        }
+
+        Double total = ((TotalFooter)itens.get(itens.size() - 1)).getTotal();
+        total -= ((Transaction)itens.remove(index)).getValue();
+        ((TotalFooter)itens.get(itens.size() - 1)).setTotal(total);
+
         itens.remove(index);
         notifyItemRemoved(index);
         ((BaseActivity) activity).showMessage(R.string.message_delete_sucess);
     }
 
+    private enum TransactionViewType {
+
+        CARD(false), FOOTER(true);
+
+        private boolean fullSpan;
+
+        TransactionViewType(boolean fullSpan) {
+            this.fullSpan = fullSpan;
+        }
+
+        public boolean isFullSpan() {
+            return fullSpan;
+        }
+    }
+
     public class TransactionViewHolder extends ViewHolderAbs {
+
+        @BindView(R.id.item_bar_container)
+        LinearLayout llContainer;
 
         @BindView(R.id.card_view_container)
         CardView cvContainer;
@@ -194,38 +228,26 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-
                     transaction.setExpanded(!transaction.isExpanded());
                     updateAll(transaction);
-
-                    //IntentRouter.startTransactionManager(getActivity(), transaction);
                 }
             });
 
             animate(transaction);
         }
 
-        private void animate(Transaction transaction) {
+        private void animate(final Transaction transaction) {
+            llContainer.removeAllViews();
             if (transaction.isExpanded()) {
                 HighlightCardBehavior.turnOn(cvContainer);
+
+                llContainer.setVisibility(View.VISIBLE);
+                llContainer.addView(new CardActionBarView(itemView.getContext()).bind(transaction, onCardBarClickListener));
+
             } else {
                 HighlightCardBehavior.turnOff(cvContainer);
+                llContainer.setVisibility(View.GONE);
             }
-        }
-    }
-
-    private enum TransactionViewType {
-
-        CARD(false), FOOTER(true);
-
-        private boolean fullSpan;
-
-        TransactionViewType(boolean fullSpan) {
-            this.fullSpan = fullSpan;
-        }
-
-        public boolean isFullSpan() {
-            return fullSpan;
         }
     }
 }

@@ -149,17 +149,21 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public void removeItem(Transaction data) {
         int index = itens.indexOf(data);
+        itens.remove(index);
 
-        for (TotalFooter item : itens){
+        notifyItemRemoved(index);
 
+        Double value = 0D;
+        for (EntityAbs item : itens) {
+
+            if (item instanceof Transaction) {
+                value += ((Transaction) item).getValue();
+            } else if (item instanceof TotalFooter) {
+                ((TotalFooter) item).setTotal(value);
+                notifyItemChanged(itens.indexOf(item));
+            }
         }
 
-        Double total = ((TotalFooter)itens.get(itens.size() - 1)).getTotal();
-        total -= ((Transaction)itens.remove(index)).getValue();
-        ((TotalFooter)itens.get(itens.size() - 1)).setTotal(total);
-
-        itens.remove(index);
-        notifyItemRemoved(index);
         ((BaseActivity) activity).showMessage(R.string.message_delete_sucess);
     }
 

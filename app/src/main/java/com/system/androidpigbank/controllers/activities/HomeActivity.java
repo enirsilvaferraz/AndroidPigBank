@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.crashlytics.android.Crashlytics;
 import com.system.androidpigbank.R;
 import com.system.architecture.activities.BaseNavigationDrawerActivity;
 import com.system.architecture.helpers.PermissionHelper;
@@ -30,6 +31,7 @@ import com.system.androidpigbank.models.business.CategoryBusiness;
 import com.system.androidpigbank.models.business.RecoverBusiness;
 import com.system.androidpigbank.models.business.TransactionBusiness;
 
+import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -78,6 +80,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
         }
 
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
     }
 
     @Override

@@ -23,13 +23,16 @@ public class CardActionBarView extends LinearLayout {
     @BindView(R.id.custom_bar_delete_action)
     ImageButton btDeleteAction;
 
+    @BindView(R.id.custom_bar_copy_action)
+    ImageButton btCopyAction;
+
     public CardActionBarView(Context context) {
         super(context);
         inflate(getContext(), R.layout.custom_view_card_bar, this);
         ButterKnife.bind(this);
     }
 
-    public CardActionBarView bind(final EntityAbs entityAbs ,final OnClickListener onClickListener) {
+    public CardActionBarView bind(final EntityAbs entityAbs, final OnClickListener onClickListener) {
 
         if (onClickListener != null) {
 
@@ -46,6 +49,13 @@ public class CardActionBarView extends LinearLayout {
                     onClickListener.onDeleteClicked(entityAbs);
                 }
             });
+
+            btCopyAction.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onClickListener.onCopyClicked(entityAbs);
+                }
+            });
         }
 
         return this;
@@ -55,5 +65,7 @@ public class CardActionBarView extends LinearLayout {
         void onEditClicked(EntityAbs model);
 
         void onDeleteClicked(EntityAbs model);
+
+        void onCopyClicked(EntityAbs model);
     }
 }

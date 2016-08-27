@@ -22,6 +22,7 @@ import com.system.architecture.managers.LoaderResult;
 import com.system.architecture.managers.ManagerHelper;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class TransactionListFragment extends Fragment {
@@ -76,6 +77,19 @@ public class TransactionListFragment extends Fragment {
                     }
                 });
 
+            }
+
+            @Override
+            public void onCopyClicked(final EntityAbs model) {
+
+                ((Transaction)model).setDatePayment(((Transaction)model).getDate());
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(((Transaction)model).getDate());
+                cal.add(Calendar.MONTH, 1);
+                ((Transaction)model).setDate(cal.getTime());
+
+                ((Transaction)model).setId(null);
+                IntentRouter.startTransactionManager((AppCompatActivity) getActivity(), (Transaction) model);
             }
         });
 

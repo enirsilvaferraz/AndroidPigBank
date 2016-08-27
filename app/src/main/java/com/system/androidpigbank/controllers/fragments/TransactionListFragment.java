@@ -82,7 +82,6 @@ public class TransactionListFragment extends Fragment {
             @Override
             public void onCopyClicked(final EntityAbs model) {
 
-                ((Transaction)model).setDatePayment(((Transaction)model).getDate());
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(((Transaction)model).getDate());
                 cal.add(Calendar.MONTH, 1);

@@ -27,7 +27,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/transaction_manager_date"
+                android:id="@+id/transaction_manager_date_lanc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
@@ -41,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
                 android:inputType="date"
+                android:enabled="false"
                 android:isScrollContainer="true"
                 tools:text="01/01/2000" />
 
@@ -70,7 +71,7 @@
             <EditText
                 android:id="@+id/transaction_manager_value"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight=".5"
                 android:inputType="numberDecimal"
                 android:isScrollContainer="true"
@@ -79,7 +80,7 @@
             <Spinner
                 android:id="@+id/transaction_manager_payment_type"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight=".5" />
 
         </LinearLayout>

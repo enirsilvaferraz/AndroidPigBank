@@ -2,12 +2,16 @@ package com.system.androidpigbank.controllers.activities;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -27,7 +31,9 @@ import com.system.architecture.managers.LoaderResult;
 import com.system.architecture.managers.ManagerHelper;
 import com.system.architecture.utils.JavaUtils;
 
+import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,8 +45,8 @@ import butterknife.ButterKnife;
 
 public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
 
-    @BindView(R.id.transaction_manager_date)
-    EditText editDate;
+    @BindView(R.id.transaction_manager_date_lanc)
+    EditText editDateLanc;
 
     @BindView(R.id.transaction_manager_date_payment)
     EditText editDatePayment;
@@ -90,24 +96,39 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         editValue.requestFocus();
-        editDate.setText(JavaUtils.DateUtil.format(Calendar.getInstance().getTime()));
+        editDateLanc.setText(JavaUtils.DateUtil.format(Calendar.getInstance().getTime()));
+        editDateLanc.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                performTextChange();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        editDatePayment.setText(editDateLanc.getText());
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(), R.array.payment_type_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spPaymentType.setAdapter(adapter);
+        spPaymentType.setSelection(Transaction.PaymentType.DIRECT_DEBIT.getId());
+        spPaymentType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                performTextChange();
+            }
 
-        final Parcelable parcelable = getArguments().getParcelable(Constants.BUNDLE_MODEL_DEFAULT);
-        if (getArguments() != null && parcelable != null) {
-            model = (Transaction) parcelable;
-
-            editDate.setText(JavaUtils.DateUtil.format(model.getDate()));
-            editValue.setText(String.valueOf(model.getValue()));
-            editCategory.setText(model.getCategory().getName());
-            editContent.setText(model.getContent());
-            editCategorySecondary.setText(model.getCategorySecondary() != null ? model.getCategorySecondary().getName() : null);
-            editDatePayment.setText(model.getDatePayment() != null ? JavaUtils.DateUtil.format(model.getDatePayment()) : null);
-            spPaymentType.setSelection(model.getPaymentType() != null ? model.getPaymentType().getId() : Transaction.PaymentType.DIRECT_DEBIT.getId());
-        }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
         btSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +148,23 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
             }
         });
 
+        final Parcelable parcelable = getArguments().getParcelable(Constants.BUNDLE_MODEL_DEFAULT);
+        if (getArguments() != null && parcelable != null) {
+            model = (Transaction) parcelable;
+
+            editDateLanc.setText(JavaUtils.DateUtil.format(model.getDate()));
+            editValue.setText(String.valueOf(model.getValue()));
+            editCategory.setText(model.getCategory().getName());
+            editContent.setText(model.getContent());
+            editCategorySecondary.setText(model.getCategorySecondary() != null ? model.getCategorySecondary().getName() : null);
+            if (model.getDatePayment() != null) {
+                editDatePayment.setText(JavaUtils.DateUtil.format(model.getDatePayment()));
+            }
+            spPaymentType.setSelection(model.getPaymentType() != null ? model.getPaymentType().getId() : Transaction.PaymentType.DIRECT_DEBIT.getId());
+        } else {
+            model = new Transaction();
+        }
+
         ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<List<Category>>() {
 
             @Override
@@ -141,6 +179,47 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
         });
 
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void performTextChange() {
+        try {
+
+            CharSequence date = editDateLanc.getText();
+            if (date.length() == JavaUtils.DateUtil.DD_MM_YYYY.length()) {
+
+                switch (Transaction.PaymentType.getEnum(spPaymentType.getSelectedItemPosition())) {
+                    case DIRECT_DEBIT:
+                    case MONEY:
+                        editDatePayment.setText(date);
+                        break;
+                    case ITAU_CARD:
+                        editDatePayment.setText(JavaUtils.DateUtil.format(
+                                getCredCardPaynentDate(Constants.DATE_ITAU_CARD_VENCIMENTO, Constants.DATE_ITAU_CARD_FECHAMENTO)));
+                        break;
+                    case NUBANK_CARD:
+                        editDatePayment.setText(JavaUtils.DateUtil.format(
+                                getCredCardPaynentDate(Constants.DATE_NUBANK_CARD_VENCIMENTO, Constants.DATE_NUBANK_CARD_FECHAMENTO)));
+                        break;
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace(); // TODO APRESENTAR MENSAGEM
+        }
+    }
+
+    @NonNull
+    private Date getCredCardPaynentDate(int dateVencimento, int dateFechamento) throws ParseException {
+        Calendar calPayment = Calendar.getInstance();
+        calPayment.setTime(JavaUtils.DateUtil.parse(editDateLanc.getText().toString()));
+
+        if (calPayment.get(Calendar.DATE) >= dateFechamento) {
+            calPayment.set(Calendar.DATE, dateVencimento); // Necessario para nao colocar 31 em fevereiro
+            calPayment.add(Calendar.MONTH, 1);
+        } else {
+            calPayment.set(Calendar.DATE, dateVencimento);
+        }
+
+        return calPayment.getTime();
     }
 
     private void autocompleteCategory(LoaderResult<List<Category>> data) {
@@ -162,7 +241,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
     }
 
     private void validateFields() throws Exception {
-        if (editDate.getText().toString().trim().isEmpty() ||
+        if (editDateLanc.getText().toString().trim().isEmpty() ||
                 editValue.getText().toString().trim().isEmpty() ||
                 editCategory.getText().toString().trim().isEmpty() ||
                 editContent.getText().toString().trim().isEmpty() ||
@@ -185,7 +264,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
             model = new Transaction();
         }
 
-        model.setDate(JavaUtils.DateUtil.parse(editDate.getText().toString()));
+        model.setDate(JavaUtils.DateUtil.parse(editDateLanc.getText().toString()));
         model.setValue(Double.parseDouble(editValue.getText().toString()));
         model.setContent(editContent.getText().toString());
 

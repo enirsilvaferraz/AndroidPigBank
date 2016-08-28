@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
@@ -62,6 +63,9 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
     @BindView(R.id.transaction_manager_bt_save)
     Button btSave;
 
+    @BindView(R.id.transaction_manager_payment_type)
+    Spinner spPaymentType;
+
     private List<Category> categories;
 
     public static TransactionManagerDialog newInstance(Transaction transaction) {
@@ -88,6 +92,10 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
         editValue.requestFocus();
         editDate.setText(JavaUtils.DateUtil.format(Calendar.getInstance().getTime()));
 
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(), R.array.payment_type_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spPaymentType.setAdapter(adapter);
+
         final Parcelable parcelable = getArguments().getParcelable(Constants.BUNDLE_MODEL_DEFAULT);
         if (getArguments() != null && parcelable != null) {
             model = (Transaction) parcelable;
@@ -98,6 +106,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
             editContent.setText(model.getContent());
             editCategorySecondary.setText(model.getCategorySecondary() != null ? model.getCategorySecondary().getName() : null);
             editDatePayment.setText(model.getDatePayment() != null ? JavaUtils.DateUtil.format(model.getDatePayment()) : null);
+            spPaymentType.setSelection(model.getPaymentType() != null ? model.getPaymentType().getId() : Transaction.PaymentType.DIRECT_DEBIT.getId());
         }
 
         btSave.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +141,6 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
         });
 
         super.onViewCreated(view, savedInstanceState);
-
     }
 
     private void autocompleteCategory(LoaderResult<List<Category>> data) {
@@ -157,7 +165,8 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
         if (editDate.getText().toString().trim().isEmpty() ||
                 editValue.getText().toString().trim().isEmpty() ||
                 editCategory.getText().toString().trim().isEmpty() ||
-                editContent.getText().toString().trim().isEmpty()) {
+                editContent.getText().toString().trim().isEmpty() ||
+                spPaymentType.getSelectedItem() == null) {
             throw new Exception("Campo obrigatório!");
         }
     }
@@ -184,7 +193,6 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
             model.setDatePayment(JavaUtils.DateUtil.parse(editDatePayment.getText().toString()));
         }
 
-
         final Category category = new Category(editCategory.getText().toString());
         if (categories.contains(category)) {
             model.setCategory(categories.get(categories.indexOf(category)));
@@ -202,7 +210,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
         } else {
             model.setCategorySecondary(null);
         }
+
+        model.setPaymentType(Transaction.PaymentType.getEnum(spPaymentType.getSelectedItemPosition()));
     }
-
-
 }

@@ -24,10 +24,11 @@ public class RoundedImageView extends LinearLayout {
         setGravity(Gravity.CENTER);
 
         imageView = new ImageView(context);
-        final ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
-        layoutParams.width = convertDpToPx(context, 24);
-        layoutParams.height = convertDpToPx(context, 24);
-        imageView.setLayoutParams(layoutParams);
+//        final ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
+//        layoutParams.width = convertDpToPx(context, 24);
+//        layoutParams.height = convertDpToPx(context, 24);
+//        imageView.setLayoutParams(layoutParams);
+        //imageView.setImageResource(R.drawable.ic_payment_purple);
 
         addView(imageView);
 
@@ -37,7 +38,12 @@ public class RoundedImageView extends LinearLayout {
         return Float.valueOf(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueDP, context.getResources().getDisplayMetrics())).intValue();
     }
 
-    public void setImageView(int resourceId) {
-        imageView.setImageResource(resourceId);
+    public void setImageView(Integer resourceId) {
+        if (resourceId != null) {
+            imageView.setImageResource(resourceId);
+            imageView.setVisibility(VISIBLE);
+        } else {
+            imageView.setVisibility(GONE);
+        }
     }
 }

@@ -49,4 +49,11 @@
     <string name="message_delete_sucess">Deleted!</string>
     <string name="title_activity_fixed_transaction_manager">Despesas Fixas</string>
 
+    <string-array name="payment_type_array">
+        <item>Money</item>
+        <item>Direct Debit</item>
+        <item>Nubank Card</item>
+        <item>Itaú Card</item>
+    </string-array>
+
 </resources>

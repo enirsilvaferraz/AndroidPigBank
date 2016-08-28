@@ -15,10 +15,10 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:tint="@color/theme_red_primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_today_black" />
+            android:src="@drawable/ic_today_black"
+            android:tint="@color/theme_red_primary" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,20 +55,34 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:tint="@color/theme_red_primary"
             android:id="@+id/transaction_manager_value_ic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_attach_money_black" />
+            android:src="@drawable/ic_attach_money_black"
+            android:tint="@color/theme_red_primary" />
 
-        <EditText
-            android:id="@+id/transaction_manager_value"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:inputType="numberDecimal"
-            android:isScrollContainer="true"
-            tools:text="0.000,00" />
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/transaction_manager_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:inputType="numberDecimal"
+                android:isScrollContainer="true"
+                tools:text="0.000,00" />
+
+            <Spinner
+                android:id="@+id/transaction_manager_payment_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -80,10 +94,10 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:tint="@color/theme_red_primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_loyalty_black" />
+            android:src="@drawable/ic_loyalty_black"
+            android:tint="@color/theme_red_primary" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -120,10 +134,10 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:tint="@color/theme_red_primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_description_black" />
+            android:src="@drawable/ic_description_black"
+            android:tint="@color/theme_red_primary" />
 
         <EditText
             android:id="@+id/transaction_manager_content"

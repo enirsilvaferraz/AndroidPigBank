@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,7 +17,7 @@ import com.system.androidpigbank.controllers.vos.TotalFooter;
 import com.system.androidpigbank.models.entities.EntityAbs;
 import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.views.CardActionBarView;
-import com.system.androidpigbank.views.RoundedTextView;
+import com.system.androidpigbank.views.RoundedImageView;
 import com.system.architecture.activities.BaseActivity;
 import com.system.architecture.utils.JavaUtils;
 import com.system.architecture.viewHolders.ViewHolderAbs;
@@ -191,7 +192,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         CardView cvContainer;
 
         @BindView(R.id.item_transaction_rounded_view)
-        RoundedTextView roundedTextView;
+        RoundedImageView ivPaymentType;
 
         @BindView(R.id.item_transaction_content)
         TextView textContent;
@@ -216,11 +217,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             final Transaction transaction = (Transaction) model;
 
             textValue.setText(JavaUtils.NumberUtil.currencyFormat(transaction.getValue()));
-            roundedTextView.setTextView(transaction.getCategory().getName());
             textContent.setText(transaction.getContent());
             textDate.setText(JavaUtils.DateUtil.format(transaction.getDate()));
 
-            roundedTextView.setColor(((Transaction) model).getCategory().getColor());
+            if (transaction.getPaymentType() != null) {
+                ivPaymentType.setImageView(transaction.getPaymentType().getResId());
+            } else {
+                ivPaymentType.setImageView(null);
+            }
 
             String categoryName = transaction.getCategory().getName();
             if (transaction.getCategorySecondary() != null) {

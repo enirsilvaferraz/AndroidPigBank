@@ -49,11 +49,20 @@
     <string name="message_delete_sucess">Deleted!</string>
     <string name="title_activity_fixed_transaction_manager">Despesas Fixas</string>
 
+    <string name="payment_type_money">Money</string>
+    <string name="payment_type_itau_transfer">Itaú Transfer</string>
+    <string name="payment_type_itau_debit">Itaú Debit</string>
+    <string name="payment_type_itau_credit">Itaú Credit</string>
+    <string name="payment_type_hsbc_transfer">HSBC Transfer</string>
+    <string name="payment_type_nubank">Nubank</string>
+
     <string-array name="payment_type_array">
-        <item>Money</item>
-        <item>Direct Debit</item>
-        <item>Nubank Card</item>
-        <item>Itaú Card</item>
+        <item>@string/payment_type_money</item>
+        <item>@string/payment_type_itau_debit</item>
+        <item>@string/payment_type_nubank</item>
+        <item>@string/payment_type_itau_credit</item>
+        <item>@string/payment_type_itau_transfer</item>
+        <item>@string/payment_type_hsbc_transfer</item>
     </string-array>
 
 </resources>

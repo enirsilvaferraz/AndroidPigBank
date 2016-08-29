@@ -65,9 +65,12 @@ public class BackupService extends IntentService {
                 FileOutputStream fos = new FileOutputStream(file);
 
                 List<EntityAbs> list = business.findAll();
-                for (EntityAbs entity : list) {
-                    sb.append(new Gson().toJson(entity)).append("\n");
-                }
+//                for (EntityAbs entity : list) {
+//                    sb.append(new Gson().toJson(entity)).append("\n");
+//                }
+
+                // TODO NAO TESTADO
+                sb.append(new Gson().toJson(list));
 
                 fos.write(sb.toString().getBytes());
                 fos.close();

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Environment;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.system.androidpigbank.BuildConfig;
 import com.system.architecture.helpers.JavaHelper;
 import com.system.androidpigbank.models.entities.EntityAbs;
@@ -13,7 +14,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecoverBusiness {
 
@@ -58,9 +62,17 @@ public class RecoverBusiness {
 
                 BufferedReader br = new BufferedReader(new FileReader(file));
 
+                // TODO NAO TESTADO
+                StringBuilder sb = new StringBuilder();
                 String line;
                 while ((line = br.readLine()) != null) {
-                    business.save((EntityAbs) new Gson().fromJson(line, JavaHelper.getTClass(business)));
+                    //business.save((EntityAbs) new Gson().fromJson(line, JavaHelper.getTClass(business)));
+                    sb.append(line);
+                }
+
+                List<EntityAbs> list = new Gson().fromJson(sb.toString(), new TypeToken<List<EntityAbs>>() {}.getType());
+                for (EntityAbs entityAbs: list){
+                    business.save(entityAbs);
                 }
 
                 br.close();

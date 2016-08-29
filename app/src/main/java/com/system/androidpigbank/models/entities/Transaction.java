@@ -20,9 +20,11 @@ public class Transaction extends EntityAbs implements Parcelable {
     public enum PaymentType {
 
         MONEY(R.drawable.ic_attach_money_green),
-        DIRECT_DEBIT(R.drawable.ic_payment_orange),
+        ITAU_DEBIT(R.drawable.ic_payment_orange),
         NUBANK_CARD(R.drawable.ic_payment_purple),
-        ITAU_CARD(R.drawable.ic_payment_blue);
+        ITAU_CREDIT(R.drawable.ic_payment_blue),
+        ITAU_TRANSFER(R.drawable.ic_swap_horiz_orange),
+        HSBC_TRANSFER(R.drawable.ic_swap_horiz_red);
 
         private int resId;
 

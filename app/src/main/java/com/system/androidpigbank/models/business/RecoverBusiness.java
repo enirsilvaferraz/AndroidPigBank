@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class RecoverBusiness {
@@ -72,7 +71,12 @@ public class RecoverBusiness {
                 }
 
                 List<EntityAbs> list = new Gson().fromJson(sb.toString(), type);
-                for (EntityAbs entityAbs: list){
+                for (EntityAbs entityAbs : list) {
+
+                    if (entityAbs instanceof Transaction) {
+                        ((Transaction) entityAbs).setDatePayment(((Transaction) entityAbs).getDateTransaction());
+                    }
+
                     business.save(entityAbs);
                 }
 

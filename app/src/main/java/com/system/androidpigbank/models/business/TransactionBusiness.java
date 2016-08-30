@@ -66,8 +66,8 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         cEnd.set(Calendar.HOUR_OF_DAY, cEnd.getActualMaximum(Calendar.HOUR_OF_DAY));
         cEnd.set(Calendar.MINUTE, cEnd.getActualMaximum(Calendar.MINUTE));
         cEnd.set(Calendar.SECOND, cEnd.getActualMaximum(Calendar.SECOND));
-        
-        queryTransaction.where().between("datePayment", cInit.getTime(), cEnd.getTime());
+
+        queryTransaction.where().between("datePayment", cEnd.getTime(), cInit.getTime());
         queryTransaction.orderBy("datePayment", true);
 
         Dao<Category, String> categoryDao = DaoManager.createDao(connection, Category.class);
@@ -107,7 +107,7 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         Where<Transaction, String> where = queryTransaction.where();
 
         where.and(
-                where.between("datePayment", cInit.getTime(), cEnd.getTime()),
+                where.between("datePayment", cEnd.getTime(), cInit.getTime()),
                 where.or(
                         where.eq("category_id", category.getId()),
                         where.eq("categorySecondary_id", category.getId())

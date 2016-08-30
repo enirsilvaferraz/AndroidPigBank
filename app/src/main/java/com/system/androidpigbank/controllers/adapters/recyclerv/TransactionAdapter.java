@@ -124,7 +124,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         for (Transaction transaction : itens) {
 
-            if (transaction.getDate().before(Calendar.getInstance().getTime())) {
+            if (transaction.getDatePayment().before(Calendar.getInstance().getTime())) {
                 total += transaction.getValue();
                 newList.add(transaction);
             } else {
@@ -218,7 +218,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             textValue.setText(JavaUtils.NumberUtil.currencyFormat(transaction.getValue()));
             textContent.setText(transaction.getContent());
-            textDate.setText(JavaUtils.DateUtil.format(transaction.getDate()));
+            textDate.setText(JavaUtils.DateUtil.format(transaction.getDatePayment()));
 
             if (transaction.getPaymentType() != null) {
                 ivPaymentType.setImageView(transaction.getPaymentType().getResId());

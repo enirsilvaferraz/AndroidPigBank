@@ -46,7 +46,7 @@ public class Transaction extends EntityAbs implements Parcelable {
     @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
     private Long id;
     @DatabaseField
-    private Date date;
+    private Date dateTransaction;
     @DatabaseField
     private Date datePayment;
     @DatabaseField
@@ -65,12 +65,12 @@ public class Transaction extends EntityAbs implements Parcelable {
     public Transaction() {
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDateTransaction() {
+        return dateTransaction;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateTransaction(Date dateTransaction) {
+        this.dateTransaction = dateTransaction;
     }
 
     public Double getValue() {
@@ -145,7 +145,7 @@ public class Transaction extends EntityAbs implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(this.id);
-        dest.writeLong(this.date != null ? this.date.getTime() : -1);
+        dest.writeLong(this.dateTransaction != null ? this.dateTransaction.getTime() : -1);
         dest.writeLong(this.datePayment != null ? this.datePayment.getTime() : -1);
         dest.writeValue(this.value);
         dest.writeParcelable(this.category, flags);
@@ -158,7 +158,7 @@ public class Transaction extends EntityAbs implements Parcelable {
     protected Transaction(Parcel in) {
         this.id = (Long) in.readValue(Long.class.getClassLoader());
         long tmpDate = in.readLong();
-        this.date = tmpDate == -1 ? null : new Date(tmpDate);
+        this.dateTransaction = tmpDate == -1 ? null : new Date(tmpDate);
         long tmpDatePayment = in.readLong();
         this.datePayment = tmpDatePayment == -1 ? null : new Date(tmpDatePayment);
         this.value = (Double) in.readValue(Double.class.getClassLoader());

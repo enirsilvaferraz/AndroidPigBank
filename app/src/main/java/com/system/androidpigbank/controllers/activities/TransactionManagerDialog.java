@@ -152,7 +152,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
         if (getArguments() != null && parcelable != null) {
             model = (Transaction) parcelable;
 
-            editDateLanc.setText(JavaUtils.DateUtil.format(model.getDate()));
+            editDateLanc.setText(JavaUtils.DateUtil.format(model.getDateTransaction()));
             editValue.setText(String.valueOf(model.getValue()));
             editCategory.setText(model.getCategory().getName());
             editContent.setText(model.getContent());
@@ -264,7 +264,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
             model = new Transaction();
         }
 
-        model.setDate(JavaUtils.DateUtil.parse(editDateLanc.getText().toString()));
+        model.setDateTransaction(JavaUtils.DateUtil.parse(editDateLanc.getText().toString()));
         model.setValue(Double.parseDouble(editValue.getText().toString()));
         model.setContent(editContent.getText().toString());
 

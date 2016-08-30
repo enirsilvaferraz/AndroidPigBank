@@ -22,6 +22,9 @@ public final class JavaUtils {
         public static final String MMMM_DE_YYYY = "MMMM 'de' yyyy";
 
         public static String format(Date date, String template) {
+            if (date == null) {
+                return "Not defined";
+            }
             final String format = new SimpleDateFormat(template, new Locale("pt", "BR")).format(date);
             return format.substring(0, 1).toUpperCase() + format.substring(1);
         }

@@ -18,7 +18,7 @@ import java.sql.SQLException;
 public class SQLiteCustomHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "m4.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 1;
     private final Context context;
 
     public SQLiteCustomHelper(Context context) {
@@ -51,13 +51,13 @@ public class SQLiteCustomHelper extends OrmLiteSqliteOpenHelper {
 
             switch (oldVersion) {
 
-                case 1:
-                    DaoManager.createDao(getConnectionSource(), Transaction.class)
-                            .executeRaw("ALTER TABLE 'category' ADD COLUMN 'primary' SMALLINT;");
-
-                case 2:
-                    DaoManager.createDao(getConnectionSource(), Transaction.class)
-                            .executeRaw("ALTER TABLE 'transaction' ADD COLUMN 'paymentType' SMALLINT;");
+//                case 1:
+//                    DaoManager.createDao(getConnectionSource(), Transaction.class)
+//                            .executeRaw("ALTER TABLE 'category' ADD COLUMN 'primary' SMALLINT;");
+//
+//                case 2:
+//                    DaoManager.createDao(getConnectionSource(), Transaction.class)
+//                            .executeRaw("ALTER TABLE 'transaction' ADD COLUMN 'paymentType' SMALLINT;");
 
 
 //                case 1:

@@ -118,7 +118,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(), R.array.payment_type_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spPaymentType.setAdapter(adapter);
-        spPaymentType.setSelection(Transaction.PaymentType.DIRECT_DEBIT.getId());
+        spPaymentType.setSelection(Transaction.PaymentType.ITAU_DEBIT.getId());
         spPaymentType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -160,7 +160,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
             if (model.getDatePayment() != null) {
                 editDatePayment.setText(JavaUtils.DateUtil.format(model.getDatePayment()));
             }
-            spPaymentType.setSelection(model.getPaymentType() != null ? model.getPaymentType().getId() : Transaction.PaymentType.DIRECT_DEBIT.getId());
+            spPaymentType.setSelection(model.getPaymentType() != null ? model.getPaymentType().getId() : Transaction.PaymentType.ITAU_DEBIT.getId());
         } else {
             model = new Transaction();
         }
@@ -188,17 +188,18 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
             if (date.length() == JavaUtils.DateUtil.DD_MM_YYYY.length()) {
 
                 switch (Transaction.PaymentType.getEnum(spPaymentType.getSelectedItemPosition())) {
-                    case DIRECT_DEBIT:
-                    case MONEY:
-                        editDatePayment.setText(date);
-                        break;
-                    case ITAU_CARD:
+
+                    case ITAU_CREDIT:
                         editDatePayment.setText(JavaUtils.DateUtil.format(
                                 getCredCardPaynentDate(Constants.DATE_ITAU_CARD_VENCIMENTO, Constants.DATE_ITAU_CARD_FECHAMENTO)));
                         break;
                     case NUBANK_CARD:
                         editDatePayment.setText(JavaUtils.DateUtil.format(
                                 getCredCardPaynentDate(Constants.DATE_NUBANK_CARD_VENCIMENTO, Constants.DATE_NUBANK_CARD_FECHAMENTO)));
+                        break;
+
+                    default:
+                        editDatePayment.setText(date);
                         break;
                 }
             }

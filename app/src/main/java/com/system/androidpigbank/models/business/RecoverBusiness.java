@@ -3,17 +3,24 @@ package com.system.androidpigbank.models.business;
 import android.content.Context;
 import android.os.Environment;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.system.androidpigbank.BuildConfig;
-import com.system.architecture.helpers.JavaHelper;
+import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.models.entities.EntityAbs;
+import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.models.persistences.DaoAbs;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class RecoverBusiness {
 
@@ -28,8 +35,8 @@ public class RecoverBusiness {
 
     public void execute(Context context) {
 
-        new RecoverImpl(new CategoryBusiness(context)).recoverData();
-        new RecoverImpl(new TransactionBusiness(context)).recoverData();
+        new RecoverImpl(new CategoryBusiness(context)).recoverData(new TypeToken<ArrayList<Category>>() {}.getType());
+        new RecoverImpl(new TransactionBusiness(context)).recoverData(new TypeToken<ArrayList<Transaction>>() {}.getType());
     }
 
     private class RecoverImpl {
@@ -45,7 +52,7 @@ public class RecoverBusiness {
             DIR_NAME = Environment.getExternalStorageDirectory().toString() + "/Unidade/AndroidPigBank/" + BuildConfig.FLAVOR;
         }
 
-        void recoverData() {
+        void recoverData(Type type) {
 
             try {
 
@@ -58,15 +65,21 @@ public class RecoverBusiness {
 
                 BufferedReader br = new BufferedReader(new FileReader(file));
 
+                StringBuilder sb = new StringBuilder();
                 String line;
                 while ((line = br.readLine()) != null) {
-                    business.save((EntityAbs) new Gson().fromJson(line, JavaHelper.getTClass(business)));
+                    sb.append(line);
+                }
+
+                List<EntityAbs> list = new Gson().fromJson(sb.toString(), type);
+                for (EntityAbs entityAbs: list){
+                    business.save(entityAbs);
                 }
 
                 br.close();
 
             } catch (IOException | SQLException e) {
-                e.printStackTrace();
+                Crashlytics.logException(e);
             }
         }
     }

@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Environment;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.system.androidpigbank.BuildConfig;
 import com.system.androidpigbank.models.entities.EntityAbs;
@@ -65,15 +66,13 @@ public class BackupService extends IntentService {
                 FileOutputStream fos = new FileOutputStream(file);
 
                 List<EntityAbs> list = business.findAll();
-                for (EntityAbs entity : list) {
-                    sb.append(new Gson().toJson(entity)).append("\n");
-                }
+                sb.append(new Gson().toJson(list));
 
                 fos.write(sb.toString().getBytes());
                 fos.close();
 
             } catch (IOException e) {
-                e.printStackTrace();
+                Crashlytics.logException(e);
             }
         }
     }

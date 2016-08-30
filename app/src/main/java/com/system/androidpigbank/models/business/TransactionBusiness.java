@@ -8,7 +8,6 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.support.ConnectionSource;
-import com.j256.ormlite.table.TableUtils;
 import com.system.androidpigbank.controllers.vos.Month;
 import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.models.entities.Transaction;
@@ -53,7 +52,7 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         Calendar cInit = Calendar.getInstance();
         cInit.set(Calendar.YEAR, year);
         cInit.set(Calendar.DATE, 1); // Evita avancar o mes (31)
-        cInit.set(Calendar.MONTH, month);
+        cInit.set(Calendar.MONTH, month + 1);
         cInit.set(Calendar.DATE, cInit.getActualMinimum(Calendar.DATE));
         cInit.set(Calendar.HOUR_OF_DAY, cInit.getActualMinimum(Calendar.HOUR_OF_DAY));
         cInit.set(Calendar.MINUTE, cInit.getActualMinimum(Calendar.MINUTE));
@@ -62,13 +61,13 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         Calendar cEnd = Calendar.getInstance();
         cEnd.set(Calendar.YEAR, year);
         cEnd.set(Calendar.DATE, 1); // Evita avancar o mes (31)
-        cEnd.set(Calendar.MONTH, month);
+        cEnd.set(Calendar.MONTH, month - 1);
         cEnd.set(Calendar.DATE, cEnd.getActualMaximum(Calendar.DATE));
         cEnd.set(Calendar.HOUR_OF_DAY, cEnd.getActualMaximum(Calendar.HOUR_OF_DAY));
         cEnd.set(Calendar.MINUTE, cEnd.getActualMaximum(Calendar.MINUTE));
         cEnd.set(Calendar.SECOND, cEnd.getActualMaximum(Calendar.SECOND));
-
-        queryTransaction.  where().between("datePayment", cInit.getTime(), cEnd.getTime());
+        
+        queryTransaction.where().between("datePayment", cInit.getTime(), cEnd.getTime());
         queryTransaction.orderBy("datePayment", true);
 
         Dao<Category, String> categoryDao = DaoManager.createDao(connection, Category.class);
@@ -85,7 +84,7 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         Calendar cInit = Calendar.getInstance();
         cInit.set(Calendar.YEAR, year);
         cInit.set(Calendar.DATE, 1); // Evita avancar o mes (31)
-        cInit.set(Calendar.MONTH, month);
+        cInit.set(Calendar.MONTH, month + 1);
         cInit.set(Calendar.DATE, cInit.getActualMinimum(Calendar.DATE));
         cInit.set(Calendar.HOUR_OF_DAY, cInit.getActualMinimum(Calendar.HOUR_OF_DAY));
         cInit.set(Calendar.MINUTE, cInit.getActualMinimum(Calendar.MINUTE));
@@ -94,7 +93,7 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         Calendar cEnd = Calendar.getInstance();
         cEnd.set(Calendar.YEAR, year);
         cEnd.set(Calendar.DATE, 1); // Evita avancar o mes (31)
-        cEnd.set(Calendar.MONTH, month);
+        cEnd.set(Calendar.MONTH, month - 1);
         cEnd.set(Calendar.DATE, cEnd.getActualMaximum(Calendar.DATE));
         cEnd.set(Calendar.HOUR_OF_DAY, cEnd.getActualMaximum(Calendar.HOUR_OF_DAY));
         cEnd.set(Calendar.MINUTE, cEnd.getActualMaximum(Calendar.MINUTE));

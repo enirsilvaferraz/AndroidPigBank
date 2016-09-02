@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
+import com.system.androidpigbank.BuildConfig;
 import com.system.androidpigbank.R;
 import com.system.architecture.activities.BaseNavigationDrawerActivity;
 import com.system.architecture.helpers.PermissionHelper;
@@ -32,6 +33,7 @@ import com.system.androidpigbank.models.business.RecoverBusiness;
 import com.system.androidpigbank.models.business.TransactionBusiness;
 
 import io.fabric.sdk.android.Fabric;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -79,6 +81,10 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
             configureResult(data);
         }
 
+        if (JavaUtils.AndroidUtil.isProd()) {
+            JavaUtils.AndroidUtil.installShortCut(getApplicationContext());
+        }
+
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
     }
@@ -124,7 +130,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (RESULT_OK == resultCode && (Constants.REQUEST_ACTION_DELETE == requestCode || Constants.REQUEST_ACTION_SAVE == requestCode)){
+        if (RESULT_OK == resultCode && (Constants.REQUEST_ACTION_DELETE == requestCode || Constants.REQUEST_ACTION_SAVE == requestCode)) {
             callApi(this.data.getMonth(), this.data.getYear());
             showMessage(data.getIntExtra(Constants.BUNDLE_MESSAGE_ID, 0));
         }
@@ -132,7 +138,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void callApi(){
+    public void callApi() {
         callApi(this.data.getMonth(), this.data.getYear());
     }
 

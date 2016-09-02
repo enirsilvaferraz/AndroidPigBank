@@ -82,10 +82,10 @@ public class TransactionListFragment extends Fragment {
             @Override
             public void onCopyClicked(final EntityAbs model) {
 
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(((Transaction)model).getDateTransaction());
-                cal.add(Calendar.MONTH, 1);
-                ((Transaction)model).setDateTransaction(cal.getTime());
+//                Calendar cal = Calendar.getInstance();
+//                cal.setTime(((Transaction)model).getDateTransaction());
+//                cal.add(Calendar.MONTH, 1);
+//                ((Transaction)model).setDateTransaction(cal.getTime());
 
                 ((Transaction)model).setId(null);
                 IntentRouter.startTransactionManager((AppCompatActivity) getActivity(), (Transaction) model);

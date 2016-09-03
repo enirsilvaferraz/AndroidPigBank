@@ -10,6 +10,7 @@ import com.system.androidpigbank.controllers.activities.HomeActivity;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -46,6 +47,13 @@ public final class JavaUtils {
 
         private static Date parse(String date, String template) throws ParseException {
             return new SimpleDateFormat(template, new Locale("pt", "BR")).parse(date);
+        }
+
+        public static Date getActualMaximum(int year, int month){
+            Calendar cInit = Calendar.getInstance();
+            cInit.set(year, month, 1, cInit.getActualMaximum(Calendar.HOUR_OF_DAY), cInit.getActualMaximum(Calendar.MINUTE),cInit.getActualMaximum(Calendar.SECOND) ); // DATE = 1 Evita avancar o mes (31)
+            cInit.set(Calendar.DATE, cInit.getActualMaximum(Calendar.DATE));
+            return cInit.getTime();
         }
     }
 

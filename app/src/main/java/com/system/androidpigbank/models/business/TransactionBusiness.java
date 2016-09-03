@@ -12,10 +12,12 @@ import com.system.androidpigbank.controllers.vos.Month;
 import com.system.androidpigbank.models.entities.Category;
 import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.models.persistences.DaoAbs;
+import com.system.architecture.utils.JavaUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,25 +51,10 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);
         QueryBuilder<Transaction, String> queryTransaction = dao.queryBuilder();
 
-        Calendar cInit = Calendar.getInstance();
-        cInit.set(Calendar.YEAR, year);
-        cInit.set(Calendar.DATE, 1); // Evita avancar o mes (31)
-        cInit.set(Calendar.MONTH, month + 1);
-        cInit.set(Calendar.DATE, cInit.getActualMinimum(Calendar.DATE));
-        cInit.set(Calendar.HOUR_OF_DAY, cInit.getActualMinimum(Calendar.HOUR_OF_DAY));
-        cInit.set(Calendar.MINUTE, cInit.getActualMinimum(Calendar.MINUTE));
-        cInit.set(Calendar.SECOND, cInit.getActualMinimum(Calendar.SECOND));
+        Date cInit = JavaUtils.DateUtil.getActualMaximum(year, month -1);
+        Date cEnd = JavaUtils.DateUtil.getActualMaximum(year, month);
 
-        Calendar cEnd = Calendar.getInstance();
-        cEnd.set(Calendar.YEAR, year);
-        cEnd.set(Calendar.DATE, 1); // Evita avancar o mes (31)
-        cEnd.set(Calendar.MONTH, month - 1);
-        cEnd.set(Calendar.DATE, cEnd.getActualMaximum(Calendar.DATE));
-        cEnd.set(Calendar.HOUR_OF_DAY, cEnd.getActualMaximum(Calendar.HOUR_OF_DAY));
-        cEnd.set(Calendar.MINUTE, cEnd.getActualMaximum(Calendar.MINUTE));
-        cEnd.set(Calendar.SECOND, cEnd.getActualMaximum(Calendar.SECOND));
-
-        queryTransaction.where().between("datePayment", cEnd.getTime(), cInit.getTime());
+        queryTransaction.where().between("datePayment", cInit, cEnd);
         queryTransaction.orderBy("datePayment", true);
 
         Dao<Category, String> categoryDao = DaoManager.createDao(connection, Category.class);
@@ -81,23 +68,8 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
 
     public List<Transaction> findByCategory(Category category, int month, int year) throws SQLException {
 
-        Calendar cInit = Calendar.getInstance();
-        cInit.set(Calendar.YEAR, year);
-        cInit.set(Calendar.DATE, 1); // Evita avancar o mes (31)
-        cInit.set(Calendar.MONTH, month + 1);
-        cInit.set(Calendar.DATE, cInit.getActualMinimum(Calendar.DATE));
-        cInit.set(Calendar.HOUR_OF_DAY, cInit.getActualMinimum(Calendar.HOUR_OF_DAY));
-        cInit.set(Calendar.MINUTE, cInit.getActualMinimum(Calendar.MINUTE));
-        cInit.set(Calendar.SECOND, cInit.getActualMinimum(Calendar.SECOND));
-
-        Calendar cEnd = Calendar.getInstance();
-        cEnd.set(Calendar.YEAR, year);
-        cEnd.set(Calendar.DATE, 1); // Evita avancar o mes (31)
-        cEnd.set(Calendar.MONTH, month - 1);
-        cEnd.set(Calendar.DATE, cEnd.getActualMaximum(Calendar.DATE));
-        cEnd.set(Calendar.HOUR_OF_DAY, cEnd.getActualMaximum(Calendar.HOUR_OF_DAY));
-        cEnd.set(Calendar.MINUTE, cEnd.getActualMaximum(Calendar.MINUTE));
-        cEnd.set(Calendar.SECOND, cEnd.getActualMaximum(Calendar.SECOND));
+        Date cInit = JavaUtils.DateUtil.getActualMaximum(year, month -1);
+        Date cEnd = JavaUtils.DateUtil.getActualMaximum(year, month);
 
         ConnectionSource connection = new AndroidConnectionSource(db);
 
@@ -107,7 +79,7 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         Where<Transaction, String> where = queryTransaction.where();
 
         where.and(
-                where.between("datePayment", cEnd.getTime(), cInit.getTime()),
+                where.between("datePayment", cInit, cEnd),
                 where.or(
                         where.eq("category_id", category.getId()),
                         where.eq("categorySecondary_id", category.getId())

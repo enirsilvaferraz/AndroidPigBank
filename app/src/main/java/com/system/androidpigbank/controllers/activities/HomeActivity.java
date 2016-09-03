@@ -81,10 +81,6 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
             configureResult(data);
         }
 
-        if (JavaUtils.AndroidUtil.isProd()) {
-            JavaUtils.AndroidUtil.installShortCut(getApplicationContext());
-        }
-
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
     }

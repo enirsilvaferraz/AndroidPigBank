@@ -2,12 +2,16 @@ package com.system.androidpigbank.models.entities;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.DrawableRes;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.system.androidpigbank.R;
+import com.system.androidpigbank.models.dtos.DTOAbs;
+import com.system.androidpigbank.models.dtos.TransactionDTO;
+import com.system.architecture.utils.JavaUtils;
 
 import java.util.Date;
 
@@ -15,50 +19,37 @@ import java.util.Date;
  * Created by eferraz on 05/12/15.
  */
 @DatabaseTable(tableName = "transaction")
+@IgnoreExtraProperties
 public class Transaction extends EntityAbs implements Parcelable {
-
-    public enum PaymentType {
-
-        MONEY(R.drawable.ic_attach_money_green),
-        ITAU_DEBIT(R.drawable.ic_payment_orange),
-        NUBANK_CARD(R.drawable.ic_payment_purple),
-        ITAU_CREDIT(R.drawable.ic_payment_blue),
-        ITAU_TRANSFER(R.drawable.ic_swap_horiz_orange),
-        HSBC_TRANSFER(R.drawable.ic_swap_horiz_red);
-
-        private int resId;
-
-        PaymentType(@DrawableRes int resId) {
-            this.resId = resId;
-        }
-
-        public int getId() {
-            return ordinal();
-        }
-
-        public static PaymentType getEnum(int position) {
-            return PaymentType.values()[position];
-        }
-
-        public int getResId() {
-            return resId;
-        }
-    }
 
     @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
     private Long id;
+
+    @Expose
     @DatabaseField
     private Date dateTransaction;
+
+    @Expose
     @DatabaseField
     private Date datePayment;
+
+    @Expose
     @DatabaseField
     private Double value;
+
+    @Expose
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Category category;
+
+    @Expose
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Category categorySecondary;
+
+    @Expose
     @DatabaseField
     private String content;
+
+    @Expose
     @DatabaseField(dataType = DataType.ENUM_INTEGER)
     private PaymentType paymentType;
 
@@ -101,6 +92,11 @@ public class Transaction extends EntityAbs implements Parcelable {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public DTOAbs toDTO() {
+        return JavaUtils.GsonUtil.getInstance().fromTransaction().toDTO(this, TransactionDTO.class);
     }
 
     public void setId(Long id) {

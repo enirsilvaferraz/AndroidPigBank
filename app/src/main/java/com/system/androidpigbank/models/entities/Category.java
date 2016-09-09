@@ -3,10 +3,16 @@ package com.system.androidpigbank.models.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.system.androidpigbank.controllers.helpers.constant.Colors;
+import com.system.androidpigbank.models.dtos.CategoryDTO;
+import com.system.androidpigbank.models.dtos.DTOAbs;
+import com.system.androidpigbank.models.dtos.TransactionDTO;
+import com.system.architecture.utils.JavaUtils;
 
 import java.util.List;
 
@@ -16,15 +22,19 @@ import java.util.List;
 @DatabaseTable(tableName = "category")
 public class Category extends EntityAbs implements Parcelable {
 
+    @Expose
     @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
     private Long id;
 
+    @Expose
     @DatabaseField
     private String name;
 
+    @Expose
     @DatabaseField
     private boolean primary;
 
+    @Expose
     @DatabaseField(dataType = DataType.ENUM_INTEGER)
     private Colors color;
 
@@ -70,6 +80,11 @@ public class Category extends EntityAbs implements Parcelable {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public DTOAbs toDTO() {
+        return JavaUtils.GsonUtil.getInstance().fromCategory().toDTO(this, CategoryDTO.class);
     }
 
     public void setId(Long id) {

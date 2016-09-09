@@ -23,6 +23,7 @@ import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.models.business.CategoryBusiness;
 import com.system.androidpigbank.models.business.TransactionBusiness;
 import com.system.androidpigbank.models.entities.Category;
+import com.system.androidpigbank.models.entities.PaymentType;
 import com.system.androidpigbank.models.entities.Transaction;
 import com.system.androidpigbank.models.persistences.DaoAbs;
 import com.system.architecture.activities.BaseActivity;
@@ -118,7 +119,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(), R.array.payment_type_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spPaymentType.setAdapter(adapter);
-        spPaymentType.setSelection(Transaction.PaymentType.ITAU_DEBIT.getId());
+        spPaymentType.setSelection(PaymentType.ITAU_DEBIT.getId());
         spPaymentType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -160,7 +161,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
             if (model.getDatePayment() != null) {
                 editDatePayment.setText(JavaUtils.DateUtil.format(model.getDatePayment()));
             }
-            spPaymentType.setSelection(model.getPaymentType() != null ? model.getPaymentType().getId() : Transaction.PaymentType.ITAU_DEBIT.getId());
+            spPaymentType.setSelection(model.getPaymentType() != null ? model.getPaymentType().getId() : PaymentType.ITAU_DEBIT.getId());
         } else {
             model = new Transaction();
         }
@@ -187,7 +188,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
             CharSequence date = editDateLanc.getText();
             if (date.length() == JavaUtils.DateUtil.DD_MM_YYYY.length()) {
 
-                switch (Transaction.PaymentType.getEnum(spPaymentType.getSelectedItemPosition())) {
+                switch (PaymentType.getEnum(spPaymentType.getSelectedItemPosition())) {
 
                     case ITAU_CREDIT:
                         editDatePayment.setText(JavaUtils.DateUtil.format(
@@ -291,6 +292,6 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
             model.setCategorySecondary(null);
         }
 
-        model.setPaymentType(Transaction.PaymentType.getEnum(spPaymentType.getSelectedItemPosition()));
+        model.setPaymentType(PaymentType.getEnum(spPaymentType.getSelectedItemPosition()));
     }
 }

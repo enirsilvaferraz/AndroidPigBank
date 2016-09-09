@@ -3,6 +3,7 @@ package com.system.androidpigbank.controllers.vos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.system.androidpigbank.models.dtos.DTOAbs;
 import com.system.androidpigbank.models.entities.EntityAbs;
 
 /**
@@ -27,6 +28,11 @@ public class TitleVO extends EntityAbs implements Parcelable {
 
     @Override
     public Long getId() {
+        return null;
+    }
+
+    @Override
+    public DTOAbs toDTO() {
         return null;
     }
 

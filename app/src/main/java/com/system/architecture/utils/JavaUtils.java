@@ -3,9 +3,21 @@ package com.system.architecture.utils;
 import android.content.Context;
 import android.content.Intent;
 
+import com.crashlytics.android.Crashlytics;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.system.androidpigbank.BuildConfig;
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.activities.HomeActivity;
+import com.system.androidpigbank.models.business.serializers.GsonCategorySerializer;
+import com.system.androidpigbank.models.business.serializers.GsonDateSerializer;
+import com.system.androidpigbank.models.business.serializers.GsonPaymentTypeSerializer;
+import com.system.androidpigbank.models.dtos.DTOAbs;
+import com.system.androidpigbank.models.dtos.TransactionDTO;
+import com.system.androidpigbank.models.entities.Category;
+import com.system.androidpigbank.models.entities.EntityAbs;
+import com.system.androidpigbank.models.entities.PaymentType;
+import com.system.androidpigbank.models.entities.Transaction;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -28,6 +40,7 @@ public final class JavaUtils {
 
         public static final String DD_MM_YYYY = "dd/MM/yyyy";
         public static final String MMMM_DE_YYYY = "MMMM 'de' yyyy";
+        public static final String YYYY_MM_DD = "yyyy/MM/dd";
 
         public static String format(Date date, String template) {
             if (date == null) {
@@ -45,8 +58,13 @@ public final class JavaUtils {
             return parse(date, DD_MM_YYYY);
         }
 
-        private static Date parse(String date, String template) throws ParseException {
-            return new SimpleDateFormat(template, new Locale("pt", "BR")).parse(date);
+        public static Date parse(String date, String template) {
+            try {
+                return new SimpleDateFormat(template, new Locale("pt", "BR")).parse(date);
+            } catch (ParseException e) {
+                Crashlytics.logException(e);
+                throw new RuntimeException(e);
+            }
         }
 
         public static Date getActualMaximum(int year, int month){
@@ -108,6 +126,46 @@ public final class JavaUtils {
 
         public static boolean isProd() {
             return BuildConfig.FLAVOR.equals(FLAVOR_PRD);
+        }
+    }
+
+    /**
+     *
+     */
+    public static class GsonUtil {
+
+        private Gson build;
+
+        public static GsonUtil getInstance(){
+            return new GsonUtil();
+        }
+
+        public GsonUtil fromTransaction(){
+            build = new GsonBuilder()
+                    .excludeFieldsWithoutExposeAnnotation()
+                    .registerTypeAdapter(Date.class, new GsonDateSerializer())
+                    .registerTypeAdapter(PaymentType.class, new GsonPaymentTypeSerializer())
+                    .registerTypeAdapter(Category.class, new GsonCategorySerializer())
+                    .create();
+            return this;
+        }
+
+        public GsonUtil fromCategory (){
+            build =  new GsonBuilder()
+                    .excludeFieldsWithoutExposeAnnotation()
+                    .create();
+            return this;
+        }
+
+        public DTOAbs toDTO(EntityAbs entity, Class<? extends DTOAbs> classe){
+            String json = build.toJson(entity);
+            return build.fromJson(json, classe);
+        }
+
+
+        public EntityAbs toEntity(DTOAbs dto, Class<? extends EntityAbs> classe) {
+            String json = build.toJson(dto);
+            return build.fromJson(json, classe);
         }
     }
 }

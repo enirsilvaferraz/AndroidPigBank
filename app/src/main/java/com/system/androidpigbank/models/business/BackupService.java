@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Environment;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.system.androidpigbank.BuildConfig;
 import com.system.androidpigbank.models.entities.EntityAbs;
@@ -30,6 +32,9 @@ public class BackupService extends IntentService {
             new BackupImpl(new TransactionBusiness(this)).backupData();
             new BackupImpl(new CategoryBusiness(this)).backupData();
 
+            new BackupFirebaseImpl(new TransactionBusiness(this)).backupData();
+            new BackupFirebaseImpl(new CategoryBusiness(this)).backupData();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,9 +53,11 @@ public class BackupService extends IntentService {
             DIR_NAME = Environment.getExternalStorageDirectory().toString() + File.separator + "Unidade" + File.separator + "AndroidPigBank" + File.separator + BuildConfig.FLAVOR + File.separator;
         }
 
-        public void backupData() throws SQLException {
+        void backupData() throws SQLException {
 
             try {
+
+                List<EntityAbs> list = business.findAll();
 
                 StringBuilder sb = new StringBuilder();
 
@@ -65,7 +72,6 @@ public class BackupService extends IntentService {
 
                 FileOutputStream fos = new FileOutputStream(file);
 
-                List<EntityAbs> list = business.findAll();
                 sb.append(new Gson().toJson(list));
 
                 fos.write(sb.toString().getBytes());
@@ -74,6 +80,40 @@ public class BackupService extends IntentService {
             } catch (IOException e) {
                 Crashlytics.logException(e);
             }
+        }
+    }
+
+    private class BackupFirebaseImpl {
+
+        private DaoAbs<EntityAbs> business;
+
+        BackupFirebaseImpl(DaoAbs business) {
+            this.business = business;
+        }
+
+        void backupData() {
+
+            try {
+
+                List<EntityAbs> list = business.findAll();
+                DatabaseReference myRef = getDatabaseReference(business);
+
+                myRef.removeValue();
+
+                for (EntityAbs entityAbs : list) {
+                    myRef.push().setValue(entityAbs.toDTO());
+                }
+
+            } catch (SQLException e) {
+                Crashlytics.logException(e);
+            }
+        }
+
+        public DatabaseReference getDatabaseReference(DaoAbs<EntityAbs> business) {
+            String simpleName = business.getClass().getSimpleName().replace("Business", "");
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            return database.getReference(BuildConfig.FLAVOR + "-database/" + simpleName);
         }
     }
 }

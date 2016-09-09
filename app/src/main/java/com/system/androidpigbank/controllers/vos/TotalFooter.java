@@ -3,6 +3,7 @@ package com.system.androidpigbank.controllers.vos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.system.androidpigbank.models.dtos.DTOAbs;
 import com.system.androidpigbank.models.entities.EntityAbs;
 
 /**
@@ -50,4 +51,10 @@ public class TotalFooter extends EntityAbs implements Parcelable {
     public Long getId() {
         return null;
     }
+
+    @Override
+    public DTOAbs toDTO() {
+        return null;
+    }
+
 }

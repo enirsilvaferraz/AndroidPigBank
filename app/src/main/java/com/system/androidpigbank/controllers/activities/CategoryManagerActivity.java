@@ -18,9 +18,9 @@ import com.system.architecture.managers.ManagerHelper;
 import com.system.architecture.helpers.JavaHelper;
 import com.system.androidpigbank.controllers.helpers.constant.Colors;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
-import com.system.androidpigbank.models.business.CategoryBusiness;
-import com.system.androidpigbank.models.entities.Category;
-import com.system.androidpigbank.models.persistences.DaoAbs;
+import com.system.androidpigbank.models.sqlite.business.CategoryBusiness;
+import com.system.androidpigbank.models.sqlite.entities.Category;
+import com.system.androidpigbank.models.sqlite.persistences.DaoAbs;
 
 import java.util.List;
 

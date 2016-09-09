@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
-import com.system.androidpigbank.models.entities.Category;
+import com.system.androidpigbank.models.sqlite.entities.Category;
 import com.system.androidpigbank.views.RoundedTextView;
 
 import java.util.ArrayList;

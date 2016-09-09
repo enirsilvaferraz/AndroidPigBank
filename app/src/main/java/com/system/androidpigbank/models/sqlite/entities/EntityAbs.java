@@ -1,6 +1,6 @@
-package com.system.androidpigbank.models.entities;
+package com.system.androidpigbank.models.sqlite.entities;
 
-import com.system.androidpigbank.models.dtos.DTOAbs;
+import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
 
 /**
  * Created by eferraz on 05/12/15.

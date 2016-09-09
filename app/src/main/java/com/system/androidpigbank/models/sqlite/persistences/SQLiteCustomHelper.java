@@ -1,14 +1,13 @@
-package com.system.androidpigbank.models.persistences;
+package com.system.androidpigbank.models.sqlite.persistences;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
-import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import com.system.androidpigbank.models.entities.Category;
-import com.system.androidpigbank.models.entities.Transaction;
+import com.system.androidpigbank.models.sqlite.entities.Category;
+import com.system.androidpigbank.models.sqlite.entities.Transaction;
 
 import java.sql.SQLException;
 

@@ -1,4 +1,4 @@
-package com.system.androidpigbank.models.business;
+package com.system.androidpigbank.models.sqlite.business;
 
 import android.content.Context;
 import android.os.Environment;
@@ -7,10 +7,10 @@ import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.system.androidpigbank.BuildConfig;
-import com.system.androidpigbank.models.entities.Category;
-import com.system.androidpigbank.models.entities.EntityAbs;
-import com.system.androidpigbank.models.entities.Transaction;
-import com.system.androidpigbank.models.persistences.DaoAbs;
+import com.system.androidpigbank.models.sqlite.entities.Category;
+import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
+import com.system.androidpigbank.models.sqlite.entities.Transaction;
+import com.system.androidpigbank.models.sqlite.persistences.DaoAbs;
 
 import java.io.BufferedReader;
 import java.io.File;

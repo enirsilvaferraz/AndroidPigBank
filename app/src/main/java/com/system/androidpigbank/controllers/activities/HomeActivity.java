@@ -13,7 +13,6 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
-import com.system.androidpigbank.BuildConfig;
 import com.system.androidpigbank.R;
 import com.system.architecture.activities.BaseNavigationDrawerActivity;
 import com.system.architecture.helpers.PermissionHelper;
@@ -28,16 +27,14 @@ import com.system.androidpigbank.controllers.fragments.TransactionListFragment;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.controllers.vos.HomeObject;
-import com.system.androidpigbank.models.business.CategoryBusiness;
-import com.system.androidpigbank.models.business.RecoverBusiness;
-import com.system.androidpigbank.models.business.TransactionBusiness;
+import com.system.androidpigbank.models.sqlite.business.CategoryBusiness;
+import com.system.androidpigbank.models.sqlite.business.RecoverBusiness;
+import com.system.androidpigbank.models.sqlite.business.TransactionBusiness;
 
 import io.fabric.sdk.android.Fabric;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 

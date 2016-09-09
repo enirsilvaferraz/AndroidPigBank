@@ -1,4 +1,4 @@
-package com.system.androidpigbank.models.business.serializers;
+package com.system.androidpigbank.models.firebase.serializers;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

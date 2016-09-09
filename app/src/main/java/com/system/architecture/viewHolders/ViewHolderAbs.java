@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.system.androidpigbank.models.entities.EntityAbs;
+import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
 
 /**
  * Created by eferraz on 05/12/15.

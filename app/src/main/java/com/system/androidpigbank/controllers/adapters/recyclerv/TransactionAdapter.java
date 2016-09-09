@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,8 +13,8 @@ import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.viewHolder.FooterViewHolder;
 import com.system.androidpigbank.controllers.behaviors.HighlightCardBehavior;
 import com.system.androidpigbank.controllers.vos.TotalFooter;
-import com.system.androidpigbank.models.entities.EntityAbs;
-import com.system.androidpigbank.models.entities.Transaction;
+import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
+import com.system.androidpigbank.models.sqlite.entities.Transaction;
 import com.system.androidpigbank.views.CardActionBarView;
 import com.system.androidpigbank.views.RoundedImageView;
 import com.system.architecture.activities.BaseActivity;

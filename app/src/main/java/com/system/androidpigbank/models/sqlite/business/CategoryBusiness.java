@@ -1,4 +1,4 @@
-package com.system.androidpigbank.models.business;
+package com.system.androidpigbank.models.sqlite.business;
 
 import android.content.Context;
 
@@ -8,12 +8,11 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.system.architecture.helpers.JavaHelper;
-import com.system.androidpigbank.models.entities.Category;
-import com.system.androidpigbank.models.entities.Transaction;
-import com.system.androidpigbank.models.persistences.DaoAbs;
+import com.system.androidpigbank.models.sqlite.entities.Category;
+import com.system.androidpigbank.models.sqlite.entities.Transaction;
+import com.system.androidpigbank.models.sqlite.persistences.DaoAbs;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

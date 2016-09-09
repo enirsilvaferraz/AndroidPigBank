@@ -34,7 +34,7 @@
         </activity>
 
         <service
-            android:name=".models.business.BackupService"
+            android:name=".models.sqlite.business.BackupService"
             android:exported="false" />
 
         <meta-data

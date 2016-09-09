@@ -3,8 +3,8 @@ package com.system.androidpigbank.controllers.vos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.system.androidpigbank.models.entities.Category;
-import com.system.androidpigbank.models.entities.Transaction;
+import com.system.androidpigbank.models.sqlite.entities.Category;
+import com.system.androidpigbank.models.sqlite.entities.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;

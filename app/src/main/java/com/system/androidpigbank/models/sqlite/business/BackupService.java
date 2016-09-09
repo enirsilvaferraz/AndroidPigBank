@@ -1,4 +1,4 @@
-package com.system.androidpigbank.models.business;
+package com.system.androidpigbank.models.sqlite.business;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -9,8 +9,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.system.androidpigbank.BuildConfig;
-import com.system.androidpigbank.models.entities.EntityAbs;
-import com.system.androidpigbank.models.persistences.DaoAbs;
+import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
+import com.system.androidpigbank.models.sqlite.persistences.DaoAbs;
 
 import java.io.File;
 import java.io.FileOutputStream;

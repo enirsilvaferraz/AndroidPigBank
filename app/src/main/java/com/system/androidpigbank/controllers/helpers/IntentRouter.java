@@ -9,9 +9,9 @@ import com.system.androidpigbank.controllers.activities.CategoryListActivity;
 import com.system.androidpigbank.controllers.activities.CategoryManagerActivity;
 import com.system.androidpigbank.controllers.activities.TransactionManagerDialog;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
-import com.system.androidpigbank.models.business.BackupService;
-import com.system.androidpigbank.models.entities.Category;
-import com.system.androidpigbank.models.entities.Transaction;
+import com.system.androidpigbank.models.sqlite.business.BackupService;
+import com.system.androidpigbank.models.sqlite.entities.Category;
+import com.system.androidpigbank.models.sqlite.entities.Transaction;
 
 /**
  * Created by eferraz on 25/04/16.

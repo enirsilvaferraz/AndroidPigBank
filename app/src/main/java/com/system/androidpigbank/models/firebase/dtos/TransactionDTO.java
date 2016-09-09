@@ -1,12 +1,9 @@
-package com.system.androidpigbank.models.dtos;
+package com.system.androidpigbank.models.firebase.dtos;
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-import com.system.androidpigbank.models.entities.EntityAbs;
-import com.system.androidpigbank.models.entities.Transaction;
+import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
+import com.system.androidpigbank.models.sqlite.entities.Transaction;
 import com.system.architecture.utils.JavaUtils;
-
-import java.util.Date;
 
 /**
  * Created by Enir on 07/09/2016.

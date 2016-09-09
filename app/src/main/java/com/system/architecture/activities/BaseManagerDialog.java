@@ -8,8 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.system.androidpigbank.controllers.activities.HomeActivity;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
-import com.system.androidpigbank.models.entities.EntityAbs;
-import com.system.androidpigbank.models.persistences.DaoAbs;
+import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
+import com.system.androidpigbank.models.sqlite.persistences.DaoAbs;
 import com.system.architecture.managers.LoaderResult;
 import com.system.architecture.managers.ManagerHelper;
 

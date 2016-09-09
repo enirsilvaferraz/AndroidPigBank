@@ -20,12 +20,12 @@ import android.widget.Spinner;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
-import com.system.androidpigbank.models.business.CategoryBusiness;
-import com.system.androidpigbank.models.business.TransactionBusiness;
-import com.system.androidpigbank.models.entities.Category;
-import com.system.androidpigbank.models.entities.PaymentType;
-import com.system.androidpigbank.models.entities.Transaction;
-import com.system.androidpigbank.models.persistences.DaoAbs;
+import com.system.androidpigbank.models.sqlite.business.CategoryBusiness;
+import com.system.androidpigbank.models.sqlite.business.TransactionBusiness;
+import com.system.androidpigbank.models.sqlite.entities.Category;
+import com.system.androidpigbank.models.sqlite.entities.PaymentType;
+import com.system.androidpigbank.models.sqlite.entities.Transaction;
+import com.system.androidpigbank.models.sqlite.persistences.DaoAbs;
 import com.system.architecture.activities.BaseActivity;
 import com.system.architecture.activities.BaseManagerDialog;
 import com.system.architecture.managers.LoaderResult;

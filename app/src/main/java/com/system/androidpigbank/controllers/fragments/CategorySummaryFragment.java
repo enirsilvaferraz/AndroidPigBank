@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.recyclerv.CategorySummaryAdapter;
-import com.system.androidpigbank.models.entities.Category;
+import com.system.androidpigbank.models.sqlite.entities.Category;
 
 import java.util.ArrayList;
 import java.util.List;

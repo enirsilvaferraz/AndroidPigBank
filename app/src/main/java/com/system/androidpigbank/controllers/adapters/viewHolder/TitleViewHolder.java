@@ -5,12 +5,8 @@ import android.widget.TextView;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.vos.TitleVO;
-import com.system.androidpigbank.controllers.vos.TotalFooter;
-import com.system.androidpigbank.models.entities.Category;
-import com.system.androidpigbank.models.entities.EntityAbs;
+import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
 import com.system.architecture.viewHolders.ViewHolderAbs;
-
-import java.text.NumberFormat;
 
 /**
  * Created by eferraz on 03/01/16.

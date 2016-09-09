@@ -1,16 +1,15 @@
-package com.system.androidpigbank.models.entities;
+package com.system.androidpigbank.models.sqlite.entities;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.system.androidpigbank.models.dtos.DTOAbs;
-import com.system.androidpigbank.models.dtos.TransactionDTO;
+import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
+import com.system.androidpigbank.models.firebase.dtos.TransactionDTO;
 import com.system.architecture.utils.JavaUtils;
 
 import java.util.Date;

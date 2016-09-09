@@ -14,15 +14,14 @@ import android.view.ViewGroup;
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.recyclerv.TransactionAdapter;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
-import com.system.androidpigbank.models.business.TransactionBusiness;
-import com.system.androidpigbank.models.entities.EntityAbs;
-import com.system.androidpigbank.models.entities.Transaction;
+import com.system.androidpigbank.models.sqlite.business.TransactionBusiness;
+import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
+import com.system.androidpigbank.models.sqlite.entities.Transaction;
 import com.system.androidpigbank.views.CardActionBarView;
 import com.system.architecture.managers.LoaderResult;
 import com.system.architecture.managers.ManagerHelper;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class TransactionListFragment extends Fragment {

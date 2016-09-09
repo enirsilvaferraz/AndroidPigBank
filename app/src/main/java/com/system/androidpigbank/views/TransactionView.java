@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.system.androidpigbank.R;
 import com.system.architecture.utils.JavaUtils;
-import com.system.androidpigbank.models.entities.Transaction;
+import com.system.androidpigbank.models.sqlite.entities.Transaction;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

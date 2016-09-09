@@ -2,7 +2,6 @@ package com.system.architecture.activities;
 
 import android.Manifest;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,8 +12,8 @@ import com.system.architecture.managers.LoaderResult;
 import com.system.architecture.managers.ManagerHelper;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
-import com.system.androidpigbank.models.entities.EntityAbs;
-import com.system.androidpigbank.models.persistences.DaoAbs;
+import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
+import com.system.androidpigbank.models.sqlite.persistences.DaoAbs;
 
 import java.util.Collections;
 import java.util.List;

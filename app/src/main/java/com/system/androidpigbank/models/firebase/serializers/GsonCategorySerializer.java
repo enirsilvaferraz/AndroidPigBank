@@ -1,4 +1,4 @@
-package com.system.androidpigbank.models.business.serializers;
+package com.system.androidpigbank.models.firebase.serializers;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -7,7 +7,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.system.androidpigbank.models.entities.Category;
+import com.system.androidpigbank.models.sqlite.entities.Category;
 
 import java.lang.reflect.Type;
 

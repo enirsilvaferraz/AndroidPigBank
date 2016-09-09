@@ -3,8 +3,8 @@ package com.system.androidpigbank.controllers.vos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.system.androidpigbank.models.dtos.DTOAbs;
-import com.system.androidpigbank.models.entities.EntityAbs;
+import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
+import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
 
 /**
  * Created by eferraz on 03/01/16.

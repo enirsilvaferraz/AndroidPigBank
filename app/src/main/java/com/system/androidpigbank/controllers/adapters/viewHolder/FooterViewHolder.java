@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.system.androidpigbank.R;
 import com.system.architecture.viewHolders.ViewHolderAbs;
 import com.system.androidpigbank.controllers.vos.TotalFooter;
-import com.system.androidpigbank.models.entities.EntityAbs;
+import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
 
 import java.text.NumberFormat;
 

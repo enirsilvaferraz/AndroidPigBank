@@ -44,7 +44,7 @@ public class TransactionViewHolder extends ViewHolderModel {
     }
 
     @Override
-    public void bind(CardAdapter.CardModel model) {
+    public void bind(CardAdapter.CardModel model, final OnClickListener onClickListener) {
         final Transaction transaction = (Transaction) model;
 
         textValue.setText(JavaUtils.NumberUtil.currencyFormat(transaction.getValue()));
@@ -63,6 +63,14 @@ public class TransactionViewHolder extends ViewHolderModel {
         }
 
         textCategory.setText(categoryName);
-    }
 
+        if (onClickListener != null) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClickListener.onContainerClicked(transaction);
+                }
+            });
+        }
+    }
 }

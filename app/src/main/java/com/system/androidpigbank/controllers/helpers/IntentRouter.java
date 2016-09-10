@@ -2,6 +2,7 @@ package com.system.androidpigbank.controllers.helpers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
@@ -13,11 +14,14 @@ import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.models.sqlite.business.BackupService;
 import com.system.androidpigbank.models.sqlite.entities.Category;
 import com.system.androidpigbank.models.sqlite.entities.Transaction;
+import com.system.architecture.activities.BaseManagerDialog;
 
 /**
  * Created by eferraz on 25/04/16.
  */
 public final class IntentRouter {
+
+    private static DialogFragment dialog;
 
     public static void startServiceBackup(Context context) {
         context.startService(new Intent(context, BackupService.class));
@@ -25,16 +29,18 @@ public final class IntentRouter {
 
     public static void startTransactionManager(AppCompatActivity context, Transaction model) {
         FragmentManager fm = context.getSupportFragmentManager();
-        TransactionManagerDialog dialog = TransactionManagerDialog.newInstance(model);
+        dialog = TransactionManagerDialog.newInstance(model);
         dialog.show(fm, TransactionManagerDialog.class.getSimpleName());
-
     }
 
     public static void startCategorySummaryDetail(AppCompatActivity context, Category model) {
         FragmentManager fm = context.getSupportFragmentManager();
-        CategoryDetailDialog dialog = CategoryDetailDialog.newInstance(model);
+        dialog = CategoryDetailDialog.newInstance(model);
         dialog.show(fm, CategoryDetailDialog.class.getSimpleName());
+    }
 
+    public static void hideDialog(){
+        dialog.dismiss();
     }
 
     public static void startCategorySummaryDetail(Context context, Category model) {

@@ -26,7 +26,7 @@ public class TotalViewHolder extends ViewHolderModel {
     }
 
     @Override
-    public void bind(CardAdapter.CardModel model) {
+    public void bind(CardAdapter.CardModel model, final OnClickListener onClickListener) {
         TotalVO totalFooter = (TotalVO) model;
 
         final NumberFormat instance = NumberFormat.getInstance();

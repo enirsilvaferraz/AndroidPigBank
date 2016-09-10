@@ -12,5 +12,9 @@ public abstract class ViewHolderModel extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    public abstract void bind(CardAdapter.CardModel model);
+    public abstract void bind(CardAdapter.CardModel model, OnClickListener onClickListener);
+
+    public interface OnClickListener {
+        void onContainerClicked (CardAdapter.CardModel model);
+    }
 }

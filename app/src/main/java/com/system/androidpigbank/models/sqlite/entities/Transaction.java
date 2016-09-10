@@ -181,7 +181,7 @@ public class Transaction extends EntityAbs implements Parcelable, CardAdapter.Ca
     };
 
     @Override
-    public CardAdapter.TransactionViewType getViewType() {
-        return CardAdapter.TransactionViewType.CARD_TRANSACTION;
+    public CardAdapter.CardViewType getViewType() {
+        return CardAdapter.CardViewType.CARD_TRANSACTION;
     }
 }

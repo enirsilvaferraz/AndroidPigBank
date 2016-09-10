@@ -14,12 +14,14 @@ import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.recyclerv.TransactionAdapter;
+import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.controllers.vos.TotalVO;
 import com.system.androidpigbank.models.sqlite.entities.Category;
 import com.system.androidpigbank.models.sqlite.entities.Transaction;
 import com.system.androidpigbank.views.CategorySummaryView;
 import com.system.architecture.adapters.CardAdapter;
+import com.system.architecture.adapters.ViewHolderModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +65,16 @@ public class CategoryDetailDialog extends DialogFragment {
             Category category = (Category) parcelable;
             header.bind(category);
 
-            final CardAdapter adapter = new CardAdapter((getActivity()));
+            final CardAdapter adapter = new CardAdapter((getActivity()), new ViewHolderModel.OnClickListener() {
+                @Override
+                public void onContainerClicked(CardAdapter.CardModel model) {
+
+                    if (model instanceof Transaction){
+                        IntentRouter.hideDialog();
+                        IntentRouter.startTransactionManager((AppCompatActivity) getActivity(), (Transaction) model);
+                    }
+                }
+            });
 
             String nomeCat = null;
             Double value = 0D;

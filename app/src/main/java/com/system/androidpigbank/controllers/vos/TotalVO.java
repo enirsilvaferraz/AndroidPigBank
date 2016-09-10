@@ -26,7 +26,7 @@ public class TotalVO implements CardAdapter.CardModel {
 
 
     @Override
-    public CardAdapter.TransactionViewType getViewType() {
-        return CardAdapter.TransactionViewType.CARD_FOOTER;
+    public CardAdapter.CardViewType getViewType() {
+        return CardAdapter.CardViewType.CARD_FOOTER;
     }
 }

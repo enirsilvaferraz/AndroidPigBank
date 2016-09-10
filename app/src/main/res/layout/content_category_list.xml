@@ -7,4 +7,4 @@
     android:layout_height="match_parent"
     android:background="@color/material_gray_300"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.system.androidpigbank.controllers.activities.CategoryListActivity" />
+    tools:activity="com.system.androidpigbank.controllers.activities.CategoryListActivity" />

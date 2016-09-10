@@ -10,6 +10,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
 import com.system.androidpigbank.models.firebase.dtos.TransactionDTO;
+import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.utils.JavaUtils;
 
 import java.util.Date;
@@ -19,7 +20,7 @@ import java.util.Date;
  */
 @DatabaseTable(tableName = "transaction")
 @IgnoreExtraProperties
-public class Transaction extends EntityAbs implements Parcelable {
+public class Transaction extends EntityAbs implements Parcelable, CardAdapter.CardModel {
 
     @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
     private Long id;
@@ -178,4 +179,9 @@ public class Transaction extends EntityAbs implements Parcelable {
             return new Transaction[size];
         }
     };
+
+    @Override
+    public CardAdapter.TransactionViewType getViewType() {
+        return CardAdapter.TransactionViewType.CARD_TRANSACTION;
+    }
 }

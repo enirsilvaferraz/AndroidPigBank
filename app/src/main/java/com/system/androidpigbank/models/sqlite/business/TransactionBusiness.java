@@ -85,7 +85,7 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
                 )
         );
 
-        queryTransaction.orderBy("datePayment", true);
+        queryTransaction.orderBy("category_id", false).orderBy("categorySecondary_id", false).orderBy("datePayment", true);
 
         List<Transaction> results = queryTransaction.query();
 

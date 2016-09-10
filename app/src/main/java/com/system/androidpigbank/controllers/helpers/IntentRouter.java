@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.system.androidpigbank.controllers.activities.CategoryDetailDialog;
 import com.system.androidpigbank.controllers.activities.CategoryListActivity;
 import com.system.androidpigbank.controllers.activities.CategoryManagerActivity;
 import com.system.androidpigbank.controllers.activities.TransactionManagerDialog;
@@ -29,7 +30,14 @@ public final class IntentRouter {
 
     }
 
-    public static void startCategoryManager(Context context, Category model) {
+    public static void startCategorySummaryDetail(AppCompatActivity context, Category model) {
+        FragmentManager fm = context.getSupportFragmentManager();
+        CategoryDetailDialog dialog = CategoryDetailDialog.newInstance(model);
+        dialog.show(fm, CategoryDetailDialog.class.getSimpleName());
+
+    }
+
+    public static void startCategorySummaryDetail(Context context, Category model) {
         Intent intent = new Intent(context, CategoryManagerActivity.class);
         intent.putExtra(Constants.BUNDLE_MODEL_DEFAULT, model);
         context.startActivity(intent);

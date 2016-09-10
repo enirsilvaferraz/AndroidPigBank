@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:transitionName="TRNAME_ICON"
-    tools:context="com.system.androidpigbank.controllers.activities.CategoryManagerActivity">
+    tools:activity="com.system.androidpigbank.controllers.activities.CategoryManagerActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"

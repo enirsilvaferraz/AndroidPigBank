@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.system.androidpigbank.controllers.activities.CategoryManagerActivity">
+    tools:activity="com.system.androidpigbank.controllers.activities.CategoryManagerActivity">
 
     <item
         android:id="@+id/base_manager_act_save"

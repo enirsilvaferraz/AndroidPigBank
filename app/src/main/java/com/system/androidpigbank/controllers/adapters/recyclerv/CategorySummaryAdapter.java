@@ -1,6 +1,7 @@
 package com.system.androidpigbank.controllers.adapters.recyclerv;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.viewHolder.TitleViewHolder;
 import com.system.androidpigbank.controllers.behaviors.HighlightCardBehavior;
+import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.vos.TitleVO;
 import com.system.androidpigbank.models.sqlite.entities.Category;
 import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
@@ -35,9 +37,11 @@ import butterknife.ButterKnife;
 public class CategorySummaryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<EntityAbs> itens;
+    private AppCompatActivity activity;
 
-    public CategorySummaryAdapter() {
+    public CategorySummaryAdapter(AppCompatActivity activity) {
         this.itens = new ArrayList<>();
+        this.activity = activity;
     }
 
     @Override
@@ -149,12 +153,13 @@ public class CategorySummaryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    item.setExpanded(!item.isExpanded());
-                    updateAll(item);
+//                    item.setExpanded(!item.isExpanded());
+//                    updateAll(item);
+                    IntentRouter.startCategorySummaryDetail(activity, item);
                 }
             });
 
-            animate(item);
+            //animate(item);
         }
 
         private void animate(Category item) {

@@ -73,7 +73,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    IntentRouter.startCategoryManager(view.getContext(), item);
+                    IntentRouter.startCategorySummaryDetail(view.getContext(), item);
                 }
             });
         }

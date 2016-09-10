@@ -2,6 +2,7 @@ package com.system.androidpigbank.controllers.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,7 +38,7 @@ public class CategorySummaryFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final CategorySummaryAdapter adapter = new CategorySummaryAdapter();
+        final CategorySummaryAdapter adapter = new CategorySummaryAdapter((AppCompatActivity) getActivity());
         adapter.addItens(getData());
 
         recyclerview.setItemAnimator(new DefaultItemAnimator());

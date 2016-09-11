@@ -26,7 +26,7 @@ public class CategoryBusiness extends DaoAbs<Category> {
 
     public List<Category> getSummaryCategoryByMonth(int month, int year) throws Exception {
 
-        List<Category> categories = findAll();
+        List<Category> categories = findAllPrimaries();
         for (Category category : categories) {
 
             category.setTransactionList(new TransactionBusiness(getContext()).findByCategory(category, month, year));
@@ -49,6 +49,21 @@ public class CategoryBusiness extends DaoAbs<Category> {
         Dao<Category, String> dao = DaoManager.createDao(connectionSource, JavaHelper.getTClass(this));
 
         QueryBuilder<Category, String> queryBuilder = dao.queryBuilder();
+        queryBuilder.orderBy("primary", false).orderBy("name", true);
+
+        List<Category> list = queryBuilder.query();
+        connectionSource.close();
+
+        return list;
+    }
+
+    public List<Category> findAllPrimaries() throws SQLException {
+
+        ConnectionSource connectionSource = new AndroidConnectionSource(db);
+        Dao<Category, String> dao = DaoManager.createDao(connectionSource, JavaHelper.getTClass(this));
+
+        QueryBuilder<Category, String> queryBuilder = dao.queryBuilder();
+        queryBuilder.where().eq("primary", true);
         queryBuilder.orderBy("primary", false).orderBy("name", true);
 
         List<Category> list = queryBuilder.query();

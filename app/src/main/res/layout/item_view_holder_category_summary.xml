@@ -12,6 +12,7 @@
     card_view:cardCornerRadius="0dp">
 
     <LinearLayout
+        android:background="#eef9ff"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -25,6 +26,7 @@
             android:layout_marginTop="8dp">
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/item_category_progress_component"
                 android:layout_width="64dp"
                 android:layout_height="64dp">
@@ -84,7 +86,6 @@
                 android:id="@+id/item_category_transaction_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@id/item_category_label_container"
                 android:layout_below="@id/item_category_label_container"
                 android:layout_marginTop="5dp"
                 android:animateLayoutChanges="true"

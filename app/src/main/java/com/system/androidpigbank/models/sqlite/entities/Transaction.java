@@ -54,6 +54,7 @@ public class Transaction extends EntityAbs implements Parcelable, CardAdapter.Ca
     private PaymentType paymentType;
 
     private boolean expanded;
+    private CardAdapter.CardModeItem cardStrategy;
 
     public Transaction() {
     }
@@ -183,5 +184,15 @@ public class Transaction extends EntityAbs implements Parcelable, CardAdapter.Ca
     @Override
     public CardAdapter.CardViewType getViewType() {
         return CardAdapter.CardViewType.CARD_TRANSACTION;
+    }
+
+    @Override
+    public void setCardStrategy(CardAdapter.CardModeItem cardStrategy) {
+        this.cardStrategy = cardStrategy;
+    }
+
+    @Override
+    public CardAdapter.CardModeItem getCardStrategy() {
+        return cardStrategy;
     }
 }

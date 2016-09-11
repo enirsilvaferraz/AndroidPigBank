@@ -3,10 +3,12 @@ package com.system.androidpigbank.controllers.adapters.recyclerv;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -114,7 +116,7 @@ public class CategorySummaryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         CATEGORY, TITLE
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.card_view_container)
         CardView cvContainer;
@@ -140,6 +142,13 @@ public class CategorySummaryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             super(itemView);
             ButterKnife.bind(this, itemView);
             context = itemView.getContext();
+
+            int pixelVertical = JavaUtils.AndroidUtil.getPixel(itemView.getResources(), 6);
+            int pixelHorizontal = JavaUtils.AndroidUtil.getPixel(itemView.getResources(), 12);
+
+            GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) itemView.getLayoutParams();
+            params.setMargins(pixelHorizontal, pixelVertical, pixelHorizontal, pixelVertical);
+            itemView.setLayoutParams(params);
         }
 
         private void bind(final Category item) {
@@ -158,6 +167,13 @@ public class CategorySummaryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     IntentRouter.startCategorySummaryDetail(activity, item);
                 }
             });
+
+//            transactionContainer.setVisibility(View.VISIBLE);
+//            transactionContainer.addView(new DividerView(itemView.getContext()));
+//
+//            for (Transaction transaction : item.getTransactionList()) {
+//                transactionContainer.addView(new TransactionView(itemView.getContext(), transaction));
+//            }
 
             //animate(item);
         }

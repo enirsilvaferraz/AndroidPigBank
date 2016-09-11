@@ -2,6 +2,8 @@ package com.system.architecture.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.util.TypedValue;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
@@ -124,6 +126,10 @@ public final class JavaUtils {
 
         public static boolean isProd() {
             return BuildConfig.FLAVOR.equals(FLAVOR_PRD);
+        }
+
+        public static int getPixel(Resources resources, int dp){
+            return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
         }
     }
 

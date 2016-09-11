@@ -10,6 +10,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import com.system.androidpigbank.controllers.helpers.constant.Colors;
 import com.system.androidpigbank.models.firebase.dtos.CategoryDTO;
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
+import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.utils.JavaUtils;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
  * Created by eferraz on 05/12/15.
  */
 @DatabaseTable(tableName = "category")
-public class Category extends EntityAbs implements Parcelable {
+public class Category extends EntityAbs implements Parcelable, CardAdapter.CardModel {
 
     @Expose
     @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
@@ -38,6 +39,7 @@ public class Category extends EntityAbs implements Parcelable {
 
     private Double amount;
     private boolean expanded;
+    private CardAdapter.CardModeItem cardStrategy;
     private List<Transaction> transactionList;
 
     public Category() {
@@ -166,4 +168,19 @@ public class Category extends EntityAbs implements Parcelable {
             return new Category[size];
         }
     };
+
+    @Override
+    public CardAdapter.CardViewType getViewType() {
+        return CardAdapter.CardViewType.CARD_CATEGOTY;
+    }
+
+    @Override
+    public void setCardStrategy(CardAdapter.CardModeItem cardStrategy) {
+        this.cardStrategy = cardStrategy;
+    }
+
+    @Override
+    public CardAdapter.CardModeItem getCardStrategy() {
+        return cardStrategy;
+    }
 }

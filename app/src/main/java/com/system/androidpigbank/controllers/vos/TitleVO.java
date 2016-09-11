@@ -5,17 +5,37 @@ import android.os.Parcelable;
 
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
 import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
+import com.system.architecture.adapters.CardAdapter;
 
 /**
  * Created by Enir on 17/08/2016.
  */
 
-public class TitleVO extends EntityAbs implements Parcelable {
+public class TitleVO extends EntityAbs implements Parcelable, CardAdapter.CardModel {
 
+    public static final Parcelable.Creator<TitleVO> CREATOR = new Parcelable.Creator<TitleVO>() {
+        @Override
+        public TitleVO createFromParcel(Parcel source) {
+            return new TitleVO(source);
+        }
+
+        @Override
+        public TitleVO[] newArray(int size) {
+            return new TitleVO[size];
+        }
+    };
+    private CardAdapter.CardModeItem cardStrategy;
     private String title;
 
     public TitleVO(String title) {
         this.title = title;
+    }
+
+    public TitleVO() {
+    }
+
+    protected TitleVO(Parcel in) {
+        this.title = in.readString();
     }
 
     public String getTitle() {
@@ -46,22 +66,18 @@ public class TitleVO extends EntityAbs implements Parcelable {
         dest.writeString(this.title);
     }
 
-    public TitleVO() {
+    @Override
+    public CardAdapter.CardViewType getViewType() {
+        return CardAdapter.CardViewType.CARD_TITLE;
     }
 
-    protected TitleVO(Parcel in) {
-        this.title = in.readString();
+    @Override
+    public CardAdapter.CardModeItem getCardStrategy() {
+        return cardStrategy;
     }
 
-    public static final Parcelable.Creator<TitleVO> CREATOR = new Parcelable.Creator<TitleVO>() {
-        @Override
-        public TitleVO createFromParcel(Parcel source) {
-            return new TitleVO(source);
-        }
-
-        @Override
-        public TitleVO[] newArray(int size) {
-            return new TitleVO[size];
-        }
-    };
+    @Override
+    public void setCardStrategy(CardAdapter.CardModeItem cardStrategy) {
+        this.cardStrategy = cardStrategy;
+    }
 }

@@ -9,13 +9,13 @@ import com.system.androidpigbank.R;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.androidpigbank.models.sqlite.entities.Transaction;
 import com.system.androidpigbank.views.RoundedImageView;
-import com.system.architecture.adapters.ViewHolderModel;
+import com.system.architecture.adapters.CardViewHolder;
 import com.system.architecture.utils.JavaUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TransactionViewHolder extends ViewHolderModel {
+public class TransactionViewHolder extends CardViewHolder {
 
     @BindView(R.id.item_bar_container)
     LinearLayout llContainer;
@@ -38,13 +38,15 @@ public class TransactionViewHolder extends ViewHolderModel {
     @BindView(R.id.item_transaction_value)
     TextView textValue;
 
-    public TransactionViewHolder(View v) {
-        super(v);
+    public TransactionViewHolder(View v, boolean isCardMode) {
+        super(v, isCardMode);
         ButterKnife.bind(this, itemView);
     }
 
     @Override
     public void bind(CardAdapter.CardModel model, final OnClickListener onClickListener) {
+        super.bind(model, onClickListener);
+
         final Transaction transaction = (Transaction) model;
 
         textValue.setText(JavaUtils.NumberUtil.currencyFormat(transaction.getValue()));

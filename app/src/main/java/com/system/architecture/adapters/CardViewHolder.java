@@ -48,6 +48,6 @@ public abstract class CardViewHolder extends RecyclerView.ViewHolder {
     }
 
     public interface OnClickListener {
-        void onContainerClicked(CardAdapter.CardModel model);
+        void onContainerClicked(int action, CardAdapter.CardModel model);
     }
 }

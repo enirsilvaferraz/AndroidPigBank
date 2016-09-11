@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.androidpigbank.models.sqlite.entities.Transaction;
 import com.system.androidpigbank.views.RoundedImageView;
@@ -70,7 +71,7 @@ public class TransactionViewHolder extends CardViewHolder {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onClickListener.onContainerClicked(transaction);
+                    onClickListener.onContainerClicked(Constants.ACTION_VIEW, transaction);
                 }
             });
         }

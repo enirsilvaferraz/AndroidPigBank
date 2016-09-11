@@ -3,16 +3,11 @@ package com.system.androidpigbank.controllers.adapters.pager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.SparseArray;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.system.androidpigbank.controllers.adapters.recyclerv.MonthAdapter;
-import com.system.androidpigbank.controllers.fragments.CategorySummaryFragment;
-import com.system.androidpigbank.controllers.fragments.ChartFragment;
+import com.system.androidpigbank.controllers.fragments.CardFragment;
 import com.system.androidpigbank.controllers.fragments.MonthFragment;
 import com.system.androidpigbank.controllers.fragments.TransactionListFragment;
-import com.system.androidpigbank.controllers.vos.HomeObject;
 
 public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -30,7 +25,7 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter 
         switch (position) {
 
             case 0:
-                fragment = CategorySummaryFragment.newInstance();
+                fragment = CardFragment.newInstance();
                 break;
 
             case 1:

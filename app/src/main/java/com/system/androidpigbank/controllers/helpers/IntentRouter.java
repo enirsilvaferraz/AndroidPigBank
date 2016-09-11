@@ -26,6 +26,7 @@ public final class IntentRouter {
     }
 
     public static void startTransactionManager(AppCompatActivity context, Transaction model) {
+        hideDialog();
         FragmentManager fm = context.getSupportFragmentManager();
         dialog = TransactionManagerDialog.newInstance(model);
         dialog.show(fm, TransactionManagerDialog.class.getSimpleName());

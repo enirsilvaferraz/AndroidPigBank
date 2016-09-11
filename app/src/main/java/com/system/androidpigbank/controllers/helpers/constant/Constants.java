@@ -18,6 +18,10 @@ public interface Constants {
 
     List<String> ACCESS_PERM_BACKUP = Collections.singletonList(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
+    int ACTION_VIEW = 1;
+    int ACTION_EDIT = 2;
+    int ACTION_DELETE = 3;
+    int ACTION_COPY = 4;
 
     String BUNDLE_MODEL_DEFAULT = "BUNDLE_MODEL_DEFAULT";
     String BUNDLE_MESSAGE_ID = "BUNDLE_MESSAGE_ID";

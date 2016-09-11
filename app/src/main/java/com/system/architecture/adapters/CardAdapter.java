@@ -1,19 +1,17 @@
 package com.system.architecture.adapters;
 
-import android.app.Activity;
 import android.support.annotation.LayoutRes;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.controllers.adapters.viewHolder.ActionBarViewHolder;
 import com.system.androidpigbank.controllers.adapters.viewHolder.CategoryViewHolder;
 import com.system.androidpigbank.controllers.adapters.viewHolder.TitleViewHolder2;
 import com.system.androidpigbank.controllers.adapters.viewHolder.TotalViewHolder;
 import com.system.androidpigbank.controllers.adapters.viewHolder.TransactionViewHolder;
-import com.system.architecture.utils.JavaUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,16 +23,13 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final CardViewHolder.OnClickListener onClickListener;
     private final boolean isCardMode;
-    private Activity activity;
     private List<CardModel> itens;
 
-    public CardAdapter(Activity activity, CardViewHolder.OnClickListener onClickListener) {
-        this(activity, false, onClickListener);
+    public CardAdapter(CardViewHolder.OnClickListener onClickListener) {
+        this(false, onClickListener);
     }
 
-    public CardAdapter(Activity activity, boolean isCardMode, CardViewHolder.OnClickListener onClickListener) {
-        this.itens = new ArrayList<>();
-        this.activity = activity;
+    public CardAdapter(boolean isCardMode, CardViewHolder.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
         this.isCardMode = isCardMode;
     }
@@ -50,23 +45,42 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((CardViewHolder) holder).bind(itens.get(position), onClickListener);
+        ((CardViewHolder) holder).bind(getItens().get(position), onClickListener);
     }
 
     @Override
     public int getItemViewType(int position) {
-        return itens.get(position).getViewType().ordinal();
+        return getItens().get(position).getViewType().ordinal();
     }
 
     @Override
     public int getItemCount() {
-        return itens.size();
+        return getItens().size();
     }
 
     public void addItens(List<CardModel> itens) {
-        this.itens.clear();
-        this.itens.addAll(itens);
+        getItens().clear();
+        getItens().addAll(itens);
         notifyDataSetChanged();
+    }
+
+    public List<CardModel> getItens() {
+        if (itens == null) {
+            itens = new ArrayList<>();
+        }
+        return itens;
+    }
+
+    public void add(CardModel model, int position) {
+        getItens().add(position, model);
+        int index = getItens().indexOf(model);
+        notifyItemInserted(index);
+    }
+
+    public void remove(CardModel model){
+        int index = getItens().indexOf(model);
+        getItens().remove(index);
+        notifyItemRemoved(index);
     }
 
     /**
@@ -77,7 +91,8 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         CARD_TRANSACTION(R.layout.item_view_holder_transaction),
         CARD_CATEGOTY(R.layout.item_view_holder_category_summary),
         CARD_FOOTER(R.layout.item_view_holder_total2),
-        CARD_TITLE(R.layout.item_view_holder_title);
+        CARD_TITLE(R.layout.item_view_holder_title),
+        CARD_ACTION_BAR(R.layout.custom_view_card_bar);
 
         @LayoutRes
         private final int layoutId;
@@ -86,16 +101,16 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.layoutId = layoutId;
         }
 
-        public int getLayoutId() {
-            return layoutId;
-        }
-
         public static CardViewType getEnum(int viewType) {
             for (CardViewType enumerator : CardViewType.values())
                 if (enumerator.ordinal() == viewType) {
                     return enumerator;
                 }
             throw new RuntimeException("Resouce not found for view type " + viewType);
+        }
+
+        public int getLayoutId() {
+            return layoutId;
         }
 
         public CardViewHolder getViewHolderInstance(View v, boolean isCardMode) {
@@ -118,6 +133,10 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 case CARD_TITLE:
                     viewHolder = new TitleViewHolder2(v, isCardMode);
                     break;
+
+                case CARD_ACTION_BAR:
+                    viewHolder = new ActionBarViewHolder(v, isCardMode);
+                    break;
             }
 
             return viewHolder;
@@ -127,17 +146,19 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     /**
      *
      */
-    public interface CardModel {
-
-        CardViewType getViewType();
-        CardModeItem getCardStrategy();
-        void setCardStrategy(CardAdapter.CardModeItem cardStrategy);
+    public enum CardModeItem {
+        SINGLE, START, END, MIDDLE, NO_STRATEGY
     }
 
     /**
      *
      */
-    public enum CardModeItem {
-        SINGLE, START, END, MIDDLE, NO_STRATEGY
+    public interface CardModel {
+
+        CardViewType getViewType();
+
+        CardModeItem getCardStrategy();
+
+        void setCardStrategy(CardAdapter.CardModeItem cardStrategy);
     }
 }

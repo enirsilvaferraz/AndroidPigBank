@@ -21,7 +21,7 @@ import com.system.architecture.managers.ManagerHelper;
 import com.system.architecture.utils.JavaUtils;
 import com.system.androidpigbank.controllers.adapters.pager.SectionsCurrentMonthPagerAdapter;
 import com.system.androidpigbank.controllers.adapters.recyclerv.MonthAdapter;
-import com.system.androidpigbank.controllers.fragments.CardFragment;
+import com.system.architecture.adapters.CardFragment;
 import com.system.androidpigbank.controllers.fragments.MonthFragment;
 import com.system.androidpigbank.controllers.fragments.TransactionListFragment;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;

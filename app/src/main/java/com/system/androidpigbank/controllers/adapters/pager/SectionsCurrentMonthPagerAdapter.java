@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.system.androidpigbank.controllers.adapters.recyclerv.MonthAdapter;
-import com.system.androidpigbank.controllers.fragments.CardFragment;
+import com.system.androidpigbank.controllers.fragments.CategorySummaryFragment;
 import com.system.androidpigbank.controllers.fragments.MonthFragment;
 import com.system.androidpigbank.controllers.fragments.TransactionListFragment;
 
@@ -25,7 +25,7 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter 
         switch (position) {
 
             case 0:
-                fragment = CardFragment.newInstance();
+                fragment = CategorySummaryFragment.newInstance();
                 break;
 
             case 1:

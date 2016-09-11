@@ -92,7 +92,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         CARD_CATEGOTY(R.layout.item_view_holder_category_summary),
         CARD_FOOTER(R.layout.item_view_holder_total2),
         CARD_TITLE(R.layout.item_view_holder_title),
-        CARD_ACTION_BAR(R.layout.custom_view_card_bar);
+        CARD_ACTION_BAR(R.layout.item_view_holder_card_bar);
 
         @LayoutRes
         private final int layoutId;

@@ -9,13 +9,17 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.support.ConnectionSource;
 import com.system.androidpigbank.controllers.vos.Month;
+import com.system.androidpigbank.controllers.vos.TitleVO;
+import com.system.androidpigbank.controllers.vos.TotalVO;
 import com.system.androidpigbank.models.sqlite.entities.Category;
 import com.system.androidpigbank.models.sqlite.entities.Transaction;
 import com.system.androidpigbank.models.sqlite.persistences.DaoAbs;
+import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.utils.JavaUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -50,7 +54,7 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);
         QueryBuilder<Transaction, String> queryTransaction = dao.queryBuilder();
 
-        Date cInit = JavaUtils.DateUtil.getActualMaximum(year, month -1);
+        Date cInit = JavaUtils.DateUtil.getActualMaximum(year, month - 1);
         Date cEnd = JavaUtils.DateUtil.getActualMaximum(year, month);
 
         queryTransaction.where().between("datePayment", cInit, cEnd);
@@ -67,7 +71,7 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
 
     public List<Transaction> findByCategory(Category category, int month, int year) throws SQLException {
 
-        Date cInit = JavaUtils.DateUtil.getActualMaximum(year, month -1);
+        Date cInit = JavaUtils.DateUtil.getActualMaximum(year, month - 1);
         Date cEnd = JavaUtils.DateUtil.getActualMaximum(year, month);
 
         ConnectionSource connection = new AndroidConnectionSource(db);
@@ -125,5 +129,57 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         }
 
         return list;
+    }
+
+    public List<CardAdapter.CardModel> organizeTransationcList(List<Transaction> list) {
+
+        List<CardAdapter.CardModel> itens = new ArrayList<>();
+
+        Long calendarDate = Calendar.getInstance().getTime().getTime();
+        Long date = null;
+        Double value = 0D;
+
+        boolean hasTitle = false;
+
+        for (int i = 0; i < list.size(); i++) {
+
+            Transaction transaction = list.get(i);
+
+            Long dateAct = transaction.getDatePayment().getTime();
+
+            if (!itens.isEmpty() && !dateAct.equals(date)) {
+                TotalVO totalVO = new TotalVO(value);
+                totalVO.setCardStrategy(CardAdapter.CardModeItem.END);
+                itens.add(totalVO);
+                value = 0D;
+            }
+
+            date = dateAct;
+
+            if (!hasTitle && dateAct > calendarDate){
+                TitleVO titleVO = new TitleVO();
+                titleVO.setCardStrategy(CardAdapter.CardModeItem.SINGLE);
+                titleVO.setTitle("Lançamentos Futuros");
+                itens.add(titleVO);
+                hasTitle = true;
+            }
+
+            if (value == 0D) {
+                transaction.setCardStrategy(CardAdapter.CardModeItem.START);
+            } else {
+                transaction.setCardStrategy(CardAdapter.CardModeItem.MIDDLE);
+            }
+
+            itens.add(transaction);
+
+            value += transaction.getValue();
+            if (i == list.size() - 1) {
+                TotalVO totalVO = new TotalVO(value);
+                totalVO.setCardStrategy(CardAdapter.CardModeItem.END);
+                itens.add(totalVO);
+            }
+        }
+
+        return itens;
     }
 }

@@ -50,6 +50,8 @@ public abstract class CardFragment extends Fragment {
 
     public abstract void performClick(int action, CardAdapter.CardModel model);
 
+    public abstract int getFragmentID();
+
     public List<CardAdapter.CardModel> getData() {
         if (data == null) {
             data = new ArrayList<>();

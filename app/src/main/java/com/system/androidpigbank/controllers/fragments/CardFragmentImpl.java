@@ -2,6 +2,7 @@ package com.system.androidpigbank.controllers.fragments;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
@@ -17,15 +18,24 @@ import com.system.architecture.managers.ManagerHelper;
  * Created by Enir on 11/09/2016.
  */
 
-public class CategorySummaryFragment extends CardFragment {
+public class CardFragmentImpl extends CardFragment {
 
+    private int fragmentID;
     private ActionBarVO toolbar;
 
-    public static CardFragment newInstance() {
-        CardFragment fragment = new CategorySummaryFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+    public static CardFragment newInstance(int id) {
+        CardFragmentImpl fragment = new CardFragmentImpl();
+        fragment.setFragmentID(id);
         return fragment;
+    }
+
+    private void setFragmentID(int fragmentID) {
+        this.fragmentID = fragmentID;
+    }
+
+    @Override
+    public int getFragmentID() {
+        return fragmentID;
     }
 
     public void performClick(int action, final CardAdapter.CardModel model) {
@@ -79,6 +89,7 @@ public class CategorySummaryFragment extends CardFragment {
             }
         }
     }
+
 
     private void removeToolbar(CardAdapter cardAdapter) {
         cardAdapter.remove(toolbar);

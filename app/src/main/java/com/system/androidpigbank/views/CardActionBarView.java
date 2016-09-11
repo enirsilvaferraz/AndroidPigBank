@@ -28,7 +28,7 @@ public class CardActionBarView extends LinearLayout {
 
     public CardActionBarView(Context context) {
         super(context);
-        inflate(getContext(), R.layout.custom_view_card_bar, this);
+        inflate(getContext(), R.layout.item_view_holder_card_bar, this);
         ButterKnife.bind(this);
     }
 

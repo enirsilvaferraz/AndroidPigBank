@@ -14,24 +14,21 @@ import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
 import com.system.androidpigbank.R;
-import com.system.architecture.activities.BaseNavigationDrawerActivity;
-import com.system.architecture.helpers.PermissionHelper;
-import com.system.architecture.managers.LoaderResult;
-import com.system.architecture.managers.ManagerHelper;
-import com.system.architecture.utils.JavaUtils;
 import com.system.androidpigbank.controllers.adapters.pager.SectionsCurrentMonthPagerAdapter;
 import com.system.androidpigbank.controllers.adapters.recyclerv.MonthAdapter;
-import com.system.architecture.adapters.CardFragment;
 import com.system.androidpigbank.controllers.fragments.MonthFragment;
-import com.system.androidpigbank.controllers.fragments.TransactionListFragment;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.controllers.vos.HomeObject;
 import com.system.androidpigbank.models.sqlite.business.CategoryBusiness;
 import com.system.androidpigbank.models.sqlite.business.RecoverBusiness;
 import com.system.androidpigbank.models.sqlite.business.TransactionBusiness;
-
-import io.fabric.sdk.android.Fabric;
+import com.system.architecture.activities.BaseNavigationDrawerActivity;
+import com.system.architecture.adapters.CardFragment;
+import com.system.architecture.helpers.PermissionHelper;
+import com.system.architecture.managers.LoaderResult;
+import com.system.architecture.managers.ManagerHelper;
+import com.system.architecture.utils.JavaUtils;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -40,6 +37,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.fabric.sdk.android.Fabric;
 
 public class HomeActivity extends BaseNavigationDrawerActivity {
 
@@ -87,9 +85,15 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
         super.onAttachFragment(fragment);
 
         if (fragment instanceof CardFragment) {
-            ((CardFragment) fragment).setData(new CategoryBusiness(this).organizeCategorySummaryList(data.getListCategorySummary()));
-        } else if (fragment instanceof TransactionListFragment) {
-            ((TransactionListFragment) fragment).setData(data.getListTransaction());
+            switch (((CardFragment) fragment).getFragmentID()) {
+                case Constants.FRAGMENT_ID_SUMMARY_CATEGORY:
+                    ((CardFragment) fragment).setData(new CategoryBusiness(this).organizeCategorySummaryList(data.getListCategorySummary()));
+                    break;
+
+                case Constants.FRAGMENT_ID_TRANSACTION:
+                    ((CardFragment) fragment).setData(new TransactionBusiness(this).organizeTransationcList(data.getListTransaction()));
+                    break;
+            }
         } else if (fragment instanceof MonthFragment) {
             ((MonthFragment) fragment).setData(data.getListMonth());
         }

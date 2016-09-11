@@ -13,7 +13,7 @@ import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.helpers.JavaHelper;
 import com.system.androidpigbank.models.sqlite.entities.Category;
 import com.system.androidpigbank.models.sqlite.entities.Transaction;
-import com.system.androidpigbank.models.sqlite.persistences.DaoAbs;
+import com.system.architecture.managers.DaoAbs;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

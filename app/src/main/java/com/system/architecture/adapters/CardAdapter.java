@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.viewHolder.ActionBarViewHolder;
 import com.system.androidpigbank.controllers.adapters.viewHolder.CategoryViewHolder;
-import com.system.androidpigbank.controllers.adapters.viewHolder.TitleViewHolder2;
+import com.system.androidpigbank.controllers.adapters.viewHolder.TitleViewHolder;
 import com.system.androidpigbank.controllers.adapters.viewHolder.TotalViewHolder;
 import com.system.androidpigbank.controllers.adapters.viewHolder.TransactionViewHolder;
 
@@ -90,7 +90,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         CARD_TRANSACTION(R.layout.item_view_holder_transaction),
         CARD_CATEGOTY(R.layout.item_view_holder_category_summary),
-        CARD_FOOTER(R.layout.item_view_holder_total2),
+        CARD_FOOTER(R.layout.item_view_holder_total),
         CARD_TITLE(R.layout.item_view_holder_title),
         CARD_ACTION_BAR(R.layout.item_view_holder_card_bar);
 
@@ -131,7 +131,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     break;
 
                 case CARD_TITLE:
-                    viewHolder = new TitleViewHolder2(v, isCardMode);
+                    viewHolder = new TitleViewHolder(v, isCardMode);
                     break;
 
                 case CARD_ACTION_BAR:

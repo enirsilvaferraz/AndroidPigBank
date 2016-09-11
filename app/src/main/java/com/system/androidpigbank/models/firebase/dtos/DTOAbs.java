@@ -1,6 +1,6 @@
 package com.system.androidpigbank.models.firebase.dtos;
 
-import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
+import com.system.architecture.managers.EntityAbs;
 
 /**
  * Created by Enir on 07/09/2016.

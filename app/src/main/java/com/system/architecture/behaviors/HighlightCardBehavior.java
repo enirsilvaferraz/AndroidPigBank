@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.behaviors;
+package com.system.architecture.behaviors;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;

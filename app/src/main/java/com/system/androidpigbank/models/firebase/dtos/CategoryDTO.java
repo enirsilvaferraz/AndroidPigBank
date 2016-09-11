@@ -3,7 +3,7 @@ package com.system.androidpigbank.models.firebase.dtos;
 import com.google.gson.annotations.Expose;
 import com.j256.ormlite.table.DatabaseTable;
 import com.system.androidpigbank.models.sqlite.entities.Category;
-import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
+import com.system.architecture.managers.EntityAbs;
 import com.system.architecture.utils.JavaUtils;
 
 /**

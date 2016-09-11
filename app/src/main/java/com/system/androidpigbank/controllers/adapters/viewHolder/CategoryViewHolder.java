@@ -2,18 +2,13 @@ package com.system.androidpigbank.controllers.adapters.viewHolder;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.behaviors.HighlightCardBehavior;
 import com.system.androidpigbank.models.sqlite.entities.Category;
-import com.system.androidpigbank.models.sqlite.entities.Transaction;
-import com.system.androidpigbank.views.DividerView;
-import com.system.androidpigbank.views.TransactionView;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.adapters.CardViewHolder;
 import com.system.architecture.utils.JavaUtils;

@@ -16,7 +16,7 @@ import com.system.androidpigbank.models.firebase.serializers.GsonDateSerializer;
 import com.system.androidpigbank.models.firebase.serializers.GsonPaymentTypeSerializer;
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
 import com.system.androidpigbank.models.sqlite.entities.Category;
-import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
+import com.system.architecture.managers.EntityAbs;
 import com.system.androidpigbank.models.sqlite.entities.PaymentType;
 
 import java.text.NumberFormat;

@@ -5,23 +5,25 @@ import android.widget.TextView;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.vos.TitleVO;
-import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
-import com.system.architecture.viewHolders.ViewHolderAbs;
+import com.system.architecture.adapters.CardAdapter;
+import com.system.architecture.adapters.CardViewHolder;
 
 /**
  * Created by eferraz on 03/01/16.
  */
-public class TitleViewHolder extends ViewHolderAbs {
+public class TitleViewHolder extends CardViewHolder {
 
     private TextView tvTitle;
 
-    public TitleViewHolder(final View v) {
-        super(v, null, null);
+    public TitleViewHolder(final View v, boolean isCardMode) {
+        super(v, isCardMode);
         tvTitle = (TextView) v.findViewById(R.id.item_title);
     }
 
     @Override
-    public void bind(final EntityAbs model) {
+    public void bind(CardAdapter.CardModel model, OnClickListener onClickListener) {
+        super.bind(model, onClickListener);
+
         TitleVO category = (TitleVO) model;
         tvTitle.setText(category.getTitle());
     }

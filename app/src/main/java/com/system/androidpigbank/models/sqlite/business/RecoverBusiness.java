@@ -8,9 +8,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.system.androidpigbank.BuildConfig;
 import com.system.androidpigbank.models.sqlite.entities.Category;
-import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
+import com.system.architecture.managers.EntityAbs;
 import com.system.androidpigbank.models.sqlite.entities.Transaction;
-import com.system.androidpigbank.models.sqlite.persistences.DaoAbs;
+import com.system.architecture.managers.DaoAbs;
 
 import java.io.BufferedReader;
 import java.io.File;

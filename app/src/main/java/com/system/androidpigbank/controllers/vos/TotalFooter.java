@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
-import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
+import com.system.architecture.managers.EntityAbs;
 
 /**
  * Created by eferraz on 03/01/16.

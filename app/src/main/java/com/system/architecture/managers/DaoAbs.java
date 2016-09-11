@@ -1,4 +1,4 @@
-package com.system.androidpigbank.models.sqlite.persistences;
+package com.system.architecture.managers;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,8 +7,8 @@ import com.j256.ormlite.android.AndroidConnectionSource;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
+import com.system.androidpigbank.models.sqlite.persistences.SQLiteCustomHelper;
 import com.system.architecture.helpers.JavaHelper;
-import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
 
 import java.sql.SQLException;
 import java.util.List;

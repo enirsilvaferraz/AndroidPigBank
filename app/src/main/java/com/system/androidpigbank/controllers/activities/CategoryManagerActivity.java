@@ -20,7 +20,7 @@ import com.system.androidpigbank.controllers.helpers.constant.Colors;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.models.sqlite.business.CategoryBusiness;
 import com.system.androidpigbank.models.sqlite.entities.Category;
-import com.system.androidpigbank.models.sqlite.persistences.DaoAbs;
+import com.system.architecture.managers.DaoAbs;
 
 import java.util.List;
 

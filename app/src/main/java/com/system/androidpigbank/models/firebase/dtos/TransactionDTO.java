@@ -1,7 +1,7 @@
 package com.system.androidpigbank.models.firebase.dtos;
 
 import com.google.gson.annotations.Expose;
-import com.system.androidpigbank.models.sqlite.entities.EntityAbs;
+import com.system.architecture.managers.EntityAbs;
 import com.system.androidpigbank.models.sqlite.entities.Transaction;
 import com.system.architecture.utils.JavaUtils;
 

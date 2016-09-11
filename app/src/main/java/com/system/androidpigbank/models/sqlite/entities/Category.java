@@ -11,6 +11,7 @@ import com.system.androidpigbank.controllers.helpers.constant.Colors;
 import com.system.androidpigbank.models.firebase.dtos.CategoryDTO;
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
 import com.system.architecture.adapters.CardAdapter;
+import com.system.architecture.managers.EntityAbs;
 import com.system.architecture.utils.JavaUtils;
 
 import java.util.List;

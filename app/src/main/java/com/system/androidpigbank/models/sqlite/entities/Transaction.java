@@ -11,6 +11,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
 import com.system.androidpigbank.models.firebase.dtos.TransactionDTO;
 import com.system.architecture.adapters.CardAdapter;
+import com.system.architecture.managers.EntityAbs;
 import com.system.architecture.utils.JavaUtils;
 
 import java.util.Date;

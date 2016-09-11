@@ -1,4 +1,4 @@
-package com.system.androidpigbank.models.sqlite.entities;
+package com.system.architecture.managers;
 
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
 

@@ -91,7 +91,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
                     break;
 
                 case Constants.FRAGMENT_ID_TRANSACTION:
-                    ((CardFragment) fragment).setData(new TransactionBusiness(this).organizeTransationcList(data.getListTransaction()));
+                    ((CardFragment) fragment).setData(new TransactionBusiness(this).organizeTransationcListV2(data.getListTransaction()));
                     break;
             }
         } else if (fragment instanceof MonthFragment) {

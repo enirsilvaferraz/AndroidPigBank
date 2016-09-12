@@ -3,29 +3,16 @@ package com.system.androidpigbank.controllers.vos;
 import com.system.architecture.adapters.CardAdapter;
 
 /**
- * Created by eferraz on 03/01/16.
+ * Created by eferraz on 12/09/16.
  */
-public class TotalVO implements CardAdapter.CardModel {
+
+public class WhiteSpaceVO implements CardAdapter.CardModel {
 
     private CardAdapter.CardModeItem cardStrategy;
 
-    private Double total;
-
-    public TotalVO() {
-    }
-
-    public TotalVO(Double total) {
-        this.total = total;
-    }
-
-    public Double getTotal() {
-        return total;
-    }
-
-
     @Override
     public CardAdapter.CardViewType getViewType() {
-        return CardAdapter.CardViewType.CARD_FOOTER;
+        return CardAdapter.CardViewType.CARD_WHITESPACE;
     }
 
     @Override

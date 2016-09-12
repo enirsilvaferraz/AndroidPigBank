@@ -11,6 +11,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.system.androidpigbank.controllers.vos.Month;
 import com.system.androidpigbank.controllers.vos.TitleVO;
 import com.system.androidpigbank.controllers.vos.TotalVO;
+import com.system.androidpigbank.controllers.vos.WhiteSpaceVO;
 import com.system.androidpigbank.models.sqlite.entities.Category;
 import com.system.androidpigbank.models.sqlite.entities.Transaction;
 import com.system.architecture.managers.DaoAbs;
@@ -129,6 +130,48 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         }
 
         return list;
+    }
+
+    public List<CardAdapter.CardModel> organizeTransationcListV2(List<Transaction> list) {
+
+        List<CardAdapter.CardModel> itens = new ArrayList<>();
+
+        Long timeAnterior = null;
+        Double valorAAcumular = 0D;
+        boolean hasTitleFutureLanc = false;
+
+        for (int position = 0; position < list.size(); position++){
+
+            Transaction transactionAct = list.get(position);
+            Transaction transactionProx = list.size() > position + 1 ? list.get(position + 1) : null;
+
+            itens.add(transactionAct);
+
+            
+
+            if (transactionProx == null || transactionAct.getDatePayment().getTime() < transactionProx.getDatePayment().getTime()) {
+                itens.add(new TotalVO(valorAAcumular));
+                itens.add(new WhiteSpaceVO());
+            }
+
+            if (transactionAct.getDatePayment().getTime() > Calendar.getInstance().getTime().getTime()){
+
+                if (!hasTitleFutureLanc && position != list.size() -1){
+                    TitleVO titleVO = new TitleVO();
+                    titleVO.setTitle("Lançamentos Futuros");
+                    itens.add(titleVO);
+                    hasTitleFutureLanc = true;
+                }
+
+                valorAAcumular += transactionAct.getValue();
+            }
+
+
+
+            timeAnterior = transactionAct.getDatePayment().getTime();
+        }
+
+        return itens;
     }
 
     public List<CardAdapter.CardModel> organizeTransationcList(List<Transaction> list) {

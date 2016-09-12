@@ -12,6 +12,7 @@ import com.system.androidpigbank.controllers.adapters.viewHolder.CategoryViewHol
 import com.system.androidpigbank.controllers.adapters.viewHolder.TitleViewHolder;
 import com.system.androidpigbank.controllers.adapters.viewHolder.TotalViewHolder;
 import com.system.androidpigbank.controllers.adapters.viewHolder.TransactionViewHolder;
+import com.system.androidpigbank.controllers.adapters.viewHolder.WhiteSpaceViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +93,8 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         CARD_CATEGOTY(R.layout.item_view_holder_category_summary),
         CARD_FOOTER(R.layout.item_view_holder_total),
         CARD_TITLE(R.layout.item_view_holder_title),
-        CARD_ACTION_BAR(R.layout.item_view_holder_card_bar);
+        CARD_ACTION_BAR(R.layout.item_view_holder_card_bar),
+        CARD_WHITESPACE(R.layout.item_view_holder_white_space);
 
         @LayoutRes
         private final int layoutId;
@@ -137,6 +139,9 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 case CARD_ACTION_BAR:
                     viewHolder = new ActionBarViewHolder(v, isCardMode);
                     break;
+
+                case CARD_WHITESPACE:
+                    viewHolder = new WhiteSpaceViewHolder(v, isCardMode);
             }
 
             return viewHolder;

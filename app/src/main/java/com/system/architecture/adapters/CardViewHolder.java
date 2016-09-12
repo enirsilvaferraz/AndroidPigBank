@@ -26,6 +26,11 @@ public abstract class CardViewHolder extends RecyclerView.ViewHolder {
 
             GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) itemView.getLayoutParams();
 
+            // TODO MARRETA
+            if (model.getCardStrategy() == null){
+                model.setCardStrategy(CardAdapter.CardModeItem.MIDDLE);
+            }
+
             switch (model.getCardStrategy()) {
                 case SINGLE:
                     params.setMargins(pixelHorizontal, pixelVertical, pixelHorizontal, pixelVertical);

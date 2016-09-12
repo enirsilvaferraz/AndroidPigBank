@@ -19,7 +19,7 @@ import com.system.androidpigbank.controllers.adapters.recyclerv.MonthAdapter;
 import com.system.androidpigbank.controllers.fragments.MonthFragment;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
-import com.system.androidpigbank.controllers.vos.HomeObject;
+import com.system.androidpigbank.controllers.vos.HomeObjectVO;
 import com.system.androidpigbank.models.sqlite.business.CategoryBusiness;
 import com.system.androidpigbank.models.sqlite.business.RecoverBusiness;
 import com.system.androidpigbank.models.sqlite.business.TransactionBusiness;
@@ -50,7 +50,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
-    private HomeObject data;
+    private HomeObjectVO data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +69,9 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
             Calendar calendar = Calendar.getInstance();
             update(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
         } else {
-            data = savedInstanceState.getParcelable(HomeObject.class.getSimpleName());
+            data = savedInstanceState.getParcelable(HomeObjectVO.class.getSimpleName());
             if (data == null) {
-                data = new HomeObject();
+                data = new HomeObjectVO();
             }
             configureResult(data);
         }
@@ -101,7 +101,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putParcelable(HomeObject.class.getSimpleName(), data);
+        savedInstanceState.putParcelable(HomeObjectVO.class.getSimpleName(), data);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -149,7 +149,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
 
     private void callApi(final int month, final int year) {
 
-        ManagerHelper.execute(this, new ManagerHelper.LoaderResultInterface<HomeObject>() {
+        ManagerHelper.execute(this, new ManagerHelper.LoaderResultInterface<HomeObjectVO>() {
 
             private ProgressDialog dialog;
 
@@ -159,7 +159,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
             }
 
             @Override
-            public HomeObject executeAction() throws Exception {
+            public HomeObjectVO executeAction() throws Exception {
 
                 SharedPreferences sp = getSharedPreferences("SHARED_APP", Context.MODE_PRIVATE);
                 if (!sp.getBoolean("FIST_ACCESS", false)) {
@@ -171,7 +171,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
                     editor.apply();
                 }
 
-                HomeObject object = new HomeObject();
+                HomeObjectVO object = new HomeObjectVO();
                 object.setMonth(month);
                 object.setYear(year);
                 object.setListCategorySummary(new CategoryBusiness(HomeActivity.this).getSummaryCategoryByMonth(month, year));
@@ -181,7 +181,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
             }
 
             @Override
-            public void onComplete(LoaderResult<HomeObject> data) {
+            public void onComplete(LoaderResult<HomeObjectVO> data) {
                 if (data.isSuccess()) {
                     configureResult(data.getData());
                 } else {
@@ -193,7 +193,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
         });
     }
 
-    private void configureResult(HomeObject data) {
+    private void configureResult(HomeObjectVO data) {
         this.data = data;
 
         Calendar calendar = Calendar.getInstance();

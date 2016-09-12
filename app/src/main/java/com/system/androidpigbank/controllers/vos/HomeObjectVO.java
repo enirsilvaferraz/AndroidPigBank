@@ -13,7 +13,7 @@ import java.util.List;
  * Created by eferraz on 29/07/16.
  */
 
-public class HomeObject implements Parcelable {
+public class HomeObjectVO implements Parcelable {
 
     private int month;
     private int year;
@@ -21,7 +21,7 @@ public class HomeObject implements Parcelable {
     private List<Transaction> listTransaction;
     private List<Month> listMonth;
 
-    public HomeObject() {
+    public HomeObjectVO() {
         listCategorySummary = new ArrayList<>();
         listTransaction = new ArrayList<>();
         listMonth = new ArrayList<>();
@@ -81,7 +81,7 @@ public class HomeObject implements Parcelable {
         dest.writeTypedList(this.listMonth);
     }
 
-    protected HomeObject(Parcel in) {
+    protected HomeObjectVO(Parcel in) {
         this.month = in.readInt();
         this.year = in.readInt();
         this.listCategorySummary = in.createTypedArrayList(Category.CREATOR);
@@ -89,15 +89,15 @@ public class HomeObject implements Parcelable {
         this.listMonth = in.createTypedArrayList(Month.CREATOR);
     }
 
-    public static final Creator<HomeObject> CREATOR = new Creator<HomeObject>() {
+    public static final Creator<HomeObjectVO> CREATOR = new Creator<HomeObjectVO>() {
         @Override
-        public HomeObject createFromParcel(Parcel source) {
-            return new HomeObject(source);
+        public HomeObjectVO createFromParcel(Parcel source) {
+            return new HomeObjectVO(source);
         }
 
         @Override
-        public HomeObject[] newArray(int size) {
-            return new HomeObject[size];
+        public HomeObjectVO[] newArray(int size) {
+            return new HomeObjectVO[size];
         }
     };
 }

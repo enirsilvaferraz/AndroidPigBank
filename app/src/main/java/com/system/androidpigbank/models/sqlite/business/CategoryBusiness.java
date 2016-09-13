@@ -8,6 +8,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
+import com.system.androidpigbank.controllers.vos.TitleVO;
 import com.system.androidpigbank.controllers.vos.TotalVO;
 import com.system.androidpigbank.controllers.vos.WhiteSpaceVO;
 import com.system.architecture.adapters.CardAdapter;
@@ -32,7 +33,7 @@ public class CategoryBusiness extends DaoAbs<Category> {
 
     public List<Category> getSummaryCategoryByMonth(int month, int year) throws Exception {
 
-        List<Category> categories = findAllPrimaries();
+        List<Category> categories = findAll();
         for (Category category : categories) {
 
             category.setTransactionList(new TransactionBusiness(getContext()).findByCategory(category, month, year));
@@ -79,17 +80,26 @@ public class CategoryBusiness extends DaoAbs<Category> {
     }
 
     @NonNull
-    public List<CardAdapter.CardModel> organizeCategorySummaryList( List<Category> data ) {
+    public List<CardAdapter.CardModel> organizeCategorySummaryList(List<Category> data) {
 
+        boolean hasTitleSecondary = false;
         List<CardAdapter.CardModel> itens = new ArrayList<>();
 
-        for (Category category : data) {
+        for (int position = 0; position < data.size(); position++) {
+
+            Category category = data.get(position);
 
             itens.add(new WhiteSpaceVO());
             itens.add(category);
 
-            if (!category.getTransactionList().isEmpty()) {
+            if (category.isPrimary() && !category.getTransactionList().isEmpty()) {
                 itens.addAll(getTransactionByCategory(category.getTransactionList()));
+            }
+
+            if (!hasTitleSecondary && !category.isPrimary() && position != data.size() - 1) {
+                itens.add(new WhiteSpaceVO());
+                itens.add(new TitleVO("Secondary Categories"));
+                hasTitleSecondary = true;
             }
         }
 
@@ -114,7 +124,7 @@ public class CategoryBusiness extends DaoAbs<Category> {
             itens.add(transactionAct);
             value += transactionAct.getValue();
 
-            if (transactionProx == null || !categoryAct .equals( categoryProx)) {
+            if (transactionProx == null || !categoryAct.equals(categoryProx)) {
                 itens.add(new TotalVO(null, value));
                 value = 0D;
             }

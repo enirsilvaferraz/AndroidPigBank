@@ -15,6 +15,7 @@ import com.system.architecture.helpers.JavaHelper;
 import com.system.androidpigbank.models.sqlite.entities.Category;
 import com.system.androidpigbank.models.sqlite.entities.Transaction;
 import com.system.architecture.managers.DaoAbs;
+import com.system.architecture.utils.JavaUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -77,27 +78,6 @@ public class CategoryBusiness extends DaoAbs<Category> {
         return list;
     }
 
-    //    public List<Category> findAll() throws Exception {
-//        ConnectionSource connectionSource = new AndroidConnectionSource(db);
-//        Dao<Category, String> accountDao = DaoManager.createDao(connectionSource, Category.class);
-//
-//        List<Category> list = accountDao.queryForAll();
-//        connectionSource.close();
-//
-//        return list;
-//    }
-
-//    public Category save(Category category) throws SQLException {
-//
-//        ConnectionSource connectionSource = new AndroidConnectionSource(db);
-//        Dao<Category, String> accountDao = DaoManager.createDao(connectionSource, Category.class);
-//
-//        accountDao.create(category);
-//        connectionSource.close();
-//
-//        return category;
-//    }
-
     @NonNull
     public List<CardAdapter.CardModel> organizeCategorySummaryList( List<Category> data ) {
 
@@ -118,29 +98,28 @@ public class CategoryBusiness extends DaoAbs<Category> {
         return itens;
     }
 
-    private List<CardAdapter.CardModel> getTransactionByCategory(List<Transaction> transactionList) {
+    private List<CardAdapter.CardModel> getTransactionByCategory(List<Transaction> list) {
 
-        Long categoryAnterior = null;
         Double value = 0D;
 
-        List<CardAdapter.CardModel> innerItens = new ArrayList<>();
-        for (int i = 0; i < transactionList.size(); i++) {
+        List<CardAdapter.CardModel> itens = new ArrayList<>();
+        for (int position = 0; position < list.size(); position++) {
 
-            Transaction transaction = transactionList.get(i);
-            innerItens.add(transaction);
+            Transaction transactionAct = list.get(position);
+            Transaction transactionProx = list.size() > position + 1 ? list.get(position + 1) : null;
 
-            value += transaction.getValue();
+            Long categoryAct = transactionAct.getCategorySecondary() != null ? transactionAct.getCategorySecondary().getId() : -1;
+            Long categoryProx = transactionProx != null && transactionProx.getCategorySecondary() != null ? transactionProx.getCategorySecondary().getId() : -1;
 
-            Long categoryAct = transaction.getCategorySecondary() != null ? transaction.getCategorySecondary().getId() : -1;
+            itens.add(transactionAct);
+            value += transactionAct.getValue();
 
-            if (!categoryAct.equals(categoryAnterior) || i == transactionList.size() -1){
-                innerItens.add(new TotalVO(null, value));
+            if (transactionProx == null || !categoryAct .equals( categoryProx)) {
+                itens.add(new TotalVO(null, value));
                 value = 0D;
             }
-
-            categoryAnterior = categoryAct;
         }
 
-        return innerItens;
+        return itens;
     }
 }

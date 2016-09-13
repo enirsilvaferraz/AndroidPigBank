@@ -137,7 +137,7 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         List<CardAdapter.CardModel> itens = new ArrayList<>();
 
         Double valorAcumular = 0D;
-        Double valorDiario = 0D;
+       // Double valorDiario = 0D;
         boolean hasTitleFutureLanc = false;
 
         itens.add(new WhiteSpaceVO());
@@ -158,12 +158,12 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
             }
 
             itens.add(transactionAct);
-            valorDiario += transactionAct.getValue();
+            //valorDiario += transactionAct.getValue();
 
             if (transactionProx == null || JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), transactionProx.getDatePayment()) != 0) {
                 itens.add(new TotalVO(null, valorAcumular));
                 itens.add(new WhiteSpaceVO());
-                valorDiario = 0D;
+                //valorDiario = 0D;
             }
         }
 

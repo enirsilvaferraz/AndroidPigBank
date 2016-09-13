@@ -73,6 +73,17 @@ public final class JavaUtils {
             cInit.set(Calendar.DATE, cInit.getActualMaximum(Calendar.DATE));
             return cInit.getTime();
         }
+
+        public static int compare(Date dInit, Date dEnd){
+
+            Calendar cInit = Calendar.getInstance();
+            cInit.setTime(parse(format(dInit, DD_MM_YYYY), DD_MM_YYYY));
+
+            Calendar cEnd = Calendar.getInstance();
+            cEnd.setTime(parse(format(dEnd, DD_MM_YYYY), DD_MM_YYYY));
+
+            return cInit.compareTo(cEnd);
+        }
     }
 
     /**

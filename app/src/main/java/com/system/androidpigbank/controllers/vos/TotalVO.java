@@ -9,19 +9,22 @@ public class TotalVO implements CardAdapter.CardModel {
 
     private CardAdapter.CardModeItem cardStrategy;
 
-    private Double total;
+    private Double valueStart;
 
-    public TotalVO() {
+    private Double valueEnd;
+
+    public TotalVO(Double valueStart, Double valueEnd) {
+        this.valueStart = valueStart;
+        this.valueEnd = valueEnd;
     }
 
-    public TotalVO(Double total) {
-        this.total = total;
+    public Double getValueStart() {
+        return valueStart;
     }
 
-    public Double getTotal() {
-        return total;
+    public Double getValueEnd() {
+        return valueEnd;
     }
-
 
     @Override
     public CardAdapter.CardViewType getViewType() {

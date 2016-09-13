@@ -138,7 +138,7 @@ public class CategoryBusiness extends DaoAbs<Category> {
             String name = transaction.getCategorySecondary() != null ? transaction.getCategorySecondary().getName() : "";
 
             if (!innerItens.isEmpty() && !name.equals(nomeCat)) {
-                TotalVO totalVO = new TotalVO(value);
+                TotalVO totalVO = new TotalVO(null, value);
                 totalVO.setCardStrategy(CardAdapter.CardModeItem.MIDDLE);
                 innerItens.add(totalVO);
                 value = 0D;
@@ -151,7 +151,7 @@ public class CategoryBusiness extends DaoAbs<Category> {
 
             value += transaction.getValue();
             if (i == category.getTransactionList().size() - 1) {
-                TotalVO totalVO = new TotalVO(value);
+                TotalVO totalVO = new TotalVO(null, value);
                 totalVO.setCardStrategy(CardAdapter.CardModeItem.END);
                 innerItens.add(totalVO);
             }

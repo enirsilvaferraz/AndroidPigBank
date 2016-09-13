@@ -136,90 +136,34 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
 
         List<CardAdapter.CardModel> itens = new ArrayList<>();
 
-        Long timeAnterior = null;
-        Double valorAAcumular = 0D;
+        Double valorAcumular = 0D;
+        Double valorDiario = 0D;
         boolean hasTitleFutureLanc = false;
+
+        itens.add(new WhiteSpaceVO());
 
         for (int position = 0; position < list.size(); position++){
 
             Transaction transactionAct = list.get(position);
             Transaction transactionProx = list.size() > position + 1 ? list.get(position + 1) : null;
 
-            itens.add(transactionAct);
+            if (JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), Calendar.getInstance().getTime()) > 0){
 
-            
-
-            if (transactionProx == null || transactionAct.getDatePayment().getTime() < transactionProx.getDatePayment().getTime()) {
-                itens.add(new TotalVO(valorAAcumular));
-                itens.add(new WhiteSpaceVO());
-            }
-
-            if (transactionAct.getDatePayment().getTime() > Calendar.getInstance().getTime().getTime()){
-
-                if (!hasTitleFutureLanc && position != list.size() -1){
-                    TitleVO titleVO = new TitleVO();
-                    titleVO.setTitle("Lançamentos Futuros");
-                    itens.add(titleVO);
+                if (!hasTitleFutureLanc && transactionProx != null){
+                    itens.add(new TitleVO("Lançamentos Futuros"));
+                    itens.add(new WhiteSpaceVO());
                     hasTitleFutureLanc = true;
                 }
-
-                valorAAcumular += transactionAct.getValue();
+                valorAcumular += transactionAct.getValue();
             }
 
+            itens.add(transactionAct);
+            valorDiario += transactionAct.getValue();
 
-
-            timeAnterior = transactionAct.getDatePayment().getTime();
-        }
-
-        return itens;
-    }
-
-    public List<CardAdapter.CardModel> organizeTransationcList(List<Transaction> list) {
-
-        List<CardAdapter.CardModel> itens = new ArrayList<>();
-
-        Long calendarDate = Calendar.getInstance().getTime().getTime();
-        Long date = null;
-        Double value = 0D;
-
-        boolean hasTitle = false;
-
-        for (int i = 0; i < list.size(); i++) {
-
-            Transaction transaction = list.get(i);
-
-            Long dateAct = transaction.getDatePayment().getTime();
-
-            if (!itens.isEmpty() && !dateAct.equals(date)) {
-                TotalVO totalVO = new TotalVO(value);
-                totalVO.setCardStrategy(CardAdapter.CardModeItem.END);
-                itens.add(totalVO);
-                value = 0D;
-            }
-
-            date = dateAct;
-
-            if (!hasTitle && dateAct > calendarDate){
-                TitleVO titleVO = new TitleVO();
-                titleVO.setCardStrategy(CardAdapter.CardModeItem.SINGLE);
-                titleVO.setTitle("Lançamentos Futuros");
-                itens.add(titleVO);
-                hasTitle = true;
-            }
-
-            if (value == 0D) {
-                transaction.setCardStrategy(CardAdapter.CardModeItem.START);
-            } else {
-                transaction.setCardStrategy(CardAdapter.CardModeItem.MIDDLE);
-            }
-
-            itens.add(transaction);
-
-            value += transaction.getValue();
-            if (i == list.size() - 1) {
-                TotalVO totalVO = new TotalVO(value);
-                totalVO.setCardStrategy(CardAdapter.CardModeItem.END);
-                itens.add(totalVO);
+            if (transactionProx == null || JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), transactionProx.getDatePayment()) != 0) {
+                itens.add(new TotalVO(null, valorAcumular));
+                itens.add(new WhiteSpaceVO());
+                valorDiario = 0D;
             }
         }
 

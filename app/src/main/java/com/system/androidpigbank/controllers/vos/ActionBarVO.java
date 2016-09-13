@@ -10,8 +10,18 @@ public class ActionBarVO implements CardAdapter.CardModel {
 
     private CardAdapter.CardModel cardReferency;
 
+    private Actions[] actionsToHide;
+
     public ActionBarVO(CardAdapter.CardModel cardReferency) {
         this.cardReferency = cardReferency;
+    }
+
+    public void setActionsToHide(Actions... actionsToHide) {
+        this.actionsToHide = actionsToHide;
+    }
+
+    public Actions[] getActionsToHide() {
+        return actionsToHide;
     }
 
     public CardAdapter.CardModel getCardReferency() {
@@ -21,5 +31,12 @@ public class ActionBarVO implements CardAdapter.CardModel {
     @Override
     public CardAdapter.CardViewType getViewType() {
         return CardAdapter.CardViewType.CARD_ACTION_BAR;
+    }
+
+    /**
+     *
+     */
+    public enum Actions {
+        COPY, EDIT, DELETE
     }
 }

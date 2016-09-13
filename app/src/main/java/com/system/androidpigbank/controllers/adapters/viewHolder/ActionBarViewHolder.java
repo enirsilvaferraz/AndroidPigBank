@@ -38,6 +38,22 @@ public class ActionBarViewHolder extends CardViewHolder {
 
         final ActionBarVO vo = (ActionBarVO) model;
 
+        if (vo.getActionsToHide() != null) {
+            for (ActionBarVO.Actions actions : vo.getActionsToHide()) {
+                switch (actions) {
+                    case COPY:
+                        btCopyAction.setVisibility(View.GONE);
+                        break;
+                    case EDIT:
+                        btEditAction.setVisibility(View.GONE);
+                        break;
+                    case DELETE:
+                        btDeleteAction.setVisibility(View.GONE);
+                        break;
+                }
+            }
+        }
+
         if (onClickListener != null) {
 
             btEditAction.setOnClickListener(new View.OnClickListener() {

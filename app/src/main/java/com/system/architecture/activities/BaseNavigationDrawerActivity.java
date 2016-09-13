@@ -15,6 +15,7 @@ import com.system.androidpigbank.controllers.helpers.IntentRouter;
  * Created by eferraz on 08/07/16.
  */
 
+@Deprecated
 public abstract class BaseNavigationDrawerActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override

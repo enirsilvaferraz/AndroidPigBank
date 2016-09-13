@@ -12,7 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#eef9ff">
+        android:background="@color/accet_50">
 
         <TextView
             android:id="@+id/item_footer_value_start"

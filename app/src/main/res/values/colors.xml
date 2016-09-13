@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Color Attibute -->
+
+    <color name="accet_100">@color/material_blue_100</color>
+    <color name="accet_50">@color/material_blue_50</color>
+
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#727272</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
+
+    <!-- Color Definition -->
 
     <color name="theme_red_primary">#F44336</color>
     <color name="theme_red_primary_dark">#D32F2F</color>
@@ -23,6 +30,10 @@
 
     <color name="material_gray_300">#E0E0E0</color>
     <color name="material_gray_200">#EEEEEE</color>
+    <color name="material_blue_50">#E3F2FD</color>
+    <color name="material_blue_100">#BBDEFB</color>
+    <color name="material_red_50">#FFEBEE</color>
+    <color name="material_red_100">#FFCDD2</color>
 
     <color name="material_red">#F44336</color>
     <color name="material_pink">#E91E63</color>

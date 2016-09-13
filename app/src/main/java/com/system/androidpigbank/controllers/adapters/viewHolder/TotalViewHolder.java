@@ -17,8 +17,8 @@ public class TotalViewHolder extends CardViewHolder {
     private TextView tvValueStart;
     private TextView tvValueEnd;
 
-    public TotalViewHolder(final View v, boolean isCardMode) {
-        super(v, isCardMode);
+    public TotalViewHolder(final View v) {
+        super(v);
         tvValueStart = (TextView) v.findViewById(R.id.item_footer_value_start);
         tvValueEnd = (TextView) v.findViewById(R.id.item_footer_value_end);
     }

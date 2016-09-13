@@ -1,8 +1,6 @@
 package com.system.androidpigbank.controllers.fragments;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
@@ -29,13 +27,13 @@ public class CardFragmentImpl extends CardFragment {
         return fragment;
     }
 
-    private void setFragmentID(int fragmentID) {
-        this.fragmentID = fragmentID;
-    }
-
     @Override
     public int getFragmentID() {
         return fragmentID;
+    }
+
+    private void setFragmentID(int fragmentID) {
+        this.fragmentID = fragmentID;
     }
 
     public void performClick(int action, final CardAdapter.CardModel model) {
@@ -45,13 +43,13 @@ public class CardFragmentImpl extends CardFragment {
             switch (action) {
                 case Constants.ACTION_VIEW:
                     if (toolbar == null) {
-                        toolbar = new ActionBarVO(model, CardAdapter.CardModeItem.MIDDLE);
+                        toolbar = new ActionBarVO(model);
                         cardAdapter.add(toolbar, cardAdapter.getItens().indexOf(model) + 1);
                     } else {
                         boolean mustAdd = !toolbar.getCardReferency().equals(model);
                         removeToolbar(cardAdapter);
                         if (mustAdd) {
-                            toolbar = new ActionBarVO(model, CardAdapter.CardModeItem.MIDDLE);
+                            toolbar = new ActionBarVO(model);
                             cardAdapter.add(toolbar, cardAdapter.getItens().indexOf(model) + 1);
                         }
                     }

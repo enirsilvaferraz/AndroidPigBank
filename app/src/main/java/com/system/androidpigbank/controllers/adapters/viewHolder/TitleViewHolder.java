@@ -15,8 +15,8 @@ public class TitleViewHolder extends CardViewHolder {
 
     private TextView tvTitle;
 
-    public TitleViewHolder(final View v, boolean isCardMode) {
-        super(v, isCardMode);
+    public TitleViewHolder(final View v) {
+        super(v);
         tvTitle = (TextView) v.findViewById(R.id.item_title);
     }
 

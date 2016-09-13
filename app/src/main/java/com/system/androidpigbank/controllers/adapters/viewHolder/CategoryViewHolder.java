@@ -38,8 +38,8 @@ public class CategoryViewHolder extends CardViewHolder {
 
     Context context;
 
-    public CategoryViewHolder(View itemView, boolean isCardMode) {
-        super(itemView, isCardMode);
+    public CategoryViewHolder(View itemView) {
+        super(itemView);
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
     }

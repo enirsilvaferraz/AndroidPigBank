@@ -27,8 +27,8 @@ public class ActionBarViewHolder extends CardViewHolder {
     @BindView(R.id.custom_bar_copy_action)
     ImageButton btCopyAction;
 
-    public ActionBarViewHolder(View itemView, boolean isCardMode) {
-        super(itemView, isCardMode);
+    public ActionBarViewHolder(View itemView) {
+        super(itemView);
         ButterKnife.bind(this, itemView);
     }
 

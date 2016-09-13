@@ -8,7 +8,6 @@ import com.system.architecture.adapters.CardAdapter;
 
 public class TitleVO implements CardAdapter.CardModel {
 
-    private CardAdapter.CardModeItem cardStrategy;
     private String title;
 
     public TitleVO(String title) {
@@ -24,13 +23,4 @@ public class TitleVO implements CardAdapter.CardModel {
         return CardAdapter.CardViewType.CARD_TITLE;
     }
 
-    @Override
-    public CardAdapter.CardModeItem getCardStrategy() {
-        return cardStrategy;
-    }
-
-    @Override
-    public void setCardStrategy(CardAdapter.CardModeItem cardStrategy) {
-        this.cardStrategy = cardStrategy;
-    }
 }

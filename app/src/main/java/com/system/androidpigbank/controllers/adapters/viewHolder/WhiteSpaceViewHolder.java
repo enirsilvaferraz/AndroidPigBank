@@ -13,8 +13,8 @@ import com.system.architecture.adapters.CardViewHolder;
  */
 public class WhiteSpaceViewHolder extends CardViewHolder {
 
-    public WhiteSpaceViewHolder(final View v, boolean isCardMode) {
-        super(v, isCardMode);
+    public WhiteSpaceViewHolder(final View v) {
+        super(v);
     }
 
     @Override

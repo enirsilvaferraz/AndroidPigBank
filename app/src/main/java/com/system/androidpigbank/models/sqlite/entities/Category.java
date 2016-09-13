@@ -22,6 +22,18 @@ import java.util.List;
 @DatabaseTable(tableName = "category")
 public class Category extends EntityAbs implements Parcelable, CardAdapter.CardModel {
 
+    public static final Creator<Category> CREATOR = new Creator<Category>() {
+        @Override
+        public Category createFromParcel(Parcel source) {
+            return new Category(source);
+        }
+
+        @Override
+        public Category[] newArray(int size) {
+            return new Category[size];
+        }
+    };
+
     @Expose
     @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
     private Long id;
@@ -40,7 +52,6 @@ public class Category extends EntityAbs implements Parcelable, CardAdapter.CardM
 
     private Double amount;
     private boolean expanded;
-    private CardAdapter.CardModeItem cardStrategy;
     private List<Transaction> transactionList;
 
     public Category() {
@@ -53,6 +64,17 @@ public class Category extends EntityAbs implements Parcelable, CardAdapter.CardM
 
     public Category(String name) {
         this.name = name;
+    }
+
+    protected Category(Parcel in) {
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
+        this.name = in.readString();
+        this.primary = in.readByte() != 0;
+        int tmpColor = in.readInt();
+        this.color = tmpColor == -1 ? null : Colors.values()[tmpColor];
+        this.amount = (Double) in.readValue(Double.class.getClassLoader());
+        this.expanded = in.readByte() != 0;
+        this.transactionList = in.createTypedArrayList(Transaction.CREATOR);
     }
 
     public String getName() {
@@ -83,13 +105,13 @@ public class Category extends EntityAbs implements Parcelable, CardAdapter.CardM
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public DTOAbs toDTO() {
         return JavaUtils.GsonUtil.getInstance().fromCategory().toDTO(this, CategoryDTO.class);
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     @Override
@@ -147,41 +169,8 @@ public class Category extends EntityAbs implements Parcelable, CardAdapter.CardM
         dest.writeTypedList(this.transactionList);
     }
 
-    protected Category(Parcel in) {
-        this.id = (Long) in.readValue(Long.class.getClassLoader());
-        this.name = in.readString();
-        this.primary = in.readByte() != 0;
-        int tmpColor = in.readInt();
-        this.color = tmpColor == -1 ? null : Colors.values()[tmpColor];
-        this.amount = (Double) in.readValue(Double.class.getClassLoader());
-        this.expanded = in.readByte() != 0;
-        this.transactionList = in.createTypedArrayList(Transaction.CREATOR);
-    }
-
-    public static final Creator<Category> CREATOR = new Creator<Category>() {
-        @Override
-        public Category createFromParcel(Parcel source) {
-            return new Category(source);
-        }
-
-        @Override
-        public Category[] newArray(int size) {
-            return new Category[size];
-        }
-    };
-
     @Override
     public CardAdapter.CardViewType getViewType() {
         return CardAdapter.CardViewType.CARD_CATEGOTY;
-    }
-
-    @Override
-    public void setCardStrategy(CardAdapter.CardModeItem cardStrategy) {
-        this.cardStrategy = cardStrategy;
-    }
-
-    @Override
-    public CardAdapter.CardModeItem getCardStrategy() {
-        return cardStrategy;
     }
 }

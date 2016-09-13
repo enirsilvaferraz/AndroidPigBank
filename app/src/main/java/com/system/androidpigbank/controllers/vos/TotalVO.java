@@ -7,8 +7,6 @@ import com.system.architecture.adapters.CardAdapter;
  */
 public class TotalVO implements CardAdapter.CardModel {
 
-    private CardAdapter.CardModeItem cardStrategy;
-
     private Double valueStart;
 
     private Double valueEnd;
@@ -29,15 +27,5 @@ public class TotalVO implements CardAdapter.CardModel {
     @Override
     public CardAdapter.CardViewType getViewType() {
         return CardAdapter.CardViewType.CARD_FOOTER;
-    }
-
-    @Override
-    public CardAdapter.CardModeItem getCardStrategy() {
-        return cardStrategy;
-    }
-
-    @Override
-    public void setCardStrategy(CardAdapter.CardModeItem cardStrategy) {
-        this.cardStrategy = cardStrategy;
     }
 }

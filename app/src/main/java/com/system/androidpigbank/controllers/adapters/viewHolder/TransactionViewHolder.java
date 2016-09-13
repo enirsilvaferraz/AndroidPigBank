@@ -39,8 +39,8 @@ public class TransactionViewHolder extends CardViewHolder {
     @BindView(R.id.item_transaction_value)
     TextView textValue;
 
-    public TransactionViewHolder(View v, boolean isCardMode) {
-        super(v, isCardMode);
+    public TransactionViewHolder(View v) {
+        super(v);
         ButterKnife.bind(this, itemView);
     }
 

@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
@@ -38,6 +39,12 @@ public class CategoryManagerDialog extends BaseManagerDialog<Category> {
 
     @BindView(R.id.category_manager_primary)
     AppCompatCheckBox chPrimary;
+
+    @BindView(R.id.transaction_manager_bt_cancel)
+    Button btCancel;
+
+    @BindView(R.id.transaction_manager_bt_save)
+    Button btSave;
 
     private List<Category> categories;
 
@@ -78,6 +85,24 @@ public class CategoryManagerDialog extends BaseManagerDialog<Category> {
             editCategory.setText(model.getName());
             chPrimary.setChecked(model.isPrimary());
         }
+
+        btCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+
+        btSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    save();
+                } catch (Exception e) {
+                    ((BaseActivity) getActivity()).showMessage(e);
+                }
+            }
+        });
 
         ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<List<Category>>() {
 

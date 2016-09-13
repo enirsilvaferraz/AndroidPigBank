@@ -92,7 +92,7 @@ public class CategoryBusiness extends DaoAbs<Category> {
             itens.add(new WhiteSpaceVO());
             itens.add(category);
 
-            if (category.isPrimary() && !category.getTransactionList().isEmpty()) {
+            if (!category.getTransactionList().isEmpty()) {
                 itens.addAll(getTransactionByCategory(category.getTransactionList()));
             }
 

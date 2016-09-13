@@ -8,21 +8,24 @@ import com.system.architecture.adapters.CardAdapter;
 
 public class ActionBarVO implements CardAdapter.CardModel {
 
-    private CardAdapter.CardModeItem cardStrategy;
-
     private CardAdapter.CardModel cardReferency;
 
-    public ActionBarVO(CardAdapter.CardModel cardReferency, CardAdapter.CardModeItem cardStrategy) {
+    private Actions[] actionsToHide;
+
+    public ActionBarVO(CardAdapter.CardModel cardReferency) {
         this.cardReferency = cardReferency;
-        this.cardStrategy = cardStrategy;
+    }
+
+    public void setActionsToHide(Actions... actionsToHide) {
+        this.actionsToHide = actionsToHide;
+    }
+
+    public Actions[] getActionsToHide() {
+        return actionsToHide;
     }
 
     public CardAdapter.CardModel getCardReferency() {
         return cardReferency;
-    }
-
-    public void setCardReferency(CardAdapter.CardModel cardReferency) {
-        this.cardReferency = cardReferency;
     }
 
     @Override
@@ -30,13 +33,10 @@ public class ActionBarVO implements CardAdapter.CardModel {
         return CardAdapter.CardViewType.CARD_ACTION_BAR;
     }
 
-    @Override
-    public CardAdapter.CardModeItem getCardStrategy() {
-        return cardStrategy;
-    }
-
-    @Override
-    public void setCardStrategy(CardAdapter.CardModeItem cardStrategy) {
-        this.cardStrategy = cardStrategy;
+    /**
+     *
+     */
+    public enum Actions {
+        COPY, EDIT, DELETE
     }
 }

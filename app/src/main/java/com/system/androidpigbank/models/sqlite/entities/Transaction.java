@@ -54,9 +54,6 @@ public class Transaction extends EntityAbs implements Parcelable, CardAdapter.Ca
     @DatabaseField(dataType = DataType.ENUM_INTEGER)
     private PaymentType paymentType;
 
-    private boolean expanded;
-    private CardAdapter.CardModeItem cardStrategy;
-
     public Transaction() {
     }
 
@@ -129,14 +126,6 @@ public class Transaction extends EntityAbs implements Parcelable, CardAdapter.Ca
         this.paymentType = paymentType;
     }
 
-    public boolean isExpanded() {
-        return expanded;
-    }
-
-    public void setExpanded(boolean expanded) {
-        this.expanded = expanded;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -152,7 +141,6 @@ public class Transaction extends EntityAbs implements Parcelable, CardAdapter.Ca
         dest.writeParcelable(this.categorySecondary, flags);
         dest.writeString(this.content);
         dest.writeInt(this.paymentType == null ? -1 : this.paymentType.ordinal());
-        dest.writeByte(this.expanded ? (byte) 1 : (byte) 0);
     }
 
     protected Transaction(Parcel in) {
@@ -167,7 +155,6 @@ public class Transaction extends EntityAbs implements Parcelable, CardAdapter.Ca
         this.content = in.readString();
         int tmpPaymentType = in.readInt();
         this.paymentType = tmpPaymentType == -1 ? null : PaymentType.values()[tmpPaymentType];
-        this.expanded = in.readByte() != 0;
     }
 
     public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
@@ -185,15 +172,5 @@ public class Transaction extends EntityAbs implements Parcelable, CardAdapter.Ca
     @Override
     public CardAdapter.CardViewType getViewType() {
         return CardAdapter.CardViewType.CARD_TRANSACTION;
-    }
-
-    @Override
-    public void setCardStrategy(CardAdapter.CardModeItem cardStrategy) {
-        this.cardStrategy = cardStrategy;
-    }
-
-    @Override
-    public CardAdapter.CardModeItem getCardStrategy() {
-        return cardStrategy;
     }
 }

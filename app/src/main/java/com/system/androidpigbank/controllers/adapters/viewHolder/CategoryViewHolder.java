@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.models.sqlite.entities.Category;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.adapters.CardViewHolder;
@@ -38,14 +39,14 @@ public class CategoryViewHolder extends CardViewHolder {
 
     Context context;
 
-    public CategoryViewHolder(View itemView, boolean isCardMode) {
-        super(itemView, isCardMode);
+    public CategoryViewHolder(View itemView) {
+        super(itemView);
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
     }
 
     @Override
-    public void bind(CardAdapter.CardModel model, OnClickListener onClickListener) {
+    public void bind(final CardAdapter.CardModel model, final OnClickListener onClickListener) {
         super.bind(model, onClickListener);
 
         Category item = (Category) model;
@@ -56,5 +57,14 @@ public class CategoryViewHolder extends CardViewHolder {
                 JavaUtils.NumberUtil.currencyFormat(0D));
         tvProgressValue.setText("N/A");
         progressBar.setProgress(0);
+
+        if (onClickListener != null) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClickListener.onContainerClicked(Constants.ACTION_VIEW, model);
+                }
+            });
+        }
     }
 }

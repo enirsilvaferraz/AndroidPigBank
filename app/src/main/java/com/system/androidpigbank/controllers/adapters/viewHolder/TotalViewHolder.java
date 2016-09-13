@@ -7,19 +7,20 @@ import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.vos.TotalVO;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.adapters.CardViewHolder;
-
-import java.text.NumberFormat;
+import com.system.architecture.utils.JavaUtils;
 
 /**
  * Created by eferraz on 03/01/16.
  */
 public class TotalViewHolder extends CardViewHolder {
 
-    private TextView total;
+    private TextView tvValueStart;
+    private TextView tvValueEnd;
 
-    public TotalViewHolder(final View v, boolean isCardMode) {
-        super(v, isCardMode);
-        total = (TextView) v.findViewById(R.id.item_footer_total);
+    public TotalViewHolder(final View v) {
+        super(v);
+        tvValueStart = (TextView) v.findViewById(R.id.item_footer_value_start);
+        tvValueEnd = (TextView) v.findViewById(R.id.item_footer_value_end);
     }
 
     @Override
@@ -28,10 +29,12 @@ public class TotalViewHolder extends CardViewHolder {
 
         TotalVO totalFooter = (TotalVO) model;
 
-        final NumberFormat instance = NumberFormat.getInstance();
-        instance.setMinimumFractionDigits(2);
-        instance.setMinimumIntegerDigits(1);
+        if (totalFooter.getValueStart() != null && totalFooter.getValueStart() != 0D) {
+            tvValueStart.setText(JavaUtils.NumberUtil.currencyFormat(totalFooter.getValueStart()));
+        }
 
-        total.setText(itemView.getContext().getString(R.string.item_transaction_footer_value, instance.format(totalFooter.getTotal())));
+        if (totalFooter.getValueEnd() != null && totalFooter.getValueEnd() != 0D) {
+            tvValueEnd.setText(JavaUtils.NumberUtil.currencyFormat(totalFooter.getValueEnd()));
+        }
     }
 }

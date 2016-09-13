@@ -12,6 +12,7 @@ import com.system.androidpigbank.controllers.adapters.viewHolder.CategoryViewHol
 import com.system.androidpigbank.controllers.adapters.viewHolder.TitleViewHolder;
 import com.system.androidpigbank.controllers.adapters.viewHolder.TotalViewHolder;
 import com.system.androidpigbank.controllers.adapters.viewHolder.TransactionViewHolder;
+import com.system.androidpigbank.controllers.adapters.viewHolder.WhiteSpaceViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,16 +23,10 @@ import java.util.List;
 public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final CardViewHolder.OnClickListener onClickListener;
-    private final boolean isCardMode;
     private List<CardModel> itens;
 
     public CardAdapter(CardViewHolder.OnClickListener onClickListener) {
-        this(false, onClickListener);
-    }
-
-    public CardAdapter(boolean isCardMode, CardViewHolder.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
-        this.isCardMode = isCardMode;
     }
 
     @Override
@@ -40,7 +35,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         CardViewType anEnum = CardViewType.getEnum(viewType);
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View v = layoutInflater.inflate(anEnum.getLayoutId(), parent, false);
-        return anEnum.getViewHolderInstance(v, isCardMode);
+        return anEnum.getViewHolderInstance(v);
     }
 
     @Override
@@ -92,7 +87,8 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         CARD_CATEGOTY(R.layout.item_view_holder_category_summary),
         CARD_FOOTER(R.layout.item_view_holder_total),
         CARD_TITLE(R.layout.item_view_holder_title),
-        CARD_ACTION_BAR(R.layout.item_view_holder_card_bar);
+        CARD_ACTION_BAR(R.layout.item_view_holder_card_bar),
+        CARD_WHITESPACE(R.layout.item_view_holder_white_space);
 
         @LayoutRes
         private final int layoutId;
@@ -113,30 +109,33 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return layoutId;
         }
 
-        public CardViewHolder getViewHolderInstance(View v, boolean isCardMode) {
+        public CardViewHolder getViewHolderInstance(View v) {
 
             CardViewHolder viewHolder = null;
 
             switch (this) {
                 case CARD_TRANSACTION:
-                    viewHolder = new TransactionViewHolder(v, isCardMode);
+                    viewHolder = new TransactionViewHolder(v);
                     break;
 
                 case CARD_CATEGOTY:
-                    viewHolder = new CategoryViewHolder(v, isCardMode);
+                    viewHolder = new CategoryViewHolder(v);
                     break;
 
                 case CARD_FOOTER:
-                    viewHolder = new TotalViewHolder(v, isCardMode);
+                    viewHolder = new TotalViewHolder(v);
                     break;
 
                 case CARD_TITLE:
-                    viewHolder = new TitleViewHolder(v, isCardMode);
+                    viewHolder = new TitleViewHolder(v);
                     break;
 
                 case CARD_ACTION_BAR:
-                    viewHolder = new ActionBarViewHolder(v, isCardMode);
+                    viewHolder = new ActionBarViewHolder(v);
                     break;
+
+                case CARD_WHITESPACE:
+                    viewHolder = new WhiteSpaceViewHolder(v);
             }
 
             return viewHolder;
@@ -146,19 +145,8 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     /**
      *
      */
-    public enum CardModeItem {
-        SINGLE, START, END, MIDDLE, NO_STRATEGY
-    }
-
-    /**
-     *
-     */
     public interface CardModel {
 
         CardViewType getViewType();
-
-        CardModeItem getCardStrategy();
-
-        void setCardStrategy(CardAdapter.CardModeItem cardStrategy);
     }
 }

@@ -35,7 +35,7 @@ public abstract class CardFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final CardAdapter adapter = new CardAdapter(true, new CardViewHolder.OnClickListener() {
+        final CardAdapter adapter = new CardAdapter(new CardViewHolder.OnClickListener() {
             @Override
             public void onContainerClicked(int action, CardAdapter.CardModel model) {
                 performClick(action, model);

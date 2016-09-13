@@ -13,7 +13,7 @@
         android:supportsRtl="true">
 
         <activity
-            android:name=".controllers.activities.CategoryManagerActivity"
+            android:name=".controllers.activities.CategoryManagerDialog"
             android:label="@string/title_activity_category_manager"
             android:theme="@style/AppTheme.Green" />
 

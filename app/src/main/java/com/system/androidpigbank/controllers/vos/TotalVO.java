@@ -7,38 +7,25 @@ import com.system.architecture.adapters.CardAdapter;
  */
 public class TotalVO implements CardAdapter.CardModel {
 
-    private CardAdapter.CardModeItem cardStrategy;
+    private Double valueStart;
 
-    private Double total;
+    private Double valueEnd;
 
-    public TotalVO() {
+    public TotalVO(Double valueStart, Double valueEnd) {
+        this.valueStart = valueStart;
+        this.valueEnd = valueEnd;
     }
 
-    public TotalVO(Double total) {
-        this.total = total;
+    public Double getValueStart() {
+        return valueStart;
     }
 
-    public Double getTotal() {
-        return total;
+    public Double getValueEnd() {
+        return valueEnd;
     }
-
-    public void setTotal(final Double total) {
-        this.total = total;
-    }
-
 
     @Override
     public CardAdapter.CardViewType getViewType() {
         return CardAdapter.CardViewType.CARD_FOOTER;
-    }
-
-    @Override
-    public CardAdapter.CardModeItem getCardStrategy() {
-        return cardStrategy;
-    }
-
-    @Override
-    public void setCardStrategy(CardAdapter.CardModeItem cardStrategy) {
-        this.cardStrategy = cardStrategy;
     }
 }

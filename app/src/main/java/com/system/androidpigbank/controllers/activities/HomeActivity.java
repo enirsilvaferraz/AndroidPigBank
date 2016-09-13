@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
@@ -23,7 +24,7 @@ import com.system.androidpigbank.controllers.vos.HomeObjectVO;
 import com.system.androidpigbank.models.sqlite.business.CategoryBusiness;
 import com.system.androidpigbank.models.sqlite.business.RecoverBusiness;
 import com.system.androidpigbank.models.sqlite.business.TransactionBusiness;
-import com.system.architecture.activities.BaseNavigationDrawerActivity;
+import com.system.architecture.activities.BaseActivity;
 import com.system.architecture.adapters.CardFragment;
 import com.system.architecture.helpers.PermissionHelper;
 import com.system.architecture.managers.LoaderResult;
@@ -39,7 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
 
-public class HomeActivity extends BaseNavigationDrawerActivity {
+public class HomeActivity extends BaseActivity {
 
     private static final List<String> ACCESS_PERMISSIONS = Arrays.asList(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     private static final int HOME_INDICATOR = 1;
@@ -50,13 +51,18 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     private HomeObjectVO data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        setContentView(R.layout.activity_home_drawer);
+        setContentView(R.layout.activity_home_tab);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +97,7 @@ public class HomeActivity extends BaseNavigationDrawerActivity {
                     break;
 
                 case Constants.FRAGMENT_ID_TRANSACTION:
-                    ((CardFragment) fragment).setData(new TransactionBusiness(this).organizeTransationcList(data.getListTransaction()));
+                    ((CardFragment) fragment).setData(new TransactionBusiness(this).organizeTransationcListV2(data.getListTransaction()));
                     break;
             }
         } else if (fragment instanceof MonthFragment) {

@@ -11,6 +11,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.system.androidpigbank.controllers.vos.Month;
 import com.system.androidpigbank.controllers.vos.TitleVO;
 import com.system.androidpigbank.controllers.vos.TotalVO;
+import com.system.androidpigbank.controllers.vos.WhiteSpaceVO;
 import com.system.androidpigbank.models.sqlite.entities.Category;
 import com.system.androidpigbank.models.sqlite.entities.Transaction;
 import com.system.architecture.managers.DaoAbs;
@@ -131,52 +132,38 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         return list;
     }
 
-    public List<CardAdapter.CardModel> organizeTransationcList(List<Transaction> list) {
+    public List<CardAdapter.CardModel> organizeTransationcListV2(List<Transaction> list) {
 
         List<CardAdapter.CardModel> itens = new ArrayList<>();
 
-        Long calendarDate = Calendar.getInstance().getTime().getTime();
-        Long date = null;
-        Double value = 0D;
+        Double valorAcumular = 0D;
+       // Double valorDiario = 0D;
+        boolean hasTitleFutureLanc = false;
 
-        boolean hasTitle = false;
+        itens.add(new WhiteSpaceVO());
 
-        for (int i = 0; i < list.size(); i++) {
+        for (int position = 0; position < list.size(); position++){
 
-            Transaction transaction = list.get(i);
+            Transaction transactionAct = list.get(position);
+            Transaction transactionProx = list.size() > position + 1 ? list.get(position + 1) : null;
 
-            Long dateAct = transaction.getDatePayment().getTime();
+            if (JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), Calendar.getInstance().getTime()) > 0){
 
-            if (!itens.isEmpty() && !dateAct.equals(date)) {
-                TotalVO totalVO = new TotalVO(value);
-                totalVO.setCardStrategy(CardAdapter.CardModeItem.END);
-                itens.add(totalVO);
-                value = 0D;
+                if (!hasTitleFutureLanc && transactionProx != null){
+                    itens.add(new TitleVO("Lançamentos Futuros"));
+                    itens.add(new WhiteSpaceVO());
+                    hasTitleFutureLanc = true;
+                }
+                valorAcumular += transactionAct.getValue();
             }
 
-            date = dateAct;
+            itens.add(transactionAct);
+            //valorDiario += transactionAct.getValue();
 
-            if (!hasTitle && dateAct > calendarDate){
-                TitleVO titleVO = new TitleVO();
-                titleVO.setCardStrategy(CardAdapter.CardModeItem.SINGLE);
-                titleVO.setTitle("Lançamentos Futuros");
-                itens.add(titleVO);
-                hasTitle = true;
-            }
-
-            if (value == 0D) {
-                transaction.setCardStrategy(CardAdapter.CardModeItem.START);
-            } else {
-                transaction.setCardStrategy(CardAdapter.CardModeItem.MIDDLE);
-            }
-
-            itens.add(transaction);
-
-            value += transaction.getValue();
-            if (i == list.size() - 1) {
-                TotalVO totalVO = new TotalVO(value);
-                totalVO.setCardStrategy(CardAdapter.CardModeItem.END);
-                itens.add(totalVO);
+            if (transactionProx == null || JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), transactionProx.getDatePayment()) != 0) {
+                itens.add(new TotalVO(null, valorAcumular));
+                itens.add(new WhiteSpaceVO());
+                //valorDiario = 0D;
             }
         }
 

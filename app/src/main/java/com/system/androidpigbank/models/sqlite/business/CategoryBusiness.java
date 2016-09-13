@@ -8,12 +8,15 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
+import com.system.androidpigbank.controllers.vos.TitleVO;
 import com.system.androidpigbank.controllers.vos.TotalVO;
+import com.system.androidpigbank.controllers.vos.WhiteSpaceVO;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.helpers.JavaHelper;
 import com.system.androidpigbank.models.sqlite.entities.Category;
 import com.system.androidpigbank.models.sqlite.entities.Transaction;
 import com.system.architecture.managers.DaoAbs;
+import com.system.architecture.utils.JavaUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,7 +33,7 @@ public class CategoryBusiness extends DaoAbs<Category> {
 
     public List<Category> getSummaryCategoryByMonth(int month, int year) throws Exception {
 
-        List<Category> categories = findAllPrimaries();
+        List<Category> categories = findAll();
         for (Category category : categories) {
 
             category.setTransactionList(new TransactionBusiness(getContext()).findByCategory(category, month, year));
@@ -76,87 +79,57 @@ public class CategoryBusiness extends DaoAbs<Category> {
         return list;
     }
 
-    //    public List<Category> findAll() throws Exception {
-//        ConnectionSource connectionSource = new AndroidConnectionSource(db);
-//        Dao<Category, String> accountDao = DaoManager.createDao(connectionSource, Category.class);
-//
-//        List<Category> list = accountDao.queryForAll();
-//        connectionSource.close();
-//
-//        return list;
-//    }
-
-//    public Category save(Category category) throws SQLException {
-//
-//        ConnectionSource connectionSource = new AndroidConnectionSource(db);
-//        Dao<Category, String> accountDao = DaoManager.createDao(connectionSource, Category.class);
-//
-//        accountDao.create(category);
-//        connectionSource.close();
-//
-//        return category;
-//    }
-
     @NonNull
-    public List<CardAdapter.CardModel> organizeCategorySummaryList( List<Category> data ) {
+    public List<CardAdapter.CardModel> organizeCategorySummaryList(List<Category> data) {
 
+        boolean hasTitleSecondary = false;
         List<CardAdapter.CardModel> itens = new ArrayList<>();
 
-//        boolean alreadyAddedSecoundary = false;
-        //this.itens.add(new TitleVO("Primary Categories"));
+        for (int position = 0; position < data.size(); position++) {
 
-        for (Category category : data) {
+            Category category = data.get(position);
 
-//            if (!alreadyAddedSecoundary && !category.isPrimary()) {
-//                TitleVO titleVO = new TitleVO("Secondary Categories");
-//                titleVO.setCardStrategy(CardAdapter.CardModeItem.NO_STRATEGY);
-//                itens.add(titleVO);
-//                alreadyAddedSecoundary = true;
-//            }
+            itens.add(new WhiteSpaceVO());
+            itens.add(category);
 
-            if (category.getTransactionList().isEmpty()) {
-                category.setCardStrategy(CardAdapter.CardModeItem.SINGLE);
-                itens.add(category);
-            } else {
-                category.setCardStrategy(CardAdapter.CardModeItem.START);
-                itens.add(category);
-                itens.addAll(getTransactionByCategory(category));
+            if (category.isPrimary() && !category.getTransactionList().isEmpty()) {
+                itens.addAll(getTransactionByCategory(category.getTransactionList()));
+            }
+
+            if (!hasTitleSecondary && !category.isPrimary() && position != data.size() - 1) {
+                itens.add(new WhiteSpaceVO());
+                itens.add(new TitleVO("Secondary Categories"));
+                hasTitleSecondary = true;
             }
         }
+
+        itens.add(new WhiteSpaceVO());
+
         return itens;
     }
 
-    private List<CardAdapter.CardModel> getTransactionByCategory(Category category) {
+    private List<CardAdapter.CardModel> getTransactionByCategory(List<Transaction> list) {
 
-        String nomeCat = null;
         Double value = 0D;
 
-        List<CardAdapter.CardModel> innerItens = new ArrayList<>();
-        for (int i = 0; i < category.getTransactionList().size(); i++) {
+        List<CardAdapter.CardModel> itens = new ArrayList<>();
+        for (int position = 0; position < list.size(); position++) {
 
-            Transaction transaction = category.getTransactionList().get(i);
-            String name = transaction.getCategorySecondary() != null ? transaction.getCategorySecondary().getName() : "";
+            Transaction transactionAct = list.get(position);
+            Transaction transactionProx = list.size() > position + 1 ? list.get(position + 1) : null;
 
-            if (!innerItens.isEmpty() && !name.equals(nomeCat)) {
-                TotalVO totalVO = new TotalVO(value);
-                totalVO.setCardStrategy(CardAdapter.CardModeItem.MIDDLE);
-                innerItens.add(totalVO);
+            Long categoryAct = transactionAct.getCategorySecondary() != null ? transactionAct.getCategorySecondary().getId() : -1;
+            Long categoryProx = transactionProx != null && transactionProx.getCategorySecondary() != null ? transactionProx.getCategorySecondary().getId() : -1;
+
+            itens.add(transactionAct);
+            value += transactionAct.getValue();
+
+            if (transactionProx == null || !categoryAct.equals(categoryProx)) {
+                itens.add(new TotalVO(null, value));
                 value = 0D;
-            }
-
-            nomeCat = name;
-
-            transaction.setCardStrategy(CardAdapter.CardModeItem.MIDDLE);
-            innerItens.add(transaction);
-
-            value += transaction.getValue();
-            if (i == category.getTransactionList().size() - 1) {
-                TotalVO totalVO = new TotalVO(value);
-                totalVO.setCardStrategy(CardAdapter.CardModeItem.END);
-                innerItens.add(totalVO);
             }
         }
 
-        return innerItens;
+        return itens;
     }
 }

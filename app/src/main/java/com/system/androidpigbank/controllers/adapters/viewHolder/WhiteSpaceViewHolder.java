@@ -11,20 +11,14 @@ import com.system.architecture.adapters.CardViewHolder;
 /**
  * Created by eferraz on 03/01/16.
  */
-public class TitleViewHolder extends CardViewHolder {
+public class WhiteSpaceViewHolder extends CardViewHolder {
 
-    private TextView tvTitle;
-
-    public TitleViewHolder(final View v) {
+    public WhiteSpaceViewHolder(final View v) {
         super(v);
-        tvTitle = (TextView) v.findViewById(R.id.item_title);
     }
 
     @Override
     public void bind(CardAdapter.CardModel model, OnClickListener onClickListener) {
         super.bind(model, onClickListener);
-
-        TitleVO category = (TitleVO) model;
-        tvTitle.setText(category.getTitle());
     }
 }

@@ -1,7 +1,6 @@
 package com.system.androidpigbank.controllers.activities;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,16 +20,19 @@ import com.system.androidpigbank.controllers.fragments.MonthFragment;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.controllers.vos.HomeObjectVO;
+import com.system.androidpigbank.controllers.vos.Month;
+import com.system.androidpigbank.models.firebase.FirebaseDaoAbs;
+import com.system.androidpigbank.models.firebase.TransactionFirebaseBusiness;
 import com.system.androidpigbank.models.sqlite.business.CategoryBusiness;
 import com.system.androidpigbank.models.sqlite.business.RecoverBusiness;
 import com.system.androidpigbank.models.sqlite.business.TransactionBusiness;
+import com.system.androidpigbank.models.sqlite.entities.Category;
 import com.system.architecture.activities.BaseActivity;
 import com.system.architecture.adapters.CardFragment;
 import com.system.architecture.helpers.PermissionHelper;
-import com.system.architecture.managers.LoaderResult;
-import com.system.architecture.managers.ManagerHelper;
 import com.system.architecture.utils.JavaUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -155,17 +157,10 @@ public class HomeActivity extends BaseActivity {
 
     private void callApi(final int month, final int year) {
 
-        ManagerHelper.execute(this, new ManagerHelper.LoaderResultInterface<HomeObjectVO>() {
-
-            private ProgressDialog dialog;
+        new TransactionFirebaseBusiness().findTransactionByMonth(month, year, new FirebaseDaoAbs.FirebaseMultiReturnListener() {
 
             @Override
-            public void onPreLoad() {
-                dialog = ProgressDialog.show(HomeActivity.this, "", "Loading. Please wait...", true);
-            }
-
-            @Override
-            public HomeObjectVO executeAction() throws Exception {
+            public void onFindAll(List list) {
 
                 SharedPreferences sp = getSharedPreferences("SHARED_APP", Context.MODE_PRIVATE);
                 if (!sp.getBoolean("FIST_ACCESS", false)) {
@@ -180,23 +175,62 @@ public class HomeActivity extends BaseActivity {
                 HomeObjectVO object = new HomeObjectVO();
                 object.setMonth(month);
                 object.setYear(year);
-                object.setListCategorySummary(new CategoryBusiness(HomeActivity.this).getSummaryCategoryByMonth(month, year));
-                object.setListTransaction(new TransactionBusiness(HomeActivity.this).getTransactionByMonth(month, year));
-                object.setListMonth(new TransactionBusiness(HomeActivity.this).getMonthWithTransaction(year));
-                return object;
+                object.setListCategorySummary(new ArrayList<Category>());
+                object.setListTransaction(list);
+                object.setListMonth(new ArrayList<Month>());
+
+                configureResult(object);
+
             }
 
             @Override
-            public void onComplete(LoaderResult<HomeObjectVO> data) {
-                if (data.isSuccess()) {
-                    configureResult(data.getData());
-                } else {
-                    showMessage(data.getException());
-                }
+            public void onError(String error) {
 
-                dialog.dismiss();
             }
         });
+
+//        ManagerHelper.execute(this, new ManagerHelper.LoaderResultInterface<HomeObjectDTO>() {
+//
+//            private ProgressDialog dialog;
+//
+//            @Override
+//            public void onPreLoad() {
+//                dialog = ProgressDialog.show(HomeActivity.this, "", "Loading. Please wait...", true);
+//            }
+//
+//            @Override
+//            public HomeObjectDTO executeAction() throws Exception {
+//
+//                SharedPreferences sp = getSharedPreferences("SHARED_APP", Context.MODE_PRIVATE);
+//                if (!sp.getBoolean("FIST_ACCESS", false)) {
+//
+//                    RecoverBusiness.getInstance().execute(HomeActivity.this);
+//
+//                    SharedPreferences.Editor editor = sp.edit();
+//                    editor.putBoolean("FIST_ACCESS", true);
+//                    editor.apply();
+//                }
+//
+//                HomeObjectDTO object = new HomeObjectDTO();
+//                object.setMonth(month);
+//                object.setYear(year);
+//                object.setListCategorySummary(new CategoryBusiness(HomeActivity.this).getSummaryCategoryByMonth(month, year));
+//                object.setListTransaction(new TransactionBusiness(HomeActivity.this).getTransactionByMonth(month, year));
+//                object.setListMonth(new TransactionBusiness(HomeActivity.this).getMonthWithTransaction(year));
+//                return object;
+//            }
+//
+//            @Override
+//            public void onComplete(LoaderResult<HomeObjectDTO> data) {
+//                if (data.isSuccess()) {
+//                    configureResult(data.getData());
+//                } else {
+//                    showMessage(data.getException());
+//                }
+//
+//                dialog.dismiss();
+//            }
+//        });
     }
 
     private void configureResult(HomeObjectVO data) {

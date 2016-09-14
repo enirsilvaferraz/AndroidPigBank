@@ -3,12 +3,18 @@ package com.system.androidpigbank.controllers.vos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.system.androidpigbank.models.firebase.dtos.CategoryDTO;
+import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
+import com.system.androidpigbank.models.firebase.dtos.MonthDTO;
+import com.system.architecture.managers.EntityAbs;
+import com.system.architecture.utils.JavaUtils;
+
 import java.util.Date;
 
 /**
  * Created by Enir on 22/07/2016.
  */
-public class Month implements Parcelable {
+public class Month extends EntityAbs implements Parcelable {
 
     private Integer month;
 
@@ -78,4 +84,14 @@ public class Month implements Parcelable {
             return new Month[size];
         }
     };
+
+    @Override
+    public Long getId() {
+        return null;
+    }
+
+    @Override
+    public DTOAbs toDTO() {
+        return JavaUtils.GsonUtil.getInstance().fromCategory().toDTO(this, MonthDTO.class);
+    }
 }

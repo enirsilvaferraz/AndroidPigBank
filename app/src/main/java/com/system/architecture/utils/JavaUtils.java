@@ -172,6 +172,20 @@ public final class JavaUtils {
             return this;
         }
 
+        public GsonUtil fromMonth (){
+            build =  new GsonBuilder()
+                    .excludeFieldsWithoutExposeAnnotation()
+                    .create();
+            return this;
+        }
+
+        public GsonUtil fromHomeObject (){
+            build =  new GsonBuilder()
+                    .excludeFieldsWithoutExposeAnnotation()
+                    .create();
+            return this;
+        }
+
         public DTOAbs toDTO(EntityAbs entity, Class<? extends DTOAbs> classe){
             String json = build.toJson(entity);
             return build.fromJson(json, classe);

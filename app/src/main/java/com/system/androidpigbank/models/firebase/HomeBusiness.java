@@ -2,9 +2,15 @@ package com.system.androidpigbank.models.firebase;
 
 import android.support.annotation.NonNull;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.system.androidpigbank.BuildConfig;
 import com.system.androidpigbank.controllers.vos.HomeObjectVO;
+import com.system.androidpigbank.controllers.vos.Month;
+import com.system.androidpigbank.models.sqlite.entities.Category;
 import com.system.androidpigbank.models.sqlite.entities.Transaction;
 
 import java.util.List;
@@ -15,15 +21,57 @@ import java.util.List;
 
 public class HomeBusiness {
 
-    public void findAll(int month, int year, @NonNull final SingleResult listener) {
+    public void findAll(final int month, int year, @NonNull final SingleResult listener) {
 
         final HomeObjectVO homeVO = new HomeObjectVO();
         homeVO.setMonth(month);
         homeVO.setYear(year);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        database.getReference("tst-database");
+        new TransactionFirebaseBusiness().findTransactionByMonth(month, year, new FirebaseDaoAbs.FirebaseMultiReturnListener<Transaction>() {
+            @Override
+            public void onFindAll(List<Transaction> list) {
 
+                homeVO.setListTransaction(list);
+
+                new CategoryFirebaseBusiness().findAll(new FirebaseDaoAbs.FirebaseMultiReturnListener<Category>() {
+                    @Override
+                    public void onFindAll(List<Category> list) {
+
+                        homeVO.setListCategorySummary(list);
+
+                        new MonthFirebaseBusiness().findAll(new FirebaseDaoAbs.FirebaseMultiReturnListener<Month>() {
+                            @Override
+                            public void onFindAll(List<Month> list) {
+
+                                homeVO.setListMonth(list);
+                                prepareList(homeVO);
+                                listener.onFind(homeVO);
+                            }
+
+                            @Override
+                            public void onError(String error) {
+                                listener.onError(error);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        listener.onError(error);
+                    }
+                });
+
+            }
+
+            @Override
+            public void onError(String error) {
+                listener.onError(error);
+            }
+        });
+
+    }
+
+    private void prepareList(HomeObjectVO homeVO) {
 
     }
 

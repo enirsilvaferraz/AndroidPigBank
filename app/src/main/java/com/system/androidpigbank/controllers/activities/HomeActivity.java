@@ -22,6 +22,7 @@ import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.controllers.vos.HomeObjectVO;
 import com.system.androidpigbank.controllers.vos.Month;
 import com.system.androidpigbank.models.firebase.FirebaseDaoAbs;
+import com.system.androidpigbank.models.firebase.HomeBusiness;
 import com.system.androidpigbank.models.firebase.TransactionFirebaseBusiness;
 import com.system.androidpigbank.models.sqlite.business.CategoryBusiness;
 import com.system.androidpigbank.models.sqlite.business.RecoverBusiness;
@@ -157,30 +158,13 @@ public class HomeActivity extends BaseActivity {
 
     private void callApi(final int month, final int year) {
 
-        new TransactionFirebaseBusiness().findTransactionByMonth(month, year, new FirebaseDaoAbs.FirebaseMultiReturnListener() {
+//        JavaUtils.SharedPreferencesUtil.backupOnFirstAccess(HomeActivity.this);
 
+
+        new HomeBusiness().findAll(month, year, new HomeBusiness.SingleResult() {
             @Override
-            public void onFindAll(List list) {
-
-                SharedPreferences sp = getSharedPreferences("SHARED_APP", Context.MODE_PRIVATE);
-                if (!sp.getBoolean("FIST_ACCESS", false)) {
-
-                    RecoverBusiness.getInstance().execute(HomeActivity.this);
-
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putBoolean("FIST_ACCESS", true);
-                    editor.apply();
-                }
-
-                HomeObjectVO object = new HomeObjectVO();
-                object.setMonth(month);
-                object.setYear(year);
-                object.setListCategorySummary(new ArrayList<Category>());
-                object.setListTransaction(list);
-                object.setListMonth(new ArrayList<Month>());
-
-                configureResult(object);
-
+            public void onFind(HomeObjectVO vo) {
+                configureResult(vo);
             }
 
             @Override

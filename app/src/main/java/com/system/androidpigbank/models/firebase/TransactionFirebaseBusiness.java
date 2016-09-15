@@ -21,8 +21,6 @@ import java.util.List;
 
 public class TransactionFirebaseBusiness extends FirebaseDaoAbs<Transaction> {
 
-    private ValueEventListener listenerTransactionByMonth;
-
     @Override
     protected Class<? extends DTOAbs> getDTOClass() {
         return TransactionDTO.class;
@@ -33,34 +31,23 @@ public class TransactionFirebaseBusiness extends FirebaseDaoAbs<Transaction> {
         Date cInit = JavaUtils.DateUtil.getActualMaximum(year, month - 1);
         Date cEnd = JavaUtils.DateUtil.getActualMaximum(year, month);
 
-        if (listenerTransactionByMonth != null) {
-            getDatabaseReference().removeEventListener(listenerTransactionByMonth);
-        } else {
-
-            listenerTransactionByMonth = new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    List<Transaction> list = new ArrayList<>();
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        list.add(getTInstance(postSnapshot));
-                    }
-                    listener.onFindAll(list);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    listener.onError(databaseError.getMessage());
-                }
-            };
-        }
-
         getDatabaseReference().orderByChild("datePayment")
                 .startAt(JavaUtils.DateUtil.format(cInit, JavaUtils.DateUtil.YYYY_MM_DD))
                 .endAt(JavaUtils.DateUtil.format(cEnd, JavaUtils.DateUtil.YYYY_MM_DD))
-                .addListenerForSingleValueEvent(listenerTransactionByMonth);
-    }
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        List<Transaction> list = new ArrayList<>();
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            list.add(getTInstance(postSnapshot));
+                        }
+                        listener.onFindAll(list);
+                    }
 
-    public void removeListeners() {
-        getDatabaseReference().removeEventListener(listenerTransactionByMonth);
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        listener.onError(databaseError.getMessage());
+                    }
+                });
     }
 }

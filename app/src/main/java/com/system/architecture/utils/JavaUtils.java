@@ -2,6 +2,7 @@ package com.system.architecture.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.util.TypedValue;
 
@@ -15,6 +16,7 @@ import com.system.androidpigbank.models.firebase.serializers.GsonCategorySeriali
 import com.system.androidpigbank.models.firebase.serializers.GsonDateSerializer;
 import com.system.androidpigbank.models.firebase.serializers.GsonPaymentTypeSerializer;
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
+import com.system.androidpigbank.models.sqlite.business.RecoverBusiness;
 import com.system.androidpigbank.models.sqlite.entities.Category;
 import com.system.architecture.managers.EntityAbs;
 import com.system.androidpigbank.models.sqlite.entities.PaymentType;
@@ -142,6 +144,26 @@ public final class JavaUtils {
         public static int getPixel(Resources resources, int dp){
             return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
         }
+    }
+
+    /**
+     *
+     */
+    public static class SharedPreferencesUtil {
+
+        public static void backupOnFirstAccess(Context context){
+
+            SharedPreferences sp = context.getSharedPreferences("SHARED_APP", Context.MODE_PRIVATE);
+            if (!sp.getBoolean("FIST_ACCESS", false)) {
+
+                RecoverBusiness.getInstance().execute(context);
+
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putBoolean("FIST_ACCESS", true);
+                editor.apply();
+            }
+        }
+
     }
 
     /**

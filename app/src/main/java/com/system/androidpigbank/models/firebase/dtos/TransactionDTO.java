@@ -102,6 +102,6 @@ public class TransactionDTO extends DTOAbs{
 
     @Override
     public EntityAbs toEntity() {
-        return JavaUtils.GsonUtil.getInstance().fromTransaction().toEntity(this, Month.class);
+        return JavaUtils.GsonUtil.getInstance().fromTransaction().toEntity(this, Transaction.class);
     }
 }

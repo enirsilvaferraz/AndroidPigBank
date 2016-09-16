@@ -11,7 +11,8 @@ public enum PaymentType {
         NUBANK_CARD(R.drawable.ic_payment_purple),
         ITAU_CREDIT(R.drawable.ic_payment_blue),
         ITAU_TRANSFER(R.drawable.ic_swap_horiz_orange),
-        HSBC_TRANSFER(R.drawable.ic_swap_horiz_red);
+        HSBC_TRANSFER(R.drawable.ic_swap_horiz_red),
+        ALELO_CARD(R.drawable.ic_payment_yellow);
 
         private int resId;
 

@@ -6,7 +6,7 @@ import com.system.architecture.adapters.CardAdapter;
  * Created by Enir on 11/09/2016.
  */
 
-public class ActionBarVO implements CardAdapter.CardModel {
+public class ActionBarVO implements VOIf, CardAdapter.CardModel {
 
     private CardAdapter.CardModel cardReferency;
 

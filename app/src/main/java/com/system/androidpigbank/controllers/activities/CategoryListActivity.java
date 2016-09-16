@@ -13,7 +13,7 @@ import com.system.architecture.managers.LoaderResult;
 import com.system.architecture.managers.ManagerHelper;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.models.sqlite.business.CategoryBusiness;
-import com.system.androidpigbank.models.sqlite.entities.Category;
+import com.system.androidpigbank.controllers.vos.CategoryVO;
 
 import java.util.List;
 
@@ -40,10 +40,10 @@ public class CategoryListActivity extends BaseActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new CategoryAdapter());
 
-        ManagerHelper.execute(this, new ManagerHelper.LoaderResultInterface<List<Category>>() {
+        ManagerHelper.execute(this, new ManagerHelper.LoaderResultInterface<List<CategoryVO>>() {
 
             @Override
-            public List<Category> executeAction() throws Exception {
+            public List<CategoryVO> executeAction() throws Exception {
                 return new CategoryBusiness(CategoryListActivity.this).findAll();
             }
 
@@ -53,7 +53,7 @@ public class CategoryListActivity extends BaseActivity {
             }
 
             @Override
-            public void onComplete(LoaderResult<List<Category>> data) {
+            public void onComplete(LoaderResult<List<CategoryVO>> data) {
                 if (data.isSuccess()) {
                     ((CategoryAdapter) recyclerView.getAdapter()).addItens(data.getData());
                 } else {

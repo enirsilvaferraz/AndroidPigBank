@@ -6,7 +6,7 @@ import com.system.architecture.adapters.CardAdapter;
  * Created by Enir on 17/08/2016.
  */
 
-public class TitleVO implements CardAdapter.CardModel {
+public class TitleVO implements VOIf, CardAdapter.CardModel {
 
     private String title;
 

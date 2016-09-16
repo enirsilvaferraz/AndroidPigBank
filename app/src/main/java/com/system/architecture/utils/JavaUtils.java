@@ -17,9 +17,9 @@ import com.system.androidpigbank.models.firebase.serializers.GsonDateSerializer;
 import com.system.androidpigbank.models.firebase.serializers.GsonPaymentTypeSerializer;
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
 import com.system.androidpigbank.models.sqlite.business.RecoverBusiness;
-import com.system.androidpigbank.models.sqlite.entities.Category;
+import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.architecture.managers.EntityAbs;
-import com.system.androidpigbank.models.sqlite.entities.PaymentType;
+import com.system.androidpigbank.controllers.vos.PaymentType;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -182,7 +182,7 @@ public final class JavaUtils {
                     .excludeFieldsWithoutExposeAnnotation()
                     .registerTypeAdapter(Date.class, new GsonDateSerializer())
                     .registerTypeAdapter(PaymentType.class, new GsonPaymentTypeSerializer())
-                    .registerTypeAdapter(Category.class, new GsonCategorySerializer())
+                    .registerTypeAdapter(CategoryVO.class, new GsonCategorySerializer())
                     .create();
             return this;
         }

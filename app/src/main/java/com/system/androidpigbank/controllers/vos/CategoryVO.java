@@ -1,4 +1,4 @@
-package com.system.androidpigbank.models.sqlite.entities;
+package com.system.androidpigbank.controllers.vos;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -20,17 +20,17 @@ import java.util.List;
  * Created by eferraz on 05/12/15.
  */
 @DatabaseTable(tableName = "category")
-public class Category extends EntityAbs implements Parcelable, CardAdapter.CardModel {
+public class CategoryVO extends EntityAbs implements VOIf, Parcelable, CardAdapter.CardModel, Cloneable {
 
-    public static final Creator<Category> CREATOR = new Creator<Category>() {
+    public static final Creator<CategoryVO> CREATOR = new Creator<CategoryVO>() {
         @Override
-        public Category createFromParcel(Parcel source) {
-            return new Category(source);
+        public CategoryVO createFromParcel(Parcel source) {
+            return new CategoryVO(source);
         }
 
         @Override
-        public Category[] newArray(int size) {
-            return new Category[size];
+        public CategoryVO[] newArray(int size) {
+            return new CategoryVO[size];
         }
     };
 
@@ -52,21 +52,22 @@ public class Category extends EntityAbs implements Parcelable, CardAdapter.CardM
 
     private Double amount;
     private boolean expanded;
-    private List<Transaction> transactionList;
+    private List<TransactionVO> transactionList;
+    private CategoryVO old;
 
-    public Category() {
+    public CategoryVO() {
     }
 
-    public Category(String name, Double amount) {
+    public CategoryVO(String name, Double amount) {
         this.name = name;
         this.amount = amount;
     }
 
-    public Category(String name) {
+    public CategoryVO(String name) {
         this.name = name;
     }
 
-    protected Category(Parcel in) {
+    protected CategoryVO(Parcel in) {
         this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.name = in.readString();
         this.primary = in.readByte() != 0;
@@ -74,7 +75,7 @@ public class Category extends EntityAbs implements Parcelable, CardAdapter.CardM
         this.color = tmpColor == -1 ? null : Colors.values()[tmpColor];
         this.amount = (Double) in.readValue(Double.class.getClassLoader());
         this.expanded = in.readByte() != 0;
-        this.transactionList = in.createTypedArrayList(Transaction.CREATOR);
+        this.transactionList = in.createTypedArrayList(TransactionVO.CREATOR);
     }
 
     public String getName() {
@@ -119,7 +120,7 @@ public class Category extends EntityAbs implements Parcelable, CardAdapter.CardM
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Category category = (Category) o;
+        CategoryVO category = (CategoryVO) o;
 
         return !(getName() != null ? !getName().equals(category.getName()) : category.getName() != null);
     }
@@ -145,11 +146,11 @@ public class Category extends EntityAbs implements Parcelable, CardAdapter.CardM
         this.expanded = expanded;
     }
 
-    public List<Transaction> getTransactionList() {
+    public List<TransactionVO> getTransactionList() {
         return transactionList;
     }
 
-    public void setTransactionList(List<Transaction> transactionList) {
+    public void setTransactionList(List<TransactionVO> transactionList) {
         this.transactionList = transactionList;
     }
 
@@ -172,5 +173,18 @@ public class Category extends EntityAbs implements Parcelable, CardAdapter.CardM
     @Override
     public CardAdapter.CardViewType getViewType() {
         return CardAdapter.CardViewType.CARD_CATEGOTY;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public void setOld(CategoryVO old) {
+        this.old = old;
+    }
+
+    public CategoryVO getOld() {
+        return old;
     }
 }

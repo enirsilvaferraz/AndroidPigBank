@@ -6,7 +6,7 @@ import com.system.architecture.adapters.CardAdapter;
  * Created by eferraz on 12/09/16.
  */
 
-public class WhiteSpaceVO implements CardAdapter.CardModel {
+public class WhiteSpaceVO implements VOIf, CardAdapter.CardModel {
 
     @Override
     public CardAdapter.CardViewType getViewType() {

@@ -7,9 +7,9 @@ import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.system.androidpigbank.BuildConfig;
-import com.system.androidpigbank.models.sqlite.entities.Category;
+import com.system.androidpigbank.controllers.vos.CategoryVO;
+import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.architecture.managers.EntityAbs;
-import com.system.androidpigbank.models.sqlite.entities.Transaction;
 import com.system.architecture.managers.DaoAbs;
 
 import java.io.BufferedReader;
@@ -34,8 +34,8 @@ public class RecoverBusiness {
 
     public void execute(Context context) {
 
-        new RecoverImpl(new CategoryBusiness(context)).recoverData(new TypeToken<ArrayList<Category>>() {}.getType());
-        new RecoverImpl(new TransactionBusiness(context)).recoverData(new TypeToken<ArrayList<Transaction>>() {}.getType());
+        new RecoverImpl(new CategoryBusiness(context)).recoverData(new TypeToken<ArrayList<CategoryVO>>() {}.getType());
+        new RecoverImpl(new TransactionBusiness(context)).recoverData(new TypeToken<ArrayList<TransactionVO>>() {}.getType());
     }
 
     private class RecoverImpl {
@@ -73,8 +73,8 @@ public class RecoverBusiness {
                 List<EntityAbs> list = new Gson().fromJson(sb.toString(), type);
                 for (EntityAbs entityAbs : list) {
 
-                    if (entityAbs instanceof Transaction) {
-                        ((Transaction) entityAbs).setDatePayment(((Transaction) entityAbs).getDateTransaction());
+                    if (entityAbs instanceof TransactionVO) {
+                        ((TransactionVO) entityAbs).setDatePayment(((TransactionVO) entityAbs).getDateTransaction());
                     }
 
                     business.save(entityAbs);

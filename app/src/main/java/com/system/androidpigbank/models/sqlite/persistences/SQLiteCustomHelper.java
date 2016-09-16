@@ -6,8 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import com.system.androidpigbank.models.sqlite.entities.Category;
-import com.system.androidpigbank.models.sqlite.entities.Transaction;
+import com.system.androidpigbank.controllers.vos.CategoryVO;
+import com.system.androidpigbank.controllers.vos.TransactionVO;
 
 import java.sql.SQLException;
 
@@ -36,8 +36,8 @@ public class SQLiteCustomHelper extends OrmLiteSqliteOpenHelper {
     }
 
     private void createTables(ConnectionSource connectionSource) throws SQLException {
-        TableUtils.createTableIfNotExists(connectionSource, Category.class);
-        TableUtils.createTableIfNotExists(connectionSource, Transaction.class);
+        TableUtils.createTableIfNotExists(connectionSource, CategoryVO.class);
+        TableUtils.createTableIfNotExists(connectionSource, TransactionVO.class);
     }
 
     @Override
@@ -51,20 +51,20 @@ public class SQLiteCustomHelper extends OrmLiteSqliteOpenHelper {
             switch (oldVersion) {
 
 //                case 1:
-//                    DaoManager.createDao(getConnectionSource(), Transaction.class)
+//                    DaoManager.createDao(getConnectionSource(), TransactionVO.class)
 //                            .executeRaw("ALTER TABLE 'category' ADD COLUMN 'primary' SMALLINT;");
 //
 //                case 2:
-//                    DaoManager.createDao(getConnectionSource(), Transaction.class)
+//                    DaoManager.createDao(getConnectionSource(), TransactionVO.class)
 //                            .executeRaw("ALTER TABLE 'transaction' ADD COLUMN 'paymentType' SMALLINT;");
 
 
 //                case 1:
-//                    DaoManager.createDao(getConnectionSource(), Transaction.class)
+//                    DaoManager.createDao(getConnectionSource(), TransactionVO.class)
 //                            .executeRaw("ALTER TABLE 'transaction' ADD COLUMN 'fixed' SMALLINT;");
 //
 //                case 2:
-//                    DaoManager.createDao(getConnectionSource(), Transaction.class)
+//                    DaoManager.createDao(getConnectionSource(), TransactionVO.class)
 //                            .executeRaw("ALTER TABLE 'transaction' DROP COLUMN 'fixed' SMALLINT;");
 
 

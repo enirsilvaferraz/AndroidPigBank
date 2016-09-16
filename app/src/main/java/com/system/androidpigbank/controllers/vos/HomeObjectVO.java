@@ -3,9 +3,6 @@ package com.system.androidpigbank.controllers.vos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.system.androidpigbank.models.sqlite.entities.Category;
-import com.system.androidpigbank.models.sqlite.entities.Transaction;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +14,9 @@ public class HomeObjectVO implements Parcelable {
 
     private int month;
     private int year;
-    private List<Category> listCategorySummary;
-    private List<Transaction> listTransaction;
-    private List<Month> listMonth;
+    private List<CategoryVO> listCategorySummary;
+    private List<TransactionVO> listTransaction;
+    private List<MonthVO> listMonth;
 
     public HomeObjectVO() {
         listCategorySummary = new ArrayList<>();
@@ -27,27 +24,27 @@ public class HomeObjectVO implements Parcelable {
         listMonth = new ArrayList<>();
     }
 
-    public List<Category> getListCategorySummary() {
+    public List<CategoryVO> getListCategorySummary() {
         return listCategorySummary;
     }
 
-    public void setListCategorySummary(List<Category> listCategorySummary) {
+    public void setListCategorySummary(List<CategoryVO> listCategorySummary) {
         this.listCategorySummary = listCategorySummary;
     }
 
-    public List<Transaction> getListTransaction() {
+    public List<TransactionVO> getListTransaction() {
         return listTransaction;
     }
 
-    public void setListTransaction(List<Transaction> listTransaction) {
+    public void setListTransaction(List<TransactionVO> listTransaction) {
         this.listTransaction = listTransaction;
     }
 
-    public List<Month> getListMonth() {
+    public List<MonthVO> getListMonth() {
         return listMonth;
     }
 
-    public void setListMonth(List<Month> listMonth) {
+    public void setListMonth(List<MonthVO> listMonth) {
         this.listMonth = listMonth;
     }
 
@@ -84,9 +81,9 @@ public class HomeObjectVO implements Parcelable {
     protected HomeObjectVO(Parcel in) {
         this.month = in.readInt();
         this.year = in.readInt();
-        this.listCategorySummary = in.createTypedArrayList(Category.CREATOR);
-        this.listTransaction = in.createTypedArrayList(Transaction.CREATOR);
-        this.listMonth = in.createTypedArrayList(Month.CREATOR);
+        this.listCategorySummary = in.createTypedArrayList(CategoryVO.CREATOR);
+        this.listTransaction = in.createTypedArrayList(TransactionVO.CREATOR);
+        this.listMonth = in.createTypedArrayList(MonthVO.CREATOR);
     }
 
     public static final Creator<HomeObjectVO> CREATOR = new Creator<HomeObjectVO>() {

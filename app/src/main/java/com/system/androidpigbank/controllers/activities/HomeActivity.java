@@ -1,9 +1,7 @@
 package com.system.androidpigbank.controllers.activities;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -20,20 +18,14 @@ import com.system.androidpigbank.controllers.fragments.MonthFragment;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.controllers.vos.HomeObjectVO;
-import com.system.androidpigbank.controllers.vos.Month;
-import com.system.androidpigbank.models.firebase.FirebaseDaoAbs;
+import com.system.androidpigbank.models.firebase.CategoryFirebaseBusiness;
 import com.system.androidpigbank.models.firebase.HomeBusiness;
 import com.system.androidpigbank.models.firebase.TransactionFirebaseBusiness;
-import com.system.androidpigbank.models.sqlite.business.CategoryBusiness;
-import com.system.androidpigbank.models.sqlite.business.RecoverBusiness;
-import com.system.androidpigbank.models.sqlite.business.TransactionBusiness;
-import com.system.androidpigbank.models.sqlite.entities.Category;
 import com.system.architecture.activities.BaseActivity;
 import com.system.architecture.adapters.CardFragment;
 import com.system.architecture.helpers.PermissionHelper;
 import com.system.architecture.utils.JavaUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -96,11 +88,11 @@ public class HomeActivity extends BaseActivity {
         if (fragment instanceof CardFragment) {
             switch (((CardFragment) fragment).getFragmentID()) {
                 case Constants.FRAGMENT_ID_SUMMARY_CATEGORY:
-                    ((CardFragment) fragment).setData(new CategoryBusiness(this).organizeCategorySummaryList(data.getListCategorySummary()));
+                    ((CardFragment) fragment).setData(new CategoryFirebaseBusiness().organizeCategorySummaryList(data.getListCategorySummary()));
                     break;
 
                 case Constants.FRAGMENT_ID_TRANSACTION:
-                    ((CardFragment) fragment).setData(new TransactionBusiness(this).organizeTransationcListV2(data.getListTransaction()));
+                    ((CardFragment) fragment).setData(new TransactionFirebaseBusiness().organizeTransationcList(data.getListTransaction()));
                     break;
             }
         } else if (fragment instanceof MonthFragment) {
@@ -163,58 +155,15 @@ public class HomeActivity extends BaseActivity {
 
         new HomeBusiness().findAll(month, year, new HomeBusiness.SingleResult() {
             @Override
-            public void onFind(HomeObjectVO vo) {
-                configureResult(vo);
+            public void onFind(HomeObjectVO homeObjectVO) {
+                configureResult(homeObjectVO);
             }
 
             @Override
             public void onError(String error) {
-
+                showMessage(error);
             }
         });
-
-//        ManagerHelper.execute(this, new ManagerHelper.LoaderResultInterface<HomeObjectDTO>() {
-//
-//            private ProgressDialog dialog;
-//
-//            @Override
-//            public void onPreLoad() {
-//                dialog = ProgressDialog.show(HomeActivity.this, "", "Loading. Please wait...", true);
-//            }
-//
-//            @Override
-//            public HomeObjectDTO executeAction() throws Exception {
-//
-//                SharedPreferences sp = getSharedPreferences("SHARED_APP", Context.MODE_PRIVATE);
-//                if (!sp.getBoolean("FIST_ACCESS", false)) {
-//
-//                    RecoverBusiness.getInstance().execute(HomeActivity.this);
-//
-//                    SharedPreferences.Editor editor = sp.edit();
-//                    editor.putBoolean("FIST_ACCESS", true);
-//                    editor.apply();
-//                }
-//
-//                HomeObjectDTO object = new HomeObjectDTO();
-//                object.setMonth(month);
-//                object.setYear(year);
-//                object.setListCategorySummary(new CategoryBusiness(HomeActivity.this).getSummaryCategoryByMonth(month, year));
-//                object.setListTransaction(new TransactionBusiness(HomeActivity.this).getTransactionByMonth(month, year));
-//                object.setListMonth(new TransactionBusiness(HomeActivity.this).getMonthWithTransaction(year));
-//                return object;
-//            }
-//
-//            @Override
-//            public void onComplete(LoaderResult<HomeObjectDTO> data) {
-//                if (data.isSuccess()) {
-//                    configureResult(data.getData());
-//                } else {
-//                    showMessage(data.getException());
-//                }
-//
-//                dialog.dismiss();
-//            }
-//        });
     }
 
     private void configureResult(HomeObjectVO data) {

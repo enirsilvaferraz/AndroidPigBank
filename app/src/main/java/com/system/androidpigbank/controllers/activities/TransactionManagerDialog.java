@@ -20,11 +20,14 @@ import android.widget.Spinner;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
+import com.system.androidpigbank.controllers.vos.TransactionVO;
+import com.system.androidpigbank.models.firebase.CategoryFirebaseBusiness;
+import com.system.androidpigbank.models.firebase.FirebaseDaoAbs;
+import com.system.androidpigbank.models.firebase.TransactionFirebaseBusiness;
 import com.system.androidpigbank.models.sqlite.business.CategoryBusiness;
 import com.system.androidpigbank.models.sqlite.business.TransactionBusiness;
-import com.system.androidpigbank.models.sqlite.entities.Category;
-import com.system.androidpigbank.models.sqlite.entities.PaymentType;
-import com.system.androidpigbank.models.sqlite.entities.Transaction;
+import com.system.androidpigbank.controllers.vos.CategoryVO;
+import com.system.androidpigbank.controllers.vos.PaymentType;
 import com.system.architecture.managers.DaoAbs;
 import com.system.architecture.activities.BaseActivity;
 import com.system.architecture.activities.BaseManagerDialog;
@@ -44,7 +47,7 @@ import butterknife.ButterKnife;
  * Created by eferraz on 18/08/16.
  */
 
-public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
+public class TransactionManagerDialog extends BaseManagerDialog<TransactionVO> {
 
     @BindView(R.id.transaction_manager_date_lanc)
     EditText editDateLanc;
@@ -73,9 +76,9 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
     @BindView(R.id.transaction_manager_payment_type)
     Spinner spPaymentType;
 
-    private List<Category> categories;
+    private List<CategoryVO> categories;
 
-    public static TransactionManagerDialog newInstance(Transaction transaction) {
+    public static TransactionManagerDialog newInstance(TransactionVO transaction) {
         TransactionManagerDialog frag = new TransactionManagerDialog();
         Bundle args = new Bundle();
         args.putParcelable(Constants.BUNDLE_MODEL_DEFAULT, transaction);
@@ -151,7 +154,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
 
         final Parcelable parcelable = getArguments().getParcelable(Constants.BUNDLE_MODEL_DEFAULT);
         if (getArguments() != null && parcelable != null) {
-            model = (Transaction) parcelable;
+            model = (TransactionVO) parcelable;
 
             editDateLanc.setText(JavaUtils.DateUtil.format(model.getDateTransaction()));
             editValue.setText(String.valueOf(model.getValue()));
@@ -163,19 +166,31 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
             }
             spPaymentType.setSelection(model.getPaymentType() != null ? model.getPaymentType().getId() : PaymentType.ITAU_DEBIT.getId());
         } else {
-            model = new Transaction();
+            model = new TransactionVO();
         }
 
-        ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<List<Category>>() {
+//        ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<List<CategoryVO>>() {
+//
+//            @Override
+//            public List<CategoryVO> executeAction() throws Exception {
+//                return new CategoryBusiness(getContext()).findAll();
+//            }
+//
+//            @Override
+//            public void onComplete(LoaderResult<List<CategoryVO>> data) {
+//                autocompleteCategory(data);
+//            }
+//        });
 
+        new CategoryFirebaseBusiness().findAll(new FirebaseDaoAbs.FirebaseMultiReturnListener<CategoryVO>() {
             @Override
-            public List<Category> executeAction() throws Exception {
-                return new CategoryBusiness(getContext()).findAll();
+            public void onFindAll(List<CategoryVO> list) {
+                autocompleteCategory(list);
             }
 
             @Override
-            public void onComplete(LoaderResult<List<Category>> data) {
-                autocompleteCategory(data);
+            public void onError(String error) {
+                ((BaseActivity) getActivity()).showMessage(error);
             }
         });
 
@@ -224,11 +239,9 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
         return calPayment.getTime();
     }
 
-    private void autocompleteCategory(LoaderResult<List<Category>> data) {
+    private void autocompleteCategory(List<CategoryVO> data) {
 
-        if (data.isSuccess()) {
-
-            categories = data.getData();
+            categories = data;
             String[] categoriesArray = new String[categories.size()];
             for (int i = 0; i < categories.size(); i++) {
                 categoriesArray[i] = categories.get(i).getName();
@@ -236,10 +249,6 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
 
             editCategory.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, categoriesArray));
             editCategorySecondary.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, categoriesArray));
-
-        } else {
-            ((BaseActivity) getActivity()).showMessage(data.getException());
-        }
     }
 
     private void validateFields() throws Exception {
@@ -253,8 +262,13 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
     }
 
     @Override
-    protected DaoAbs<Transaction> getBusinessInstance() {
+    protected DaoAbs<TransactionVO> getBusinessInstance() {
         return new TransactionBusiness(getContext());
+    }
+
+    @Override
+    protected FirebaseDaoAbs<TransactionVO> getFirebaseBusinessInstance() {
+        return new TransactionFirebaseBusiness();
     }
 
     @Override
@@ -263,7 +277,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
         validateFields();
 
         if (model == null) {
-            model = new Transaction();
+            model = new TransactionVO();
         }
 
         model.setDateTransaction(JavaUtils.DateUtil.parse(editDateLanc.getText().toString()));
@@ -274,7 +288,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
             model.setDatePayment(JavaUtils.DateUtil.parse(editDatePayment.getText().toString()));
         }
 
-        final Category category = new Category(editCategory.getText().toString());
+        final CategoryVO category = new CategoryVO(editCategory.getText().toString());
         if (categories.contains(category)) {
             model.setCategory(categories.get(categories.indexOf(category)));
         } else {
@@ -282,7 +296,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<Transaction> {
         }
 
         if (!JavaUtils.StringUtil.isEmpty(editCategorySecondary.getText().toString())) {
-            final Category categorySecondary = new Category(editCategorySecondary.getText().toString());
+            final CategoryVO categorySecondary = new CategoryVO(editCategorySecondary.getText().toString());
             if (categories.contains(categorySecondary)) {
                 model.setCategorySecondary(categories.get(categories.indexOf(categorySecondary)));
             } else {

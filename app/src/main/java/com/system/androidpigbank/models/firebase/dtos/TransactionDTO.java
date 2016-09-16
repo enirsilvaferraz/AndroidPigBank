@@ -1,9 +1,8 @@
 package com.system.androidpigbank.models.firebase.dtos;
 
 import com.google.gson.annotations.Expose;
-import com.system.androidpigbank.controllers.vos.Month;
 import com.system.architecture.managers.EntityAbs;
-import com.system.androidpigbank.models.sqlite.entities.Transaction;
+import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.architecture.utils.JavaUtils;
 
 /**
@@ -102,6 +101,6 @@ public class TransactionDTO extends DTOAbs{
 
     @Override
     public EntityAbs toEntity() {
-        return JavaUtils.GsonUtil.getInstance().fromTransaction().toEntity(this, Transaction.class);
+        return JavaUtils.GsonUtil.getInstance().fromTransaction().toEntity(this, TransactionVO.class);
     }
 }

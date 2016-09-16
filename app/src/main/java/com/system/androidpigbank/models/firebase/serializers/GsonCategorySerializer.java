@@ -7,7 +7,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.system.androidpigbank.models.sqlite.entities.Category;
+import com.system.androidpigbank.controllers.vos.CategoryVO;
 
 import java.lang.reflect.Type;
 
@@ -15,16 +15,16 @@ import java.lang.reflect.Type;
  * Created by Enir on 07/09/2016.
  */
 
-public class GsonCategorySerializer implements JsonSerializer<Category>, JsonDeserializer<Category> {
+public class GsonCategorySerializer implements JsonSerializer<CategoryVO>, JsonDeserializer<CategoryVO> {
 
     @Override
-    public JsonElement serialize(Category src, Type typeOfSrc, JsonSerializationContext context) {
+    public JsonElement serialize(CategoryVO src, Type typeOfSrc, JsonSerializationContext context) {
         return new JsonPrimitive(src.getName());
     }
 
     @Override
-    public Category deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        Category category = new Category();
+    public CategoryVO deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        CategoryVO category = new CategoryVO();
         category.setName(json.getAsString());
         return category;
     }

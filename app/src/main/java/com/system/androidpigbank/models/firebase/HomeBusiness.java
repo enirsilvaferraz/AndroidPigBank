@@ -2,10 +2,10 @@ package com.system.androidpigbank.models.firebase;
 
 import android.support.annotation.NonNull;
 
+import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.HomeObjectVO;
-import com.system.androidpigbank.controllers.vos.Month;
-import com.system.androidpigbank.models.sqlite.entities.Category;
-import com.system.androidpigbank.models.sqlite.entities.Transaction;
+import com.system.androidpigbank.controllers.vos.MonthVO;
+import com.system.androidpigbank.controllers.vos.TransactionVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,29 +16,29 @@ import java.util.List;
 
 public class HomeBusiness {
 
-    public void findAll(final int month, int year, @NonNull final SingleResult listener) {
+    public void findAll(final int month, final int year, @NonNull final SingleResult listener) {
 
-        final HomeObjectVO homeVO = new HomeObjectVO();
-        homeVO.setMonth(month);
-        homeVO.setYear(year);
+        final List<TransactionVO> transactions = new ArrayList<>();
+        final List<CategoryVO> categories = new ArrayList<>();
 
-        getTransactions(month, year, listener, homeVO);
-
-    }
-
-    private void getTransactions(int month, int year, @NonNull final SingleResult listener, final HomeObjectVO homeVO) {
-
-        new TransactionFirebaseBusiness().findTransactionByMonth(month, year, new FirebaseDaoAbs.FirebaseMultiReturnListener<Transaction>() {
+        new TransactionFirebaseBusiness().findTransactionByMonth(month, year, new FirebaseDaoAbs.FirebaseMultiReturnListener<TransactionVO>() {
             @Override
-            public void onFindAll(List<Transaction> list) {
+            public void onFindAll(List<TransactionVO> list) {
+                transactions.addAll(list);
+                verifyNextStep(month, year, transactions, categories, listener);
+            }
 
-                homeVO.setListTransaction(list);
-                organizeHome(homeVO);
+            @Override
+            public void onError(String error) {
+                listener.onError(error);
+            }
+        });
 
-                //getCategories(homeVO, listener);
-
-                listener.onFind(homeVO);
-
+        new CategoryFirebaseBusiness().findAll(new FirebaseDaoAbs.FirebaseMultiReturnListener<CategoryVO>() {
+            @Override
+            public void onFindAll(List<CategoryVO> list) {
+                categories.addAll(list);
+                verifyNextStep(month, year, transactions, categories, listener);
             }
 
             @Override
@@ -48,78 +48,70 @@ public class HomeBusiness {
         });
     }
 
-    private void getCategories(final HomeObjectVO homeVO, @NonNull final SingleResult listener) {
-        new CategoryFirebaseBusiness().findAll(new FirebaseDaoAbs.FirebaseMultiReturnListener<Category>() {
-            @Override
-            public void onFindAll(List<Category> list) {
-
-                homeVO.setListCategorySummary(list);
-
-                getMonth(homeVO, listener);
-            }
-
-            @Override
-            public void onError(String error) {
-                listener.onError(error);
-            }
-        });
-    }
-
-    private void getMonth(final HomeObjectVO homeVO, @NonNull final SingleResult listener) {
-        new MonthFirebaseBusiness().findAll(new FirebaseDaoAbs.FirebaseMultiReturnListener<Month>() {
-            @Override
-            public void onFindAll(List<Month> list) {
-
-                homeVO.setListMonth(list);
-                listener.onFind(homeVO);
-            }
-
-            @Override
-            public void onError(String error) {
-                listener.onError(error);
-            }
-        });
-    }
-
-    private void organizeHome(HomeObjectVO vo) {
-
-        List<Category> innerList = new ArrayList<>();
-
-        for (Transaction transaction : vo.getListTransaction()) {
-            getCategoryIndex(innerList, transaction, transaction.getCategory());
-            getCategoryIndex(innerList, transaction, transaction.getCategorySecondary());
+    private void verifyNextStep(final int month, final int year, List<TransactionVO> transactions, List<CategoryVO> categories, SingleResult listener) {
+        if (!transactions.isEmpty() && !categories.isEmpty()) {
+            listener.onFind(fillHomeObject(month, year, transactions, categories));
         }
-
-        vo.setListCategorySummary(innerList);
-
-        Month month = new Month();
-        month.setMonth(vo.getMonth());
-        month.setYear(vo.getYear());
-        month.setValue(0D);
-
-        for (Category category:innerList){
-            month.setValue(month.getValue() + category.getAmount());
-        }
-
-        List<Month> months = new ArrayList<>();
-        months.add(month);
-
-        vo.setListMonth(months);
     }
 
-    private void getCategoryIndex(List<Category> innerList, Transaction transaction, Category categorySecondary) {
-        if (categorySecondary != null) {
-            if (!innerList.contains(categorySecondary)) {
-                categorySecondary.setAmount(transaction.getValue());
-                categorySecondary.setTransactionList(new ArrayList<Transaction>());
-                categorySecondary.getTransactionList().add(transaction);
-                innerList.add(categorySecondary);
+
+    private HomeObjectVO fillHomeObject(final int monthInt, final int yearInt, List<TransactionVO> transactions, List<CategoryVO> categories) {
+
+        final HomeObjectVO home = new HomeObjectVO();
+        home.setMonth(monthInt);
+        home.setYear(yearInt);
+        home.setListCategorySummary(new ArrayList<CategoryVO>());
+        home.setListTransaction(transactions);
+        home.setListMonth(new ArrayList<MonthVO>());
+
+        for (TransactionVO transaction : transactions) {
+            CategoryVO category = getCategoryIndex(categories, transaction, transaction.getCategory());
+            if (!home.getListCategorySummary().contains(category)) {
+                home.getListCategorySummary().add(category);
             } else {
-                Category category = innerList.get(innerList.indexOf(categorySecondary));
-                category.setAmount(category.getAmount() + transaction.getValue());
-                category.getTransactionList().add(transaction);
+                int index = home.getListCategorySummary().indexOf(category);
+                home.getListCategorySummary().set(index, category);
             }
+
+//            if (transaction.getCategorySecondary() != null) {
+//                category = getCategoryIndex(categories, transaction, transaction.getCategorySecondary());
+//                if (!home.getListCategorySummary().contains(category)) {
+//                    home.getListCategorySummary().add(category);
+//                } else {
+//                    int index = home.getListCategorySummary().indexOf(category);
+//                    home.getListCategorySummary().set(index, category);
+//                }
+//            }
         }
+
+//        MonthVO month = new MonthVO();
+//        month.setMonth(monthInt);
+//        month.setYear(yearInt);
+//        month.setValue(0D);
+//
+//        for (CategoryVO category : home.getListCategorySummary()) {
+//            month.setValue(month.getValue() + category.getAmount());
+//        }
+//
+//        List<MonthVO> months = new ArrayList<>();
+//        months.add(month);
+//
+//        home.setListMonth(months);
+
+        return home;
+    }
+
+    private CategoryVO getCategoryIndex(List<CategoryVO> categories, TransactionVO transaction, CategoryVO categoryParam) {
+
+        CategoryVO category = categories.get(categories.indexOf(categoryParam));
+        category.setAmount((category.getAmount() != null ? category.getAmount() : 0) + transaction.getValue());
+
+        if (category.getTransactionList() == null) {
+            category.setTransactionList(new ArrayList<TransactionVO>());
+        }
+
+        category.getTransactionList().add(transaction);
+        return category;
     }
 
     /**
@@ -127,8 +119,9 @@ public class HomeBusiness {
      */
     public interface SingleResult {
 
-        void onFind(HomeObjectVO vo);
+        void onFind(HomeObjectVO homeObjectVO);
 
         void onError(String error);
     }
+
 }

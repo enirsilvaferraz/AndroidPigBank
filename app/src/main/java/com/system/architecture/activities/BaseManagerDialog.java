@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.system.androidpigbank.controllers.activities.HomeActivity;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
+import com.system.androidpigbank.models.firebase.FirebaseDaoAbs;
 import com.system.architecture.managers.EntityAbs;
 import com.system.architecture.managers.DaoAbs;
 import com.system.architecture.managers.LoaderResult;
@@ -23,40 +24,48 @@ public abstract class BaseManagerDialog<T extends EntityAbs> extends DialogFragm
 
     protected void save() throws Exception {
 
+        prepareToPersist();
+        getFirebaseBusinessInstance().save(model);
         final AppCompatActivity activity = (AppCompatActivity) getActivity();
-        ManagerHelper.execute(activity, new ManagerHelper.LoaderResultInterface<T>() {
+        ((HomeActivity) activity).callApi();
+        dismiss();
 
-            @Override
-            public T executeAction() throws Exception {
-                        prepareToPersist();
-                        return getBusinessInstance().save(model);
-            }
-
-            @Override
-            public int loaderId() {
-                return Constants.LOADER_DEFAULT_ID;
-            }
-
-            @Override
-            public void onComplete(LoaderResult<T> data) {
-                if (data.isSuccess()) {
-                    IntentRouter.startServiceBackup(activity);
-                    ((HomeActivity) activity).callApi();
-
-                    Handler handler = new Handler(){
-                        @Override
-                        public void handleMessage(Message msg) {
-                            dismiss();
-                        }
-                    };
-                    handler.sendEmptyMessage(0);
-
-                } else {
-                    ((BaseActivity) activity).showMessage(data.getException());
-                }
-            }
-        });
+//        final AppCompatActivity activity = (AppCompatActivity) getActivity();
+//        ManagerHelper.execute(activity, new ManagerHelper.LoaderResultInterface<T>() {
+//
+//            @Override
+//            public T executeAction() throws Exception {
+//                        prepareToPersist();
+//                        return getBusinessInstance().save(model);
+//            }
+//
+//            @Override
+//            public int loaderId() {
+//                return Constants.LOADER_DEFAULT_ID;
+//            }
+//
+//            @Override
+//            public void onComplete(LoaderResult<T> data) {
+//                if (data.isSuccess()) {
+//                    IntentRouter.startServiceBackup(activity);
+//                    ((HomeActivity) activity).callApi();
+//
+//                    Handler handler = new Handler(){
+//                        @Override
+//                        public void handleMessage(Message msg) {
+//                            dismiss();
+//                        }
+//                    };
+//                    handler.sendEmptyMessage(0);
+//
+//                } else {
+//                    ((BaseActivity) activity).showMessage(data.getException());
+//                }
+//            }
+//        });
     }
+
+    protected abstract FirebaseDaoAbs<T> getFirebaseBusinessInstance();
 
     protected abstract DaoAbs<T> getBusinessInstance();
 

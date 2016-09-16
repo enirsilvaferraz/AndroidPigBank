@@ -3,18 +3,15 @@ package com.system.androidpigbank.controllers.vos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.system.androidpigbank.models.firebase.dtos.CategoryDTO;
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
 import com.system.androidpigbank.models.firebase.dtos.MonthDTO;
 import com.system.architecture.managers.EntityAbs;
 import com.system.architecture.utils.JavaUtils;
 
-import java.util.Date;
-
 /**
  * Created by Enir on 22/07/2016.
  */
-public class Month extends EntityAbs implements Parcelable {
+public class MonthVO extends EntityAbs implements VOIf, Parcelable {
 
     private Integer month;
 
@@ -22,7 +19,7 @@ public class Month extends EntityAbs implements Parcelable {
 
     private Double value;
 
-    public Month(Integer month, Integer year, Double value) {
+    public MonthVO(Integer month, Integer year, Double value) {
         this.month = month;
         this.year = year;
         this.value = value;
@@ -64,24 +61,24 @@ public class Month extends EntityAbs implements Parcelable {
         dest.writeValue(this.value);
     }
 
-    public Month() {
+    public MonthVO() {
     }
 
-    protected Month(Parcel in) {
+    protected MonthVO(Parcel in) {
         this.month = (Integer) in.readValue(Integer.class.getClassLoader());
         this.year = (Integer) in.readValue(Integer.class.getClassLoader());
         this.value = (Double) in.readValue(Double.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<Month> CREATOR = new Parcelable.Creator<Month>() {
+    public static final Parcelable.Creator<MonthVO> CREATOR = new Parcelable.Creator<MonthVO>() {
         @Override
-        public Month createFromParcel(Parcel source) {
-            return new Month(source);
+        public MonthVO createFromParcel(Parcel source) {
+            return new MonthVO(source);
         }
 
         @Override
-        public Month[] newArray(int size) {
-            return new Month[size];
+        public MonthVO[] newArray(int size) {
+            return new MonthVO[size];
         }
     };
 

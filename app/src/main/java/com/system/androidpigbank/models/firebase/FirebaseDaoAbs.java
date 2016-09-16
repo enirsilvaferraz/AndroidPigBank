@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by Enir on 07/09/2016.
@@ -31,14 +32,20 @@ public abstract class FirebaseDaoAbs<T extends EntityAbs> {
         if (JavaUtils.StringUtil.isEmpty(entity.getKey())) {
             getDatabaseReference().push().setValue(entity.toDTO());
         } else {
-            DatabaseReference dbUpdateRef = getDatabaseReference();
-            Map<String, Object> map = new HashMap<>();
-            map.put(entity.getKey(), entity);
-            dbUpdateRef.updateChildren(map);
+            update(entity);
         }
 
         return entity;
     }
+
+    protected void update(T entity) {
+        DatabaseReference dbUpdateRef = getDatabaseReference();
+        Map<String, Object> map = new HashMap<>();
+        map.put(entity.getKey(), pupulateMap(entity));
+        dbUpdateRef.updateChildren(map);
+    }
+
+    protected abstract Map<String, Object> pupulateMap(T vo);
 
     public void findByKey(String key, final FirebaseSingleReturnListener<T> firebaseSingleReturnListener) {
 

@@ -1,4 +1,4 @@
-package com.system.androidpigbank.models.sqlite.entities;
+package com.system.androidpigbank.controllers.vos;
 
 import android.support.annotation.DrawableRes;
 

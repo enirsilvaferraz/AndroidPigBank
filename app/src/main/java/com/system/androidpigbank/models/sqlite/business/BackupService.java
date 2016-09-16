@@ -9,18 +9,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.system.androidpigbank.BuildConfig;
-import com.system.androidpigbank.controllers.vos.HomeObjectVO;
-import com.system.androidpigbank.controllers.vos.Month;
-import com.system.androidpigbank.models.sqlite.entities.Category;
-import com.system.androidpigbank.models.sqlite.entities.Transaction;
-import com.system.architecture.managers.DaoAbs;
 import com.system.architecture.managers.EntityAbs;
+import com.system.architecture.managers.DaoAbs;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BackupService extends IntentService {
@@ -38,7 +33,7 @@ public class BackupService extends IntentService {
             new BackupImpl(new CategoryBusiness(this)).backupData();
 
             new BackupFirebaseImpl(new TransactionBusiness(this)).backupData();
-            //new BackupFirebaseImpl(new CategoryBusiness(this)).backupData();
+            new BackupFirebaseImpl(new CategoryBusiness(this)).backupData();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -90,7 +85,7 @@ public class BackupService extends IntentService {
 
     private class BackupFirebaseImpl {
 
-        private DaoAbs<Transaction> business;
+        private DaoAbs<EntityAbs> business;
 
         BackupFirebaseImpl(DaoAbs business) {
             this.business = business;
@@ -100,36 +95,14 @@ public class BackupService extends IntentService {
 
             try {
 
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference ref = database.getReference(BuildConfig.FLAVOR + "-database/");
-                ref.removeValue();
+                List<EntityAbs> list = business.findAll();
+                DatabaseReference myRef = getDatabaseReference(business);
 
-                List<Transaction> list = business.findAll();
+                myRef.removeValue();
 
-                List<Category> categories = new ArrayList<>();
-                List<Month> months = new ArrayList<>();
-                List<HomeObjectVO> homes = new ArrayList<>();
-
-                Month month = new Month();
-
-                for (int position = 0; position < list.size(); position ++) {
-
-                    Transaction transactionAct = list.get(position);
-                    Transaction transactionProx = list.size() > position ? list.get(position) : null;
-
-                    if (!categories.contains(transactionAct.getCategory())) {
-                        categories.add(transactionAct.getCategory());
-                    }
-
-                    if (month.getValue() == 0D){
-
-                    }
-
-
+                for (EntityAbs entityAbs : list) {
+                    myRef.push().setValue(entityAbs.toDTO());
                 }
-
-
-               // myRef.push().setValue(entityAbs.toDTO());
 
             } catch (SQLException e) {
                 Crashlytics.logException(e);

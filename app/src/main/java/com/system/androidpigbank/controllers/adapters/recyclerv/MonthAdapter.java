@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.system.androidpigbank.R;
 import com.system.architecture.utils.JavaUtils;
-import com.system.androidpigbank.controllers.vos.Month;
+import com.system.androidpigbank.controllers.vos.MonthVO;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,7 +26,7 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private OnItemClicked onItemClicked;
 
-    private List<Month> itens;
+    private List<MonthVO> itens;
 
     public MonthAdapter() {
         this.itens = new ArrayList<>();
@@ -48,7 +48,7 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return itens.size();
     }
 
-    public void addItens(List<Month> itens) {
+    public void addItens(List<MonthVO> itens) {
         this.itens.clear();
         this.itens.addAll(itens);
         notifyDataSetChanged();
@@ -78,7 +78,7 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             context = itemView.getContext();
         }
 
-        private void bind(Month item) {
+        private void bind(MonthVO item) {
 
             final Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.DATE, 1);

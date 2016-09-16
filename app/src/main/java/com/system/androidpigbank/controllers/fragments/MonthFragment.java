@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.recyclerv.MonthAdapter;
-import com.system.androidpigbank.controllers.vos.Month;
+import com.system.androidpigbank.controllers.vos.MonthVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class MonthFragment extends Fragment {
 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    private List<Month> data;
+    private List<MonthVO> data;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,11 +62,11 @@ public class MonthFragment extends Fragment {
         this.onItemClicked = onItemClicked;
     }
 
-    public void setData(List<Month> data) {
+    public void setData(List<MonthVO> data) {
         this.data = data;
     }
 
-    public List<Month> getData() {
+    public List<MonthVO> getData() {
         if (data == null) {
             data = new ArrayList<>();
         }

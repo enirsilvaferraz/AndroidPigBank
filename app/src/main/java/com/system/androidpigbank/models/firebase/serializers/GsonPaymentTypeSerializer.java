@@ -7,7 +7,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.system.androidpigbank.models.sqlite.entities.PaymentType;
+import com.system.androidpigbank.controllers.vos.PaymentType;
 
 import java.lang.reflect.Type;
 

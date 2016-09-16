@@ -1,4 +1,4 @@
-package com.system.androidpigbank.models.firebase;
+package com.system.androidpigbank.models.firebase.business;
 
 import android.support.annotation.NonNull;
 

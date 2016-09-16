@@ -1,5 +1,6 @@
 package com.system.androidpigbank.models.firebase.dtos;
 
+import com.google.gson.annotations.Expose;
 import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.architecture.managers.EntityAbs;
 import com.system.architecture.utils.JavaUtils;
@@ -9,10 +10,13 @@ import com.system.architecture.utils.JavaUtils;
  */
 public class MonthDTO extends DTOAbs {
 
+    @Expose
     private Integer month;
 
+    @Expose
     private Integer year;
 
+    @Expose
     private Double value;
 
     public Integer getMonth() {

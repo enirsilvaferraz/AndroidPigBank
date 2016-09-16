@@ -1,4 +1,4 @@
-package com.system.androidpigbank.models.firebase;
+package com.system.androidpigbank.models.firebase.business;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +27,7 @@ public abstract class FirebaseDaoAbs<T extends EntityAbs> {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
 
-    public T save(T entity) throws Exception {
+    public T save(T entity) {
 
         if (JavaUtils.StringUtil.isEmpty(entity.getKey())) {
             getDatabaseReference().push().setValue(entity.toDTO());

@@ -1,6 +1,7 @@
-package com.system.androidpigbank.models.firebase;
+package com.system.androidpigbank.models.firebase.business;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.HomeObjectVO;
@@ -8,6 +9,8 @@ import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -16,16 +19,17 @@ import java.util.List;
 
 public class HomeBusiness {
 
-    public void findAll(final int month, final int year, @NonNull final SingleResult listener) {
+    private List<TransactionVO> transactions;
+    private List<CategoryVO> categories;
+    private List<MonthVO> months;
 
-        final List<TransactionVO> transactions = new ArrayList<>();
-        final List<CategoryVO> categories = new ArrayList<>();
+    public void findAll(final int month, final int year, @NonNull final SingleResult listener) {
 
         new TransactionFirebaseBusiness().findTransactionByMonth(month, year, new FirebaseDaoAbs.FirebaseMultiReturnListener<TransactionVO>() {
             @Override
             public void onFindAll(List<TransactionVO> list) {
-                transactions.addAll(list);
-                verifyNextStep(month, year, transactions, categories, listener);
+                transactions = new ArrayList<>(list);
+                verifyNextStep(month, year, transactions, categories, months, listener);
             }
 
             @Override
@@ -37,8 +41,22 @@ public class HomeBusiness {
         new CategoryFirebaseBusiness().findAll(new FirebaseDaoAbs.FirebaseMultiReturnListener<CategoryVO>() {
             @Override
             public void onFindAll(List<CategoryVO> list) {
-                categories.addAll(list);
-                verifyNextStep(month, year, transactions, categories, listener);
+                categories = new ArrayList<>(list);
+                verifyNextStep(month, year, transactions, categories, months, listener);
+            }
+
+            @Override
+            public void onError(String error) {
+                listener.onError(error);
+            }
+        });
+
+        new MonthFirebaseBusiness().findAll(new FirebaseDaoAbs.FirebaseMultiReturnListener<MonthVO>() {
+
+            @Override
+            public void onFindAll(List<MonthVO> list) {
+                months = new ArrayList<>(list);
+                verifyNextStep(month, year, transactions, categories, months, listener);
             }
 
             @Override
@@ -48,14 +66,14 @@ public class HomeBusiness {
         });
     }
 
-    private void verifyNextStep(final int month, final int year, List<TransactionVO> transactions, List<CategoryVO> categories, SingleResult listener) {
-        if (!transactions.isEmpty() && !categories.isEmpty()) {
-            listener.onFind(fillHomeObject(month, year, transactions, categories));
+    private void verifyNextStep(final int month, final int year, List<TransactionVO> transactions, List<CategoryVO> categories, List<MonthVO> months, SingleResult listener) {
+        if (transactions != null && categories != null && months != null) {
+            listener.onFind(fillHomeObject(month, year, transactions, categories, months));
         }
     }
 
 
-    private HomeObjectVO fillHomeObject(final int monthInt, final int yearInt, List<TransactionVO> transactions, List<CategoryVO> categories) {
+    private HomeObjectVO fillHomeObject(final int monthInt, final int yearInt, List<TransactionVO> transactions, List<CategoryVO> categories, List<MonthVO> months) {
 
         final HomeObjectVO home = new HomeObjectVO();
         home.setMonth(monthInt);
@@ -84,19 +102,38 @@ public class HomeBusiness {
 //            }
         }
 
-//        MonthVO month = new MonthVO();
-//        month.setMonth(monthInt);
-//        month.setYear(yearInt);
-//        month.setValue(0D);
-//
-//        for (CategoryVO category : home.getListCategorySummary()) {
-//            month.setValue(month.getValue() + category.getAmount());
-//        }
-//
-//        List<MonthVO> months = new ArrayList<>();
-//        months.add(month);
-//
-//        home.setListMonth(months);
+
+        Double total = 0D;
+        for (CategoryVO category : home.getListCategorySummary()) {
+            total += category.getAmount();
+        }
+
+        MonthVO month = new MonthVO();
+        month.setMonth(monthInt);
+        month.setYear(yearInt);
+
+        if (!months.contains(month)) {
+            month.setValue(total);
+            months.add(new MonthFirebaseBusiness().save(month));
+        } else {
+            int index = months.indexOf(month);
+            MonthVO monthVO = months.get(index);
+            if (!monthVO.getValue().equals(total)) {
+                monthVO.setValue(total);
+                new MonthFirebaseBusiness().save(monthVO);
+                months.set(index, monthVO);
+            }
+        }
+
+        home.setListMonth(months);
+
+        Collections.sort(months, new Comparator<MonthVO>() {
+            @Override
+            public int compare(MonthVO o1, MonthVO o2) {
+                int compareToYear = o1.getYear().compareTo(o2.getYear());
+                return compareToYear != 0 ? compareToYear : o1.getMonth().compareTo(o2.getMonth());
+            }
+        });
 
         return home;
     }

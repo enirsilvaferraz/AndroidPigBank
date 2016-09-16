@@ -1,18 +1,12 @@
 package com.system.architecture.activities;
 
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.system.androidpigbank.controllers.activities.HomeActivity;
-import com.system.androidpigbank.controllers.helpers.IntentRouter;
-import com.system.androidpigbank.controllers.helpers.constant.Constants;
-import com.system.androidpigbank.models.firebase.FirebaseDaoAbs;
+import com.system.androidpigbank.models.firebase.business.FirebaseDaoAbs;
 import com.system.architecture.managers.EntityAbs;
 import com.system.architecture.managers.DaoAbs;
-import com.system.architecture.managers.LoaderResult;
-import com.system.architecture.managers.ManagerHelper;
 
 /**
  * Created by eferraz on 25/04/16.

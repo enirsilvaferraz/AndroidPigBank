@@ -1,4 +1,4 @@
-package com.system.androidpigbank.models.firebase;
+package com.system.androidpigbank.models.firebase.business;
 
 
 import android.support.annotation.NonNull;
@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class TransactionFirebaseBusiness extends FirebaseDaoAbs<TransactionVO> {
 
-    public TransactionVO save(TransactionVO transaction) throws Exception {
+    public TransactionVO save(TransactionVO transaction) {
 
         if (transaction.getCategory().getKey() == null) {
             CategoryVO category = new CategoryFirebaseBusiness().save(transaction.getCategory());

@@ -1,4 +1,4 @@
-package com.system.androidpigbank.models.firebase;
+package com.system.androidpigbank.models.firebase.business;
 
 import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;

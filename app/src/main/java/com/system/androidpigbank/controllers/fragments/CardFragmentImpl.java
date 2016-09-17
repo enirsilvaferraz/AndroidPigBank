@@ -63,8 +63,6 @@ public class CardFragmentImpl extends CardFragment {
 
         switch (action) {
             case Constants.ACTION_VIEW:
-                Date parse = JavaUtils.DateUtil.parse(model.getYear() + "/" + model.getMonth(), JavaUtils.DateUtil.MM_YYYY);
-                getActivity().setTitle(JavaUtils.DateUtil.format(parse, JavaUtils.DateUtil.MMMM_DE_YYYY));
                 ((HomeActivity) getActivity()).update(model.getMonth(), model.getYear());
                 break;
         }

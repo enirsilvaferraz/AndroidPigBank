@@ -46,6 +46,8 @@ public class MonthViewHolder extends CardViewHolder {
 
         if (item.getValue() != 0D) {
             tvTotal.setText(JavaUtils.NumberUtil.currencyFormat(item.getValue().toString()));
+        } else {
+            tvTotal.setText("");
         }
     }
 }

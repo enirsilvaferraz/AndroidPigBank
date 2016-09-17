@@ -1,5 +1,7 @@
 package com.system.androidpigbank.controllers.fragments;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import com.system.androidpigbank.controllers.activities.HomeActivity;
@@ -89,18 +91,27 @@ public class CardFragmentImpl extends CardFragment {
                 break;
 
             case Constants.ACTION_DELETE:
-                removeToolbar(cardAdapter);
-                new CategoryFirebaseBusiness().delete((CategoryVO) model, new FirebaseDaoAbs.FirebaseSingleReturnListener() {
-                    @Override
-                    public void onFind(EntityAbs list) {
-                        ((HomeActivity) getActivity()).callApi();
-                    }
 
+                removeToolbar(cardAdapter);
+
+                new AlertDialog.Builder(getContext()).setTitle("Delete Alert").setMessage("Are you sure?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onError(String error) {
-                        ((HomeActivity) getActivity()).showMessage(error);
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        new CategoryFirebaseBusiness().delete((CategoryVO) model, new FirebaseDaoAbs.FirebaseSingleReturnListener() {
+                            @Override
+                            public void onFind(EntityAbs list) {
+                                ((HomeActivity) getActivity()).callApi();
+                            }
+
+                            @Override
+                            public void onError(String error) {
+                                ((HomeActivity) getActivity()).showMessage(error);
+                            }
+                        });
                     }
-                });
+                }).setNegativeButton("No", null).show();
+
                 break;
         }
 
@@ -135,18 +146,27 @@ public class CardFragmentImpl extends CardFragment {
                 break;
 
             case Constants.ACTION_DELETE:
-                removeToolbar(cardAdapter);
-                new TransactionFirebaseBusiness().delete((TransactionVO) model, new FirebaseDaoAbs.FirebaseSingleReturnListener() {
-                    @Override
-                    public void onFind(EntityAbs list) {
-                        ((HomeActivity) getActivity()).callApi();
-                    }
 
+                removeToolbar(cardAdapter);
+
+                new AlertDialog.Builder(getContext()).setTitle("Delete Alert").setMessage("Are you sure?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onError(String error) {
-                        ((HomeActivity) getActivity()).showMessage(error);
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        new TransactionFirebaseBusiness().delete((TransactionVO) model, new FirebaseDaoAbs.FirebaseSingleReturnListener() {
+                            @Override
+                            public void onFind(EntityAbs list) {
+                                ((HomeActivity) getActivity()).callApi();
+                            }
+
+                            @Override
+                            public void onError(String error) {
+                                ((HomeActivity) getActivity()).showMessage(error);
+                            }
+                        });
                     }
-                });
+                }).setNegativeButton("No", null).show();
+
                 break;
         }
     }

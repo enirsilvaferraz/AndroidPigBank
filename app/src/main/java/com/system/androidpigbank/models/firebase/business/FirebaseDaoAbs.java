@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by Enir on 07/09/2016.
@@ -83,7 +82,7 @@ public abstract class FirebaseDaoAbs<T extends EntityAbs> {
         });
     }
 
-    public T delete(T entity) throws Exception {
+    public T delete(T entity) {
         throw new RuntimeException("Not implemented yet!");
     }
 

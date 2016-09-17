@@ -13,8 +13,6 @@ import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusine
 import com.system.androidpigbank.models.firebase.business.TransactionFirebaseBusiness;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.adapters.CardFragment;
-import com.system.architecture.managers.LoaderResult;
-import com.system.architecture.managers.ManagerHelper;
 
 /**
  * Created by Enir on 11/09/2016.
@@ -90,21 +88,7 @@ public class CardFragmentImpl extends CardFragment {
 
             case Constants.ACTION_DELETE:
                 removeToolbar(cardAdapter);
-                ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<CategoryVO>() {
-                    @Override
-                    public CategoryVO executeAction() throws Exception {
-                        return new CategoryFirebaseBusiness().delete((CategoryVO) model);
-                    }
-
-                    @Override
-                    public void onComplete(LoaderResult<CategoryVO> data) {
-                        if (data.isSuccess()) {
-                            cardAdapter.remove(data.getData());
-                        } else {
-                            // TODO Tratar exception
-                        }
-                    }
-                });
+                new CategoryFirebaseBusiness().delete((CategoryVO) model);
                 break;
         }
 
@@ -140,21 +124,7 @@ public class CardFragmentImpl extends CardFragment {
 
             case Constants.ACTION_DELETE:
                 removeToolbar(cardAdapter);
-                ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<TransactionVO>() {
-                    @Override
-                    public TransactionVO executeAction() throws Exception {
-                        return new TransactionFirebaseBusiness().delete((TransactionVO) model);
-                    }
-
-                    @Override
-                    public void onComplete(LoaderResult<TransactionVO> data) {
-                        if (data.isSuccess()) {
-                            cardAdapter.remove(data.getData());
-                        } else {
-                            // TODO Tratar exception
-                        }
-                    }
-                });
+                new TransactionFirebaseBusiness().delete((TransactionVO) model);
                 break;
         }
     }

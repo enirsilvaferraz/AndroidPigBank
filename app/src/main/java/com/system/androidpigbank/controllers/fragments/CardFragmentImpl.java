@@ -134,7 +134,7 @@ public class CardFragmentImpl extends CardFragment {
 
             case Constants.ACTION_COPY:
                 removeToolbar(cardAdapter);
-                ((TransactionVO) model).setId(null);
+                ((TransactionVO) model).setKey(null);
                 IntentRouter.startTransactionManager((AppCompatActivity) getActivity(), (TransactionVO) model);
                 break;
 

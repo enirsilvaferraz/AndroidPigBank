@@ -1,7 +1,6 @@
 package com.system.androidpigbank.models.firebase.business;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.HomeObjectVO;
@@ -84,6 +83,7 @@ public class HomeBusiness {
 
         for (TransactionVO transaction : transactions) {
             CategoryVO category = getCategoryIndex(categories, transaction, transaction.getCategory());
+            transaction.setCategory(category);
             if (!home.getListCategorySummary().contains(category)) {
                 home.getListCategorySummary().add(category);
             } else {

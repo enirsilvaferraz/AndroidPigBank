@@ -24,38 +24,59 @@ import java.util.Date;
 @IgnoreExtraProperties
 public class TransactionVO extends EntityAbs implements VOIf, Parcelable, CardAdapter.CardModel {
 
+    public static final Creator<TransactionVO> CREATOR = new Creator<TransactionVO>() {
+        @Override
+        public TransactionVO createFromParcel(Parcel source) {
+            return new TransactionVO(source);
+        }
+
+        @Override
+        public TransactionVO[] newArray(int size) {
+            return new TransactionVO[size];
+        }
+    };
+    @Expose
+    private String key;
     @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
     private Long id;
-
     @Expose
     @DatabaseField
     private Date dateTransaction;
-
     @Expose
     @DatabaseField
     private Date datePayment;
-
     @Expose
     @DatabaseField
     private Double value;
-
     @Expose
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private CategoryVO category;
-
     @Expose
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private CategoryVO categorySecondary;
-
     @Expose
     @DatabaseField
     private String content;
-
     @Expose
     @DatabaseField(dataType = DataType.ENUM_INTEGER)
     private PaymentType paymentType;
 
     public TransactionVO() {
+    }
+
+    protected TransactionVO(Parcel in) {
+        this.key = in.readString();
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
+        long tmpDateTransaction = in.readLong();
+        this.dateTransaction = tmpDateTransaction == -1 ? null : new Date(tmpDateTransaction);
+        long tmpDatePayment = in.readLong();
+        this.datePayment = tmpDatePayment == -1 ? null : new Date(tmpDatePayment);
+        this.value = (Double) in.readValue(Double.class.getClassLoader());
+        this.category = in.readParcelable(CategoryVO.class.getClassLoader());
+        this.categorySecondary = in.readParcelable(CategoryVO.class.getClassLoader());
+        this.content = in.readString();
+        int tmpPaymentType = in.readInt();
+        this.paymentType = tmpPaymentType == -1 ? null : PaymentType.values()[tmpPaymentType];
     }
 
     public Date getDateTransaction() {
@@ -94,13 +115,40 @@ public class TransactionVO extends EntityAbs implements VOIf, Parcelable, CardAd
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TransactionVO that = (TransactionVO) o;
+
+        return key != null ? key.equals(that.key) : that.key == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return key != null ? key.hashCode() : 0;
+    }
+
+    @Override
+    public String getKey() {
+
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     @Override
     public DTOAbs toDTO() {
         return JavaUtils.GsonUtil.getInstance().fromTransaction().toDTO(this, TransactionDTO.class);
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Date getDatePayment() {
@@ -128,12 +176,18 @@ public class TransactionVO extends EntityAbs implements VOIf, Parcelable, CardAd
     }
 
     @Override
+    public CardAdapter.CardViewType getViewType() {
+        return CardAdapter.CardViewType.CARD_TRANSACTION;
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.key);
         dest.writeValue(this.id);
         dest.writeLong(this.dateTransaction != null ? this.dateTransaction.getTime() : -1);
         dest.writeLong(this.datePayment != null ? this.datePayment.getTime() : -1);
@@ -142,36 +196,5 @@ public class TransactionVO extends EntityAbs implements VOIf, Parcelable, CardAd
         dest.writeParcelable(this.categorySecondary, flags);
         dest.writeString(this.content);
         dest.writeInt(this.paymentType == null ? -1 : this.paymentType.ordinal());
-    }
-
-    protected TransactionVO(Parcel in) {
-        this.id = (Long) in.readValue(Long.class.getClassLoader());
-        long tmpDate = in.readLong();
-        this.dateTransaction = tmpDate == -1 ? null : new Date(tmpDate);
-        long tmpDatePayment = in.readLong();
-        this.datePayment = tmpDatePayment == -1 ? null : new Date(tmpDatePayment);
-        this.value = (Double) in.readValue(Double.class.getClassLoader());
-        this.category = in.readParcelable(CategoryVO.class.getClassLoader());
-        this.categorySecondary = in.readParcelable(CategoryVO.class.getClassLoader());
-        this.content = in.readString();
-        int tmpPaymentType = in.readInt();
-        this.paymentType = tmpPaymentType == -1 ? null : PaymentType.values()[tmpPaymentType];
-    }
-
-    public static final Creator<TransactionVO> CREATOR = new Creator<TransactionVO>() {
-        @Override
-        public TransactionVO createFromParcel(Parcel source) {
-            return new TransactionVO(source);
-        }
-
-        @Override
-        public TransactionVO[] newArray(int size) {
-            return new TransactionVO[size];
-        }
-    };
-
-    @Override
-    public CardAdapter.CardViewType getViewType() {
-        return CardAdapter.CardViewType.CARD_TRANSACTION;
     }
 }

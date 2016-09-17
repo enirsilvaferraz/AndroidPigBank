@@ -33,23 +33,20 @@ public class CategoryVO extends EntityAbs implements VOIf, Parcelable, CardAdapt
             return new CategoryVO[size];
         }
     };
-
+    @Expose
+    private String key;
     @Expose
     @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
     private Long id;
-
     @Expose
     @DatabaseField
     private String name;
-
     @Expose
     @DatabaseField
     private boolean primary;
-
     @Expose
     @DatabaseField(dataType = DataType.ENUM_INTEGER)
     private Colors color;
-
     private Double amount;
     private List<TransactionVO> transactionList;
     private CategoryVO old;
@@ -67,6 +64,7 @@ public class CategoryVO extends EntityAbs implements VOIf, Parcelable, CardAdapt
     }
 
     protected CategoryVO(Parcel in) {
+        this.key = in.readString();
         this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.name = in.readString();
         this.primary = in.readByte() != 0;
@@ -74,6 +72,7 @@ public class CategoryVO extends EntityAbs implements VOIf, Parcelable, CardAdapt
         this.color = tmpColor == -1 ? null : Colors.values()[tmpColor];
         this.amount = (Double) in.readValue(Double.class.getClassLoader());
         this.transactionList = in.createTypedArrayList(TransactionVO.CREATOR);
+        this.old = in.readParcelable(CategoryVO.class.getClassLoader());
     }
 
     public String getName() {
@@ -113,27 +112,28 @@ public class CategoryVO extends EntityAbs implements VOIf, Parcelable, CardAdapt
         return JavaUtils.GsonUtil.getInstance().fromCategory().toDTO(this, CategoryDTO.class);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        CategoryVO category = (CategoryVO) o;
-
-        return !(getName() != null ? !getName().equals(category.getName()) : category.getName() != null);
-    }
-
-    @Override
-    public int hashCode() {
-        return getName() != null ? getName().hashCode() : 0;
-    }
-
     public Colors getColor() {
         return color;
     }
 
     public void setColor(Colors color) {
         this.color = color;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CategoryVO that = (CategoryVO) o;
+
+        return key != null ? key.equals(that.key) : that.key == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return key != null ? key.hashCode() : 0;
     }
 
     public List<TransactionVO> getTransactionList() {
@@ -145,18 +145,13 @@ public class CategoryVO extends EntityAbs implements VOIf, Parcelable, CardAdapt
     }
 
     @Override
-    public int describeContents() {
-        return 0;
+    public String getKey() {
+        return key;
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(this.id);
-        dest.writeString(this.name);
-        dest.writeByte(this.primary ? (byte) 1 : (byte) 0);
-        dest.writeInt(this.color == null ? -1 : this.color.ordinal());
-        dest.writeValue(this.amount);
-        dest.writeTypedList(this.transactionList);
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override
@@ -169,11 +164,28 @@ public class CategoryVO extends EntityAbs implements VOIf, Parcelable, CardAdapt
         return super.clone();
     }
 
+    public CategoryVO getOld() {
+        return old;
+    }
+
     public void setOld(CategoryVO old) {
         this.old = old;
     }
 
-    public CategoryVO getOld() {
-        return old;
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.key);
+        dest.writeValue(this.id);
+        dest.writeString(this.name);
+        dest.writeByte(this.primary ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.color == null ? -1 : this.color.ordinal());
+        dest.writeValue(this.amount);
+        dest.writeTypedList(this.transactionList);
+        dest.writeParcelable(this.old, flags);
     }
 }

@@ -19,13 +19,13 @@ public class GsonCategorySerializer implements JsonSerializer<CategoryVO>, JsonD
 
     @Override
     public JsonElement serialize(CategoryVO src, Type typeOfSrc, JsonSerializationContext context) {
-        return new JsonPrimitive(src.getName());
+        return new JsonPrimitive(src.getKey());
     }
 
     @Override
     public CategoryVO deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         CategoryVO category = new CategoryVO();
-        category.setName(json.getAsString());
+        category.setKey(json.getAsString());
         return category;
     }
 }

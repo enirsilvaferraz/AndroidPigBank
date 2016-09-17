@@ -15,7 +15,7 @@ import com.system.architecture.utils.JavaUtils;
  */
 public class MonthVO extends EntityAbs implements VOIf, Parcelable, CardAdapter.CardModel {
 
-    public static final Parcelable.Creator<MonthVO> CREATOR = new Parcelable.Creator<MonthVO>() {
+    public static final Creator<MonthVO> CREATOR = new Creator<MonthVO>() {
         @Override
         public MonthVO createFromParcel(Parcel source) {
             return new MonthVO(source);
@@ -26,7 +26,8 @@ public class MonthVO extends EntityAbs implements VOIf, Parcelable, CardAdapter.
             return new MonthVO[size];
         }
     };
-
+    @Expose
+    private String key;
     @Expose
     private Integer month;
     @Expose
@@ -44,6 +45,7 @@ public class MonthVO extends EntityAbs implements VOIf, Parcelable, CardAdapter.
     }
 
     protected MonthVO(Parcel in) {
+        this.key = in.readString();
         this.month = (Integer) in.readValue(Integer.class.getClassLoader());
         this.year = (Integer) in.readValue(Integer.class.getClassLoader());
         this.value = (Double) in.readValue(Double.class.getClassLoader());
@@ -74,11 +76,6 @@ public class MonthVO extends EntityAbs implements VOIf, Parcelable, CardAdapter.
     }
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -91,18 +88,20 @@ public class MonthVO extends EntityAbs implements VOIf, Parcelable, CardAdapter.
     }
 
     @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    @Override
     public int hashCode() {
         int result = month != null ? month.hashCode() : 0;
         result = 31 * result + (year != null ? year.hashCode() : 0);
         return result;
-    }
-
-    @Override
-
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(this.month);
-        dest.writeValue(this.year);
-        dest.writeValue(this.value);
     }
 
     @Override
@@ -118,5 +117,18 @@ public class MonthVO extends EntityAbs implements VOIf, Parcelable, CardAdapter.
     @Override
     public CardAdapter.CardViewType getViewType() {
         return CardAdapter.CardViewType.CARD_MONTH;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.key);
+        dest.writeValue(this.month);
+        dest.writeValue(this.year);
+        dest.writeValue(this.value);
     }
 }

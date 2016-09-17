@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.adapters.viewHolder;
+package com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder;
 
 import android.content.Context;
 import android.view.View;

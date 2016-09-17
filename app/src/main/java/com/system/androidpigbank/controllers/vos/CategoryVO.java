@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.system.androidpigbank.controllers.helpers.constant.Colors;
+import com.system.androidpigbank.controllers.helpers.Colors;
 import com.system.androidpigbank.models.firebase.dtos.CategoryDTO;
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
 import com.system.architecture.adapters.CardAdapter;
@@ -51,7 +51,6 @@ public class CategoryVO extends EntityAbs implements VOIf, Parcelable, CardAdapt
     private Colors color;
 
     private Double amount;
-    private boolean expanded;
     private List<TransactionVO> transactionList;
     private CategoryVO old;
 
@@ -74,7 +73,6 @@ public class CategoryVO extends EntityAbs implements VOIf, Parcelable, CardAdapt
         int tmpColor = in.readInt();
         this.color = tmpColor == -1 ? null : Colors.values()[tmpColor];
         this.amount = (Double) in.readValue(Double.class.getClassLoader());
-        this.expanded = in.readByte() != 0;
         this.transactionList = in.createTypedArrayList(TransactionVO.CREATOR);
     }
 
@@ -138,14 +136,6 @@ public class CategoryVO extends EntityAbs implements VOIf, Parcelable, CardAdapt
         this.color = color;
     }
 
-    public boolean isExpanded() {
-        return expanded;
-    }
-
-    public void setExpanded(boolean expanded) {
-        this.expanded = expanded;
-    }
-
     public List<TransactionVO> getTransactionList() {
         return transactionList;
     }
@@ -166,7 +156,6 @@ public class CategoryVO extends EntityAbs implements VOIf, Parcelable, CardAdapt
         dest.writeByte(this.primary ? (byte) 1 : (byte) 0);
         dest.writeInt(this.color == null ? -1 : this.color.ordinal());
         dest.writeValue(this.amount);
-        dest.writeByte(this.expanded ? (byte) 1 : (byte) 0);
         dest.writeTypedList(this.transactionList);
     }
 

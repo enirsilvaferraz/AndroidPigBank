@@ -1,10 +1,10 @@
-package com.system.androidpigbank.controllers.adapters.viewHolder;
+package com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder;
 
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.helpers.constant.Constants;
+import com.system.androidpigbank.controllers.helpers.Constants;
 import com.system.androidpigbank.controllers.vos.ActionBarVO;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.adapters.CardViewHolder;

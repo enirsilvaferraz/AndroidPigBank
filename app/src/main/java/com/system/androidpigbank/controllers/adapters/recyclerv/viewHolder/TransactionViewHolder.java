@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.adapters.viewHolder;
+package com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder;
 
 import android.support.v7.widget.CardView;
 import android.view.View;
@@ -6,7 +6,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.androidpigbank.views.RoundedImageView;

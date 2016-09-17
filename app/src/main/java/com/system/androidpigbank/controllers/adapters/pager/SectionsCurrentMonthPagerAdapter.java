@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.system.androidpigbank.controllers.fragments.CardFragmentImpl;
-import com.system.androidpigbank.controllers.helpers.constant.Constants;
+import com.system.androidpigbank.controllers.helpers.Constants;
 
 public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter {
 

@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.vos;
+package com.system.androidpigbank.controllers.helpers;
 
 import android.support.annotation.DrawableRes;
 

@@ -11,7 +11,7 @@ import com.system.architecture.helpers.PermissionHelper;
 import com.system.architecture.managers.LoaderResult;
 import com.system.architecture.managers.ManagerHelper;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
-import com.system.androidpigbank.controllers.helpers.constant.Constants;
+import com.system.androidpigbank.controllers.helpers.Constants;
 import com.system.architecture.managers.EntityAbs;
 import com.system.architecture.managers.DaoAbs;
 

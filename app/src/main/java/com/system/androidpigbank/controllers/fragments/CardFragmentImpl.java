@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.system.androidpigbank.controllers.activities.HomeActivity;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
-import com.system.androidpigbank.controllers.helpers.constant.Constants;
+import com.system.androidpigbank.controllers.helpers.Constants;
 import com.system.androidpigbank.controllers.vos.ActionBarVO;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.MonthVO;
@@ -15,10 +15,6 @@ import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.adapters.CardFragment;
 import com.system.architecture.managers.LoaderResult;
 import com.system.architecture.managers.ManagerHelper;
-import com.system.architecture.utils.JavaUtils;
-
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by Enir on 11/09/2016.

@@ -13,7 +13,7 @@ import com.system.androidpigbank.BuildConfig;
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.activities.HomeActivity;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
-import com.system.androidpigbank.controllers.vos.PaymentType;
+import com.system.androidpigbank.controllers.helpers.PaymentType;
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
 import com.system.androidpigbank.models.firebase.serializers.GsonCategorySerializer;
 import com.system.androidpigbank.models.firebase.serializers.GsonDateSerializer;

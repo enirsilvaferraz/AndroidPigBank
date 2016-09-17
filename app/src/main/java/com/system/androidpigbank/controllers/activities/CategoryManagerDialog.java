@@ -15,7 +15,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.helpers.constant.Constants;
+import com.system.androidpigbank.controllers.helpers.Constants;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusiness;
 import com.system.androidpigbank.models.firebase.business.FirebaseDaoAbs;

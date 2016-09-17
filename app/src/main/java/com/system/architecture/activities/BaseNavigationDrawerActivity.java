@@ -49,16 +49,6 @@ public abstract class BaseNavigationDrawerActivity extends BaseActivity implemen
     public boolean onNavigationItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-
-//            case R.id.nav_act_detail:
-//                final Intent intent = new Intent(this, TransactionDetailActivity.class);
-//                intent.putExtra("MONTH", mViewPager.getCurrentItem());
-//                startActivity(intent);
-//                break;
-
-            case R.id.nav_act_category:
-                IntentRouter.startCategoryList(this);
-                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

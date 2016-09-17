@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.adapters.viewHolder.ActionBarViewHolder;
-import com.system.androidpigbank.controllers.adapters.viewHolder.CategoryViewHolder;
-import com.system.androidpigbank.controllers.adapters.viewHolder.MonthViewHolder;
-import com.system.androidpigbank.controllers.adapters.viewHolder.TitleViewHolder;
-import com.system.androidpigbank.controllers.adapters.viewHolder.TotalViewHolder;
-import com.system.androidpigbank.controllers.adapters.viewHolder.TransactionViewHolder;
-import com.system.androidpigbank.controllers.adapters.viewHolder.WhiteSpaceViewHolder;
+import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.ActionBarViewHolder;
+import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.CategoryViewHolder;
+import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.MonthViewHolder;
+import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.TitleViewHolder;
+import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.TotalViewHolder;
+import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.TransactionViewHolder;
+import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.WhiteSpaceViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;

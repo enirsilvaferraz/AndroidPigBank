@@ -72,8 +72,20 @@ public final class JavaUtils {
 
         public static Date getActualMaximum(int year, int month) {
             Calendar cInit = Calendar.getInstance();
-            cInit.set(year, month, 1, cInit.getActualMaximum(Calendar.HOUR_OF_DAY), cInit.getActualMaximum(Calendar.MINUTE), cInit.getActualMaximum(Calendar.SECOND)); // DATE = 1 Evita avancar o mes (31)
+            cInit.set(year, month, 1); // DATE = 1 Evita avancar o mes (31)
             cInit.set(Calendar.DATE, cInit.getActualMaximum(Calendar.DATE));
+            cInit.set(Calendar.HOUR_OF_DAY, cInit.getActualMaximum(Calendar.HOUR_OF_DAY));
+            cInit.set(Calendar.MINUTE, cInit.getActualMaximum(Calendar.MINUTE));
+            cInit.set(Calendar.SECOND, cInit.getActualMaximum(Calendar.SECOND));
+            return cInit.getTime();
+        }
+
+        public static Date getActualMinimum(int year, int month) {
+            Calendar cInit = Calendar.getInstance();
+            cInit.set(year, month, cInit.getActualMinimum(Calendar.DATE));
+            cInit.set(Calendar.HOUR_OF_DAY, cInit.getActualMinimum(Calendar.HOUR_OF_DAY));
+            cInit.set(Calendar.MINUTE, cInit.getActualMinimum(Calendar.MINUTE));
+            cInit.set(Calendar.SECOND, cInit.getActualMinimum(Calendar.SECOND));
             return cInit.getTime();
         }
 

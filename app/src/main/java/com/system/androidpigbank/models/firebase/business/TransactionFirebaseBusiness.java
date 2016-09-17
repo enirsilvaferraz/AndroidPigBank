@@ -69,7 +69,7 @@ public class TransactionFirebaseBusiness extends FirebaseDaoAbs<TransactionVO> {
 
     public void findTransactionByMonth(int month, int year, @NonNull final FirebaseMultiReturnListener listener) {
 
-        Date cInit = JavaUtils.DateUtil.getActualMaximum(year, month - 1);
+        Date cInit = JavaUtils.DateUtil.getActualMinimum(year, month);
         Date cEnd = JavaUtils.DateUtil.getActualMaximum(year, month);
 
         getDatabaseReference().orderByChild("datePayment")

@@ -10,9 +10,11 @@ import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusiness;
+import com.system.androidpigbank.models.firebase.business.FirebaseDaoAbs;
 import com.system.androidpigbank.models.firebase.business.TransactionFirebaseBusiness;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.adapters.CardFragment;
+import com.system.architecture.managers.EntityAbs;
 
 /**
  * Created by Enir on 11/09/2016.
@@ -88,7 +90,17 @@ public class CardFragmentImpl extends CardFragment {
 
             case Constants.ACTION_DELETE:
                 removeToolbar(cardAdapter);
-                new CategoryFirebaseBusiness().delete((CategoryVO) model);
+                new CategoryFirebaseBusiness().delete((CategoryVO) model, new FirebaseDaoAbs.FirebaseSingleReturnListener() {
+                    @Override
+                    public void onFind(EntityAbs list) {
+                        ((HomeActivity) getActivity()).callApi();
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        ((HomeActivity) getActivity()).showMessage(error);
+                    }
+                });
                 break;
         }
 
@@ -124,7 +136,17 @@ public class CardFragmentImpl extends CardFragment {
 
             case Constants.ACTION_DELETE:
                 removeToolbar(cardAdapter);
-                new TransactionFirebaseBusiness().delete((TransactionVO) model);
+                new TransactionFirebaseBusiness().delete((TransactionVO) model, new FirebaseDaoAbs.FirebaseSingleReturnListener() {
+                    @Override
+                    public void onFind(EntityAbs list) {
+                        ((HomeActivity) getActivity()).callApi();
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        ((HomeActivity) getActivity()).showMessage(error);
+                    }
+                });
                 break;
         }
     }

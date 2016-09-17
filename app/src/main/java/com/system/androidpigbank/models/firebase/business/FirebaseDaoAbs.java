@@ -82,8 +82,13 @@ public abstract class FirebaseDaoAbs<T extends EntityAbs> {
         });
     }
 
-    public T delete(T entity) {
-        throw new RuntimeException("Not implemented yet!");
+    public void delete(final T entity, final FirebaseSingleReturnListener listener) {
+        getDatabaseReference().child(entity.getKey()).removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                listener.onFind(entity);
+            }
+        });
     }
 
     public T getTInstance(DataSnapshot postSnapshot) {

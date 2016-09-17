@@ -7,12 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.adapters.viewHolder.ActionBarViewHolder;
-import com.system.androidpigbank.controllers.adapters.viewHolder.CategoryViewHolder;
-import com.system.androidpigbank.controllers.adapters.viewHolder.TitleViewHolder;
-import com.system.androidpigbank.controllers.adapters.viewHolder.TotalViewHolder;
-import com.system.androidpigbank.controllers.adapters.viewHolder.TransactionViewHolder;
-import com.system.androidpigbank.controllers.adapters.viewHolder.WhiteSpaceViewHolder;
+import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.ActionBarViewHolder;
+import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.CategoryViewHolder;
+import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.MonthViewHolder;
+import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.TitleViewHolder;
+import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.TotalViewHolder;
+import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.TransactionViewHolder;
+import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.WhiteSpaceViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +73,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyItemInserted(index);
     }
 
-    public void remove(CardModel model){
+    public void remove(CardModel model) {
         int index = getItens().indexOf(model);
         getItens().remove(index);
         notifyItemRemoved(index);
@@ -88,7 +89,8 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         CARD_FOOTER(R.layout.item_view_holder_total),
         CARD_TITLE(R.layout.item_view_holder_title),
         CARD_ACTION_BAR(R.layout.item_view_holder_card_bar),
-        CARD_WHITESPACE(R.layout.item_view_holder_white_space);
+        CARD_WHITESPACE(R.layout.item_view_holder_white_space),
+        CARD_MONTH(R.layout.item_view_holder_month);
 
         @LayoutRes
         private final int layoutId;
@@ -136,6 +138,11 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 case CARD_WHITESPACE:
                     viewHolder = new WhiteSpaceViewHolder(v);
+                    break;
+
+                case CARD_MONTH:
+                    viewHolder = new MonthViewHolder(v);
+                    break;
             }
 
             return viewHolder;

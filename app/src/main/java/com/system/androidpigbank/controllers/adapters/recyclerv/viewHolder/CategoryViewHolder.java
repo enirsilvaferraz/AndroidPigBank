@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.adapters.viewHolder;
+package com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -8,8 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.helpers.constant.Constants;
-import com.system.androidpigbank.models.sqlite.entities.Category;
+import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.adapters.CardViewHolder;
 import com.system.architecture.utils.JavaUtils;
@@ -49,7 +48,7 @@ public class CategoryViewHolder extends CardViewHolder {
     public void bind(final CardAdapter.CardModel model, final OnClickListener onClickListener) {
         super.bind(model, onClickListener);
 
-        Category item = (Category) model;
+        CategoryVO item = (CategoryVO) model;
 
         tvName.setText(item.getName());
 
@@ -57,14 +56,5 @@ public class CategoryViewHolder extends CardViewHolder {
                 JavaUtils.NumberUtil.currencyFormat(0D));
         tvProgressValue.setText("N/A");
         progressBar.setProgress(0);
-
-        if (onClickListener != null) {
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onClickListener.onContainerClicked(Constants.ACTION_VIEW, model);
-                }
-            });
-        }
     }
 }

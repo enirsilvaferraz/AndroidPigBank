@@ -5,7 +5,7 @@ import com.system.architecture.adapters.CardAdapter;
 /**
  * Created by eferraz on 03/01/16.
  */
-public class TotalVO implements CardAdapter.CardModel {
+public class TotalVO implements VOIf, CardAdapter.CardModel {
 
     private Double valueStart;
 

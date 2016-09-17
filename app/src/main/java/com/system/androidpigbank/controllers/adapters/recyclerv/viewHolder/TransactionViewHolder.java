@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.adapters.viewHolder;
+package com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder;
 
 import android.support.v7.widget.CardView;
 import android.view.View;
@@ -6,9 +6,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.helpers.constant.Constants;
+import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.architecture.adapters.CardAdapter;
-import com.system.androidpigbank.models.sqlite.entities.Transaction;
 import com.system.androidpigbank.views.RoundedImageView;
 import com.system.architecture.adapters.CardViewHolder;
 import com.system.architecture.utils.JavaUtils;
@@ -48,7 +47,7 @@ public class TransactionViewHolder extends CardViewHolder {
     public void bind(CardAdapter.CardModel model, final OnClickListener onClickListener) {
         super.bind(model, onClickListener);
 
-        final Transaction transaction = (Transaction) model;
+        final TransactionVO transaction = (TransactionVO) model;
 
         textValue.setText(JavaUtils.NumberUtil.currencyFormat(transaction.getValue()));
         textContent.setText(transaction.getContent());
@@ -66,14 +65,5 @@ public class TransactionViewHolder extends CardViewHolder {
         }
 
         textCategory.setText(categoryName);
-
-        if (onClickListener != null) {
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onClickListener.onContainerClicked(Constants.ACTION_VIEW, transaction);
-                }
-            });
-        }
     }
 }

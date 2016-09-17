@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.helpers.constant;
+package com.system.androidpigbank.controllers.helpers;
 
 import android.Manifest;
 
@@ -34,4 +34,5 @@ public interface Constants {
 
     int FRAGMENT_ID_SUMMARY_CATEGORY = 1;
     int FRAGMENT_ID_TRANSACTION = 2;
+    int FRAGMENT_ID_MONTH = 3;
 }

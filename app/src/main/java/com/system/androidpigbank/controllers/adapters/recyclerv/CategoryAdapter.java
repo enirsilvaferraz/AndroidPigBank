@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
-import com.system.androidpigbank.models.sqlite.entities.Category;
+import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.views.RoundedTextView;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
  */
 public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Category> itens;
+    private List<CategoryVO> itens;
 
     public CategoryAdapter() {
         this.itens = new ArrayList<>();
@@ -45,7 +45,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return itens.size();
     }
 
-    public void addItens(List<Category> itens) {
+    public void addItens(List<CategoryVO> itens) {
         this.itens.clear();
         this.itens.addAll(itens);
         notifyDataSetChanged();
@@ -64,7 +64,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ButterKnife.bind(this, itemView);
         }
 
-        private void bind(final Category item) {
+        private void bind(final CategoryVO item) {
 
             name.setText(item.getName());
             roundedView.setColor(item.getColor());

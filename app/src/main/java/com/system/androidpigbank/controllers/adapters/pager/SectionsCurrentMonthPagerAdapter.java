@@ -4,14 +4,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.system.androidpigbank.controllers.adapters.recyclerv.MonthAdapter;
 import com.system.androidpigbank.controllers.fragments.CardFragmentImpl;
-import com.system.androidpigbank.controllers.fragments.MonthFragment;
-import com.system.androidpigbank.controllers.helpers.constant.Constants;
+import com.system.androidpigbank.controllers.helpers.Constants;
 
 public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter {
 
-    private MonthAdapter.OnItemClicked onItemClicked;
 
     public SectionsCurrentMonthPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -33,7 +30,7 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter 
                 break;
 
             case 2:
-                fragment = MonthFragment.newInstance(onItemClicked);
+                fragment =  CardFragmentImpl.newInstance(Constants.FRAGMENT_ID_MONTH);
                 break;
 
         }
@@ -49,9 +46,5 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter 
     @Override
     public CharSequence getPageTitle(int position) {
         return String.valueOf(position);
-    }
-
-    public void setOnItemClicked(MonthAdapter.OnItemClicked onItemClicked) {
-        this.onItemClicked = onItemClicked;
     }
 }

@@ -1,10 +1,7 @@
-package com.system.androidpigbank.controllers.adapters.viewHolder;
+package com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder;
 
 import android.view.View;
-import android.widget.TextView;
 
-import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.vos.TitleVO;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.adapters.CardViewHolder;
 

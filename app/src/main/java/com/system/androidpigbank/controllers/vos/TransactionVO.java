@@ -1,4 +1,4 @@
-package com.system.androidpigbank.models.sqlite.entities;
+package com.system.androidpigbank.controllers.vos;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -8,6 +8,7 @@ import com.google.gson.annotations.Expose;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.system.androidpigbank.controllers.helpers.PaymentType;
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
 import com.system.androidpigbank.models.firebase.dtos.TransactionDTO;
 import com.system.architecture.adapters.CardAdapter;
@@ -21,7 +22,7 @@ import java.util.Date;
  */
 @DatabaseTable(tableName = "transaction")
 @IgnoreExtraProperties
-public class Transaction extends EntityAbs implements Parcelable, CardAdapter.CardModel {
+public class TransactionVO extends EntityAbs implements VOIf, Parcelable, CardAdapter.CardModel {
 
     @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
     private Long id;
@@ -40,11 +41,11 @@ public class Transaction extends EntityAbs implements Parcelable, CardAdapter.Ca
 
     @Expose
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
-    private Category category;
+    private CategoryVO category;
 
     @Expose
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
-    private Category categorySecondary;
+    private CategoryVO categorySecondary;
 
     @Expose
     @DatabaseField
@@ -54,7 +55,7 @@ public class Transaction extends EntityAbs implements Parcelable, CardAdapter.Ca
     @DatabaseField(dataType = DataType.ENUM_INTEGER)
     private PaymentType paymentType;
 
-    public Transaction() {
+    public TransactionVO() {
     }
 
     public Date getDateTransaction() {
@@ -73,11 +74,11 @@ public class Transaction extends EntityAbs implements Parcelable, CardAdapter.Ca
         this.value = value;
     }
 
-    public Category getCategory() {
+    public CategoryVO getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(CategoryVO category) {
         this.category = category;
     }
 
@@ -110,11 +111,11 @@ public class Transaction extends EntityAbs implements Parcelable, CardAdapter.Ca
         this.datePayment = datePayment;
     }
 
-    public Category getCategorySecondary() {
+    public CategoryVO getCategorySecondary() {
         return categorySecondary;
     }
 
-    public void setCategorySecondary(Category categorySecondary) {
+    public void setCategorySecondary(CategoryVO categorySecondary) {
         this.categorySecondary = categorySecondary;
     }
 
@@ -143,29 +144,29 @@ public class Transaction extends EntityAbs implements Parcelable, CardAdapter.Ca
         dest.writeInt(this.paymentType == null ? -1 : this.paymentType.ordinal());
     }
 
-    protected Transaction(Parcel in) {
+    protected TransactionVO(Parcel in) {
         this.id = (Long) in.readValue(Long.class.getClassLoader());
         long tmpDate = in.readLong();
         this.dateTransaction = tmpDate == -1 ? null : new Date(tmpDate);
         long tmpDatePayment = in.readLong();
         this.datePayment = tmpDatePayment == -1 ? null : new Date(tmpDatePayment);
         this.value = (Double) in.readValue(Double.class.getClassLoader());
-        this.category = in.readParcelable(Category.class.getClassLoader());
-        this.categorySecondary = in.readParcelable(Category.class.getClassLoader());
+        this.category = in.readParcelable(CategoryVO.class.getClassLoader());
+        this.categorySecondary = in.readParcelable(CategoryVO.class.getClassLoader());
         this.content = in.readString();
         int tmpPaymentType = in.readInt();
         this.paymentType = tmpPaymentType == -1 ? null : PaymentType.values()[tmpPaymentType];
     }
 
-    public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
+    public static final Creator<TransactionVO> CREATOR = new Creator<TransactionVO>() {
         @Override
-        public Transaction createFromParcel(Parcel source) {
-            return new Transaction(source);
+        public TransactionVO createFromParcel(Parcel source) {
+            return new TransactionVO(source);
         }
 
         @Override
-        public Transaction[] newArray(int size) {
-            return new Transaction[size];
+        public TransactionVO[] newArray(int size) {
+            return new TransactionVO[size];
         }
     };
 

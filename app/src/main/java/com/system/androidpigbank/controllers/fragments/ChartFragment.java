@@ -16,7 +16,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.models.sqlite.entities.Category;
+import com.system.androidpigbank.controllers.vos.CategoryVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,7 @@ public class ChartFragment extends Fragment {
         return fragment;
     }
 
-    public void update(List<Category> data) {
+    public void update(List<CategoryVO> data) {
 
         mChart.setUsePercentValues(true);
         mChart.setDescription("");
@@ -71,13 +71,13 @@ public class ChartFragment extends Fragment {
 
     }
 
-    private void setData(List<Category> categories, float range, Chart mChart) {
+    private void setData(List<CategoryVO> categories, float range, Chart mChart) {
 
         ArrayList<Entry> yVals1 = new ArrayList<>();
         ArrayList<String> xVals = new ArrayList<>();
 
         for (int i = 0; i < categories.size(); i++) {
-            final Category category = categories.get(i);
+            final CategoryVO category = categories.get(i);
             if (category.getAmount() > 0) {
                 yVals1.add(new Entry(Float.valueOf(category.getAmount().toString()), i));
                 xVals.add(category.getName());

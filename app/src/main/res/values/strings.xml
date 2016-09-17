@@ -55,6 +55,7 @@
     <string name="payment_type_itau_credit">Itaú Credit</string>
     <string name="payment_type_hsbc_transfer">HSBC Transfer</string>
     <string name="payment_type_nubank">Nubank</string>
+    <string name="payment_type_alelo">Alelo</string>
 
     <string-array name="payment_type_array">
         <item>@string/payment_type_money</item>
@@ -63,6 +64,7 @@
         <item>@string/payment_type_itau_credit</item>
         <item>@string/payment_type_itau_transfer</item>
         <item>@string/payment_type_hsbc_transfer</item>
+        <item>@string/payment_type_alelo</item>
     </string-array>
 
 </resources>

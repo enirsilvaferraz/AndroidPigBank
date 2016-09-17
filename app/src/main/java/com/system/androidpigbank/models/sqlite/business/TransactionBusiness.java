@@ -8,12 +8,12 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.support.ConnectionSource;
-import com.system.androidpigbank.controllers.vos.Month;
+import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.controllers.vos.TitleVO;
 import com.system.androidpigbank.controllers.vos.TotalVO;
 import com.system.androidpigbank.controllers.vos.WhiteSpaceVO;
-import com.system.androidpigbank.models.sqlite.entities.Category;
-import com.system.androidpigbank.models.sqlite.entities.Transaction;
+import com.system.androidpigbank.controllers.vos.CategoryVO;
+import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.architecture.managers.DaoAbs;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.utils.JavaUtils;
@@ -27,33 +27,33 @@ import java.util.List;
 /**
  * Created by eferraz on 05/12/15.
  */
-public class TransactionBusiness extends DaoAbs<Transaction> {
+public class TransactionBusiness extends DaoAbs<TransactionVO> {
 
     public TransactionBusiness(Context context) {
         super(context);
     }
 
-    public Transaction save(Transaction transaction) throws SQLException {
+    public TransactionVO save(TransactionVO transaction) throws SQLException {
 
         if (transaction.getCategory().getId() == null) {
-            Category category = new CategoryBusiness(getContext()).save(transaction.getCategory());
+            CategoryVO category = new CategoryBusiness(getContext()).save(transaction.getCategory());
             category.setPrimary(true);
             transaction.setCategory(category);
         }
 
         if (transaction.getCategorySecondary() != null && transaction.getCategorySecondary().getId() == null) {
-            Category category = new CategoryBusiness(getContext()).save(transaction.getCategorySecondary());
+            CategoryVO category = new CategoryBusiness(getContext()).save(transaction.getCategorySecondary());
             transaction.setCategorySecondary(category);
         }
 
         return super.save(transaction);
     }
 
-    public List<Transaction> getTransactionByMonth(int month, int year) throws SQLException {
+    public List<TransactionVO> getTransactionByMonth(int month, int year) throws SQLException {
 
         ConnectionSource connection = new AndroidConnectionSource(db);
-        Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);
-        QueryBuilder<Transaction, String> queryTransaction = dao.queryBuilder();
+        Dao<TransactionVO, String> dao = DaoManager.createDao(connection, TransactionVO.class);
+        QueryBuilder<TransactionVO, String> queryTransaction = dao.queryBuilder();
 
         Date cInit = JavaUtils.DateUtil.getActualMaximum(year, month - 1);
         Date cEnd = JavaUtils.DateUtil.getActualMaximum(year, month);
@@ -61,26 +61,26 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
         queryTransaction.where().between("datePayment", cInit, cEnd);
         queryTransaction.orderBy("datePayment", true);
 
-        Dao<Category, String> categoryDao = DaoManager.createDao(connection, Category.class);
-        QueryBuilder<Category, String> queryCategory = categoryDao.queryBuilder();
+        Dao<CategoryVO, String> categoryDao = DaoManager.createDao(connection, CategoryVO.class);
+        QueryBuilder<CategoryVO, String> queryCategory = categoryDao.queryBuilder();
 
-        List<Transaction> results = queryTransaction.join(queryCategory).query();
+        List<TransactionVO> results = queryTransaction.join(queryCategory).query();
         connection.close();
 
         return results;
     }
 
-    public List<Transaction> findByCategory(Category category, int month, int year) throws SQLException {
+    public List<TransactionVO> findByCategory(CategoryVO category, int month, int year) throws SQLException {
 
         Date cInit = JavaUtils.DateUtil.getActualMaximum(year, month - 1);
         Date cEnd = JavaUtils.DateUtil.getActualMaximum(year, month);
 
         ConnectionSource connection = new AndroidConnectionSource(db);
 
-        Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);
-        QueryBuilder<Transaction, String> queryTransaction = dao.queryBuilder();
+        Dao<TransactionVO, String> dao = DaoManager.createDao(connection, TransactionVO.class);
+        QueryBuilder<TransactionVO, String> queryTransaction = dao.queryBuilder();
 
-        Where<Transaction, String> where = queryTransaction.where();
+        Where<TransactionVO, String> where = queryTransaction.where();
 
         where.and(
                 where.between("datePayment", cInit, cEnd),
@@ -92,47 +92,47 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
 
         queryTransaction.orderBy("category_id", false).orderBy("categorySecondary_id", false).orderBy("datePayment", true);
 
-        List<Transaction> results = queryTransaction.query();
+        List<TransactionVO> results = queryTransaction.query();
 
         connection.close();
         return results;
     }
 
-    public Transaction delete(Transaction transaction) throws SQLException {
+    public TransactionVO delete(TransactionVO transaction) throws SQLException {
         ConnectionSource connection = new AndroidConnectionSource(db);
-        Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);
+        Dao<TransactionVO, String> dao = DaoManager.createDao(connection, TransactionVO.class);
         dao.delete(transaction);
         return transaction;
     }
 
-    public Transaction edit(Transaction transaction) throws SQLException {
+    public TransactionVO edit(TransactionVO transaction) throws SQLException {
         ConnectionSource connection = new AndroidConnectionSource(db);
-        Dao<Transaction, String> dao = DaoManager.createDao(connection, Transaction.class);
+        Dao<TransactionVO, String> dao = DaoManager.createDao(connection, TransactionVO.class);
         dao.update(transaction);
         return transaction;
     }
 
-    public List<Month> getMonthWithTransaction(int year) throws SQLException {
+    public List<MonthVO> getMonthWithTransaction(int year) throws SQLException {
 
-        List<Month> list = new ArrayList<>();
+        List<MonthVO> list = new ArrayList<>();
 
         for (int month = 11; month >= 0; month--) {
-            List<Transaction> transactions = getTransactionByMonth(month, year);
+            List<TransactionVO> transactions = getTransactionByMonth(month, year);
 
             Double amount = 0D;
-            for (Transaction transaction : transactions) {
+            for (TransactionVO transaction : transactions) {
                 amount += transaction.getValue();
             }
 
             if (amount > 0) {
-                list.add(new Month(month, year, amount));
+                list.add(new MonthVO(month, year, amount));
             }
         }
 
         return list;
     }
 
-    public List<CardAdapter.CardModel> organizeTransationcListV2(List<Transaction> list) {
+    public List<CardAdapter.CardModel> organizeTransationcListV2(List<TransactionVO> list) {
 
         List<CardAdapter.CardModel> itens = new ArrayList<>();
 
@@ -144,8 +144,8 @@ public class TransactionBusiness extends DaoAbs<Transaction> {
 
         for (int position = 0; position < list.size(); position++){
 
-            Transaction transactionAct = list.get(position);
-            Transaction transactionProx = list.size() > position + 1 ? list.get(position + 1) : null;
+            TransactionVO transactionAct = list.get(position);
+            TransactionVO transactionProx = list.size() > position + 1 ? list.get(position + 1) : null;
 
             if (JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), Calendar.getInstance().getTime()) > 0){
 

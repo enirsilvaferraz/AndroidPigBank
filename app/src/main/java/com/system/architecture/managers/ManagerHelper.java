@@ -6,7 +6,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 
-import com.system.androidpigbank.controllers.helpers.constant.Constants;
+import com.system.androidpigbank.controllers.helpers.Constants;
 
 /**
  * Created by eferraz on 05/12/15.

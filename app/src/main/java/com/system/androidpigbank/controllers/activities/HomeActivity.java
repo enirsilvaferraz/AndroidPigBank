@@ -1,9 +1,9 @@
 package com.system.androidpigbank.controllers.activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -22,12 +22,10 @@ import com.system.androidpigbank.models.firebase.business.MonthFirebaseBusiness;
 import com.system.androidpigbank.models.firebase.business.TransactionFirebaseBusiness;
 import com.system.architecture.activities.BaseActivity;
 import com.system.architecture.adapters.CardFragment;
-import com.system.architecture.helpers.PermissionHelper;
 import com.system.architecture.utils.JavaUtils;
 
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -108,29 +106,10 @@ public class HomeActivity extends BaseActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull int[] grantResults) {
-
-        PermissionHelper.verifyPermissionAlert(this, permissions, grantResults, new PermissionHelper.PermissionCallBack() {
-
-            @Override
-            public void executeAction(String permission) {
-                try {
-                    if (Manifest.permission.READ_EXTERNAL_STORAGE.equals(permission)) {
-                        Calendar calendar = Calendar.getInstance();
-                        update(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
-                    }
-                } catch (Exception e) {
-                    showMessage(e);
-                }
-            }
-        });
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (RESULT_OK == resultCode && (Constants.REQUEST_ACTION_DELETE == requestCode || Constants.REQUEST_ACTION_SAVE == requestCode)) {
-            callApi(this.data.getMonth(), this.data.getYear());
+            update(this.data.getMonth(), this.data.getYear());
             showMessage(data.getIntExtra(Constants.BUNDLE_MESSAGE_ID, 0));
         }
 
@@ -138,30 +117,23 @@ public class HomeActivity extends BaseActivity {
     }
 
     public void callApi() {
-        callApi(this.data.getMonth(), this.data.getYear());
+        update(this.data.getMonth(), this.data.getYear());
     }
 
     public void update(final int month, final int year) {
-        if (PermissionHelper.checkForPermissions(this, ACCESS_PERMISSIONS)) {
-            callApi(month, year);
-        } else {
-            PermissionHelper.requestPermissions(this, ACCESS_PERMISSIONS, Constants.REQUEST_PERMISSION_DEFAULT_ID);
-        }
-    }
 
-    private void callApi(final int month, final int year) {
-
-//        JavaUtils.SharedPreferencesUtil.backupOnFirstAccess(HomeActivity.this);
-
+        final ProgressDialog dialog = ProgressDialog.show(HomeActivity.this, "", "Loading. Please wait...", true);
 
         new HomeBusiness().findAll(month, year, new HomeBusiness.SingleResult() {
             @Override
             public void onFind(HomeObjectVO homeObjectVO) {
                 configureResult(homeObjectVO);
+                dialog.dismiss();
             }
 
             @Override
             public void onError(String error) {
+                dialog.dismiss();
                 showMessage(error);
             }
         });

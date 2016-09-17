@@ -26,6 +26,7 @@ public class MonthVO extends EntityAbs implements VOIf, Parcelable, CardAdapter.
             return new MonthVO[size];
         }
     };
+
     @Expose
     private Integer month;
     @Expose

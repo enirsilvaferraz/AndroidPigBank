@@ -8,6 +8,7 @@ import com.system.architecture.adapters.CardAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,11 +17,6 @@ import java.util.Map;
  */
 
 public class MonthFirebaseBusiness extends FirebaseDaoAbs<MonthVO> {
-
-    @Override
-    protected Map<String, Object> pupulateMap(MonthVO vo) {
-        return null;
-    }
 
     @Override
     protected Class<? extends DTOAbs> getDTOClass() {
@@ -47,5 +43,18 @@ public class MonthFirebaseBusiness extends FirebaseDaoAbs<MonthVO> {
 
         list.add(new WhiteSpaceVO());
         return list;
+    }
+
+    @Override
+    protected Map<String, Object> pupulateMap(MonthVO vo) {
+
+        MonthDTO dto = (MonthDTO) vo.toDTO();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("month", dto.getMonth());
+        map.put("year", dto.getYear());
+        map.put("value", dto.getValue());
+
+        return map;
     }
 }

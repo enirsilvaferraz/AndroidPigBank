@@ -102,10 +102,31 @@ public class HomeBusiness {
 //            }
         }
 
+        Collections.sort(home.getListCategorySummary(), new Comparator<CategoryVO>() {
+            @Override
+            public int compare(CategoryVO o1, CategoryVO o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+
 
         Double total = 0D;
         for (CategoryVO category : home.getListCategorySummary()) {
             total += category.getAmount();
+
+            Collections.sort(category.getTransactionList(), new Comparator<TransactionVO>() {
+                @Override
+                public int compare(TransactionVO o1, TransactionVO o2) {
+
+                    if (o1.getCategorySecondary() == null){
+                        return -1;
+                    } else if (o2.getCategorySecondary() == null) {
+                        return 1;
+                    } else {
+                        return o1.getCategorySecondary().getName().compareTo(o2.getCategorySecondary().getName());
+                    }
+                }
+            });
         }
 
         MonthVO month = new MonthVO();

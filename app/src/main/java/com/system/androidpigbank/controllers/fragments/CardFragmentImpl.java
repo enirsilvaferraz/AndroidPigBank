@@ -2,17 +2,23 @@ package com.system.androidpigbank.controllers.fragments;
 
 import android.support.v7.app.AppCompatActivity;
 
+import com.system.androidpigbank.controllers.activities.HomeActivity;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.controllers.vos.ActionBarVO;
+import com.system.androidpigbank.controllers.vos.CategoryVO;
+import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.androidpigbank.models.sqlite.business.CategoryBusiness;
 import com.system.androidpigbank.models.sqlite.business.TransactionBusiness;
-import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.adapters.CardFragment;
 import com.system.architecture.managers.LoaderResult;
 import com.system.architecture.managers.ManagerHelper;
+import com.system.architecture.utils.JavaUtils;
+
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Enir on 11/09/2016.
@@ -47,6 +53,21 @@ public class CardFragmentImpl extends CardFragment {
 //        else if (model instanceof CategoryVO){
 //            performCategoryClick(action, model, cardAdapter);
 //        }
+
+        else if (model instanceof MonthVO) {
+            performMonthClick(action, (MonthVO) model, cardAdapter);
+        }
+    }
+
+    private void performMonthClick(int action, MonthVO model, CardAdapter cardAdapter) {
+
+        switch (action) {
+            case Constants.ACTION_VIEW:
+                Date parse = JavaUtils.DateUtil.parse(model.getYear() + "/" + model.getMonth(), JavaUtils.DateUtil.MM_YYYY);
+                getActivity().setTitle(JavaUtils.DateUtil.format(parse, JavaUtils.DateUtil.MMMM_DE_YYYY));
+                ((HomeActivity) getActivity()).update(model.getMonth(), model.getYear());
+                break;
+        }
     }
 
     private void performCategoryClick(int action, final CardAdapter.CardModel model, final CardAdapter cardAdapter) {

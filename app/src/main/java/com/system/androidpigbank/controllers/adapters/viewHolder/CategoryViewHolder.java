@@ -57,14 +57,5 @@ public class CategoryViewHolder extends CardViewHolder {
                 JavaUtils.NumberUtil.currencyFormat(0D));
         tvProgressValue.setText("N/A");
         progressBar.setProgress(0);
-
-        if (onClickListener != null) {
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onClickListener.onContainerClicked(Constants.ACTION_VIEW, model);
-                }
-            });
-        }
     }
 }

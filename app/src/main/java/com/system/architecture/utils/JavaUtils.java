@@ -12,14 +12,14 @@ import com.google.gson.GsonBuilder;
 import com.system.androidpigbank.BuildConfig;
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.activities.HomeActivity;
+import com.system.androidpigbank.controllers.vos.CategoryVO;
+import com.system.androidpigbank.controllers.vos.PaymentType;
+import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
 import com.system.androidpigbank.models.firebase.serializers.GsonCategorySerializer;
 import com.system.androidpigbank.models.firebase.serializers.GsonDateSerializer;
 import com.system.androidpigbank.models.firebase.serializers.GsonPaymentTypeSerializer;
-import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
 import com.system.androidpigbank.models.sqlite.business.RecoverBusiness;
-import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.architecture.managers.EntityAbs;
-import com.system.androidpigbank.controllers.vos.PaymentType;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -43,6 +43,7 @@ public final class JavaUtils {
         public static final String DD_MM_YYYY = "dd/MM/yyyy";
         public static final String MMMM_DE_YYYY = "MMMM 'de' yyyy";
         public static final String YYYY_MM_DD = "yyyy/MM/dd";
+        public static final String MM_YYYY = "MM/yyyy";
 
         public static String format(Date date, String template) {
             if (date == null) {
@@ -69,14 +70,14 @@ public final class JavaUtils {
             }
         }
 
-        public static Date getActualMaximum(int year, int month){
+        public static Date getActualMaximum(int year, int month) {
             Calendar cInit = Calendar.getInstance();
-            cInit.set(year, month, 1, cInit.getActualMaximum(Calendar.HOUR_OF_DAY), cInit.getActualMaximum(Calendar.MINUTE),cInit.getActualMaximum(Calendar.SECOND) ); // DATE = 1 Evita avancar o mes (31)
+            cInit.set(year, month, 1, cInit.getActualMaximum(Calendar.HOUR_OF_DAY), cInit.getActualMaximum(Calendar.MINUTE), cInit.getActualMaximum(Calendar.SECOND)); // DATE = 1 Evita avancar o mes (31)
             cInit.set(Calendar.DATE, cInit.getActualMaximum(Calendar.DATE));
             return cInit.getTime();
         }
 
-        public static int compare(Date dInit, Date dEnd){
+        public static int compare(Date dInit, Date dEnd) {
 
             Calendar cInit = Calendar.getInstance();
             cInit.setTime(parse(format(dInit, DD_MM_YYYY), DD_MM_YYYY));
@@ -122,7 +123,7 @@ public final class JavaUtils {
 
         private static final String FLAVOR_PRD = "prd";
 
-        public static void installShortCut(Context appContext){
+        public static void installShortCut(Context appContext) {
 
             Intent shortcutIntent = new Intent(appContext, HomeActivity.class);
             shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -141,7 +142,7 @@ public final class JavaUtils {
             return BuildConfig.FLAVOR.equals(FLAVOR_PRD);
         }
 
-        public static int getPixel(Resources resources, int dp){
+        public static int getPixel(Resources resources, int dp) {
             return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
         }
     }
@@ -151,7 +152,7 @@ public final class JavaUtils {
      */
     public static class SharedPreferencesUtil {
 
-        public static void backupOnFirstAccess(Context context){
+        public static void backupOnFirstAccess(Context context) {
 
             SharedPreferences sp = context.getSharedPreferences("SHARED_APP", Context.MODE_PRIVATE);
             if (!sp.getBoolean("FIST_ACCESS", false)) {
@@ -173,11 +174,11 @@ public final class JavaUtils {
 
         private Gson build;
 
-        public static GsonUtil getInstance(){
+        public static GsonUtil getInstance() {
             return new GsonUtil();
         }
 
-        public GsonUtil fromTransaction(){
+        public GsonUtil fromTransaction() {
             build = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
                     .registerTypeAdapter(Date.class, new GsonDateSerializer())
@@ -187,28 +188,28 @@ public final class JavaUtils {
             return this;
         }
 
-        public GsonUtil fromCategory (){
-            build =  new GsonBuilder()
+        public GsonUtil fromCategory() {
+            build = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
                     .create();
             return this;
         }
 
-        public GsonUtil fromMonth (){
-            build =  new GsonBuilder()
+        public GsonUtil fromMonth() {
+            build = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
                     .create();
             return this;
         }
 
-        public GsonUtil fromHomeObject (){
-            build =  new GsonBuilder()
+        public GsonUtil fromHomeObject() {
+            build = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
                     .create();
             return this;
         }
 
-        public DTOAbs toDTO(EntityAbs entity, Class<? extends DTOAbs> classe){
+        public DTOAbs toDTO(EntityAbs entity, Class<? extends DTOAbs> classe) {
             String json = build.toJson(entity);
             return build.fromJson(json, classe);
         }

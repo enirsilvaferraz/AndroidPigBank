@@ -13,13 +13,12 @@ import android.view.View;
 import com.crashlytics.android.Crashlytics;
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.pager.SectionsCurrentMonthPagerAdapter;
-import com.system.androidpigbank.controllers.adapters.recyclerv.MonthAdapter;
-import com.system.androidpigbank.controllers.fragments.MonthFragment;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.helpers.constant.Constants;
 import com.system.androidpigbank.controllers.vos.HomeObjectVO;
 import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusiness;
 import com.system.androidpigbank.models.firebase.business.HomeBusiness;
+import com.system.androidpigbank.models.firebase.business.MonthFirebaseBusiness;
 import com.system.androidpigbank.models.firebase.business.TransactionFirebaseBusiness;
 import com.system.architecture.activities.BaseActivity;
 import com.system.architecture.adapters.CardFragment;
@@ -94,9 +93,11 @@ public class HomeActivity extends BaseActivity {
                 case Constants.FRAGMENT_ID_TRANSACTION:
                     ((CardFragment) fragment).setData(new TransactionFirebaseBusiness().organizeTransationcList(data.getListTransaction()));
                     break;
+
+                case Constants.FRAGMENT_ID_MONTH:
+                    ((CardFragment) fragment).setData(new MonthFirebaseBusiness().organizeList(data.getListMonth()));
+                    break;
             }
-        } else if (fragment instanceof MonthFragment) {
-            ((MonthFragment) fragment).setData(data.getListMonth());
         }
     }
 
@@ -140,7 +141,7 @@ public class HomeActivity extends BaseActivity {
         callApi(this.data.getMonth(), this.data.getYear());
     }
 
-    private void update(final int month, final int year) {
+    public void update(final int month, final int year) {
         if (PermissionHelper.checkForPermissions(this, ACCESS_PERMISSIONS)) {
             callApi(month, year);
         } else {
@@ -175,23 +176,9 @@ public class HomeActivity extends BaseActivity {
         setTitle(JavaUtils.DateUtil.format(calendar.getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));
 
         SectionsCurrentMonthPagerAdapter adapter = new SectionsCurrentMonthPagerAdapter(getSupportFragmentManager());
-        adapter.setOnItemClicked(new OnItemClickedListener());
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.setCurrentItem(HOME_INDICATOR);
         mViewPager.getAdapter().notifyDataSetChanged();
-    }
-
-    private class OnItemClickedListener implements MonthAdapter.OnItemClicked {
-
-        @Override
-        public void onClick(Date date) {
-
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-
-            setTitle(JavaUtils.DateUtil.format(calendar.getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));
-            update(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
-        }
     }
 }

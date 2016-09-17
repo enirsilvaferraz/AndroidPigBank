@@ -66,14 +66,5 @@ public class TransactionViewHolder extends CardViewHolder {
         }
 
         textCategory.setText(categoryName);
-
-        if (onClickListener != null) {
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onClickListener.onContainerClicked(Constants.ACTION_VIEW, transaction);
-                }
-            });
-        }
     }
 }

@@ -8,9 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.system.androidpigbank.controllers.activities.CategoryManagerDialog;
 import com.system.androidpigbank.controllers.activities.TransactionManagerDialog;
-import com.system.androidpigbank.controllers.vos.TransactionVO;
-import com.system.androidpigbank.models.sqlite.business.BackupService;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
+import com.system.androidpigbank.controllers.vos.TransactionVO;
 
 /**
  * Created by eferraz on 25/04/16.
@@ -18,10 +17,6 @@ import com.system.androidpigbank.controllers.vos.CategoryVO;
 public final class IntentRouter {
 
     private static DialogFragment dialog;
-
-    public static void startServiceBackup(Context context) {
-        context.startService(new Intent(context, BackupService.class));
-    }
 
     public static void startTransactionManager(AppCompatActivity context, TransactionVO model) {
         hideDialog();

@@ -3,14 +3,14 @@ package com.system.androidpigbank.controllers.fragments;
 import android.support.v7.app.AppCompatActivity;
 
 import com.system.androidpigbank.controllers.activities.HomeActivity;
-import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.helpers.Constants;
+import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.vos.ActionBarVO;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
-import com.system.androidpigbank.models.sqlite.business.CategoryBusiness;
-import com.system.androidpigbank.models.sqlite.business.TransactionBusiness;
+import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusiness;
+import com.system.androidpigbank.models.firebase.business.TransactionFirebaseBusiness;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.adapters.CardFragment;
 import com.system.architecture.managers.LoaderResult;
@@ -93,7 +93,7 @@ public class CardFragmentImpl extends CardFragment {
                 ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<CategoryVO>() {
                     @Override
                     public CategoryVO executeAction() throws Exception {
-                        return new CategoryBusiness(getActivity()).delete((CategoryVO) model);
+                        return new CategoryFirebaseBusiness().delete((CategoryVO) model);
                     }
 
                     @Override
@@ -143,7 +143,7 @@ public class CardFragmentImpl extends CardFragment {
                 ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<TransactionVO>() {
                     @Override
                     public TransactionVO executeAction() throws Exception {
-                        return new TransactionBusiness(getActivity()).delete((TransactionVO) model);
+                        return new TransactionFirebaseBusiness().delete((TransactionVO) model);
                     }
 
                     @Override

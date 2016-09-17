@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.system.androidpigbank.controllers.activities.HomeActivity;
 import com.system.androidpigbank.models.firebase.business.FirebaseDaoAbs;
 import com.system.architecture.managers.EntityAbs;
-import com.system.architecture.managers.DaoAbs;
 
 /**
  * Created by eferraz on 25/04/16.
@@ -60,8 +59,6 @@ public abstract class BaseManagerDialog<T extends EntityAbs> extends DialogFragm
     }
 
     protected abstract FirebaseDaoAbs<T> getFirebaseBusinessInstance();
-
-    protected abstract DaoAbs<T> getBusinessInstance();
 
     protected abstract void prepareToPersist() throws Exception;
 }

@@ -19,11 +19,9 @@ import com.system.androidpigbank.controllers.helpers.Constants;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusiness;
 import com.system.androidpigbank.models.firebase.business.FirebaseDaoAbs;
-import com.system.androidpigbank.models.sqlite.business.CategoryBusiness;
 import com.system.architecture.activities.BaseActivity;
 import com.system.architecture.activities.BaseManagerDialog;
 import com.system.architecture.helpers.JavaHelper;
-import com.system.architecture.managers.DaoAbs;
 
 import java.util.List;
 
@@ -137,11 +135,6 @@ public class CategoryManagerDialog extends BaseManagerDialog<CategoryVO> {
             }
         });
 
-    }
-
-    @Override
-    protected DaoAbs<CategoryVO> getBusinessInstance() {
-        return new CategoryBusiness(getContext());
     }
 
     @Override

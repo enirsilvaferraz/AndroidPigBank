@@ -19,14 +19,12 @@ import android.widget.Spinner;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.helpers.Constants;
+import com.system.androidpigbank.controllers.helpers.PaymentType;
+import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusiness;
 import com.system.androidpigbank.models.firebase.business.FirebaseDaoAbs;
 import com.system.androidpigbank.models.firebase.business.TransactionFirebaseBusiness;
-import com.system.androidpigbank.models.sqlite.business.TransactionBusiness;
-import com.system.androidpigbank.controllers.vos.CategoryVO;
-import com.system.androidpigbank.controllers.helpers.PaymentType;
-import com.system.architecture.managers.DaoAbs;
 import com.system.architecture.activities.BaseActivity;
 import com.system.architecture.activities.BaseManagerDialog;
 import com.system.architecture.utils.JavaUtils;
@@ -255,11 +253,6 @@ public class TransactionManagerDialog extends BaseManagerDialog<TransactionVO> {
                 spPaymentType.getSelectedItem() == null) {
             throw new Exception("Campo obrigatório!");
         }
-    }
-
-    @Override
-    protected DaoAbs<TransactionVO> getBusinessInstance() {
-        return new TransactionBusiness(getContext());
     }
 
     @Override

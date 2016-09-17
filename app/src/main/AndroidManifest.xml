@@ -3,19 +3,12 @@
     package="com.system.androidpigbank">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true">
-
-        <activity
-            android:name=".controllers.activities.CategoryManagerDialog"
-            android:label="@string/title_activity_category_manager"
-            android:theme="@style/AppTheme.Green" />
 
         <activity
             android:name=".controllers.activities.HomeActivity"
@@ -27,10 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <service
-            android:name=".models.sqlite.business.BackupService"
-            android:exported="false" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

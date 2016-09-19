@@ -14,6 +14,7 @@ import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.managers.EntityAbs;
 import com.system.architecture.utils.JavaUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,6 +53,8 @@ public class CategoryVO extends EntityAbs implements VOIf, Parcelable, CardAdapt
     private CategoryVO old;
 
     public CategoryVO() {
+        transactionList = new ArrayList<>();
+        amount = 0D;
     }
 
     public CategoryVO(String name, Double amount) {

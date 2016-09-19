@@ -70,7 +70,9 @@ public abstract class FirebaseDaoAbs<T extends EntityAbs> {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<T> list = new ArrayList<T>();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    list.add(getTInstance(postSnapshot));
+                    T tInstance = getTInstance(postSnapshot);
+                    tInstance.setKey(postSnapshot.getKey());
+                    list.add(tInstance);
                 }
                 firebaseMultiReturnListener.onFindAll(list);
             }

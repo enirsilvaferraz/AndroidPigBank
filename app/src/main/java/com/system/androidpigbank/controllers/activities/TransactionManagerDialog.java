@@ -277,19 +277,25 @@ public class TransactionManagerDialog extends BaseManagerDialog<TransactionVO> {
             model.setDatePayment(JavaUtils.DateUtil.parse(editDatePayment.getText().toString()));
         }
 
-        final CategoryVO category = new CategoryVO(editCategory.getText().toString());
-        if (categories.contains(category)) {
-            model.setCategory(categories.get(categories.indexOf(category)));
-        } else {
-            model.setCategory(category);
+        for (CategoryVO category : categories) {
+            if (category.getName().equals(editCategory.getText().toString())) {
+                model.setCategory(category);
+                break;
+            }
+        }
+        if (model.getCategory() == null) {
+            model.setCategory(new CategoryVO(editCategory.getText().toString()));
         }
 
         if (!JavaUtils.StringUtil.isEmpty(editCategorySecondary.getText().toString())) {
-            final CategoryVO categorySecondary = new CategoryVO(editCategorySecondary.getText().toString());
-            if (categories.contains(categorySecondary)) {
-                model.setCategorySecondary(categories.get(categories.indexOf(categorySecondary)));
-            } else {
-                model.setCategorySecondary(categorySecondary);
+            for (CategoryVO category : categories) {
+                if (category.getName().equals(editCategorySecondary.getText().toString())) {
+                    model.setCategorySecondary(category);
+                    break;
+                }
+            }
+            if (model.getCategory() == null) {
+                model.setCategorySecondary(new CategoryVO(editCategorySecondary.getText().toString()));
             }
         } else {
             model.setCategorySecondary(null);

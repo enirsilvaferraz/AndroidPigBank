@@ -91,21 +91,23 @@ public class HomeBusiness {
                 home.getListCategorySummary().set(index, category);
             }
 
-//            if (transaction.getCategorySecondary() != null) {
-//                category = getCategoryIndex(categories, transaction, transaction.getCategorySecondary());
-//                if (!home.getListCategorySummary().contains(category)) {
-//                    home.getListCategorySummary().add(category);
-//                } else {
-//                    int index = home.getListCategorySummary().indexOf(category);
-//                    home.getListCategorySummary().set(index, category);
-//                }
-//            }
+            if (transaction.getCategorySecondary() != null) {
+                CategoryVO categoryS = getCategoryIndex(categories, transaction, transaction.getCategorySecondary());
+                transaction.setCategorySecondary(categoryS);
+                if (!home.getListCategorySummary().contains(categoryS)) {
+                    home.getListCategorySummary().add(categoryS);
+                } else {
+                    int index = home.getListCategorySummary().indexOf(categoryS);
+                    home.getListCategorySummary().set(index, categoryS);
+                }
+            }
         }
 
         Collections.sort(home.getListCategorySummary(), new Comparator<CategoryVO>() {
             @Override
             public int compare(CategoryVO o1, CategoryVO o2) {
-                return o1.getName().compareTo(o2.getName());
+                int compare = Boolean.compare(o1.isPrimary(), o2.isPrimary());
+                return compare == 0 ? o1.getName().compareTo(o2.getName()) : compare;
             }
         });
 

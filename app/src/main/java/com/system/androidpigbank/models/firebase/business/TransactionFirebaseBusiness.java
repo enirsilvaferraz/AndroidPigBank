@@ -80,7 +80,9 @@ public class TransactionFirebaseBusiness extends FirebaseDaoAbs<TransactionVO> {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         List<TransactionVO> list = new ArrayList<>();
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                            list.add(getTInstance(postSnapshot));
+                            TransactionVO tInstance = getTInstance(postSnapshot);
+                            tInstance.setKey(postSnapshot.getKey());
+                            list.add(tInstance);
                         }
                         listener.onFindAll(list);
                     }

@@ -26,7 +26,7 @@ import java.util.Map;
 public class CategoryFirebaseBusiness extends FirebaseDaoAbs<CategoryVO> {
 
 
-    @Override
+    /*@Override
     public void update(final CategoryVO entity) {
 
         final TransactionFirebaseBusiness business = new TransactionFirebaseBusiness();
@@ -55,7 +55,7 @@ public class CategoryFirebaseBusiness extends FirebaseDaoAbs<CategoryVO> {
 
             }
         });
-    }
+    }*/
 
     @Override
     protected Map<String, Object> pupulateMap(CategoryVO vo) {

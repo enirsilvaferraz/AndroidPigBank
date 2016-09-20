@@ -48,9 +48,10 @@ public class CardFragmentImpl extends CardFragment {
         if (model instanceof TransactionVO) {
             performTransactionClick(action, model, cardAdapter);
         }
-//        else if (model instanceof CategoryVO){
-//            performCategoryClick(action, model, cardAdapter);
-//        }
+
+        else if (model instanceof CategoryVO){
+            performCategoryClick(action, model, cardAdapter);
+        }
 
         else if (model instanceof MonthVO) {
             performMonthClick(action, (MonthVO) model, cardAdapter);

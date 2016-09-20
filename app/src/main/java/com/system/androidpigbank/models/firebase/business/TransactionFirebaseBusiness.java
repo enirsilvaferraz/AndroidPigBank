@@ -109,13 +109,18 @@ public class TransactionFirebaseBusiness extends FirebaseDaoAbs<TransactionVO> {
             TransactionVO transactionAct = list.get(position);
             TransactionVO transactionProx = list.size() > position + 1 ? list.get(position + 1) : null;
 
-            if (JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), Calendar.getInstance().getTime()) > 0) {
+            if (JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), Calendar.getInstance().getTime()) == 0) {
+                valorAcumular += transactionAct.getValue();
+            }
 
-                if (!hasTitleFutureLanc && transactionProx != null) {
+            else if (JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), Calendar.getInstance().getTime()) > 0) {
+
+                if (!hasTitleFutureLanc) {
                     itens.add(new TitleVO("Lançamentos Futuros"));
                     itens.add(new WhiteSpaceVO());
                     hasTitleFutureLanc = true;
                 }
+
                 valorAcumular += transactionAct.getValue();
             }
 
@@ -125,6 +130,7 @@ public class TransactionFirebaseBusiness extends FirebaseDaoAbs<TransactionVO> {
             if (transactionProx == null || JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), transactionProx.getDatePayment()) != 0) {
                 itens.add(new TotalVO(null, valorAcumular));
                 itens.add(new WhiteSpaceVO());
+                valorAcumular = 0D;
                 //valorDiario = 0D;
             }
         }

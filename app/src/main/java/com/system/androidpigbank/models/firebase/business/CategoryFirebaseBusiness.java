@@ -84,17 +84,17 @@ public class CategoryFirebaseBusiness extends FirebaseDaoAbs<CategoryVO> {
 
             CategoryVO category = data.get(position);
 
+            if (!hasTitleSecondary && !category.isPrimary() && position != data.size() - 1) {
+                itens.add(new WhiteSpaceVO());
+                itens.add(new TitleVO("Secondary Categories"));
+                hasTitleSecondary = true;
+            }
+
             itens.add(new WhiteSpaceVO());
             itens.add(category);
 
             if (!category.getTransactionList().isEmpty()) {
                 itens.addAll(getTransactionByCategory(category.getTransactionList()));
-            }
-
-            if (!hasTitleSecondary && !category.isPrimary() && position != data.size() - 1) {
-                itens.add(new WhiteSpaceVO());
-                itens.add(new TitleVO("Secondary Categories"));
-                hasTitleSecondary = true;
             }
         }
 

@@ -82,7 +82,7 @@ public class HomeBusiness {
             homeObjectVO.setYear(year);
             homeObjectVO.setListCategorySummary(organizeCategorySummaryList(categories, transactions));
             homeObjectVO.setListTransaction(organizeTransationcList(transactions, categories));
-            homeObjectVO.setListMonth(organizeList(month, year, months));
+            homeObjectVO.setListMonth(organizeMonthList(month, year, months));
             listener.onFind(homeObjectVO);
         }
     }
@@ -142,7 +142,7 @@ public class HomeBusiness {
         return itens;
     }
 
-    private List<CardAdapter.CardModel> organizeList(final int monthInt, final int yearInt, List<MonthVO> months) {
+    private List<CardAdapter.CardModel> organizeMonthList(final int monthInt, final int yearInt, List<MonthVO> months) {
 
         saveMonth(monthInt, yearInt, months);
 

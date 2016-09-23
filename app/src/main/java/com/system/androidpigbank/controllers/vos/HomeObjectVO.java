@@ -3,20 +3,34 @@ package com.system.androidpigbank.controllers.vos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.system.architecture.adapters.CardAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by eferraz on 29/07/16.
+ * Value Object da Home
  */
 
 public class HomeObjectVO implements Parcelable {
 
+    public static final Creator<HomeObjectVO> CREATOR = new Creator<HomeObjectVO>() {
+        @Override
+        public HomeObjectVO createFromParcel(Parcel source) {
+            return new HomeObjectVO(source);
+        }
+
+        @Override
+        public HomeObjectVO[] newArray(int size) {
+            return new HomeObjectVO[size];
+        }
+    };
     private int month;
     private int year;
-    private List<CategoryVO> listCategorySummary;
-    private List<TransactionVO> listTransaction;
-    private List<MonthVO> listMonth;
+    private List<CardAdapter.CardModel> listCategorySummary;
+    private List<CardAdapter.CardModel> listTransaction;
+    private List<CardAdapter.CardModel> listMonth;
 
     public HomeObjectVO() {
         listCategorySummary = new ArrayList<>();
@@ -24,27 +38,38 @@ public class HomeObjectVO implements Parcelable {
         listMonth = new ArrayList<>();
     }
 
-    public List<CategoryVO> getListCategorySummary() {
+    protected HomeObjectVO(Parcel in) {
+        this.month = in.readInt();
+        this.year = in.readInt();
+        this.listCategorySummary = new ArrayList<>();
+        in.readList(this.listCategorySummary, CardAdapter.CardModel.class.getClassLoader());
+        this.listTransaction = new ArrayList<>();
+        in.readList(this.listTransaction, CardAdapter.CardModel.class.getClassLoader());
+        this.listMonth = new ArrayList<>();
+        in.readList(this.listMonth, CardAdapter.CardModel.class.getClassLoader());
+    }
+
+    public List<CardAdapter.CardModel> getListCategorySummary() {
         return listCategorySummary;
     }
 
-    public void setListCategorySummary(List<CategoryVO> listCategorySummary) {
+    public void setListCategorySummary(List<CardAdapter.CardModel> listCategorySummary) {
         this.listCategorySummary = listCategorySummary;
     }
 
-    public List<TransactionVO> getListTransaction() {
+    public List<CardAdapter.CardModel> getListTransaction() {
         return listTransaction;
     }
 
-    public void setListTransaction(List<TransactionVO> listTransaction) {
+    public void setListTransaction(List<CardAdapter.CardModel> listTransaction) {
         this.listTransaction = listTransaction;
     }
 
-    public List<MonthVO> getListMonth() {
+    public List<CardAdapter.CardModel> getListMonth() {
         return listMonth;
     }
 
-    public void setListMonth(List<MonthVO> listMonth) {
+    public void setListMonth(List<CardAdapter.CardModel> listMonth) {
         this.listMonth = listMonth;
     }
 
@@ -73,28 +98,8 @@ public class HomeObjectVO implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.month);
         dest.writeInt(this.year);
-        dest.writeTypedList(this.listCategorySummary);
-        dest.writeTypedList(this.listTransaction);
-        dest.writeTypedList(this.listMonth);
+        dest.writeList(this.listCategorySummary);
+        dest.writeList(this.listTransaction);
+        dest.writeList(this.listMonth);
     }
-
-    protected HomeObjectVO(Parcel in) {
-        this.month = in.readInt();
-        this.year = in.readInt();
-        this.listCategorySummary = in.createTypedArrayList(CategoryVO.CREATOR);
-        this.listTransaction = in.createTypedArrayList(TransactionVO.CREATOR);
-        this.listMonth = in.createTypedArrayList(MonthVO.CREATOR);
-    }
-
-    public static final Creator<HomeObjectVO> CREATOR = new Creator<HomeObjectVO>() {
-        @Override
-        public HomeObjectVO createFromParcel(Parcel source) {
-            return new HomeObjectVO(source);
-        }
-
-        @Override
-        public HomeObjectVO[] newArray(int size) {
-            return new HomeObjectVO[size];
-        }
-    };
 }

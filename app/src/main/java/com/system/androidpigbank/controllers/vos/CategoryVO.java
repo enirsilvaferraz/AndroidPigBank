@@ -14,11 +14,9 @@ import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.managers.EntityAbs;
 import com.system.architecture.utils.JavaUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by eferraz on 05/12/15.
+ * Value Object de Categoria
  */
 @DatabaseTable(tableName = "category")
 public class CategoryVO extends EntityAbs implements VOIf, Parcelable, CardAdapter.CardModel, Cloneable {
@@ -49,11 +47,9 @@ public class CategoryVO extends EntityAbs implements VOIf, Parcelable, CardAdapt
     @DatabaseField(dataType = DataType.ENUM_INTEGER)
     private Colors color;
     private Double amount;
-    private List<TransactionVO> transactionList;
     private CategoryVO old;
 
     public CategoryVO() {
-        transactionList = new ArrayList<>();
         amount = 0D;
     }
 
@@ -74,7 +70,6 @@ public class CategoryVO extends EntityAbs implements VOIf, Parcelable, CardAdapt
         int tmpColor = in.readInt();
         this.color = tmpColor == -1 ? null : Colors.values()[tmpColor];
         this.amount = (Double) in.readValue(Double.class.getClassLoader());
-        this.transactionList = in.createTypedArrayList(TransactionVO.CREATOR);
         this.old = in.readParcelable(CategoryVO.class.getClassLoader());
     }
 
@@ -139,14 +134,6 @@ public class CategoryVO extends EntityAbs implements VOIf, Parcelable, CardAdapt
         return key != null ? key.hashCode() : 0;
     }
 
-    public List<TransactionVO> getTransactionList() {
-        return transactionList;
-    }
-
-    public void setTransactionList(List<TransactionVO> transactionList) {
-        this.transactionList = transactionList;
-    }
-
     @Override
     public String getKey() {
         return key;
@@ -188,7 +175,6 @@ public class CategoryVO extends EntityAbs implements VOIf, Parcelable, CardAdapt
         dest.writeByte(this.primary ? (byte) 1 : (byte) 0);
         dest.writeInt(this.color == null ? -1 : this.color.ordinal());
         dest.writeValue(this.amount);
-        dest.writeTypedList(this.transactionList);
         dest.writeParcelable(this.old, flags);
     }
 }

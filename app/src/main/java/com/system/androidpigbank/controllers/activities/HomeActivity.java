@@ -13,13 +13,10 @@ import android.view.View;
 import com.crashlytics.android.Crashlytics;
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.pager.SectionsCurrentMonthPagerAdapter;
-import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.helpers.Constants;
+import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.vos.HomeObjectVO;
-import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusiness;
 import com.system.androidpigbank.models.firebase.business.HomeBusiness;
-import com.system.androidpigbank.models.firebase.business.MonthFirebaseBusiness;
-import com.system.androidpigbank.models.firebase.business.TransactionFirebaseBusiness;
 import com.system.architecture.activities.BaseActivity;
 import com.system.architecture.adapters.CardFragment;
 import com.system.architecture.utils.JavaUtils;
@@ -85,15 +82,15 @@ public class HomeActivity extends BaseActivity {
         if (fragment instanceof CardFragment) {
             switch (((CardFragment) fragment).getFragmentID()) {
                 case Constants.FRAGMENT_ID_SUMMARY_CATEGORY:
-                    ((CardFragment) fragment).setData(new CategoryFirebaseBusiness().organizeCategorySummaryList(data.getListCategorySummary()));
+                    ((CardFragment) fragment).setData(data.getListCategorySummary());
                     break;
 
                 case Constants.FRAGMENT_ID_TRANSACTION:
-                    ((CardFragment) fragment).setData(new TransactionFirebaseBusiness().organizeTransationcList(data.getListTransaction()));
+                    ((CardFragment) fragment).setData(data.getListTransaction());
                     break;
 
                 case Constants.FRAGMENT_ID_MONTH:
-                    ((CardFragment) fragment).setData(new MonthFirebaseBusiness().organizeList(data.getListMonth()));
+                    ((CardFragment) fragment).setData(data.getListMonth());
                     break;
             }
         }

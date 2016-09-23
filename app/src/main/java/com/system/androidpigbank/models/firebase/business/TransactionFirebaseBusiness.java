@@ -7,17 +7,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
-import com.system.androidpigbank.controllers.vos.TitleVO;
-import com.system.androidpigbank.controllers.vos.TotalVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
-import com.system.androidpigbank.controllers.vos.WhiteSpaceVO;
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
 import com.system.androidpigbank.models.firebase.dtos.TransactionDTO;
-import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.utils.JavaUtils;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +20,7 @@ import java.util.Map;
 
 /**
  * Created by Enir on 08/09/2016.
+ * Business de Transaction
  */
 
 public class TransactionFirebaseBusiness extends FirebaseDaoAbs<TransactionVO> {
@@ -67,97 +63,33 @@ public class TransactionFirebaseBusiness extends FirebaseDaoAbs<TransactionVO> {
         return TransactionDTO.class;
     }
 
-    public void findTransactionByMonth(int month, int year, @NonNull final FirebaseMultiReturnListener listener) {
+    void findTransactionByMonth(int month, int year, @NonNull final FirebaseMultiReturnListener<TransactionVO> listener) {
 
         Date cInit = JavaUtils.DateUtil.getActualMinimum(year, month);
         Date cEnd = JavaUtils.DateUtil.getActualMaximum(year, month);
 
+        ValueEventListener valueEventListener = new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<TransactionVO> list = new ArrayList<>();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    TransactionVO tInstance = getTInstance(postSnapshot);
+                    tInstance.setKey(postSnapshot.getKey());
+                    list.add(tInstance);
+                }
+                listener.onFindAll(list);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onError(databaseError.getMessage());
+            }
+        };
+
         getDatabaseReference().orderByChild("datePayment")
                 .startAt(JavaUtils.DateUtil.format(cInit, JavaUtils.DateUtil.YYYY_MM_DD))
                 .endAt(JavaUtils.DateUtil.format(cEnd, JavaUtils.DateUtil.YYYY_MM_DD))
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        List<TransactionVO> list = new ArrayList<>();
-                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                            TransactionVO tInstance = getTInstance(postSnapshot);
-                            tInstance.setKey(postSnapshot.getKey());
-                            list.add(tInstance);
-                        }
-                        listener.onFindAll(list);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        listener.onError(databaseError.getMessage());
-                    }
-                });
-    }
-
-    public List<CardAdapter.CardModel> organizeTransationcList(List<TransactionVO> list) {
-
-        List<CardAdapter.CardModel> itens = new ArrayList<>();
-
-        Double valorAcumular = 0D;
-        // Double valorDiario = 0D;
-        boolean hasTitleFutureLanc = false;
-
-        itens.add(new WhiteSpaceVO());
-
-        for (int position = 0; position < list.size(); position++) {
-
-            TransactionVO transactionAct = list.get(position);
-            TransactionVO transactionProx = list.size() > position + 1 ? list.get(position + 1) : null;
-
-            if (JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), Calendar.getInstance().getTime()) == 0) {
-                valorAcumular += transactionAct.getValue();
-            }
-
-            else if (JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), Calendar.getInstance().getTime()) > 0) {
-
-                if (!hasTitleFutureLanc) {
-                    itens.add(new TitleVO("Lançamentos Futuros"));
-                    itens.add(new WhiteSpaceVO());
-                    hasTitleFutureLanc = true;
-                }
-
-                valorAcumular += transactionAct.getValue();
-            }
-
-            itens.add(transactionAct);
-            //valorDiario += transactionAct.getValue();
-
-            if (transactionProx == null || JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), transactionProx.getDatePayment()) != 0) {
-                itens.add(new TotalVO(null, valorAcumular));
-                itens.add(new WhiteSpaceVO());
-                //valorAcumular = 0D;
-                //valorDiario = 0D;
-            }
-        }
-
-        return itens;
-    }
-
-    public void findTransactionByCategory(CategoryVO category, final FirebaseMultiReturnListener listener) {
-
-        getDatabaseReference()
-                .orderByChild("category").equalTo(category.getOld().getName())
-                //.orderByChild("categorySecondary").equalTo(category.getName())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        List<TransactionVO> list = new ArrayList<>();
-                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                            list.add(getTInstance(postSnapshot));
-                        }
-                        listener.onFindAll(list);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        listener.onError(databaseError.getMessage());
-                    }
-                });
+                .addListenerForSingleValueEvent(valueEventListener);
     }
 }

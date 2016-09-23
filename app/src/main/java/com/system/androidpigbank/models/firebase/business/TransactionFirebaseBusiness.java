@@ -130,7 +130,7 @@ public class TransactionFirebaseBusiness extends FirebaseDaoAbs<TransactionVO> {
             if (transactionProx == null || JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), transactionProx.getDatePayment()) != 0) {
                 itens.add(new TotalVO(null, valorAcumular));
                 itens.add(new WhiteSpaceVO());
-                valorAcumular = 0D;
+                //valorAcumular = 0D;
                 //valorDiario = 0D;
             }
         }

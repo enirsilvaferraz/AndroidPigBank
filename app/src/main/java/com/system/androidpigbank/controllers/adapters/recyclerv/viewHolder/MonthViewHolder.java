@@ -49,5 +49,16 @@ public class MonthViewHolder extends CardViewHolder {
         } else {
             tvTotal.setText("");
         }
+
+        int actualYear = JavaUtils.DateUtil.get(Calendar.YEAR, Calendar.getInstance().getTime());
+        int actualMonth = JavaUtils.DateUtil.get(Calendar.MONTH, Calendar.getInstance().getTime());
+
+        if (item.getYear() < actualYear || (item.getYear() == actualYear && item.getMonth() < actualMonth)) {
+            tvTotal.setTextColor(itemView.getContext().getColor(R.color.material_green));
+        } else if (item.getYear() > actualYear || (item.getYear() == actualYear && item.getMonth() > actualMonth)) {
+            tvTotal.setTextColor(itemView.getContext().getColor(R.color.material_orange));
+        } else if (item.getYear() == actualYear && item.getMonth() == actualMonth) {
+            tvTotal.setTextColor(itemView.getContext().getColor(R.color.material_blue));
+        }
     }
 }

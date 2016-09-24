@@ -1,5 +1,6 @@
 package com.system.architecture.adapters;
 
+import android.os.Parcelable;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -152,7 +153,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     /**
      *
      */
-    public interface CardModel {
+    public interface CardModel extends Parcelable {
 
         CardViewType getViewType();
     }

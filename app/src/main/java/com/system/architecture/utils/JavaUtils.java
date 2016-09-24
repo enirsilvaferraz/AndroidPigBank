@@ -97,6 +97,12 @@ public final class JavaUtils {
 
             return cInit.compareTo(cEnd);
         }
+
+        public static int get(int constantCalendar, Date date) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            return calendar.get(constantCalendar);
+        }
     }
 
     /**

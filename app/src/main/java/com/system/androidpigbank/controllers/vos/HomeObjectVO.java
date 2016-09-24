@@ -41,11 +41,11 @@ public class HomeObjectVO implements Parcelable {
     protected HomeObjectVO(Parcel in) {
         this.month = in.readInt();
         this.year = in.readInt();
-        this.listCategorySummary = new ArrayList<>();
+        this.listCategorySummary = new ArrayList<CardAdapter.CardModel>();
         in.readList(this.listCategorySummary, CardAdapter.CardModel.class.getClassLoader());
-        this.listTransaction = new ArrayList<>();
+        this.listTransaction = new ArrayList<CardAdapter.CardModel>();
         in.readList(this.listTransaction, CardAdapter.CardModel.class.getClassLoader());
-        this.listMonth = new ArrayList<>();
+        this.listMonth = new ArrayList<CardAdapter.CardModel>();
         in.readList(this.listMonth, CardAdapter.CardModel.class.getClassLoader());
     }
 

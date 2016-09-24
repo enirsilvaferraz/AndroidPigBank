@@ -16,46 +16,20 @@ public abstract class BaseManagerDialog<T extends EntityAbs> extends DialogFragm
     protected T model;
 
     protected void save() throws Exception {
-
         prepareToPersist();
-        getFirebaseBusinessInstance().save(model);
-        final AppCompatActivity activity = (AppCompatActivity) getActivity();
-        ((HomeActivity) activity).callApi();
-        dismiss();
+        getFirebaseBusinessInstance().save(model, new FirebaseDaoAbs.FirebaseSingleReturnListener<T>() {
+            @Override
+            public void onFind(T list) {
+                final AppCompatActivity activity = (AppCompatActivity) getActivity();
+                ((HomeActivity) activity).callApi();
+                dismiss();
+            }
 
-//        final AppCompatActivity activity = (AppCompatActivity) getActivity();
-//        ManagerHelper.execute(activity, new ManagerHelper.LoaderResultInterface<T>() {
-//
-//            @Override
-//            public T executeAction() throws Exception {
-//                        prepareToPersist();
-//                        return getBusinessInstance().save(model);
-//            }
-//
-//            @Override
-//            public int loaderId() {
-//                return Constants.LOADER_DEFAULT_ID;
-//            }
-//
-//            @Override
-//            public void onComplete(LoaderResult<T> data) {
-//                if (data.isSuccess()) {
-//                    IntentRouter.startServiceBackup(activity);
-//                    ((HomeActivity) activity).callApi();
-//
-//                    Handler handler = new Handler(){
-//                        @Override
-//                        public void handleMessage(Message msg) {
-//                            dismiss();
-//                        }
-//                    };
-//                    handler.sendEmptyMessage(0);
-//
-//                } else {
-//                    ((BaseActivity) activity).showMessage(data.getException());
-//                }
-//            }
-//        });
+            @Override
+            public void onError(String error) {
+
+            }
+        });
     }
 
     protected abstract FirebaseDaoAbs<T> getFirebaseBusinessInstance();

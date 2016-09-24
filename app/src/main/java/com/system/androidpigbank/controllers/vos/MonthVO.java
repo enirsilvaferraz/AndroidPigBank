@@ -105,11 +105,6 @@ public class MonthVO extends EntityAbs implements VOIf, Parcelable, CardAdapter.
     }
 
     @Override
-    public Long getId() {
-        return null;
-    }
-
-    @Override
     public DTOAbs toDTO() {
         return JavaUtils.GsonUtil.getInstance().fromMonth().toDTO(this, MonthDTO.class);
     }

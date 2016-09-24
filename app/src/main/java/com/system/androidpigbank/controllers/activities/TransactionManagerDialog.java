@@ -150,6 +150,12 @@ public class TransactionManagerDialog extends BaseManagerDialog<TransactionVO> {
         if (getArguments() != null && parcelable != null) {
             model = (TransactionVO) parcelable;
 
+            try {
+                model.setOld((TransactionVO) model.clone());
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
+            }
+
             editDateLanc.setText(JavaUtils.DateUtil.format(model.getDateTransaction()));
             editValue.setText(String.valueOf(model.getValue()));
             editCategory.setText(model.getCategory().getName());
@@ -162,19 +168,6 @@ public class TransactionManagerDialog extends BaseManagerDialog<TransactionVO> {
         } else {
             model = new TransactionVO();
         }
-
-//        ManagerHelper.execute((AppCompatActivity) getActivity(), new ManagerHelper.LoaderResultInterface<List<CategoryVO>>() {
-//
-//            @Override
-//            public List<CategoryVO> executeAction() throws Exception {
-//                return new CategoryBusiness(getContext()).findAll();
-//            }
-//
-//            @Override
-//            public void onComplete(LoaderResult<List<CategoryVO>> data) {
-//                autocompleteCategory(data);
-//            }
-//        });
 
         new CategoryFirebaseBusiness().findAll(new FirebaseDaoAbs.FirebaseMultiReturnListener<CategoryVO>() {
             @Override
@@ -294,7 +287,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<TransactionVO> {
                     break;
                 }
             }
-            if (model.getCategory() == null) {
+            if (model.getCategorySecondary() == null) {
                 model.setCategorySecondary(new CategoryVO(editCategorySecondary.getText().toString()));
             }
         } else {

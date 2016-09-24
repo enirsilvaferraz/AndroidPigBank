@@ -5,8 +5,6 @@ import android.os.Parcelable;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.gson.annotations.Expose;
-import com.j256.ormlite.field.DataType;
-import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.system.androidpigbank.controllers.helpers.PaymentType;
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
@@ -22,7 +20,7 @@ import java.util.Date;
  */
 @DatabaseTable(tableName = "transaction")
 @IgnoreExtraProperties
-public class TransactionVO extends EntityAbs implements VOIf, Parcelable, CardAdapter.CardModel {
+public class TransactionVO extends EntityAbs implements VOIf, Parcelable, CardAdapter.CardModel, Cloneable {
 
     public static final Creator<TransactionVO> CREATOR = new Creator<TransactionVO>() {
         @Override
@@ -37,28 +35,19 @@ public class TransactionVO extends EntityAbs implements VOIf, Parcelable, CardAd
     };
     @Expose
     private String key;
-    @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
-    private Long id;
     @Expose
-    @DatabaseField
     private Date dateTransaction;
     @Expose
-    @DatabaseField
     private Date datePayment;
     @Expose
-    @DatabaseField
     private Double value;
     @Expose
-    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private CategoryVO category;
     @Expose
-    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private CategoryVO categorySecondary;
     @Expose
-    @DatabaseField
     private String content;
     @Expose
-    @DatabaseField(dataType = DataType.ENUM_INTEGER)
     private PaymentType paymentType;
 
     public TransactionVO() {
@@ -66,7 +55,6 @@ public class TransactionVO extends EntityAbs implements VOIf, Parcelable, CardAd
 
     protected TransactionVO(Parcel in) {
         this.key = in.readString();
-        this.id = (Long) in.readValue(Long.class.getClassLoader());
         long tmpDateTransaction = in.readLong();
         this.dateTransaction = tmpDateTransaction == -1 ? null : new Date(tmpDateTransaction);
         long tmpDatePayment = in.readLong();
@@ -109,14 +97,6 @@ public class TransactionVO extends EntityAbs implements VOIf, Parcelable, CardAd
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     @Override
@@ -188,7 +168,6 @@ public class TransactionVO extends EntityAbs implements VOIf, Parcelable, CardAd
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.key);
-        dest.writeValue(this.id);
         dest.writeLong(this.dateTransaction != null ? this.dateTransaction.getTime() : -1);
         dest.writeLong(this.datePayment != null ? this.datePayment.getTime() : -1);
         dest.writeValue(this.value);

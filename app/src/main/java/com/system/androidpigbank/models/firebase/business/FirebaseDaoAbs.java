@@ -26,22 +26,20 @@ public abstract class FirebaseDaoAbs<T extends EntityAbs> {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
 
-    public T save(T entity) {
+    public void save(T entity, FirebaseSingleReturnListener<T> listener) {
 
         if (JavaUtils.StringUtil.isEmpty(entity.getKey())) {
-            getDatabaseReference().push().setValue(entity.toDTO());
+            DatabaseReference push = getDatabaseReference().push();
+            entity.setKey(push.getKey());
+            push.setValue(entity.toDTO());
         } else {
-            update(entity);
+            DatabaseReference dbUpdateRef = getDatabaseReference();
+            Map<String, Object> map = new HashMap<>();
+            map.put(entity.getKey(), pupulateMap(entity));
+            dbUpdateRef.updateChildren(map);
         }
 
-        return entity;
-    }
-
-    protected void update(T entity) {
-        DatabaseReference dbUpdateRef = getDatabaseReference();
-        Map<String, Object> map = new HashMap<>();
-        map.put(entity.getKey(), pupulateMap(entity));
-        dbUpdateRef.updateChildren(map);
+        listener.onFind(entity);
     }
 
     protected abstract Map<String, Object> pupulateMap(T vo);

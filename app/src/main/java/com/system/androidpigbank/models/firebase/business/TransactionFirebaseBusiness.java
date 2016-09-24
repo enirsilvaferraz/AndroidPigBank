@@ -7,9 +7,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
+import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
 import com.system.androidpigbank.models.firebase.dtos.TransactionDTO;
+import com.system.architecture.managers.EntityAbs;
 import com.system.architecture.utils.JavaUtils;
 
 import java.util.ArrayList;
@@ -25,20 +27,65 @@ import java.util.Map;
 
 public class TransactionFirebaseBusiness extends FirebaseDaoAbs<TransactionVO> {
 
-    public TransactionVO save(TransactionVO transaction) {
+    public void save(final TransactionVO transaction, final FirebaseSingleReturnListener<TransactionVO> listener) {
+
+        new MonthFirebaseBusiness().update(transaction, new FirebaseSingleReturnListener<MonthVO>() {
+
+            @Override
+            public void onFind(MonthVO list) {
+                saveCategory(transaction, listener);
+            }
+
+            @Override
+            public void onError(String error) {
+                listener.onError(error);
+            }
+        });
+    }
+
+    private void saveCategory(final TransactionVO transaction, final FirebaseSingleReturnListener<TransactionVO> listener) {
 
         if (transaction.getCategory().getKey() == null) {
-            CategoryVO category = new CategoryFirebaseBusiness().save(transaction.getCategory());
+
+            final CategoryVO category = transaction.getCategory();
             category.setPrimary(true);
-            transaction.setCategory(category);
+
+            new CategoryFirebaseBusiness().save(category, new FirebaseSingleReturnListener<CategoryVO>() {
+
+                @Override
+                public void onFind(CategoryVO list) {
+                    saveSecondary(transaction.getCategorySecondary(), transaction, listener);
+                }
+
+                @Override
+                public void onError(String error) {
+                    listener.onError(error);
+                }
+            });
+        } else {
+            saveSecondary(transaction.getCategorySecondary(), transaction, listener);
         }
+    }
+
+    private void saveSecondary(CategoryVO category, final TransactionVO transaction, final FirebaseSingleReturnListener<TransactionVO> listener) {
 
         if (transaction.getCategorySecondary() != null && transaction.getCategorySecondary().getKey() == null) {
-            CategoryVO category = new CategoryFirebaseBusiness().save(transaction.getCategorySecondary());
-            transaction.setCategorySecondary(category);
-        }
 
-        return super.save(transaction);
+            new CategoryFirebaseBusiness().save(category, new FirebaseSingleReturnListener<CategoryVO>() {
+
+                @Override
+                public void onFind(CategoryVO list) {
+                    TransactionFirebaseBusiness.super.save(transaction, listener);
+                }
+
+                @Override
+                public void onError(String error) {
+                    listener.onError(error);
+                }
+            });
+        } else {
+            TransactionFirebaseBusiness.super.save(transaction, listener);
+        }
     }
 
     @Override
@@ -56,6 +103,22 @@ public class TransactionFirebaseBusiness extends FirebaseDaoAbs<TransactionVO> {
         map.put("paymentType", dto.getPaymentType());
 
         return map;
+    }
+
+    @Override
+    public void delete(final TransactionVO entity, final FirebaseSingleReturnListener listener) {
+
+        new MonthFirebaseBusiness().delete(entity, new FirebaseSingleReturnListener() {
+            @Override
+            public void onFind(EntityAbs list) {
+                TransactionFirebaseBusiness.super.delete(entity, listener);
+            }
+
+            @Override
+            public void onError(String error) {
+                listener.onError(error);
+            }
+        });
     }
 
     @Override

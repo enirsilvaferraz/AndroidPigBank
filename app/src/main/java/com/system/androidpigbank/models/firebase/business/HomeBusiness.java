@@ -82,7 +82,7 @@ public class HomeBusiness {
             homeObjectVO.setYear(year);
             homeObjectVO.setListCategorySummary(organizeCategorySummaryList(categories, transactions));
             homeObjectVO.setListTransaction(organizeTransationcList(transactions, categories));
-            homeObjectVO.setListMonth(organizeMonthList(month, year, months));
+            homeObjectVO.setListMonth(organizeMonthList(months));
             listener.onFind(homeObjectVO);
         }
     }
@@ -142,53 +142,15 @@ public class HomeBusiness {
         return itens;
     }
 
-    private List<CardAdapter.CardModel> organizeMonthList(final int monthInt, final int yearInt, List<MonthVO> months) {
-
-        saveMonth(monthInt, yearInt, months);
+    private List<CardAdapter.CardModel> organizeMonthList(List<MonthVO> months) {
 
         Collections.sort(months, new MonthSort());
 
         List<CardAdapter.CardModel> list = new ArrayList<>();
         list.add(new WhiteSpaceVO());
-
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-        for (int i = 11; i >= 0; i--) {
-            MonthVO month = new MonthVO();
-            month.setYear(year);
-            month.setMonth(i);
-            month.setValue(0D);
-
-            if (months.contains(month)) {
-                month = months.get(months.indexOf(month));
-            }
-
-            list.add(month);
-        }
-
+        list.addAll(months);
         list.add(new WhiteSpaceVO());
         return list;
-    }
-
-    private void saveMonth(int monthInt, int yearInt, List<MonthVO> months) {
-        final MonthVO month = new MonthVO();
-        month.setMonth(monthInt);
-        month.setYear(yearInt);
-        month.setValue(0D);
-
-        for (TransactionVO tvo : transactions) {
-            month.setValue(month.getValue() + tvo.getValue());
-        }
-
-        if (!months.contains(month)) {
-            months.add(new MonthFirebaseBusiness().save(month));
-        } else {
-            int index = months.indexOf(month);
-            MonthVO monthVO = months.get(index);
-            if (!monthVO.getValue().equals(month.getValue())) {
-                monthVO.setValue(month.getValue());
-                months.set(index, new MonthFirebaseBusiness().save(monthVO));
-            }
-        }
     }
 
     @NonNull
@@ -278,8 +240,8 @@ public class HomeBusiness {
 
         @Override
         public int compare(MonthVO o1, MonthVO o2) {
-            int compareToYear = o1.getYear().compareTo(o2.getYear());
-            return compareToYear != 0 ? compareToYear : o1.getMonth().compareTo(o2.getMonth());
+            int compareToYear = o1.getYear().compareTo(o2.getYear()) * -1;
+            return compareToYear != 0 ? compareToYear : o1.getMonth().compareTo(o2.getMonth()) * -1;
         }
     }
 

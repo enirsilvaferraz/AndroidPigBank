@@ -4,11 +4,11 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
@@ -42,14 +42,17 @@ public class HomeActivity extends BaseActivity {
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    Toolbar toolbar;
 
     @BindView(R.id.home_header)
     CustomHeaderSummary homeHeader;
 
     @BindView(R.id.collapse_layout)
     CollapsingToolbarLayout collapseLayout;
+
+    @BindView(R.id.appbar)
+    AppBarLayout appbar;
 
     private HomeObjectVO data;
 
@@ -59,8 +62,8 @@ public class HomeActivity extends BaseActivity {
         setContentView(R.layout.activity_home_tab);
         ButterKnife.bind(this);
 
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
+        //toolbar.setTitle("");
+        //setSupportActionBar(toolbar);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +156,7 @@ public class HomeActivity extends BaseActivity {
         calendar.set(Calendar.MONTH, data.getCurrentMonth().getMonth());
 //        toolbar.setTitle(JavaUtils.DateUtil.format(calendar.getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));
 
+        appbar.setExpanded(true);
         collapseLayout.setTitle(JavaUtils.DateUtil.format(calendar.getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));
 
         homeHeader.bind(data.getCurrentMonth().getValue(), 3500D);

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -17,6 +18,7 @@ import com.system.androidpigbank.controllers.helpers.Constants;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.vos.HomeObjectVO;
 import com.system.androidpigbank.models.firebase.business.HomeBusiness;
+import com.system.androidpigbank.views.CustomHeaderSummary;
 import com.system.architecture.activities.BaseActivity;
 import com.system.architecture.adapters.CardFragment;
 import com.system.architecture.utils.JavaUtils;
@@ -43,6 +45,12 @@ public class HomeActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.home_header)
+    CustomHeaderSummary homeHeader;
+
+    @BindView(R.id.collapse_layout)
+    CollapsingToolbarLayout collapseLayout;
+
     private HomeObjectVO data;
 
     @Override
@@ -51,6 +59,7 @@ public class HomeActivity extends BaseActivity {
         setContentView(R.layout.activity_home_tab);
         ButterKnife.bind(this);
 
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +115,7 @@ public class HomeActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (RESULT_OK == resultCode && (Constants.REQUEST_ACTION_DELETE == requestCode || Constants.REQUEST_ACTION_SAVE == requestCode)) {
-            update(this.data.getMonth(), this.data.getYear());
+            update(this.data.getCurrentMonth().getMonth(), this.data.getCurrentMonth().getYear());
             showMessage(data.getIntExtra(Constants.BUNDLE_MESSAGE_ID, 0));
         }
 
@@ -114,7 +123,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     public void callApi() {
-        update(this.data.getMonth(), this.data.getYear());
+        update(this.data.getCurrentMonth().getMonth(), this.data.getCurrentMonth().getYear());
     }
 
     public void update(final int month, final int year) {
@@ -140,9 +149,13 @@ public class HomeActivity extends BaseActivity {
         this.data = data;
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, data.getYear());
-        calendar.set(Calendar.MONTH, data.getMonth());
-        setTitle(JavaUtils.DateUtil.format(calendar.getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));
+        calendar.set(Calendar.YEAR, data.getCurrentMonth().getYear());
+        calendar.set(Calendar.MONTH, data.getCurrentMonth().getMonth());
+//        toolbar.setTitle(JavaUtils.DateUtil.format(calendar.getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));
+
+        collapseLayout.setTitle(JavaUtils.DateUtil.format(calendar.getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));
+
+        homeHeader.bind(data.getCurrentMonth().getValue(), 3500D);
 
         SectionsCurrentMonthPagerAdapter adapter = new SectionsCurrentMonthPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(adapter);

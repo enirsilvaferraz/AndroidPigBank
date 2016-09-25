@@ -26,8 +26,7 @@ public class HomeObjectVO implements Parcelable {
             return new HomeObjectVO[size];
         }
     };
-    private int month;
-    private int year;
+    private MonthVO currentMonth;
     private List<CardAdapter.CardModel> listCategorySummary;
     private List<CardAdapter.CardModel> listTransaction;
     private List<CardAdapter.CardModel> listMonth;
@@ -36,11 +35,11 @@ public class HomeObjectVO implements Parcelable {
         listCategorySummary = new ArrayList<>();
         listTransaction = new ArrayList<>();
         listMonth = new ArrayList<>();
+        currentMonth = new MonthVO();
     }
 
     protected HomeObjectVO(Parcel in) {
-        this.month = in.readInt();
-        this.year = in.readInt();
+        this.currentMonth = in.readParcelable(MonthVO.class.getClassLoader());
         this.listCategorySummary = new ArrayList<CardAdapter.CardModel>();
         in.readList(this.listCategorySummary, CardAdapter.CardModel.class.getClassLoader());
         this.listTransaction = new ArrayList<CardAdapter.CardModel>();
@@ -73,31 +72,22 @@ public class HomeObjectVO implements Parcelable {
         this.listMonth = listMonth;
     }
 
-    public int getMonth() {
-        return month;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
     @Override
     public int describeContents() {
         return 0;
     }
 
+    public MonthVO getCurrentMonth() {
+        return currentMonth;
+    }
+
+    public void setCurrentMonth(MonthVO currentMonth) {
+        this.currentMonth = currentMonth;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.month);
-        dest.writeInt(this.year);
+        dest.writeParcelable(this.currentMonth, flags);
         dest.writeList(this.listCategorySummary);
         dest.writeList(this.listTransaction);
         dest.writeList(this.listMonth);

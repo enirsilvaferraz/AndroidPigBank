@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_today_black"
-            android:tint="@color/theme_red_primary" />
+            android:tint="@color/material_red" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,8 +40,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
-                android:inputType="date"
                 android:enabled="false"
+                android:inputType="date"
                 android:isScrollContainer="true"
                 tools:text="01/01/2000" />
 
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_attach_money_black"
-            android:tint="@color/theme_red_primary" />
+            android:tint="@color/material_red" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -98,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_loyalty_black"
-            android:tint="@color/theme_red_primary" />
+            android:tint="@color/material_red" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -138,7 +138,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_description_black"
-            android:tint="@color/theme_red_primary" />
+            android:tint="@color/material_red" />
 
         <EditText
             android:id="@+id/transaction_manager_content"

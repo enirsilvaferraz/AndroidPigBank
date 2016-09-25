@@ -78,11 +78,10 @@ public class HomeBusiness {
             transactions = fillTransactions(categories, transactions);
 
             HomeObjectVO homeObjectVO = new HomeObjectVO(); //fillHomeObjectV2(month, year, transactions, categories, months);
-            homeObjectVO.setMonth(month);
-            homeObjectVO.setYear(year);
             homeObjectVO.setListCategorySummary(organizeCategorySummaryList(categories, transactions));
             homeObjectVO.setListTransaction(organizeTransationcList(transactions, categories));
             homeObjectVO.setListMonth(organizeMonthList(months));
+            homeObjectVO.setCurrentMonth(getCurrentMonth(month, year, months));
             listener.onFind(homeObjectVO);
         }
     }
@@ -151,6 +150,10 @@ public class HomeBusiness {
         list.addAll(months);
         list.add(new WhiteSpaceVO());
         return list;
+    }
+
+    private MonthVO getCurrentMonth(int month, int year, List<MonthVO> months) {
+        return months.get(months.indexOf(new MonthVO(month, year, 0D)));
     }
 
     @NonNull

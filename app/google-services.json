@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "803103363483-pojuar0b2eah9s7fk2p7pkp3vj20hmpl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.system.androidpigbank",
+            "certificate_hash": "F7E35E222B49BDF42906332C35E4598EC26AC7DE"
+          }
+        },
+        {
           "client_id": "803103363483-ktl81c7leu2r521dl4fi2anp2ds2pkql.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -58,6 +66,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "803103363483-v8skto15blme74626edfj1eips07q4m7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.system.androidpigbank.dev",
+            "certificate_hash": "F7E35E222B49BDF42906332C35E4598EC26AC7DE"
+          }
+        },
         {
           "client_id": "803103363483-d8a0u55i86qnsh96a3pboi49bfudhupb.apps.googleusercontent.com",
           "client_type": 1,

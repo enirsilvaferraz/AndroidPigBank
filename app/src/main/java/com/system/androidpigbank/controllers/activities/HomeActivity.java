@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.crashlytics.android.Crashlytics;
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.pager.SectionsCurrentMonthPagerAdapter;
 import com.system.androidpigbank.controllers.helpers.Constants;
@@ -29,7 +28,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.fabric.sdk.android.Fabric;
 
 public class HomeActivity extends BaseActivity {
 
@@ -84,7 +82,6 @@ public class HomeActivity extends BaseActivity {
         }
 
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
     }
 
     @Override

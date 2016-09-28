@@ -1,7 +1,9 @@
 package com.system.androidpigbank.models.firebase.dtos;
 
 import com.system.androidpigbank.controllers.vos.CategoryVO;
+import com.system.androidpigbank.models.firebase.serializers.GsonUtil;
 import com.system.architecture.managers.EntityAbs;
+import com.system.architecture.utils.DTOAbs;
 import com.system.architecture.utils.JavaUtils;
 
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ public class HomeObjectDTO extends DTOAbs {
 
     @Override
     public EntityAbs toEntity() {
-        return JavaUtils.GsonUtil.getInstance().fromHomeObject().toEntity(this, CategoryVO.class);
+        return GsonUtil.getInstance().fromHomeObject().toEntity(this, CategoryVO.class);
     }
 
     public int getMonth() {

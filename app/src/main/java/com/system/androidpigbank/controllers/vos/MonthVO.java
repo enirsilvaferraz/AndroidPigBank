@@ -4,7 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
-import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
+import com.system.androidpigbank.models.firebase.serializers.GsonUtil;
+import com.system.architecture.utils.DTOAbs;
 import com.system.androidpigbank.models.firebase.dtos.MonthDTO;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.managers.EntityAbs;
@@ -106,7 +107,7 @@ public class MonthVO extends EntityAbs implements VOIf, Parcelable, CardAdapter.
 
     @Override
     public DTOAbs toDTO() {
-        return JavaUtils.GsonUtil.getInstance().fromMonth().toDTO(this, MonthDTO.class);
+        return GsonUtil.getInstance().fromMonth().toDTO(this, MonthDTO.class);
     }
 
     @Override

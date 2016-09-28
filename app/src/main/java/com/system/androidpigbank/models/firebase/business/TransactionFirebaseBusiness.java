@@ -9,7 +9,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
-import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
+import com.system.architecture.utils.DTOAbs;
 import com.system.androidpigbank.models.firebase.dtos.TransactionDTO;
 import com.system.architecture.managers.EntityAbs;
 import com.system.architecture.utils.JavaUtils;

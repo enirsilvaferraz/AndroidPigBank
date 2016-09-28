@@ -74,6 +74,8 @@ dependencies {
     compile 'com.google.firebase:firebase-crash:9.6.1'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
+
+    compile project(':architecture')
 }
 
 apply plugin: 'com.google.gms.google-services'

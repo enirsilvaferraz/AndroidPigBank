@@ -3,7 +3,9 @@ package com.system.androidpigbank.models.firebase.dtos;
 import com.google.gson.annotations.Expose;
 import com.j256.ormlite.table.DatabaseTable;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
+import com.system.androidpigbank.models.firebase.serializers.GsonUtil;
 import com.system.architecture.managers.EntityAbs;
+import com.system.architecture.utils.DTOAbs;
 import com.system.architecture.utils.JavaUtils;
 
 /**
@@ -47,6 +49,6 @@ public class CategoryDTO extends DTOAbs {
 
     @Override
     public EntityAbs toEntity() {
-        return JavaUtils.GsonUtil.getInstance().fromCategory().toEntity(this, CategoryVO.class);
+        return GsonUtil.getInstance().fromCategory().toEntity(this, CategoryVO.class);
     }
 }

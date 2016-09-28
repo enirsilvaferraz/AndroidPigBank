@@ -5,7 +5,8 @@ import android.os.Parcel;
 import com.google.gson.annotations.Expose;
 import com.j256.ormlite.table.DatabaseTable;
 import com.system.androidpigbank.models.firebase.dtos.CategoryDTO;
-import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
+import com.system.androidpigbank.models.firebase.serializers.GsonUtil;
+import com.system.architecture.utils.DTOAbs;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.managers.EntityAbs;
 import com.system.architecture.utils.JavaUtils;
@@ -84,7 +85,7 @@ public class CategoryVO extends EntityAbs implements CardAdapter.CardModel {
 
     @Override
     public DTOAbs toDTO() {
-        return JavaUtils.GsonUtil.getInstance().fromCategory().toDTO(this, CategoryDTO.class);
+        return GsonUtil.getInstance().fromCategory().toDTO(this, CategoryDTO.class);
     }
 
     @Override

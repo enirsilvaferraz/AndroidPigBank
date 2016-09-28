@@ -13,7 +13,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.system.androidpigbank.R;
 import com.system.architecture.activities.BaseActivity;
 
 import java.util.ArrayList;
@@ -86,7 +85,7 @@ public class PermissionHelper {
     private static void notifyError(AppCompatActivity activity, final String permission, final PermissionCallBack permissionCallback) {
         View view = activity instanceof BaseActivity ? ((BaseActivity) activity).getContainer() : activity.getSupportFragmentManager().getFragments().get(0).getView();
         if (view != null) {
-            Snackbar.make(view, R.string.system_permission_required, Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(view, /*R.string.system_permission_required*/"R.string.system_permission_required", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Try Again", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -135,9 +134,9 @@ public class PermissionHelper {
     private static void showDialogMessage(final AppCompatActivity context) {
 
         new AlertDialog.Builder(context)
-                .setMessage(context.getString(R.string.permission_required_message))
+                .setMessage(/*context.getString(R.string.permission_required_message)*/"R.string.permission_required_message")
                 .setCancelable(false)
-                .setPositiveButton(R.string.system_ok, new DialogInterface.OnClickListener() {
+                .setPositiveButton(/*R.string.system_ok*/"OK!", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {

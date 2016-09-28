@@ -5,7 +5,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
-import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
+import com.system.architecture.utils.DTOAbs;
 import com.system.androidpigbank.models.firebase.dtos.MonthDTO;
 import com.system.architecture.utils.JavaUtils;
 

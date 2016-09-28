@@ -20,7 +20,7 @@ import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusiness;
 import com.system.androidpigbank.models.firebase.business.FirebaseDaoAbs;
 import com.system.architecture.activities.BaseActivity;
-import com.system.architecture.activities.BaseManagerDialog;
+import com.system.architecture.adapters.BaseManagerDialog;
 import com.system.architecture.helpers.JavaHelper;
 
 import java.util.List;

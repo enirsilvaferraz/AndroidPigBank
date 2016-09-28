@@ -2,7 +2,7 @@ package com.system.androidpigbank.models.firebase.business;
 
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.models.firebase.dtos.CategoryDTO;
-import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
+import com.system.architecture.utils.DTOAbs;
 
 import java.util.HashMap;
 import java.util.Map;

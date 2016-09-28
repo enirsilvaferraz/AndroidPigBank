@@ -2,7 +2,7 @@ package com.system.architecture.managers;
 
 import android.os.Parcelable;
 
-import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
+import com.system.architecture.utils.DTOAbs;
 
 /**
  * Created by eferraz on 05/12/15.

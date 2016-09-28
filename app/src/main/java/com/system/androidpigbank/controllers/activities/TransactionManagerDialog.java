@@ -26,7 +26,7 @@ import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusine
 import com.system.androidpigbank.models.firebase.business.FirebaseDaoAbs;
 import com.system.androidpigbank.models.firebase.business.TransactionFirebaseBusiness;
 import com.system.architecture.activities.BaseActivity;
-import com.system.architecture.activities.BaseManagerDialog;
+import com.system.architecture.adapters.BaseManagerDialog;
 import com.system.architecture.utils.JavaUtils;
 
 import java.text.ParseException;

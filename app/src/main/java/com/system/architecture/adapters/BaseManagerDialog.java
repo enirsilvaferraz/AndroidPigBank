@@ -1,4 +1,4 @@
-package com.system.architecture.activities;
+package com.system.architecture.adapters;
 
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;

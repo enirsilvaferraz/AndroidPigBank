@@ -1,4 +1,4 @@
-package com.system.androidpigbank.models.firebase.dtos;
+package com.system.architecture.utils;
 
 import com.system.architecture.managers.EntityAbs;
 

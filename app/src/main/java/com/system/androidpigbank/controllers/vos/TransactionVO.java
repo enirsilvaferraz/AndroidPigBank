@@ -7,7 +7,8 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.gson.annotations.Expose;
 import com.j256.ormlite.table.DatabaseTable;
 import com.system.androidpigbank.controllers.helpers.PaymentType;
-import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
+import com.system.androidpigbank.models.firebase.serializers.GsonUtil;
+import com.system.architecture.utils.DTOAbs;
 import com.system.androidpigbank.models.firebase.dtos.TransactionDTO;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.managers.EntityAbs;
@@ -128,7 +129,7 @@ public class TransactionVO extends EntityAbs implements VOIf, Parcelable, CardAd
 
     @Override
     public DTOAbs toDTO() {
-        return JavaUtils.GsonUtil.getInstance().fromTransaction().toDTO(this, TransactionDTO.class);
+        return GsonUtil.getInstance().fromTransaction().toDTO(this, TransactionDTO.class);
     }
 
     public Date getDatePayment() {

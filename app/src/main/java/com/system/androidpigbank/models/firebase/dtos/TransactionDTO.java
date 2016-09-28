@@ -1,15 +1,17 @@
 package com.system.androidpigbank.models.firebase.dtos;
 
 import com.google.gson.annotations.Expose;
+import com.system.androidpigbank.models.firebase.serializers.GsonUtil;
 import com.system.architecture.managers.EntityAbs;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
+import com.system.architecture.utils.DTOAbs;
 import com.system.architecture.utils.JavaUtils;
 
 /**
  * Created by Enir on 07/09/2016.
  */
 
-public class TransactionDTO extends DTOAbs{
+public class TransactionDTO extends DTOAbs {
 
     @Expose
     private String key;
@@ -101,6 +103,6 @@ public class TransactionDTO extends DTOAbs{
 
     @Override
     public EntityAbs toEntity() {
-        return JavaUtils.GsonUtil.getInstance().fromTransaction().toEntity(this, TransactionVO.class);
+        return GsonUtil.getInstance().fromTransaction().toEntity(this, TransactionVO.class);
     }
 }

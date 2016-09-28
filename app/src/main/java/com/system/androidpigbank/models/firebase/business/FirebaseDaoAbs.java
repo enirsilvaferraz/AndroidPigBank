@@ -7,7 +7,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.system.androidpigbank.BuildConfig;
-import com.system.androidpigbank.models.firebase.dtos.DTOAbs;
+import com.system.architecture.utils.DTOAbs;
 import com.system.architecture.managers.EntityAbs;
 import com.system.architecture.utils.JavaUtils;
 

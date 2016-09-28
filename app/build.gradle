@@ -66,16 +66,17 @@ dependencies {
     compile "com.android.support:recyclerview-v7:${supportLibraryVersion}"
     compile "com.android.support:support-v4:${supportLibraryVersion}"
 
-    compile 'com.jakewharton:butterknife:8.1.0'
-    compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
-    compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.google.firebase:firebase-database:9.6.1'
     compile 'com.google.firebase:firebase-crash:9.6.1'
-    testCompile 'junit:junit:4.12'
-    apt 'com.jakewharton:butterknife-compiler:8.1.0'
+
+    compile 'com.jakewharton:butterknife:8.1.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
+    compile 'com.j256.ormlite:ormlite-android:4.48'
 
     compile project(':architecture')
+
+    apt 'com.jakewharton:butterknife-compiler:8.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

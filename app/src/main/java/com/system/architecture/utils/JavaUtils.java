@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.util.TypedValue;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.system.androidpigbank.BuildConfig;
@@ -63,7 +62,6 @@ public final class JavaUtils {
             try {
                 return new SimpleDateFormat(template, new Locale("pt", "BR")).parse(date);
             } catch (ParseException e) {
-                Crashlytics.logException(e);
                 throw new RuntimeException(e);
             }
         }

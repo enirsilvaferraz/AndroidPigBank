@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -112,37 +113,14 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+    <com.system.androidpigbank.views.CustomPercentualProgress
+        android:id="@+id/custom_header_progress"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="30dp">
-
-        <ProgressBar
-            android:id="@+id/custom_header_progress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:indeterminate="false"
-            android:max="100"
-            android:progressDrawable="@drawable/custom_circular_progress"
-            android:secondaryProgress="100"
-            tools:progress="70" />
-
-        <TextView
-            android:id="@+id/custom_header_progress_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:textColor="@color/material_white"
-            android:textSize="30sp"
-            tools:text="70%" />
-
-    </RelativeLayout>
-
+        android:layout_marginTop="30dp"
+        app:percentTextSize="30sp" />
 
 </RelativeLayout>
 

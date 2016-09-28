@@ -3,7 +3,6 @@ package com.system.androidpigbank.views;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
@@ -28,10 +27,7 @@ public class CustomHeaderSummary extends LinearLayout {
     TextView tvTotal;
 
     @BindView(R.id.custom_header_progress)
-    ProgressBar pProgress;
-
-    @BindView(R.id.custom_header_progress_value)
-    TextView pProgressValue;
+    CustomPercentualProgress progress;
 
     public CustomHeaderSummary(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -42,13 +38,11 @@ public class CustomHeaderSummary extends LinearLayout {
     public void bind(double registrados, double planejados) {
 
         Double total = planejados - registrados;
-        Integer percentual = Double.valueOf(registrados * 100 / (planejados == 0 ? 1 : planejados)).intValue();
+
+        progress.bind(planejados, registrados);
 
         tvRegistrados.setText(JavaUtils.NumberUtil.currencyFormat(registrados));
         tvPlanejados.setText(JavaUtils.NumberUtil.currencyFormat(planejados));
         tvTotal.setText(JavaUtils.NumberUtil.currencyFormat(total));
-
-        pProgress.setProgress(percentual);
-        pProgressValue.setText(percentual + "%");
     }
 }

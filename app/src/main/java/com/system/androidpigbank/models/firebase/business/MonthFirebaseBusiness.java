@@ -3,8 +3,10 @@ package com.system.androidpigbank.models.firebase.business;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.system.androidpigbank.BuildConfig;
 import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
+import com.system.architecture.managers.FirebaseDaoAbs;
 import com.system.architecture.utils.DTOAbs;
 import com.system.androidpigbank.models.firebase.dtos.MonthDTO;
 import com.system.architecture.utils.JavaUtils;
@@ -19,6 +21,10 @@ import java.util.Map;
  */
 
 class MonthFirebaseBusiness extends FirebaseDaoAbs<MonthVO> {
+
+    public MonthFirebaseBusiness() {
+        super(BuildConfig.FLAVOR);
+    }
 
     @Override
     protected Class<? extends DTOAbs> getDTOClass() {

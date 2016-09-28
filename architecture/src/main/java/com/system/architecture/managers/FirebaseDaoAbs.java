@@ -1,4 +1,4 @@
-package com.system.androidpigbank.models.firebase.business;
+package com.system.architecture.managers;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -6,9 +6,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.system.androidpigbank.BuildConfig;
 import com.system.architecture.utils.DTOAbs;
-import com.system.architecture.managers.EntityAbs;
 import com.system.architecture.utils.JavaUtils;
 
 import java.util.ArrayList;
@@ -21,6 +19,12 @@ import java.util.Map;
  */
 
 public abstract class FirebaseDaoAbs<T extends EntityAbs> {
+
+    private String flavor;
+
+    public FirebaseDaoAbs(String flavor) {
+        this.flavor = flavor;
+    }
 
     public static void enableOffline() {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
@@ -103,7 +107,7 @@ public abstract class FirebaseDaoAbs<T extends EntityAbs> {
         String simpleName = getClass().getSimpleName().replace("FirebaseBusiness", "");
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        return database.getReference(BuildConfig.FLAVOR + "-database/" + simpleName);
+        return database.getReference(flavor + "-database/" + simpleName);
     }
 
     public interface FirebaseMultiReturnListener<T extends EntityAbs> {

@@ -6,9 +6,11 @@ import android.support.annotation.NonNull;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.system.androidpigbank.BuildConfig;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
+import com.system.architecture.managers.FirebaseDaoAbs;
 import com.system.architecture.utils.DTOAbs;
 import com.system.androidpigbank.models.firebase.dtos.TransactionDTO;
 import com.system.architecture.managers.EntityAbs;
@@ -26,6 +28,10 @@ import java.util.Map;
  */
 
 public class TransactionFirebaseBusiness extends FirebaseDaoAbs<TransactionVO> {
+
+    public TransactionFirebaseBusiness() {
+        super(BuildConfig.FLAVOR);
+    }
 
     public void save(final TransactionVO transaction, final FirebaseSingleReturnListener<TransactionVO> listener) {
 

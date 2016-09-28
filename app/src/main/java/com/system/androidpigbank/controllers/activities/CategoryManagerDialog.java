@@ -18,7 +18,7 @@ import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.helpers.Constants;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusiness;
-import com.system.androidpigbank.models.firebase.business.FirebaseDaoAbs;
+import com.system.architecture.managers.FirebaseDaoAbs;
 import com.system.architecture.activities.BaseActivity;
 import com.system.architecture.adapters.BaseManagerDialog;
 import com.system.architecture.helpers.JavaHelper;

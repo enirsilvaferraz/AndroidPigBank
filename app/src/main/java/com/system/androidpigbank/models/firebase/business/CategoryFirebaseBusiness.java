@@ -1,7 +1,9 @@
 package com.system.androidpigbank.models.firebase.business;
 
+import com.system.androidpigbank.BuildConfig;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.models.firebase.dtos.CategoryDTO;
+import com.system.architecture.managers.FirebaseDaoAbs;
 import com.system.architecture.utils.DTOAbs;
 
 import java.util.HashMap;
@@ -13,6 +15,10 @@ import java.util.Map;
  */
 
 public class CategoryFirebaseBusiness extends FirebaseDaoAbs<CategoryVO> {
+
+    public CategoryFirebaseBusiness() {
+        super(BuildConfig.FLAVOR);
+    }
 
     @Override
     protected Map<String, Object> pupulateMap(CategoryVO vo) {

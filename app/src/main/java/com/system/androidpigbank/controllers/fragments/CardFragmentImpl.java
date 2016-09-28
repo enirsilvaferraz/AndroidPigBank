@@ -12,7 +12,7 @@ import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusiness;
-import com.system.androidpigbank.models.firebase.business.FirebaseDaoAbs;
+import com.system.architecture.managers.FirebaseDaoAbs;
 import com.system.androidpigbank.models.firebase.business.TransactionFirebaseBusiness;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.adapters.CardFragment;

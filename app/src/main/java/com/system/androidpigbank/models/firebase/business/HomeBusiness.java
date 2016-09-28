@@ -10,6 +10,7 @@ import com.system.androidpigbank.controllers.vos.TotalVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.androidpigbank.controllers.vos.WhiteSpaceVO;
 import com.system.architecture.adapters.CardAdapter;
+import com.system.architecture.managers.FirebaseDaoAbs;
 import com.system.architecture.utils.JavaUtils;
 
 import java.util.ArrayList;

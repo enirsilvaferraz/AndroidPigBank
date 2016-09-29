@@ -33,16 +33,20 @@ public class CustomPercentualProgress extends LinearLayout {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CustomPercentualProgress, 0, 0);
         try {
             mValue.setTextSize(TypedValue.COMPLEX_UNIT_PX, a.getDimensionPixelSize(R.styleable.CustomPercentualProgress_percentTextSize, 16));
+            mValue.setTextColor(a.getColor(R.styleable.CustomPercentualProgress_percentTextColor, context.getColor(R.color.material_white)));
+            mProgress.setProgressDrawable(a.getDrawable(R.styleable.CustomPercentualProgress_percentProgressDrawable));
         } finally {
             a.recycle();
         }
+
     }
 
     public void bind(Double maxValue, Double totalValue) {
 
-        Integer percentual = Double.valueOf(totalValue * 100 / (maxValue == 0 ? 1 : maxValue)).intValue();
+        Long percentual = Math.round(totalValue * 100 / (maxValue == 0 ? 1 : maxValue));
 
-        mProgress.setProgress(percentual);
+        mProgress.setProgress(percentual.intValue());
         mValue.setText(percentual + "%");
+
     }
 }

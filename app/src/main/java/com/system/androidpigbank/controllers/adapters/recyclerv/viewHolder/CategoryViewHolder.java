@@ -1,7 +1,13 @@
 package com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.support.v7.widget.CardView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -9,6 +15,7 @@ import android.widget.TextView;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
+import com.system.androidpigbank.views.CustomPercentualProgress;
 import com.system.architecture.adapters.CardAdapter;
 import com.system.architecture.adapters.CardViewHolder;
 import com.system.architecture.utils.JavaUtils;
@@ -27,14 +34,8 @@ public class CategoryViewHolder extends CardViewHolder {
     @BindView(R.id.item_category_range)
     TextView tvRange;
 
-    @BindView(R.id.item_category_progress)
-    ProgressBar progressBar;
-
-    @BindView(R.id.item_category_progress_value)
-    TextView tvProgressValue;
-
-    @BindView(R.id.item_category_transaction_container)
-    LinearLayout transactionContainer;
+    @BindView(R.id.item_category_progress_component)
+    CustomPercentualProgress progress;
 
     Context context;
 
@@ -52,9 +53,9 @@ public class CategoryViewHolder extends CardViewHolder {
 
         tvName.setText(item.getName());
 
-        tvRange.setText(JavaUtils.NumberUtil.currencyFormat(item.getAmount()) + " de " +
-                JavaUtils.NumberUtil.currencyFormat(0D));
-        tvProgressValue.setText("N/A");
-        progressBar.setProgress(0);
+        tvRange.setText(JavaUtils.NumberUtil.currencyFormat(item.getAmount()));
+
+        progress.bind(item.getMonthVO().getValue(), item.getAmount());
+
     }
 }

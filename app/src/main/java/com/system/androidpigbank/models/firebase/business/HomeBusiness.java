@@ -79,7 +79,7 @@ public class HomeBusiness {
             transactions = fillTransactions(categories, transactions);
 
             HomeObjectVO homeObjectVO = new HomeObjectVO(); //fillHomeObjectV2(month, year, transactions, categories, months);
-            homeObjectVO.setListCategorySummary(organizeCategorySummaryList(categories, transactions));
+            homeObjectVO.setListCategorySummary(organizeCategorySummaryList(months.get(months.indexOf(new MonthVO(month, year, 0D))), categories, transactions));
             homeObjectVO.setListTransaction(organizeTransationcList(transactions, categories));
             homeObjectVO.setListMonth(organizeMonthList(months));
             homeObjectVO.setCurrentMonth(getCurrentMonth(month, year, months));
@@ -158,7 +158,7 @@ public class HomeBusiness {
     }
 
     @NonNull
-    private List<CardAdapter.CardModel> organizeCategorySummaryList(List<CategoryVO> categories, List<TransactionVO> transactions) {
+    private List<CardAdapter.CardModel> organizeCategorySummaryList(MonthVO monthVO, List<CategoryVO> categories, List<TransactionVO> transactions) {
 
         boolean hasTitleSecondary = false;
         List<CardAdapter.CardModel> itens = new ArrayList<>();
@@ -167,6 +167,7 @@ public class HomeBusiness {
 
             CategoryVO category = categories.get(position);
             category.setAmount(0D);
+            category.setMonthVO(monthVO);
 
             if (!hasTitleSecondary && !category.isPrimary() && position != categories.size() - 1) {
                 itens.add(new WhiteSpaceVO());

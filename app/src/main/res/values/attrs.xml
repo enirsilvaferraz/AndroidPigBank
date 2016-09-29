@@ -2,5 +2,7 @@
 <resources>
     <declare-styleable name="CustomPercentualProgress">
         <attr name="percentTextSize" format="dimension" />
+        <attr name="percentTextColor" format="color"/>
+        <attr name="percentProgressDrawable" format="reference"/>
     </declare-styleable>
 </resources>

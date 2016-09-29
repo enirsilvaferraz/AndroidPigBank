@@ -63,6 +63,8 @@ public class HomeActivity extends BaseActivity {
         //toolbar.setTitle("");
         //setSupportActionBar(toolbar);
 
+        appbar.setExpanded(false);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,7 +155,7 @@ public class HomeActivity extends BaseActivity {
         calendar.set(Calendar.MONTH, data.getCurrentMonth().getMonth());
 //        toolbar.setTitle(JavaUtils.DateUtil.format(calendar.getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));
 
-        appbar.setExpanded(true);
+        appbar.setExpanded(false);
         collapseLayout.setTitle(JavaUtils.DateUtil.format(calendar.getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));
 
         homeHeader.bind(data.getCurrentMonth().getValue(), 3500D);

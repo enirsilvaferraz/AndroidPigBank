@@ -120,6 +120,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="30dp"
+        app:percentProgressDrawable="@drawable/custom_circular_progress"
         app:percentTextSize="30sp" />
 
 </RelativeLayout>

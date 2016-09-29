@@ -39,6 +39,8 @@ public class CategoryVO extends EntityAbs implements CardAdapter.CardModel {
     @Expose
     private Double amount;
 
+    private MonthVO monthVO;
+
     public CategoryVO() {
         amount = 0D;
     }
@@ -122,6 +124,14 @@ public class CategoryVO extends EntityAbs implements CardAdapter.CardModel {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public MonthVO getMonthVO() {
+        return monthVO;
+    }
+
+    public void setMonthVO(MonthVO monthVO) {
+        this.monthVO = monthVO;
     }
 
     @Override

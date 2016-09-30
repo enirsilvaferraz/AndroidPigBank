@@ -55,6 +55,7 @@ public class CategoryViewHolder extends CardViewHolder {
 
         tvRange.setText(JavaUtils.NumberUtil.currencyFormat(item.getAmount()));
 
+        progress.setVisibility(View.GONE);
         progress.bind(item.getMonthVO().getValue(), item.getAmount());
 
     }

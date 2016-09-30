@@ -169,7 +169,7 @@ public class HomeBusiness {
             category.setAmount(0D);
             category.setMonthVO(monthVO);
 
-            if (!hasTitleSecondary && !category.isPrimary() && position != categories.size() - 1) {
+            if (!hasTitleSecondary && !category.isPrimary()) {
                 itens.add(new WhiteSpaceVO());
                 itens.add(new TitleVO("Secondary Categories"));
                 hasTitleSecondary = true;

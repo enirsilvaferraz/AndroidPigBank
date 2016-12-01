@@ -8,11 +8,10 @@ import com.google.gson.annotations.Expose;
 import com.j256.ormlite.table.DatabaseTable;
 import com.system.androidpigbank.controllers.helpers.PaymentType;
 import com.system.androidpigbank.models.firebase.serializers.GsonUtil;
-import com.system.architecture.utils.DTOAbs;
+import com.system.architecture.models.DTOAbs;
 import com.system.androidpigbank.models.firebase.dtos.TransactionDTO;
 import com.system.architecture.adapters.CardAdapter;
-import com.system.architecture.managers.EntityAbs;
-import com.system.architecture.utils.JavaUtils;
+import com.system.architecture.models.VOAbs;
 
 import java.util.Date;
 
@@ -21,7 +20,7 @@ import java.util.Date;
  */
 @DatabaseTable(tableName = "transaction")
 @IgnoreExtraProperties
-public class TransactionVO extends EntityAbs implements VOIf, Parcelable, CardAdapter.CardModel, Cloneable {
+public class TransactionVO extends VOAbs implements VOIf, Parcelable, CardAdapter.CardModel, Cloneable {
 
     public static final Creator<TransactionVO> CREATOR = new Creator<TransactionVO>() {
         @Override

@@ -3,8 +3,8 @@ package com.system.androidpigbank.models.firebase.business;
 import com.system.androidpigbank.BuildConfig;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.models.firebase.dtos.CategoryDTO;
-import com.system.architecture.managers.FirebaseDaoAbs;
-import com.system.architecture.utils.DTOAbs;
+import com.system.architecture.models.FirebaseAbs;
+import com.system.architecture.models.DTOAbs;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ import java.util.Map;
  * Business de Category
  */
 
-public class CategoryFirebaseBusiness extends FirebaseDaoAbs<CategoryVO> {
+public class CategoryFirebaseBusiness extends FirebaseAbs<CategoryVO> {
 
     public CategoryFirebaseBusiness() {
         super(BuildConfig.FLAVOR);

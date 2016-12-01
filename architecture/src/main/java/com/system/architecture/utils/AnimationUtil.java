@@ -1,4 +1,4 @@
-package com.system.architecture.helpers;
+package com.system.architecture.utils;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

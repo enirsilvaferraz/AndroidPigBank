@@ -12,22 +12,22 @@ import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusiness;
-import com.system.architecture.managers.FirebaseDaoAbs;
+import com.system.architecture.models.FirebaseAbs;
 import com.system.androidpigbank.models.firebase.business.TransactionFirebaseBusiness;
 import com.system.architecture.adapters.CardAdapter;
-import com.system.architecture.adapters.CardFragment;
-import com.system.architecture.managers.EntityAbs;
+import com.system.architecture.adapters.CardFragmentAbs;
+import com.system.architecture.models.VOAbs;
 
 /**
  * Created by Enir on 11/09/2016.
  */
 
-public class CardFragmentImpl extends CardFragment {
+public class CardFragmentImpl extends CardFragmentAbs {
 
     private int fragmentID;
     private ActionBarVO toolbar;
 
-    public static CardFragment newInstance(int id) {
+    public static CardFragmentAbs newInstance(int id) {
         CardFragmentImpl fragment = new CardFragmentImpl();
         fragment.setFragmentID(id);
         return fragment;
@@ -99,9 +99,9 @@ public class CardFragmentImpl extends CardFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        new CategoryFirebaseBusiness().delete((CategoryVO) model, new FirebaseDaoAbs.FirebaseSingleReturnListener() {
+                        new CategoryFirebaseBusiness().delete((CategoryVO) model, new FirebaseAbs.FirebaseSingleReturnListener() {
                             @Override
-                            public void onFind(EntityAbs list) {
+                            public void onFind(VOAbs list) {
                                 ((HomeActivity) getActivity()).callApi();
                             }
 
@@ -154,9 +154,9 @@ public class CardFragmentImpl extends CardFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        new TransactionFirebaseBusiness().delete((TransactionVO) model, new FirebaseDaoAbs.FirebaseSingleReturnListener() {
+                        new TransactionFirebaseBusiness().delete((TransactionVO) model, new FirebaseAbs.FirebaseSingleReturnListener() {
                             @Override
-                            public void onFind(EntityAbs list) {
+                            public void onFind(VOAbs list) {
                                 ((HomeActivity) getActivity()).callApi();
                             }
 

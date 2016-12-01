@@ -1,4 +1,4 @@
-package com.system.architecture.helpers;
+package com.system.architecture.utils;
 
 import android.app.Activity;
 import android.content.Context;

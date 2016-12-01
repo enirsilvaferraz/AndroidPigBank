@@ -10,10 +10,10 @@ import com.system.androidpigbank.BuildConfig;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
-import com.system.architecture.managers.FirebaseDaoAbs;
-import com.system.architecture.utils.DTOAbs;
+import com.system.architecture.models.FirebaseAbs;
+import com.system.architecture.models.DTOAbs;
 import com.system.androidpigbank.models.firebase.dtos.TransactionDTO;
-import com.system.architecture.managers.EntityAbs;
+import com.system.architecture.models.VOAbs;
 import com.system.architecture.utils.JavaUtils;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import java.util.Map;
  * Business de Transaction
  */
 
-public class TransactionFirebaseBusiness extends FirebaseDaoAbs<TransactionVO> {
+public class TransactionFirebaseBusiness extends FirebaseAbs<TransactionVO> {
 
     public TransactionFirebaseBusiness() {
         super(BuildConfig.FLAVOR);
@@ -116,7 +116,7 @@ public class TransactionFirebaseBusiness extends FirebaseDaoAbs<TransactionVO> {
 
         new MonthFirebaseBusiness().delete(entity, new FirebaseSingleReturnListener() {
             @Override
-            public void onFind(EntityAbs list) {
+            public void onFind(VOAbs list) {
                 TransactionFirebaseBusiness.super.delete(entity, listener);
             }
 

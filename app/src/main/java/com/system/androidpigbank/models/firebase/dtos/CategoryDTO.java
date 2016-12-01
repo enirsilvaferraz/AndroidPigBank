@@ -4,9 +4,8 @@ import com.google.gson.annotations.Expose;
 import com.j256.ormlite.table.DatabaseTable;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.models.firebase.serializers.GsonUtil;
-import com.system.architecture.managers.EntityAbs;
-import com.system.architecture.utils.DTOAbs;
-import com.system.architecture.utils.JavaUtils;
+import com.system.architecture.models.VOAbs;
+import com.system.architecture.models.DTOAbs;
 
 /**
  * Created by eferraz on 05/12/15.
@@ -48,7 +47,7 @@ public class CategoryDTO extends DTOAbs {
     }
 
     @Override
-    public EntityAbs toEntity() {
+    public VOAbs toEntity() {
         return GsonUtil.getInstance().fromCategory().toEntity(this, CategoryVO.class);
     }
 }

@@ -17,7 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public abstract class CardFragment extends Fragment {
+public abstract class CardFragmentAbs extends Fragment {
 
     @BindView(R.id.category_recyclerview)
     public RecyclerView recyclerview;

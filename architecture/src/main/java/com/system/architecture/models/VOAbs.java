@@ -1,15 +1,13 @@
-package com.system.architecture.managers;
+package com.system.architecture.models;
 
 import android.os.Parcelable;
-
-import com.system.architecture.utils.DTOAbs;
 
 /**
  * Created by eferraz on 05/12/15.
  */
-public abstract class EntityAbs implements Parcelable, Cloneable {
+public abstract class VOAbs implements Parcelable, Cloneable {
 
-    private EntityAbs old;
+    private VOAbs old;
 
     public abstract DTOAbs toDTO();
 
@@ -17,11 +15,11 @@ public abstract class EntityAbs implements Parcelable, Cloneable {
 
     public abstract void setKey(String key);
 
-    public EntityAbs getOld() {
+    public VOAbs getOld() {
         return old;
     }
 
-    public void setOld(EntityAbs old) {
+    public void setOld(VOAbs old) {
         this.old = old;
     }
 

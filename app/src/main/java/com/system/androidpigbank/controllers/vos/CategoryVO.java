@@ -6,17 +6,16 @@ import com.google.gson.annotations.Expose;
 import com.j256.ormlite.table.DatabaseTable;
 import com.system.androidpigbank.models.firebase.dtos.CategoryDTO;
 import com.system.androidpigbank.models.firebase.serializers.GsonUtil;
-import com.system.architecture.utils.DTOAbs;
 import com.system.architecture.adapters.CardAdapter;
-import com.system.architecture.managers.EntityAbs;
-import com.system.architecture.utils.JavaUtils;
+import com.system.architecture.models.DTOAbs;
+import com.system.architecture.models.VOAbs;
 
 /**
  * Created by eferraz on 05/12/15.
  * Value Object de Categoria
  */
 @DatabaseTable(tableName = "category")
-public class CategoryVO extends EntityAbs implements CardAdapter.CardModel {
+public class CategoryVO extends VOAbs implements CardAdapter.CardModel {
 
     public static final Creator<CategoryVO> CREATOR = new Creator<CategoryVO>() {
         @Override

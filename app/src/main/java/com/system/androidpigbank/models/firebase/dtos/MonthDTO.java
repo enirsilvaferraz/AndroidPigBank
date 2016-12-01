@@ -3,9 +3,8 @@ package com.system.androidpigbank.models.firebase.dtos;
 import com.google.gson.annotations.Expose;
 import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.models.firebase.serializers.GsonUtil;
-import com.system.architecture.managers.EntityAbs;
-import com.system.architecture.utils.DTOAbs;
-import com.system.architecture.utils.JavaUtils;
+import com.system.architecture.models.VOAbs;
+import com.system.architecture.models.DTOAbs;
 
 /**
  * Created by Enir on 22/07/2016.
@@ -46,7 +45,7 @@ public class MonthDTO extends DTOAbs {
     }
 
     @Override
-    public EntityAbs toEntity() {
+    public VOAbs toEntity() {
         return GsonUtil.getInstance().fromMonth().toEntity(this, MonthVO.class);
     }
 }

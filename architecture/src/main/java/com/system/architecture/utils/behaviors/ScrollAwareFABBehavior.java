@@ -1,4 +1,4 @@
-package com.system.architecture.behaviors;
+package com.system.architecture.utils.behaviors;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;

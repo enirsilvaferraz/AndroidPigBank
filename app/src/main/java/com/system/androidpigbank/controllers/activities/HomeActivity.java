@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -19,8 +20,9 @@ import com.system.androidpigbank.controllers.vos.HomeObjectVO;
 import com.system.androidpigbank.models.firebase.business.HomeBusiness;
 import com.system.androidpigbank.views.CustomHeaderSummary;
 import com.system.architecture.activities.BaseActivity;
-import com.system.architecture.adapters.CardFragment;
+import com.system.architecture.adapters.CardFragmentAbs;
 import com.system.architecture.utils.JavaUtils;
+import com.system.architecture.utils.behaviors.ScrollAwareFABBehavior;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -65,6 +67,10 @@ public class HomeActivity extends BaseActivity {
 
         appbar.setExpanded(false);
 
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+        params.setBehavior(new ScrollAwareFABBehavior(this, null));
+        fab.requestLayout();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,18 +96,18 @@ public class HomeActivity extends BaseActivity {
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
 
-        if (fragment instanceof CardFragment) {
-            switch (((CardFragment) fragment).getFragmentID()) {
+        if (fragment instanceof CardFragmentAbs) {
+            switch (((CardFragmentAbs) fragment).getFragmentID()) {
                 case Constants.FRAGMENT_ID_SUMMARY_CATEGORY:
-                    ((CardFragment) fragment).setData(data.getListCategorySummary());
+                    ((CardFragmentAbs) fragment).setData(data.getListCategorySummary());
                     break;
 
                 case Constants.FRAGMENT_ID_TRANSACTION:
-                    ((CardFragment) fragment).setData(data.getListTransaction());
+                    ((CardFragmentAbs) fragment).setData(data.getListTransaction());
                     break;
 
                 case Constants.FRAGMENT_ID_MONTH:
-                    ((CardFragment) fragment).setData(data.getListMonth());
+                    ((CardFragmentAbs) fragment).setData(data.getListMonth());
                     break;
             }
         }
@@ -150,15 +156,16 @@ public class HomeActivity extends BaseActivity {
     private void configureResult(HomeObjectVO data) {
         this.data = data;
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, data.getCurrentMonth().getYear());
-        calendar.set(Calendar.MONTH, data.getCurrentMonth().getMonth());
-//        toolbar.setTitle(JavaUtils.DateUtil.format(calendar.getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));
+        if (data != null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, data.getCurrentMonth().getYear());
+            calendar.set(Calendar.MONTH, data.getCurrentMonth().getMonth());
 
-        appbar.setExpanded(false);
-        collapseLayout.setTitle(JavaUtils.DateUtil.format(calendar.getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));
+            appbar.setExpanded(false);
+            collapseLayout.setTitle(JavaUtils.DateUtil.format(calendar.getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));
 
-        homeHeader.bind(data.getCurrentMonth().getValue(), 3500D);
+            homeHeader.bind(data.getCurrentMonth().getValue(), 3500D);
+        }
 
         SectionsCurrentMonthPagerAdapter adapter = new SectionsCurrentMonthPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(adapter);

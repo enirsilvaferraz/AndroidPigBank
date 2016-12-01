@@ -6,7 +6,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.system.androidpigbank.R;
-import com.system.architecture.managers.EntityAbs;
+import com.system.architecture.models.VOAbs;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +32,7 @@ public class CardActionBarView extends LinearLayout {
         ButterKnife.bind(this);
     }
 
-    public CardActionBarView bind(final EntityAbs entityAbs, final OnClickListener onClickListener) {
+    public CardActionBarView bind(final VOAbs entityAbs, final OnClickListener onClickListener) {
 
         if (onClickListener != null) {
 
@@ -62,10 +62,10 @@ public class CardActionBarView extends LinearLayout {
     }
 
     public interface OnClickListener {
-        void onEditClicked(EntityAbs model);
+        void onEditClicked(VOAbs model);
 
-        void onDeleteClicked(EntityAbs model);
+        void onDeleteClicked(VOAbs model);
 
-        void onCopyClicked(EntityAbs model);
+        void onCopyClicked(VOAbs model);
     }
 }

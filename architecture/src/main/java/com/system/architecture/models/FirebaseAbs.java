@@ -1,4 +1,4 @@
-package com.system.architecture.managers;
+package com.system.architecture.models;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -6,7 +6,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.system.architecture.utils.DTOAbs;
+import com.system.architecture.models.VOAbs;
+import com.system.architecture.models.DTOAbs;
 import com.system.architecture.utils.JavaUtils;
 
 import java.util.ArrayList;
@@ -18,11 +19,11 @@ import java.util.Map;
  * Created by Enir on 07/09/2016.
  */
 
-public abstract class FirebaseDaoAbs<T extends EntityAbs> {
+public abstract class FirebaseAbs<T extends VOAbs> {
 
     private String flavor;
 
-    public FirebaseDaoAbs(String flavor) {
+    public FirebaseAbs(String flavor) {
         this.flavor = flavor;
     }
 
@@ -110,13 +111,13 @@ public abstract class FirebaseDaoAbs<T extends EntityAbs> {
         return database.getReference(flavor + "-database/" + simpleName);
     }
 
-    public interface FirebaseMultiReturnListener<T extends EntityAbs> {
+    public interface FirebaseMultiReturnListener<T extends VOAbs> {
         void onFindAll(List<T> list);
 
         void onError(String error);
     }
 
-    public interface FirebaseSingleReturnListener<T extends EntityAbs> {
+    public interface FirebaseSingleReturnListener<T extends VOAbs> {
         void onFind(T list);
 
         void onError(String error);

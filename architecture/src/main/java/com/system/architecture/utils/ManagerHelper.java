@@ -1,6 +1,7 @@
-package com.system.architecture.managers;
+package com.system.architecture.utils;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -17,7 +18,7 @@ public final class ManagerHelper {
      *
      * @param callback Retorno da execucao em background {@link LoaderResultInterface}
      */
-    public static <T> void execute(AppCompatActivity context, final LoaderResultInterface<T> callback) {
+    public <T> void execute(AppCompatActivity context, final LoaderResultInterface<T> callback) {
 
         final AsyncTaskLoader<LoaderResult<T>> asyncTaskLoader = new AsyncTaskLoader<LoaderResult<T>>(context) {
 
@@ -73,4 +74,39 @@ public final class ManagerHelper {
         }
     }
 
+    /**
+     * Created by andersonr on 18/11/15.
+     */
+    public class LoaderResult<T> {
+
+        private final T data;
+        private final Throwable exception;
+
+        public LoaderResult() {
+            this.data = null;
+            this.exception = null;
+        }
+
+        public LoaderResult(@NonNull T data) {
+            this.data = data;
+            this.exception = null;
+        }
+
+        public LoaderResult(@NonNull Throwable exception) {
+            this.data = null;
+            this.exception = exception;
+        }
+
+        public T getData() {
+            return data;
+        }
+
+        public Throwable getException() {
+            return exception;
+        }
+
+        public boolean isSuccess() {
+            return exception == null;
+        }
+    }
 }

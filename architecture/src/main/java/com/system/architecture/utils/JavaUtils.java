@@ -3,6 +3,7 @@ package com.system.architecture.utils;
 import android.content.res.Resources;
 import android.util.TypedValue;
 
+import java.lang.reflect.ParameterizedType;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -122,6 +123,15 @@ public final class JavaUtils {
 
         public static int getPixel(Resources resources, int dp) {
             return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
+        }
+    }
+
+
+    public static class ClassUtil {
+
+        public static Class getTClass(Object object) {
+            final ParameterizedType type = (ParameterizedType) object.getClass().getGenericSuperclass();
+            return (Class) (type).getActualTypeArguments()[0];
         }
     }
 }

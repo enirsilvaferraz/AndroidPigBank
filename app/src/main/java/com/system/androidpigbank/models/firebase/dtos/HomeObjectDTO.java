@@ -2,9 +2,8 @@ package com.system.androidpigbank.models.firebase.dtos;
 
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.models.firebase.serializers.GsonUtil;
-import com.system.architecture.managers.EntityAbs;
-import com.system.architecture.utils.DTOAbs;
-import com.system.architecture.utils.JavaUtils;
+import com.system.architecture.models.VOAbs;
+import com.system.architecture.models.DTOAbs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,7 @@ public class HomeObjectDTO extends DTOAbs {
     }
 
     @Override
-    public EntityAbs toEntity() {
+    public VOAbs toEntity() {
         return GsonUtil.getInstance().fromHomeObject().toEntity(this, CategoryVO.class);
     }
 

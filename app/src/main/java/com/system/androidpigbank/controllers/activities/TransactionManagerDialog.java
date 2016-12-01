@@ -23,7 +23,7 @@ import com.system.androidpigbank.controllers.helpers.PaymentType;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusiness;
-import com.system.architecture.managers.FirebaseDaoAbs;
+import com.system.architecture.models.FirebaseAbs;
 import com.system.androidpigbank.models.firebase.business.TransactionFirebaseBusiness;
 import com.system.architecture.activities.BaseActivity;
 import com.system.architecture.adapters.BaseManagerDialog;
@@ -169,7 +169,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<TransactionVO> {
             model = new TransactionVO();
         }
 
-        new CategoryFirebaseBusiness().findAll(new FirebaseDaoAbs.FirebaseMultiReturnListener<CategoryVO>() {
+        new CategoryFirebaseBusiness().findAll(new FirebaseAbs.FirebaseMultiReturnListener<CategoryVO>() {
             @Override
             public void onFindAll(List<CategoryVO> list) {
                 autocompleteCategory(list);
@@ -249,7 +249,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<TransactionVO> {
     }
 
     @Override
-    protected FirebaseDaoAbs<TransactionVO> getFirebaseBusinessInstance() {
+    protected FirebaseAbs<TransactionVO> getFirebaseBusinessInstance() {
         return new TransactionFirebaseBusiness();
     }
 

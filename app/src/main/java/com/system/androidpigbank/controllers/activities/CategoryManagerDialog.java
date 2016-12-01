@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,9 @@ import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.helpers.Constants;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusiness;
-import com.system.architecture.managers.FirebaseDaoAbs;
+import com.system.architecture.models.FirebaseAbs;
 import com.system.architecture.activities.BaseActivity;
 import com.system.architecture.adapters.BaseManagerDialog;
-import com.system.architecture.helpers.JavaHelper;
 
 import java.util.List;
 
@@ -123,7 +123,7 @@ public class CategoryManagerDialog extends BaseManagerDialog<CategoryVO> {
 //            }
 //        });
 
-        new CategoryFirebaseBusiness().findAll(new FirebaseDaoAbs.FirebaseMultiReturnListener<CategoryVO>() {
+        new CategoryFirebaseBusiness().findAll(new FirebaseAbs.FirebaseMultiReturnListener<CategoryVO>() {
             @Override
             public void onFindAll(List<CategoryVO> list) {
                 autocompleteCategory(list);
@@ -138,14 +138,14 @@ public class CategoryManagerDialog extends BaseManagerDialog<CategoryVO> {
     }
 
     @Override
-    protected FirebaseDaoAbs<CategoryVO> getFirebaseBusinessInstance() {
+    protected FirebaseAbs<CategoryVO> getFirebaseBusinessInstance() {
         return new CategoryFirebaseBusiness();
     }
 
     @Override
     protected void prepareToPersist() throws Exception {
 
-        if (JavaHelper.isEmpty(editCategory.getText().toString())) {
+        if (TextUtils.isEmpty(editCategory.getText().toString())) {
             throw new Exception("Campo obrigatório!");
         }
 

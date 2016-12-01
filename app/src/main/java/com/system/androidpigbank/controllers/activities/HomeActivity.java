@@ -13,10 +13,14 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.controllers.adapters.CardAdapter;
 import com.system.androidpigbank.controllers.adapters.SectionsCurrentMonthPagerAdapter;
 import com.system.androidpigbank.controllers.helpers.Constants;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
+import com.system.androidpigbank.controllers.vos.EstimateVO;
 import com.system.androidpigbank.controllers.vos.HomeObjectVO;
+import com.system.androidpigbank.controllers.vos.TitleVO;
+import com.system.androidpigbank.controllers.vos.WhiteSpaceVO;
 import com.system.androidpigbank.models.firebase.business.HomeBusiness;
 import com.system.androidpigbank.views.CustomHeaderSummary;
 import com.system.architecture.activities.BaseActivity;
@@ -24,6 +28,7 @@ import com.system.androidpigbank.controllers.fragments.CardFragmentAbs;
 import com.system.architecture.utils.JavaUtils;
 import com.system.architecture.utils.behaviors.ScrollAwareFABBehavior;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -74,7 +79,11 @@ public class HomeActivity extends BaseActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentRouter.startTransactionManager(HomeActivity.this, null);
+                if (mViewPager.getCurrentItem() == 1){
+                    IntentRouter.startEstimateManager(HomeActivity.this, null);
+                } else {
+                    IntentRouter.startTransactionManager(HomeActivity.this, null);
+                }
             }
         });
 
@@ -100,6 +109,10 @@ public class HomeActivity extends BaseActivity {
             switch (((CardFragmentAbs) fragment).getFragmentID()) {
                 case Constants.FRAGMENT_ID_SUMMARY_CATEGORY:
                     ((CardFragmentAbs) fragment).setData(data.getListCategorySummary());
+                    break;
+
+                case Constants.FRAGMENT_ID_ESTIMATE:
+                    ((CardFragmentAbs) fragment).setData(data.getListEstimate());
                     break;
 
                 case Constants.FRAGMENT_ID_TRANSACTION:
@@ -169,7 +182,7 @@ public class HomeActivity extends BaseActivity {
 
         SectionsCurrentMonthPagerAdapter adapter = new SectionsCurrentMonthPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
-        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setOffscreenPageLimit(4);
         mViewPager.setCurrentItem(HOME_INDICATOR);
         mViewPager.getAdapter().notifyDataSetChanged();
     }

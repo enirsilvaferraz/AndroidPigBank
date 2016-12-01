@@ -30,12 +30,14 @@ public class HomeObjectVO implements Parcelable {
     private List<CardAdapterAbs.CardModel> listCategorySummary;
     private List<CardAdapterAbs.CardModel> listTransaction;
     private List<CardAdapterAbs.CardModel> listMonth;
+    private List<CardAdapterAbs.CardModel> listEstimate;
 
     public HomeObjectVO() {
         listCategorySummary = new ArrayList<>();
         listTransaction = new ArrayList<>();
         listMonth = new ArrayList<>();
         currentMonth = new MonthVO();
+        listEstimate = new ArrayList<>();
     }
 
     protected HomeObjectVO(Parcel in) {
@@ -46,6 +48,8 @@ public class HomeObjectVO implements Parcelable {
         in.readList(this.listTransaction, CardAdapterAbs.CardModel.class.getClassLoader());
         this.listMonth = new ArrayList<CardAdapterAbs.CardModel>();
         in.readList(this.listMonth, CardAdapterAbs.CardModel.class.getClassLoader());
+        this.listEstimate = new ArrayList<CardAdapterAbs.CardModel>();
+        in.readList(this.listEstimate, CardAdapterAbs.CardModel.class.getClassLoader());
     }
 
     public List<CardAdapterAbs.CardModel> getListCategorySummary() {
@@ -91,5 +95,14 @@ public class HomeObjectVO implements Parcelable {
         dest.writeList(this.listCategorySummary);
         dest.writeList(this.listTransaction);
         dest.writeList(this.listMonth);
+        dest.writeList(this.listEstimate);
+    }
+
+    public List<CardAdapterAbs.CardModel> getListEstimate() {
+        return listEstimate;
+    }
+
+    public void setListEstimate(List<CardAdapterAbs.CardModel> listEstimate) {
+        this.listEstimate = listEstimate;
     }
 }

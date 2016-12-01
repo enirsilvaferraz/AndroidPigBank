@@ -26,10 +26,14 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter 
                 break;
 
             case 1:
-                fragment = CardFragmentImpl.newInstance(Constants.FRAGMENT_ID_TRANSACTION);
+                fragment = CardFragmentImpl.newInstance(Constants.FRAGMENT_ID_ESTIMATE);
                 break;
 
             case 2:
+                fragment = CardFragmentImpl.newInstance(Constants.FRAGMENT_ID_TRANSACTION);
+                break;
+
+            case 3:
                 fragment =  CardFragmentImpl.newInstance(Constants.FRAGMENT_ID_MONTH);
                 break;
 
@@ -40,7 +44,7 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter 
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Override

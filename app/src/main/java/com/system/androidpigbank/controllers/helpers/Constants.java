@@ -35,4 +35,5 @@ public interface Constants {
     int FRAGMENT_ID_SUMMARY_CATEGORY = 1;
     int FRAGMENT_ID_TRANSACTION = 2;
     int FRAGMENT_ID_MONTH = 3;
+    int FRAGMENT_ID_ESTIMATE = 4;
 }

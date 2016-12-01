@@ -14,7 +14,7 @@ import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusiness;
 import com.system.architecture.models.FirebaseAbs;
 import com.system.androidpigbank.models.firebase.business.TransactionFirebaseBusiness;
-import com.system.architecture.adapters.CardAdapter;
+import com.system.architecture.activities.CardAdapterAbs;
 import com.system.architecture.adapters.CardFragmentAbs;
 import com.system.architecture.models.VOAbs;
 
@@ -42,8 +42,8 @@ public class CardFragmentImpl extends CardFragmentAbs {
         this.fragmentID = fragmentID;
     }
 
-    public void performClick(int action, final CardAdapter.CardModel model) {
-        final CardAdapter cardAdapter = (CardAdapter) recyclerview.getAdapter();
+    public void performClick(int action, final CardAdapterAbs.CardModel model) {
+        final CardAdapterAbs cardAdapter = (CardAdapterAbs) recyclerview.getAdapter();
 
         if (model instanceof TransactionVO) {
             performTransactionClick(action, model, cardAdapter);
@@ -58,7 +58,7 @@ public class CardFragmentImpl extends CardFragmentAbs {
         }
     }
 
-    private void performMonthClick(int action, MonthVO model, CardAdapter cardAdapter) {
+    private void performMonthClick(int action, MonthVO model, CardAdapterAbs cardAdapter) {
 
         switch (action) {
             case Constants.ACTION_VIEW:
@@ -67,7 +67,7 @@ public class CardFragmentImpl extends CardFragmentAbs {
         }
     }
 
-    private void performCategoryClick(int action, final CardAdapter.CardModel model, final CardAdapter cardAdapter) {
+    private void performCategoryClick(int action, final CardAdapterAbs.CardModel model, final CardAdapterAbs cardAdapter) {
 
         switch (action) {
             case Constants.ACTION_VIEW:
@@ -118,7 +118,7 @@ public class CardFragmentImpl extends CardFragmentAbs {
 
     }
 
-    private void performTransactionClick(int action, final CardAdapter.CardModel model, final CardAdapter cardAdapter) {
+    private void performTransactionClick(int action, final CardAdapterAbs.CardModel model, final CardAdapterAbs cardAdapter) {
 
         switch (action) {
             case Constants.ACTION_VIEW:
@@ -173,7 +173,7 @@ public class CardFragmentImpl extends CardFragmentAbs {
     }
 
 
-    private void removeToolbar(CardAdapter cardAdapter) {
+    private void removeToolbar(CardAdapterAbs cardAdapter) {
         cardAdapter.remove(toolbar);
         toolbar = null;
     }

@@ -6,8 +6,8 @@ import android.widget.TextView;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.vos.MonthVO;
-import com.system.architecture.adapters.CardAdapter;
-import com.system.architecture.adapters.CardViewHolder;
+import com.system.architecture.activities.CardAdapterAbs;
+import com.system.architecture.activities.CardViewHolder;
 import com.system.architecture.utils.JavaUtils;
 
 import java.util.Calendar;
@@ -32,7 +32,7 @@ public class MonthViewHolder extends CardViewHolder {
     }
 
     @Override
-    public void bind(final CardAdapter.CardModel model, final OnClickListener onClickListener) {
+    public void bind(final CardAdapterAbs.CardModel model, final OnClickListener onClickListener) {
         super.bind(model, onClickListener);
 
         final MonthVO item = (MonthVO) model;

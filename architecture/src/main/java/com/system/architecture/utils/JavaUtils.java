@@ -1,6 +1,8 @@
 package com.system.architecture.utils;
 
+import android.content.Context;
 import android.content.res.Resources;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
 import java.lang.reflect.ParameterizedType;
@@ -121,8 +123,14 @@ public final class JavaUtils {
      */
     public static class AndroidUtil {
 
-        public static int getPixel(Resources resources, int dp) {
-            return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
+        public static int getPixel(Context context, float dp) {
+            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+            return (int) (dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+        }
+
+        public static int getDP(Context context, float px) {
+            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+            return (int) (px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT));
         }
     }
 

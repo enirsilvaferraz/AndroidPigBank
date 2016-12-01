@@ -3,7 +3,7 @@ package com.system.androidpigbank.controllers.vos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.system.architecture.adapters.CardAdapter;
+import com.system.architecture.activities.CardAdapterAbs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +27,9 @@ public class HomeObjectVO implements Parcelable {
         }
     };
     private MonthVO currentMonth;
-    private List<CardAdapter.CardModel> listCategorySummary;
-    private List<CardAdapter.CardModel> listTransaction;
-    private List<CardAdapter.CardModel> listMonth;
+    private List<CardAdapterAbs.CardModel> listCategorySummary;
+    private List<CardAdapterAbs.CardModel> listTransaction;
+    private List<CardAdapterAbs.CardModel> listMonth;
 
     public HomeObjectVO() {
         listCategorySummary = new ArrayList<>();
@@ -40,35 +40,35 @@ public class HomeObjectVO implements Parcelable {
 
     protected HomeObjectVO(Parcel in) {
         this.currentMonth = in.readParcelable(MonthVO.class.getClassLoader());
-        this.listCategorySummary = new ArrayList<CardAdapter.CardModel>();
-        in.readList(this.listCategorySummary, CardAdapter.CardModel.class.getClassLoader());
-        this.listTransaction = new ArrayList<CardAdapter.CardModel>();
-        in.readList(this.listTransaction, CardAdapter.CardModel.class.getClassLoader());
-        this.listMonth = new ArrayList<CardAdapter.CardModel>();
-        in.readList(this.listMonth, CardAdapter.CardModel.class.getClassLoader());
+        this.listCategorySummary = new ArrayList<CardAdapterAbs.CardModel>();
+        in.readList(this.listCategorySummary, CardAdapterAbs.CardModel.class.getClassLoader());
+        this.listTransaction = new ArrayList<CardAdapterAbs.CardModel>();
+        in.readList(this.listTransaction, CardAdapterAbs.CardModel.class.getClassLoader());
+        this.listMonth = new ArrayList<CardAdapterAbs.CardModel>();
+        in.readList(this.listMonth, CardAdapterAbs.CardModel.class.getClassLoader());
     }
 
-    public List<CardAdapter.CardModel> getListCategorySummary() {
+    public List<CardAdapterAbs.CardModel> getListCategorySummary() {
         return listCategorySummary;
     }
 
-    public void setListCategorySummary(List<CardAdapter.CardModel> listCategorySummary) {
+    public void setListCategorySummary(List<CardAdapterAbs.CardModel> listCategorySummary) {
         this.listCategorySummary = listCategorySummary;
     }
 
-    public List<CardAdapter.CardModel> getListTransaction() {
+    public List<CardAdapterAbs.CardModel> getListTransaction() {
         return listTransaction;
     }
 
-    public void setListTransaction(List<CardAdapter.CardModel> listTransaction) {
+    public void setListTransaction(List<CardAdapterAbs.CardModel> listTransaction) {
         this.listTransaction = listTransaction;
     }
 
-    public List<CardAdapter.CardModel> getListMonth() {
+    public List<CardAdapterAbs.CardModel> getListMonth() {
         return listMonth;
     }
 
-    public void setListMonth(List<CardAdapter.CardModel> listMonth) {
+    public void setListMonth(List<CardAdapterAbs.CardModel> listMonth) {
         this.listMonth = listMonth;
     }
 

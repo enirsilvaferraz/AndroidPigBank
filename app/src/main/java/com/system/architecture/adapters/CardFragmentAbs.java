@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
+import com.system.androidpigbank.controllers.adapters.CardAdapter;
+import com.system.architecture.activities.CardAdapterAbs;
+import com.system.architecture.activities.CardViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +25,7 @@ public abstract class CardFragmentAbs extends Fragment {
     @BindView(R.id.category_recyclerview)
     public RecyclerView recyclerview;
 
-    private List<CardAdapter.CardModel> data;
+    private List<CardAdapterAbs.CardModel> data;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,9 +38,9 @@ public abstract class CardFragmentAbs extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final CardAdapter adapter = new CardAdapter(new CardViewHolder.OnClickListener() {
+        final CardAdapterAbs adapter = new CardAdapter(new CardViewHolder.OnClickListener() {
             @Override
-            public void onContainerClicked(int action, CardAdapter.CardModel model) {
+            public void onContainerClicked(int action, CardAdapterAbs.CardModel model) {
                 performClick(action, model);
             }
         });
@@ -48,18 +51,18 @@ public abstract class CardFragmentAbs extends Fragment {
         recyclerview.setAdapter(adapter);
     }
 
-    public abstract void performClick(int action, CardAdapter.CardModel model);
+    public abstract void performClick(int action, CardAdapterAbs.CardModel model);
 
     public abstract int getFragmentID();
 
-    public List<CardAdapter.CardModel> getData() {
+    public List<CardAdapterAbs.CardModel> getData() {
         if (data == null) {
             data = new ArrayList<>();
         }
         return data;
     }
 
-    public void setData(List<CardAdapter.CardModel> data) {
+    public void setData(List<CardAdapterAbs.CardModel> data) {
         this.data = data;
     }
 

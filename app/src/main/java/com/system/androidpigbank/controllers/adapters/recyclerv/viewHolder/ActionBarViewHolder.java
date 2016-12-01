@@ -6,8 +6,8 @@ import android.widget.ImageButton;
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.helpers.Constants;
 import com.system.androidpigbank.controllers.vos.ActionBarVO;
-import com.system.architecture.adapters.CardAdapter;
-import com.system.architecture.adapters.CardViewHolder;
+import com.system.architecture.activities.CardAdapterAbs;
+import com.system.architecture.activities.CardViewHolder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +33,7 @@ public class ActionBarViewHolder extends CardViewHolder {
     }
 
     @Override
-    public void bind(final CardAdapter.CardModel model, final OnClickListener onClickListener) {
+    public void bind(final CardAdapterAbs.CardModel model, final OnClickListener onClickListener) {
         super.bind(model, onClickListener);
 
         final ActionBarVO vo = (ActionBarVO) model;

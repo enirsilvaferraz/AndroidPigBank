@@ -1,13 +1,14 @@
 package com.system.androidpigbank.controllers.vos;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 
-import com.system.architecture.adapters.CardAdapter;
+import com.system.architecture.activities.CardAdapterAbs;
 
 /**
  * Created by eferraz on 03/01/16.
  */
-public class TotalVO implements VOIf, CardAdapter.CardModel {
+public class TotalVO implements CardAdapterAbs.CardModel, Cloneable, Parcelable {
 
     public static final Creator<TotalVO> CREATOR = new Creator<TotalVO>() {
         @Override
@@ -39,11 +40,6 @@ public class TotalVO implements VOIf, CardAdapter.CardModel {
 
     public Double getValueEnd() {
         return valueEnd;
-    }
-
-    @Override
-    public CardAdapter.CardViewType getViewType() {
-        return CardAdapter.CardViewType.CARD_FOOTER;
     }
 
     @Override

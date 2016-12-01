@@ -6,14 +6,14 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.system.androidpigbank.models.firebase.serializers.GsonUtil;
 import com.system.androidpigbank.models.firebase.dtos.MonthDTO;
-import com.system.architecture.adapters.CardAdapter;
+import com.system.architecture.activities.CardAdapterAbs;
 import com.system.architecture.models.DTOAbs;
 import com.system.architecture.models.VOAbs;
 
 /**
  * Created by Enir on 22/07/2016.
  */
-public class MonthVO extends VOAbs implements VOIf, Parcelable, CardAdapter.CardModel {
+public class MonthVO extends VOAbs implements Parcelable, CardAdapterAbs.CardModel, Cloneable {
 
     public static final Creator<MonthVO> CREATOR = new Creator<MonthVO>() {
         @Override
@@ -107,11 +107,6 @@ public class MonthVO extends VOAbs implements VOIf, Parcelable, CardAdapter.Card
     @Override
     public DTOAbs toDTO() {
         return GsonUtil.getInstance().fromMonth().toDTO(this, MonthDTO.class);
-    }
-
-    @Override
-    public CardAdapter.CardViewType getViewType() {
-        return CardAdapter.CardViewType.CARD_MONTH;
     }
 
     @Override

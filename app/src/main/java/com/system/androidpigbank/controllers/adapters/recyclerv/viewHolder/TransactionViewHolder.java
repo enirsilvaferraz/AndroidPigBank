@@ -7,9 +7,9 @@ import android.widget.TextView;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
-import com.system.architecture.adapters.CardAdapter;
+import com.system.architecture.activities.CardAdapterAbs;
 import com.system.androidpigbank.views.RoundedImageView;
-import com.system.architecture.adapters.CardViewHolder;
+import com.system.architecture.activities.CardViewHolder;
 import com.system.architecture.utils.JavaUtils;
 
 import butterknife.BindView;
@@ -44,7 +44,7 @@ public class TransactionViewHolder extends CardViewHolder {
     }
 
     @Override
-    public void bind(CardAdapter.CardModel model, final OnClickListener onClickListener) {
+    public void bind(CardAdapterAbs.CardModel model, final OnClickListener onClickListener) {
         super.bind(model, onClickListener);
 
         final TransactionVO transaction = (TransactionVO) model;

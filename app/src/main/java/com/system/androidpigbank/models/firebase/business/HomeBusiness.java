@@ -9,7 +9,7 @@ import com.system.androidpigbank.controllers.vos.TitleVO;
 import com.system.androidpigbank.controllers.vos.TotalVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.androidpigbank.controllers.vos.WhiteSpaceVO;
-import com.system.architecture.adapters.CardAdapter;
+import com.system.architecture.activities.CardAdapterAbs;
 import com.system.architecture.models.FirebaseAbs;
 import com.system.architecture.utils.JavaUtils;
 
@@ -106,9 +106,9 @@ public class HomeBusiness {
         return transactions;
     }
 
-    private List<CardAdapter.CardModel> organizeTransationcList(List<TransactionVO> transactions, List<CategoryVO> categories) {
+    private List<CardAdapterAbs.CardModel> organizeTransationcList(List<TransactionVO> transactions, List<CategoryVO> categories) {
 
-        List<CardAdapter.CardModel> itens = new ArrayList<>();
+        List<CardAdapterAbs.CardModel> itens = new ArrayList<>();
 
         Double valorAcumular = 0D;
         boolean hasTitleFutureLanc = false;
@@ -149,11 +149,11 @@ public class HomeBusiness {
         return itens;
     }
 
-    private List<CardAdapter.CardModel> organizeMonthList(List<MonthVO> months) {
+    private List<CardAdapterAbs.CardModel> organizeMonthList(List<MonthVO> months) {
 
         Collections.sort(months, new MonthSort());
 
-        List<CardAdapter.CardModel> list = new ArrayList<>();
+        List<CardAdapterAbs.CardModel> list = new ArrayList<>();
         list.add(new WhiteSpaceVO());
         list.addAll(months);
         list.add(new WhiteSpaceVO());
@@ -165,10 +165,10 @@ public class HomeBusiness {
     }
 
     @NonNull
-    private List<CardAdapter.CardModel> organizeCategorySummaryList(MonthVO monthVO, List<CategoryVO> categories, List<TransactionVO> transactions) {
+    private List<CardAdapterAbs.CardModel> organizeCategorySummaryList(MonthVO monthVO, List<CategoryVO> categories, List<TransactionVO> transactions) {
 
         boolean hasTitleSecondary = false;
-        List<CardAdapter.CardModel> itens = new ArrayList<>();
+        List<CardAdapterAbs.CardModel> itens = new ArrayList<>();
 
         for (int position = 0; position < categories.size(); position++) {
 
@@ -210,11 +210,11 @@ public class HomeBusiness {
         return itens;
     }
 
-    private List<CardAdapter.CardModel> getTransactionByCategory(List<TransactionVO> transactions) {
+    private List<CardAdapterAbs.CardModel> getTransactionByCategory(List<TransactionVO> transactions) {
 
         Double value = 0D;
 
-        List<CardAdapter.CardModel> itens = new ArrayList<>();
+        List<CardAdapterAbs.CardModel> itens = new ArrayList<>();
         for (int position = 0; position < transactions.size(); position++) {
 
             TransactionVO transactionAct = transactions.get(position);

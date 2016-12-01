@@ -1,14 +1,15 @@
 package com.system.androidpigbank.controllers.vos;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 
-import com.system.architecture.adapters.CardAdapter;
+import com.system.architecture.activities.CardAdapterAbs;
 
 /**
  * Created by eferraz on 12/09/16.
  */
 
-public class WhiteSpaceVO implements VOIf, CardAdapter.CardModel {
+public class WhiteSpaceVO implements CardAdapterAbs.CardModel, Cloneable, Parcelable {
 
     public static final Creator<WhiteSpaceVO> CREATOR = new Creator<WhiteSpaceVO>() {
         @Override
@@ -26,11 +27,6 @@ public class WhiteSpaceVO implements VOIf, CardAdapter.CardModel {
     }
 
     protected WhiteSpaceVO(Parcel in) {
-    }
-
-    @Override
-    public CardAdapter.CardViewType getViewType() {
-        return CardAdapter.CardViewType.CARD_WHITESPACE;
     }
 
     @Override

@@ -1,14 +1,15 @@
 package com.system.androidpigbank.controllers.vos;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 
-import com.system.architecture.adapters.CardAdapter;
+import com.system.architecture.activities.CardAdapterAbs;
 
 /**
  * Created by Enir on 17/08/2016.
  */
 
-public class TitleVO implements VOIf, CardAdapter.CardModel {
+public class TitleVO implements CardAdapterAbs.CardModel, Cloneable, Parcelable {
 
     public static final Creator<TitleVO> CREATOR = new Creator<TitleVO>() {
         @Override
@@ -33,11 +34,6 @@ public class TitleVO implements VOIf, CardAdapter.CardModel {
 
     public String getTitle() {
         return title;
-    }
-
-    @Override
-    public CardAdapter.CardViewType getViewType() {
-        return CardAdapter.CardViewType.CARD_TITLE;
     }
 
     @Override

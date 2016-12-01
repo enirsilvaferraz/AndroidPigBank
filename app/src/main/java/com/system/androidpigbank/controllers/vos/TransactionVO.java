@@ -10,7 +10,7 @@ import com.system.androidpigbank.controllers.helpers.PaymentType;
 import com.system.androidpigbank.models.firebase.serializers.GsonUtil;
 import com.system.architecture.models.DTOAbs;
 import com.system.androidpigbank.models.firebase.dtos.TransactionDTO;
-import com.system.architecture.adapters.CardAdapter;
+import com.system.architecture.activities.CardAdapterAbs;
 import com.system.architecture.models.VOAbs;
 
 import java.util.Date;
@@ -20,7 +20,7 @@ import java.util.Date;
  */
 @DatabaseTable(tableName = "transaction")
 @IgnoreExtraProperties
-public class TransactionVO extends VOAbs implements VOIf, Parcelable, CardAdapter.CardModel, Cloneable {
+public class TransactionVO extends VOAbs implements Parcelable, CardAdapterAbs.CardModel, Cloneable {
 
     public static final Creator<TransactionVO> CREATOR = new Creator<TransactionVO>() {
         @Override
@@ -153,11 +153,6 @@ public class TransactionVO extends VOAbs implements VOIf, Parcelable, CardAdapte
 
     public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
-    }
-
-    @Override
-    public CardAdapter.CardViewType getViewType() {
-        return CardAdapter.CardViewType.CARD_TRANSACTION;
     }
 
     @Override

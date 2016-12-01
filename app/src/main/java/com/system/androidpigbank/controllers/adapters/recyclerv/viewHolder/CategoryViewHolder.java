@@ -1,23 +1,15 @@
 package com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder;
 
 import android.content.Context;
-import android.graphics.Paint;
-import android.graphics.drawable.ClipDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.support.v7.widget.CardView;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.views.CustomPercentualProgress;
-import com.system.architecture.adapters.CardAdapter;
-import com.system.architecture.adapters.CardViewHolder;
+import com.system.architecture.activities.CardAdapterAbs;
+import com.system.architecture.activities.CardViewHolder;
 import com.system.architecture.utils.JavaUtils;
 
 import butterknife.BindView;
@@ -46,7 +38,7 @@ public class CategoryViewHolder extends CardViewHolder {
     }
 
     @Override
-    public void bind(final CardAdapter.CardModel model, final OnClickListener onClickListener) {
+    public void bind(final CardAdapterAbs.CardModel model, final OnClickListener onClickListener) {
         super.bind(model, onClickListener);
 
         CategoryVO item = (CategoryVO) model;

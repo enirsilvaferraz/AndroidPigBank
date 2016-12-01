@@ -5,8 +5,8 @@ import android.widget.TextView;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.vos.TotalVO;
-import com.system.architecture.adapters.CardAdapter;
-import com.system.architecture.adapters.CardViewHolder;
+import com.system.architecture.activities.CardAdapterAbs;
+import com.system.architecture.activities.CardViewHolder;
 import com.system.architecture.utils.JavaUtils;
 
 /**
@@ -24,7 +24,7 @@ public class TotalViewHolder extends CardViewHolder {
     }
 
     @Override
-    public void bind(CardAdapter.CardModel model, final OnClickListener onClickListener) {
+    public void bind(CardAdapterAbs.CardModel model, final OnClickListener onClickListener) {
         super.bind(model, onClickListener);
 
         TotalVO totalFooter = (TotalVO) model;

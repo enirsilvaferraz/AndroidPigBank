@@ -6,8 +6,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.system.architecture.models.VOAbs;
-import com.system.architecture.models.DTOAbs;
 import com.system.architecture.utils.JavaUtils;
 
 import java.util.ArrayList;

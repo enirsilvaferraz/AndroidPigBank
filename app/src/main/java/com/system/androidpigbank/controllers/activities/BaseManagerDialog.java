@@ -1,4 +1,4 @@
-package com.system.architecture.adapters;
+package com.system.androidpigbank.controllers.activities;
 
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;

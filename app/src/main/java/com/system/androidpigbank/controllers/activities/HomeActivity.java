@@ -13,14 +13,14 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.adapters.pager.SectionsCurrentMonthPagerAdapter;
+import com.system.androidpigbank.controllers.adapters.SectionsCurrentMonthPagerAdapter;
 import com.system.androidpigbank.controllers.helpers.Constants;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.vos.HomeObjectVO;
 import com.system.androidpigbank.models.firebase.business.HomeBusiness;
 import com.system.androidpigbank.views.CustomHeaderSummary;
 import com.system.architecture.activities.BaseActivity;
-import com.system.architecture.adapters.CardFragmentAbs;
+import com.system.androidpigbank.controllers.fragments.CardFragmentAbs;
 import com.system.architecture.utils.JavaUtils;
 import com.system.architecture.utils.behaviors.ScrollAwareFABBehavior;
 

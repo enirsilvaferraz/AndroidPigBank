@@ -15,7 +15,6 @@ import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusine
 import com.system.architecture.models.FirebaseAbs;
 import com.system.androidpigbank.models.firebase.business.TransactionFirebaseBusiness;
 import com.system.architecture.activities.CardAdapterAbs;
-import com.system.architecture.adapters.CardFragmentAbs;
 import com.system.architecture.models.VOAbs;
 
 /**

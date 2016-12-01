@@ -1,4 +1,4 @@
-package com.system.architecture.adapters;
+package com.system.androidpigbank.controllers.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

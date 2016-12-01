@@ -1,4 +1,4 @@
-package com.system.androidpigbank.controllers.adapters.pager;
+package com.system.androidpigbank.controllers.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

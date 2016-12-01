@@ -9,4 +9,4 @@
     android:paddingBottom="6dp"
     android:paddingTop="6dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:activity="com.system.architecture.adapters.CardFragmentAbs" />
+    tools:activity="com.system.androidpigbank.controllers.fragments.CardFragmentAbs" />

@@ -9,9 +9,11 @@ import com.system.androidpigbank.controllers.helpers.Constants;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.vos.ActionBarVO;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
+import com.system.androidpigbank.controllers.vos.EstimateVO;
 import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusiness;
+import com.system.androidpigbank.models.firebase.business.EstimateFirebaseBusiness;
 import com.system.architecture.models.FirebaseAbs;
 import com.system.androidpigbank.models.firebase.business.TransactionFirebaseBusiness;
 import com.system.architecture.activities.CardAdapterAbs;
@@ -55,6 +57,61 @@ public class CardFragmentImpl extends CardFragmentAbs {
         else if (model instanceof MonthVO) {
             performMonthClick(action, (MonthVO) model, cardAdapter);
         }
+
+        else if (model instanceof EstimateVO){
+            performEstimateClick(action, (EstimateVO) model, cardAdapter);
+        }
+    }
+
+    private void performEstimateClick(int action, final EstimateVO model, CardAdapterAbs cardAdapter) {
+
+        switch (action){
+            case Constants.ACTION_VIEW:
+                if (toolbar == null) {
+                    toolbar = new ActionBarVO(model);
+                    toolbar.setActionsToHide(ActionBarVO.Actions.COPY);
+                    cardAdapter.add(toolbar, cardAdapter.getItens().indexOf(model) + 1);
+                } else {
+                    boolean mustAdd = !toolbar.getCardReferency().equals(model);
+                    removeToolbar(cardAdapter);
+                    if (mustAdd) {
+                        toolbar = new ActionBarVO(model);
+                        toolbar.setActionsToHide(ActionBarVO.Actions.COPY);
+                        cardAdapter.add(toolbar, cardAdapter.getItens().indexOf(model) + 1);
+                    }
+                }
+                break;
+
+            case Constants.ACTION_EDIT:
+                removeToolbar(cardAdapter);
+                IntentRouter.startEstimateManager((AppCompatActivity) getActivity(), model);
+                break;
+
+            case Constants.ACTION_DELETE:
+
+                removeToolbar(cardAdapter);
+
+                new AlertDialog.Builder(getContext()).setTitle("Delete Alert").setMessage("Are you sure?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        new EstimateFirebaseBusiness().delete(model, new FirebaseAbs.FirebaseSingleReturnListener() {
+                            @Override
+                            public void onFind(VOAbs list) {
+                                ((HomeActivity) getActivity()).callApi();
+                            }
+
+                            @Override
+                            public void onError(String error) {
+                                ((HomeActivity) getActivity()).showMessage(error);
+                            }
+                        });
+                    }
+                }).setNegativeButton("No", null).show();
+
+                break;
+        }
+
     }
 
     private void performMonthClick(int action, MonthVO model, CardAdapterAbs cardAdapter) {

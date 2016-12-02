@@ -2,6 +2,7 @@ package com.system.androidpigbank.models.firebase.business;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.system.androidpigbank.controllers.helpers.Quinzena;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
@@ -199,13 +200,14 @@ public class HomeBusiness {
                             }
                         }
 
-                    } else {
+                    } else if (vo.getCategorySecondary() == null && tvo.getCategorySecondary() == null) {
 
                         if (vo.getQuinzena().equals(Quinzena.PRIMEIRA) && day >= 5 && day < 20) {
                             vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
                         } else if (vo.getQuinzena().equals(Quinzena.SEGUNDA) && !(day >= 5 && day < 20)) {
                             vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
                         }
+
                     }
                 }
             }

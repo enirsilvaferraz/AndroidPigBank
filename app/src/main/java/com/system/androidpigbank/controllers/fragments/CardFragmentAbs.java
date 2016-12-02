@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.adapters.CardAdapter;
+import com.system.androidpigbank.controllers.adapters.CardAdapterImpl;
 import com.system.architecture.activities.CardAdapterAbs;
 import com.system.architecture.activities.CardViewHolder;
 
@@ -38,7 +38,7 @@ public abstract class CardFragmentAbs extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final CardAdapterAbs adapter = new CardAdapter(new CardViewHolder.OnClickListener() {
+        final CardAdapterAbs adapter = new CardAdapterImpl(new CardViewHolder.OnClickListener() {
             @Override
             public void onContainerClicked(int action, CardAdapterAbs.CardModel model) {
                 performClick(action, model);

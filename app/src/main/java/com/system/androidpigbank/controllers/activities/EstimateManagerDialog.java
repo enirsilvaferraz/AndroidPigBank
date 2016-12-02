@@ -103,13 +103,13 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
             model = (EstimateVO) parcelable;
 
             try {
-                model.setOld((TransactionVO) model.clone());
+                model.setOld((EstimateVO) model.clone());
             } catch (CloneNotSupportedException e) {
                 throw new RuntimeException(e);
             }
 
             editDay.setText(model.getDay() != null ? model.getDay().toString() : "");
-            editQuinzena.setText(model.getQuinzena().ordinal() +1);
+            editQuinzena.setText(String.valueOf(model.getQuinzena().getId()));
             editValue.setText(String.valueOf(model.getPlannedValue()));
             editCategory.setText(model.getCategory().getName());
             editCategorySecondary.setText(model.getCategorySecondary() != null ? model.getCategorySecondary().getName() : null);

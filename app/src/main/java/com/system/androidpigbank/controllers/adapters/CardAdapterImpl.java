@@ -26,10 +26,10 @@ import com.system.architecture.activities.CardViewHolder;
  * Created by eferraz on 01/12/16.
  */
 
-public class CardAdapter extends CardAdapterAbs {
+public class CardAdapterImpl extends CardAdapterAbs {
 
 
-    public CardAdapter(CardViewHolder.OnClickListener onClickListener) {
+    public CardAdapterImpl(CardViewHolder.OnClickListener onClickListener) {
         super(onClickListener);
     }
 

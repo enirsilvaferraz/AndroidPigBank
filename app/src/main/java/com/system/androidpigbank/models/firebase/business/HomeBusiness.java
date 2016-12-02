@@ -143,9 +143,9 @@ public class HomeBusiness {
             for (CategoryVO cvo : categories) {
                 if (vo.getCategory().getKey().equals(cvo.getKey())) {
                     vo.setCategory(cvo);
-                    vo.setSpentValue(cvo.getAmount());
                 } else if (vo.getCategorySecondary().getKey().equals(cvo.getKey())) {
                     vo.setCategorySecondary(cvo);
+                    vo.setSpentValue(cvo.getAmount());
                 }
 
                 if (!TextUtils.isEmpty(vo.getCategory().getName()) && !TextUtils.isEmpty(vo.getCategorySecondary().getName())) {

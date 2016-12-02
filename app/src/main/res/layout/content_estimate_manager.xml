@@ -17,7 +17,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:src="@drawable/ic_loyalty_black"
             android:tint="@color/material_amber" />
 
@@ -25,7 +25,7 @@
             android:id="@+id/estimate_manager_category"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight=".5"
             android:inputType="textAutoCorrect|textCapWords"
             android:isScrollContainer="true"
@@ -34,7 +34,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:src="@drawable/ic_loyalty_black"
             android:tint="@color/material_amber" />
 
@@ -58,7 +58,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:src="@drawable/ic_today_black"
             android:tint="@color/material_amber" />
 
@@ -66,25 +66,49 @@
             android:id="@+id/estimate_manager_date_lanc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight=".5"
-            android:inputType="number"
+            android:inputType="date"
             android:isScrollContainer="true"
             tools:text="01" />
 
         <ImageView
-            android:id="@+id/estimate_manager_value_ic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_today_black"
+            android:tint="@color/material_amber" />
+
+        <EditText
+            android:id="@+id/estimate_manager_quinzena"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight=".5"
+            android:inputType="number"
+            android:isScrollContainer="true"
+            android:maxLength="1"
+            tools:text="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:src="@drawable/ic_attach_money_black"
             android:tint="@color/material_amber" />
 
         <EditText
             android:id="@+id/estimate_manager_value"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight=".5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:isScrollContainer="true"
             tools:text="0.000,00" />

@@ -30,10 +30,7 @@ public class EstimateFirebaseBusiness extends FirebaseAbs<EstimateVO> {
         map.put("categorySecondary", dto.getCategorySecondary());
         map.put("day", dto.getDay());
         map.put("plannedValue", dto.getPlannedValue());
-        map.put("spentValue", dto.getSpentValue());
-        map.put("savedValue", dto.getSavedValue());
-        map.put("percentSpentValue", dto.getPercentSpentValue());
-        map.put("plannedValue", dto.getPlannedValue());
+        map.put("quinzena", dto.getQuinzena());
 
         return map;
     }

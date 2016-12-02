@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
+import com.system.androidpigbank.controllers.helpers.Quinzena;
 import com.system.androidpigbank.models.firebase.dtos.EstimateDTO;
 import com.system.androidpigbank.models.firebase.serializers.GsonUtil;
 import com.system.architecture.activities.CardAdapterAbs;
@@ -27,7 +28,6 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
             return new EstimateVO[size];
         }
     };
-
     @Expose
     private String key;
     @Expose
@@ -35,9 +35,11 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
     @Expose
     private CategoryVO categorySecondary;
     @Expose
-    private String day;
+    private Integer day;
     @Expose
     private Double plannedValue;
+    @Expose
+    private Quinzena quinzena;
 
     public EstimateVO() {
     }
@@ -45,8 +47,11 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
     protected EstimateVO(Parcel in) {
         this.key = in.readString();
         this.category = in.readParcelable(CategoryVO.class.getClassLoader());
-        this.day = in.readString();
+        this.categorySecondary = in.readParcelable(CategoryVO.class.getClassLoader());
+        this.day = (Integer) in.readValue(Integer.class.getClassLoader());
         this.plannedValue = (Double) in.readValue(Double.class.getClassLoader());
+        int tmpQuinzena = in.readInt();
+        this.quinzena = tmpQuinzena == -1 ? null : Quinzena.values()[tmpQuinzena];
     }
 
     public CategoryVO getCategory() {
@@ -60,6 +65,14 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
     @Override
     public DTOAbs toDTO() {
         return GsonUtil.getInstance().fromEstimate().toDTO(this, EstimateDTO.class);
+    }
+
+    public Quinzena getQuinzena() {
+        return quinzena;
+    }
+
+    public void setQuinzena(Quinzena quinzena) {
+        this.quinzena = quinzena;
     }
 
     @Override
@@ -80,11 +93,11 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
         this.categorySecondary = categorySecondary;
     }
 
-    public String getDay() {
+    public Integer getDay() {
         return day;
     }
 
-    public void setDay(String day) {
+    public void setDay(Integer day) {
         this.day = day;
     }
 
@@ -105,7 +118,9 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.key);
         dest.writeParcelable(this.category, flags);
-        dest.writeString(this.day);
+        dest.writeParcelable(this.categorySecondary, flags);
+        dest.writeValue(this.day);
         dest.writeValue(this.plannedValue);
+        dest.writeInt(this.quinzena == null ? -1 : this.quinzena.ordinal());
     }
 }

@@ -3,7 +3,9 @@ package com.system.androidpigbank.controllers.activities;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import android.widget.EditText;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.helpers.Constants;
+import com.system.androidpigbank.controllers.helpers.Quinzena;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.EstimateVO;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
@@ -48,6 +51,9 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
 
     @BindView(R.id.estimate_manager_value)
     EditText editValue;
+
+    @BindView(R.id.estimate_manager_quinzena)
+    EditText editQuinzena;
 
     private List<CategoryVO> categories;
 
@@ -102,7 +108,8 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
                 throw new RuntimeException(e);
             }
 
-            editDay.setText(model.getDay());
+            editDay.setText(model.getDay() != null ? model.getDay().toString() : "");
+            editQuinzena.setText(model.getQuinzena().ordinal() +1);
             editValue.setText(String.valueOf(model.getPlannedValue()));
             editCategory.setText(model.getCategory().getName());
             editCategorySecondary.setText(model.getCategorySecondary() != null ? model.getCategorySecondary().getName() : null);
@@ -110,6 +117,28 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
         } else {
             model = new EstimateVO();
         }
+
+        editDay.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!TextUtils.isEmpty(charSequence)){
+                    Integer day = Integer.valueOf(charSequence.toString());
+                    Integer dayAux = (day >= 5 && day < 20 ? Quinzena.PRIMEIRA.getId() : Quinzena.SEGUNDA.getId());
+                    editQuinzena.setText(dayAux.toString());
+                } else {
+                    editQuinzena.setText(String.valueOf(Quinzena.PRIMEIRA.getId()));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         new CategoryFirebaseBusiness().findAll(new FirebaseAbs.FirebaseMultiReturnListener<CategoryVO>() {
             @Override
@@ -135,8 +164,9 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
     protected void prepareToPersist() throws Exception {
 
         if (TextUtils.isEmpty(editCategory.getText().toString())
-                && TextUtils.isEmpty(editCategorySecondary.getText().toString())
-                && TextUtils.isEmpty(editValue.getText().toString())) {
+                || TextUtils.isEmpty(editCategorySecondary.getText().toString())
+                || TextUtils.isEmpty(editQuinzena.getText().toString())
+                || TextUtils.isEmpty(editValue.getText().toString())) {
             throw new Exception("Campo obrigatório!");
         }
 
@@ -145,8 +175,10 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
             model.setPlannedValue(0D);
         }
 
-        model.setDay(editDay.getText().toString());
+        model.setDay(!TextUtils.isEmpty(editDay.getText().toString()) ? Integer.valueOf(editDay.getText().toString()) : null);
         model.setPlannedValue(Double.parseDouble(editValue.getText().toString()));
+
+        model.setQuinzena(Quinzena.getEnum(Integer.valueOf(editQuinzena.getText().toString())));
 
         for (CategoryVO category : categories) {
             if (category.getName().equals(editCategory.getText().toString())) {

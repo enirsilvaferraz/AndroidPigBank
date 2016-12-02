@@ -1,6 +1,7 @@
 package com.system.androidpigbank.models.firebase.dtos;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.system.androidpigbank.controllers.vos.EstimateVO;
 import com.system.androidpigbank.models.firebase.serializers.GsonUtil;
 import com.system.architecture.models.DTOAbs;
@@ -11,22 +12,29 @@ import com.system.architecture.models.VOAbs;
  */
 public class EstimateDTO extends DTOAbs {
 
+    @SerializedName("key")
     @Expose
     private String key;
+
+    @SerializedName("category")
     @Expose
     private String category;
+
+    @SerializedName("categorySecondary")
     @Expose
     private String categorySecondary;
+
+    @SerializedName("day")
     @Expose
     private String day;
+
+    @SerializedName("plannedValue")
     @Expose
     private String plannedValue;
+
+    @SerializedName("quinzena")
     @Expose
-    private String spentValue;
-    @Expose
-    private String savedValue;
-    @Expose
-    private String percentSpentValue;
+    private String quinzena;
 
     public String getKey() {
         return key;
@@ -50,6 +58,15 @@ public class EstimateDTO extends DTOAbs {
 
     public void setCategorySecondary(String categorySecondary) {
         this.categorySecondary = categorySecondary;
+
+    }
+
+    public String getQuinzena() {
+        return quinzena;
+    }
+
+    public void setQuinzena(String quinzena) {
+        this.quinzena = quinzena;
     }
 
     public String getDay() {
@@ -66,30 +83,6 @@ public class EstimateDTO extends DTOAbs {
 
     public void setPlannedValue(String plannedValue) {
         this.plannedValue = plannedValue;
-    }
-
-    public String getSpentValue() {
-        return spentValue;
-    }
-
-    public void setSpentValue(String spentValue) {
-        this.spentValue = spentValue;
-    }
-
-    public String getSavedValue() {
-        return savedValue;
-    }
-
-    public void setSavedValue(String savedValue) {
-        this.savedValue = savedValue;
-    }
-
-    public String getPercentSpentValue() {
-        return percentSpentValue;
-    }
-
-    public void setPercentSpentValue(String percentSpentValue) {
-        this.percentSpentValue = percentSpentValue;
     }
 
     @Override

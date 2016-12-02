@@ -2,6 +2,7 @@ package com.system.androidpigbank.views;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.LinearLayout;
@@ -14,7 +15,7 @@ import com.system.androidpigbank.controllers.helpers.Colors;
  * Created by eferraz on 03/01/16.
  */
 public class RoundedTextView extends LinearLayout {
-    
+
     private final TextView textView;
 
     public RoundedTextView(final Context context, AttributeSet attrs) {
@@ -30,8 +31,17 @@ public class RoundedTextView extends LinearLayout {
     }
 
     public void setTextView(final String text) {
+
+        if (TextUtils.isEmpty(text)){
+            return;
+        }
+
         int size = text.length() > 2 ? 2 : text.length();
         textView.setText(text.substring(0, size));
+    }
+
+    public void setTextColor(final Colors color){
+        textView.setTextColor(getContext().getColor(color.getColorId()));
     }
 
     public void setColor(Colors color){

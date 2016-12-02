@@ -41,6 +41,10 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
     @Expose
     private Quinzena quinzena;
 
+    private Double savedValue;
+    private Double spentValue;
+    private Double percentualVelue;
+
     public EstimateVO() {
     }
 
@@ -52,6 +56,9 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
         this.plannedValue = (Double) in.readValue(Double.class.getClassLoader());
         int tmpQuinzena = in.readInt();
         this.quinzena = tmpQuinzena == -1 ? null : Quinzena.values()[tmpQuinzena];
+        this.savedValue = (Double) in.readValue(Double.class.getClassLoader());
+        this.spentValue = (Double) in.readValue(Double.class.getClassLoader());
+        this.percentualVelue = (Double) in.readValue(Double.class.getClassLoader());
     }
 
     public CategoryVO getCategory() {
@@ -109,6 +116,30 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
         this.plannedValue = plannedValue;
     }
 
+    public Double getSavedValue() {
+        return savedValue;
+    }
+
+    public void setSavedValue(Double savedValue) {
+        this.savedValue = savedValue;
+    }
+
+    public Double getSpentValue() {
+        return spentValue;
+    }
+
+    public void setSpentValue(Double spentValue) {
+        this.spentValue = spentValue;
+    }
+
+    public Double getPercentualVelue() {
+        return percentualVelue;
+    }
+
+    public void setPercentualVelue(Double percentualVelue) {
+        this.percentualVelue = percentualVelue;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -122,5 +153,8 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
         dest.writeValue(this.day);
         dest.writeValue(this.plannedValue);
         dest.writeInt(this.quinzena == null ? -1 : this.quinzena.ordinal());
+        dest.writeValue(this.savedValue);
+        dest.writeValue(this.spentValue);
+        dest.writeValue(this.percentualVelue);
     }
 }

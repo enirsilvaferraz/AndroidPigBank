@@ -106,6 +106,18 @@ public final class JavaUtils {
             instance.setMinimumIntegerDigits(1);
             return "R$ " + instance.format(value);
         }
+
+        public static String percentFormat(Double percentValue) {
+            final NumberFormat instance = NumberFormat.getInstance(new Locale("pt", "BR"));
+            instance.setMinimumFractionDigits(1);
+            instance.setMinimumIntegerDigits(1);
+            instance.setMaximumFractionDigits(2);
+            return "(" + instance.format(percentValue) + "%)";
+        }
+
+        public static Double calcPercent(Double total, Double parcial) {
+            return parcial * 100 / total;
+        }
     }
 
     /**

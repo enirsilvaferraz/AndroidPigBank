@@ -87,6 +87,6 @@ public class EstimateDTO extends DTOAbs {
 
     @Override
     public VOAbs toEntity() {
-        return GsonUtil.getInstance().fromCategory().toEntity(this, EstimateVO.class);
+        return GsonUtil.getInstance().fromEstimate().toEntity(this, EstimateVO.class);
     }
 }

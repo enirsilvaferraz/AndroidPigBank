@@ -1,8 +1,10 @@
 package com.system.androidpigbank.models.firebase.business;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.system.androidpigbank.controllers.vos.CategoryVO;
+import com.system.androidpigbank.controllers.vos.EstimateVO;
 import com.system.androidpigbank.controllers.vos.HomeObjectVO;
 import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.controllers.vos.TitleVO;
@@ -29,6 +31,7 @@ public class HomeBusiness {
     private List<TransactionVO> transactions;
     private List<CategoryVO> categories;
     private List<MonthVO> months;
+    private List<EstimateVO> estimates;
 
     public void findAll(final int month, final int year, @NonNull final SingleResult listener) {
 
@@ -36,7 +39,7 @@ public class HomeBusiness {
             @Override
             public void onFindAll(List<TransactionVO> list) {
                 transactions = new ArrayList<>(list);
-                verifyNextStep(month, year, transactions, categories, months, listener);
+                verifyNextStep(month, year, transactions, categories, months, estimates, listener);
             }
 
             @Override
@@ -49,7 +52,7 @@ public class HomeBusiness {
             @Override
             public void onFindAll(List<CategoryVO> list) {
                 categories = new ArrayList<>(list);
-                verifyNextStep(month, year, transactions, categories, months, listener);
+                verifyNextStep(month, year, transactions, categories, months, estimates, listener);
             }
 
             @Override
@@ -63,7 +66,21 @@ public class HomeBusiness {
             @Override
             public void onFindAll(List<MonthVO> list) {
                 months = new ArrayList<>(list);
-                verifyNextStep(month, year, transactions, categories, months, listener);
+                verifyNextStep(month, year, transactions, categories, months, estimates, listener);
+            }
+
+            @Override
+            public void onError(String error) {
+                listener.onError(error);
+            }
+        });
+
+        new EstimateFirebaseBusiness().findAll(new FirebaseAbs.FirebaseMultiReturnListener<EstimateVO>() {
+
+            @Override
+            public void onFindAll(List<EstimateVO> list) {
+                estimates = new ArrayList<>(list);
+                verifyNextStep(month, year, transactions, categories, months, estimates, listener);
             }
 
             @Override
@@ -73,8 +90,10 @@ public class HomeBusiness {
         });
     }
 
-    private void verifyNextStep(final int month, final int year, List<TransactionVO> transactions, List<CategoryVO> categories, List<MonthVO> months, SingleResult listener) {
-        if (transactions != null && categories != null && months != null) {
+    private void verifyNextStep(final int month, final int year, List<TransactionVO> transactions, List<CategoryVO> categories,
+                                List<MonthVO> months, List<EstimateVO> estimates, SingleResult listener) {
+
+        if (transactions != null && categories != null && months != null && estimates != null) {
 
             transactions = fillTransactions(categories, transactions);
 
@@ -86,12 +105,39 @@ public class HomeBusiness {
                 homeObjectVO.setListTransaction(organizeTransationcList(transactions, categories));
                 homeObjectVO.setListMonth(organizeMonthList(months));
                 homeObjectVO.setCurrentMonth(getCurrentMonth(month, year, months));
+                homeObjectVO.setListEstimate(organizeEstimates(estimates, categories));
             } else {
                 homeObjectVO.setCurrentMonth(new MonthVO(month, year, 0D));
             }
 
             listener.onFind(homeObjectVO);
         }
+    }
+
+    private List<CardAdapterAbs.CardModel> organizeEstimates(List<EstimateVO> estimates, List<CategoryVO> categories) {
+
+        List<CardAdapterAbs.CardModel> itens = new ArrayList<>();
+
+        for (EstimateVO vo : estimates){
+            vo.setSpentValue(1000D);
+            vo.setSavedValue(vo.getPlannedValue() - vo.getSpentValue());
+            vo.setPercentualVelue(JavaUtils.NumberUtil.calcPercent(vo.getPlannedValue(), vo.getSpentValue()));
+
+            for (CategoryVO cvo : categories) {
+                if (vo.getCategory().getKey().equals(cvo.getKey())){
+                    vo.setCategory(cvo);
+                } else if (vo.getCategorySecondary().getKey().equals(cvo.getKey())){
+                    vo.setCategorySecondary(cvo);
+                }
+
+                if (!TextUtils.isEmpty(vo.getCategory().getName()) && !TextUtils.isEmpty(vo.getCategorySecondary().getName())){
+                    break;
+                }
+            }
+
+            itens.add(vo);
+        }
+        return itens;
     }
 
     private List<TransactionVO> fillTransactions(List<CategoryVO> categories, List<TransactionVO> transactions) {

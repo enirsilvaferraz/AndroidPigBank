@@ -5,6 +5,7 @@ import android.view.View;
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.ActionBarViewHolder;
 import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.CategoryViewHolder;
+import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.EstimateViewHolder;
 import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.MonthViewHolder;
 import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.TitleViewHolder;
 import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.TotalViewHolder;
@@ -12,6 +13,7 @@ import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.Trans
 import com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder.WhiteSpaceViewHolder;
 import com.system.androidpigbank.controllers.vos.ActionBarVO;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
+import com.system.androidpigbank.controllers.vos.EstimateVO;
 import com.system.androidpigbank.controllers.vos.MonthVO;
 import com.system.androidpigbank.controllers.vos.TitleVO;
 import com.system.androidpigbank.controllers.vos.TotalVO;
@@ -57,6 +59,9 @@ public class CardAdapter extends CardAdapterAbs {
             case CARD_MONTH:
                 return new MonthViewHolder(v);
 
+            case CARD_ESTIMATE:
+                return new EstimateViewHolder(v);
+
             default:
                 throw new IllegalArgumentException("View Holder não encontrado!");
         }
@@ -81,6 +86,8 @@ public class CardAdapter extends CardAdapterAbs {
                 return R.layout.item_view_holder_transaction;
             case CARD_WHITESPACE:
                 return R.layout.item_view_holder_white_space;
+            case CARD_ESTIMATE:
+                return R.layout.item_view_holder_estimate;
             default:
                 throw new IllegalArgumentException("View Holder não encontrado!");
         }
@@ -103,6 +110,8 @@ public class CardAdapter extends CardAdapterAbs {
             return Card.CARD_WHITESPACE.ordinal();
         } else if (cardModel instanceof MonthVO) {
             return Card.CARD_MONTH.ordinal();
+        } else if (cardModel instanceof EstimateVO) {
+            return Card.CARD_ESTIMATE.ordinal();
         } else {
             throw new IllegalArgumentException("View Holder não encontrado!");
         }
@@ -115,6 +124,7 @@ public class CardAdapter extends CardAdapterAbs {
         CARD_TITLE,
         CARD_ACTION_BAR,
         CARD_WHITESPACE,
+        CARD_ESTIMATE,
         CARD_MONTH;
     }
 }

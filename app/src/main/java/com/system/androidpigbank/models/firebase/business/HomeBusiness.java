@@ -99,23 +99,23 @@ public class HomeBusiness {
             transactions = fillTransactions(categories, transactions);
 
             HomeObjectVO homeObjectVO = new HomeObjectVO();
-            int index = months.indexOf(new MonthVO(month, year, 0D));
+            int index = months.indexOf(new MonthVO(month, year, 0D, 0D));
 
             if (index != -1) {
                 homeObjectVO.setListCategorySummary(organizeCategorySummaryList(months.get(index), categories, transactions));
                 homeObjectVO.setListTransaction(organizeTransationcList(transactions, categories));
                 homeObjectVO.setListMonth(organizeMonthList(months));
-                homeObjectVO.setCurrentMonth(getCurrentMonth(month, year, months));
-                homeObjectVO.setListEstimate(organizeEstimates(estimates, categories));
+                homeObjectVO.setListEstimate(organizeEstimates(estimates, categories, transactions));
+                homeObjectVO.setCurrentMonth(getCurrentMonth(month, year, months, estimates));
             } else {
-                homeObjectVO.setCurrentMonth(new MonthVO(month, year, 0D));
+                homeObjectVO.setCurrentMonth(new MonthVO(month, year, 0D, 0D));
             }
 
             listener.onFind(homeObjectVO);
         }
     }
 
-    private List<CardAdapterAbs.CardModel> organizeEstimates(List<EstimateVO> estimates, List<CategoryVO> categories) {
+    private List<CardAdapterAbs.CardModel> organizeEstimates(List<EstimateVO> estimates, List<CategoryVO> categories, List<TransactionVO> transactions) {
 
         List<CardAdapterAbs.CardModel> squad1Dated = new ArrayList<>();
         List<CardAdapterAbs.CardModel> squad1Undated = new ArrayList<>();
@@ -141,7 +141,7 @@ public class HomeBusiness {
         Collections.sort(estimates, new Comparator<EstimateVO>() {
             @Override
             public int compare(EstimateVO o1, EstimateVO o2) {
-                if (o1.getDay() == null){
+                if (o1.getDay() == null) {
                     return -1;
                 } else if (o2.getDay() == null) {
                     return 1;
@@ -151,22 +151,62 @@ public class HomeBusiness {
             }
         });
 
+        Double sq1DValue = 0D;
+        Double sq1UValue = 0D;
+        Double sq2DValue = 0D;
+        Double sq2UValue = 0D;
+
+        Double sq1DValuePlann = 0D;
+        Double sq1UValuePlann = 0D;
+        Double sq2DValuePlann = 0D;
+        Double sq2UValuePlann = 0D;
+
         for (EstimateVO vo : estimates) {
 
             for (CategoryVO cvo : categories) {
+
                 if (vo.getCategory().getKey().equals(cvo.getKey())) {
                     vo.setCategory(cvo);
-
-                    if (vo.getCategorySecondary() == null) {
-                        vo.setSpentValue(cvo.getAmount());
-                    }
-                } else if (vo.getCategorySecondary().getKey().equals(cvo.getKey())) {
+                } else if (vo.getCategorySecondary() != null && vo.getCategorySecondary().getKey().equals(cvo.getKey())) {
                     vo.setCategorySecondary(cvo);
-                    vo.setSpentValue(cvo.getAmount());
                 }
 
-                if (!TextUtils.isEmpty(vo.getCategory().getName()) && !TextUtils.isEmpty(vo.getCategorySecondary().getName())) {
+                if (!TextUtils.isEmpty(vo.getCategory().getName()) &&
+                        (vo.getCategorySecondary() == null || !TextUtils.isEmpty(vo.getCategorySecondary().getName()))) {
                     break;
+                }
+            }
+
+            vo.setSpentValue(0D);
+
+            for (TransactionVO tvo : transactions) {
+
+                int day = JavaUtils.DateUtil.get(Calendar.DATE, tvo.getDatePayment());
+
+                // Se a categoria principal for igual
+                if (vo.getCategory().equals(tvo.getCategory())) {
+
+                    // se houverem categorias secundarias estimadas
+                    if (vo.getCategorySecondary() != null){
+
+                        // se as categorias secundarias forem iguais
+                        if (tvo.getCategorySecondary() != null && vo.getCategorySecondary().equals(tvo.getCategorySecondary())) {
+
+                            if (vo.getQuinzena().equals(Quinzena.PRIMEIRA) && day >= 5 && day < 20) {
+                                vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
+                            } else if (vo.getQuinzena().equals(Quinzena.SEGUNDA) && !(day >= 5 && day < 20)) {
+                                vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
+                            }
+                        }
+
+                    } else {
+
+                        if (vo.getQuinzena().equals(Quinzena.PRIMEIRA) && day >= 5 && day < 20) {
+                            vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
+                        } else if (vo.getQuinzena().equals(Quinzena.SEGUNDA) && !(day >= 5 && day < 20)) {
+                            vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
+                        }
+                    }
                 }
             }
 
@@ -177,16 +217,24 @@ public class HomeBusiness {
 
                 if (vo.getDay() != null) {
                     squad1Dated.add(vo);
+                    sq1DValue += vo.getSpentValue();
+                    sq1DValuePlann += vo.getPlannedValue();
                 } else {
                     squad1Undated.add(vo);
+                    sq1UValue += vo.getSpentValue();
+                    sq1UValuePlann += vo.getPlannedValue();
                 }
 
             } else {
 
                 if (vo.getDay() != null) {
                     squad2Dated.add(vo);
+                    sq2DValue += vo.getSpentValue();
+                    sq2DValuePlann += vo.getPlannedValue();
                 } else {
                     squad2Undated.add(vo);
+                    sq2UValue += vo.getSpentValue();
+                    sq2UValuePlann += vo.getPlannedValue();
                 }
             }
         }
@@ -195,15 +243,19 @@ public class HomeBusiness {
 
         if (squad1Dated.size() > 3) {
             itens.addAll(squad1Dated);
+            itens.add(new TotalVO(sq1DValuePlann, sq1DValue));
         }
         if (squad1Undated.size() > 3) {
             itens.addAll(squad1Undated);
+            itens.add(new TotalVO(sq1UValuePlann, sq1UValue));
         }
         if (squad2Dated.size() > 3) {
             itens.addAll(squad2Dated);
+            itens.add(new TotalVO(sq2DValuePlann, sq2DValue));
         }
         if (squad2Undated.size() > 3) {
             itens.addAll(squad2Undated);
+            itens.add(new TotalVO(sq2UValuePlann, sq2UValue));
         }
 
         return itens;
@@ -275,8 +327,16 @@ public class HomeBusiness {
         return list;
     }
 
-    private MonthVO getCurrentMonth(int month, int year, List<MonthVO> months) {
-        return months.get(months.indexOf(new MonthVO(month, year, 0D)));
+    private MonthVO getCurrentMonth(int month, int year, List<MonthVO> months, List<EstimateVO> estimates) {
+
+        Double estimate = 0D;
+        for (EstimateVO vo : estimates) {
+            estimate += vo.getPlannedValue();
+        }
+
+        MonthVO monthVO = months.get(months.indexOf(new MonthVO(month, year, 0D, 0D)));
+        monthVO.setPlannedValue(estimate);
+        return monthVO;
     }
 
     @NonNull

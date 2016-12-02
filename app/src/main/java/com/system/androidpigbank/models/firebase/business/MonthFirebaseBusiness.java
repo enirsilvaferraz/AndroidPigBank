@@ -64,7 +64,7 @@ class MonthFirebaseBusiness extends FirebaseAbs<MonthVO> {
 
                     // Se nao existir um mes grava-se um
                     if (modelAtual == null) {
-                        save(new MonthVO(month, year, transaction.getValue()), listener);
+                        save(new MonthVO(month, year, transaction.getValue(), 0D), listener);
                     } else {
 
                         Double value;
@@ -98,7 +98,7 @@ class MonthFirebaseBusiness extends FirebaseAbs<MonthVO> {
 
                                     // Se nao existir um mes grava-se um
                                     if (modelAtual == null) {
-                                        save(new MonthVO(month, year, transaction.getValue()), listener);
+                                        save(new MonthVO(month, year, transaction.getValue(), 0D), listener);
                                     } else {
                                         // Salva o atual
                                         modelAtual.setValue(modelAtual.getValue() + transaction.getValue());

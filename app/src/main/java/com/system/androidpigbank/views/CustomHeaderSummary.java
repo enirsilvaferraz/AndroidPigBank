@@ -35,7 +35,7 @@ public class CustomHeaderSummary extends LinearLayout {
         ButterKnife.bind(this);
     }
 
-    public void bind(double registrados, double planejados) {
+    public void bind(Double registrados, Double planejados) {
 
         Double total = planejados - registrados;
 

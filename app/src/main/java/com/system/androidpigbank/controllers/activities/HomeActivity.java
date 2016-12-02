@@ -177,7 +177,7 @@ public class HomeActivity extends BaseActivity {
             appbar.setExpanded(false);
             collapseLayout.setTitle(JavaUtils.DateUtil.format(calendar.getTime(), JavaUtils.DateUtil.MMMM_DE_YYYY));
 
-            homeHeader.bind(data.getCurrentMonth().getValue(), 3500D);
+            homeHeader.bind(data.getCurrentMonth().getValue(), data.getCurrentMonth().getPlannedValue());
         }
 
         SectionsCurrentMonthPagerAdapter adapter = new SectionsCurrentMonthPagerAdapter(getSupportFragmentManager());

@@ -49,7 +49,12 @@ public class EstimateViewHolder extends CardViewHolder {
 
         final EstimateVO item = (EstimateVO) model;
 
-        txtCategory.setText(item.getCategory().getName() + " / " + item.getCategorySecondary().getName());
+        String categoryName = item.getCategory().getName();
+        if (item.getCategorySecondary() != null) {
+            categoryName += " / " + item.getCategorySecondary().getName();
+        }
+        txtCategory.setText(categoryName);
+
         txtSavedValue.setText(JavaUtils.NumberUtil.currencyFormat(item.getSavedValue()));
         txtPlannedValue.setText(JavaUtils.NumberUtil.currencyFormat(item.getPlannedValue()));
         txtSpentValue.setText(JavaUtils.NumberUtil.currencyFormat(item.getSpentValue()));

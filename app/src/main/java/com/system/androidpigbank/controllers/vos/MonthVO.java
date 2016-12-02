@@ -4,8 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
-import com.system.androidpigbank.models.firebase.serializers.GsonUtil;
 import com.system.androidpigbank.models.firebase.dtos.MonthDTO;
+import com.system.androidpigbank.models.firebase.serializers.GsonUtil;
 import com.system.architecture.activities.CardAdapterAbs;
 import com.system.architecture.models.DTOAbs;
 import com.system.architecture.models.VOAbs;
@@ -34,11 +34,13 @@ public class MonthVO extends VOAbs implements Parcelable, CardAdapterAbs.CardMod
     private Integer year;
     @Expose
     private Double value;
+    private Double plannedValue;
 
-    public MonthVO(Integer month, Integer year, Double value) {
+    public MonthVO(Integer month, Integer year, Double value, Double plannedValue) {
         this.month = month;
         this.year = year;
         this.value = value;
+        this.plannedValue = plannedValue;
     }
 
     public MonthVO() {
@@ -49,6 +51,7 @@ public class MonthVO extends VOAbs implements Parcelable, CardAdapterAbs.CardMod
         this.month = (Integer) in.readValue(Integer.class.getClassLoader());
         this.year = (Integer) in.readValue(Integer.class.getClassLoader());
         this.value = (Double) in.readValue(Double.class.getClassLoader());
+        this.plannedValue = (Double) in.readValue(Double.class.getClassLoader());
     }
 
     public Integer getMonth() {
@@ -109,6 +112,14 @@ public class MonthVO extends VOAbs implements Parcelable, CardAdapterAbs.CardMod
         return GsonUtil.getInstance().fromMonth().toDTO(this, MonthDTO.class);
     }
 
+    public Double getPlannedValue() {
+        return plannedValue;
+    }
+
+    public void setPlannedValue(Double plannedValue) {
+        this.plannedValue = plannedValue;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -120,5 +131,6 @@ public class MonthVO extends VOAbs implements Parcelable, CardAdapterAbs.CardMod
         dest.writeValue(this.month);
         dest.writeValue(this.year);
         dest.writeValue(this.value);
+        dest.writeValue(this.plannedValue);
     }
 }

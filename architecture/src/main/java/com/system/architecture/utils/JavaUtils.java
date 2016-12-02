@@ -116,6 +116,9 @@ public final class JavaUtils {
         }
 
         public static Double calcPercent(Double total, Double parcial) {
+            if (total == 0){
+                return 0D;
+            }
             return parcial * 100 / total;
         }
     }

@@ -32,12 +32,14 @@ public class RoundedTextView extends LinearLayout {
 
     public void setTextView(final String text) {
 
-        if (TextUtils.isEmpty(text)){
-            return;
+        String texto = "";
+
+        if (!TextUtils.isEmpty(text)){
+            int size = text.length() > 2 ? 2 : text.length();
+            texto = text.substring(0, size);
         }
 
-        int size = text.length() > 2 ? 2 : text.length();
-        textView.setText(text.substring(0, size));
+        textView.setText(texto);
     }
 
     public void setTextColor(final Colors color){

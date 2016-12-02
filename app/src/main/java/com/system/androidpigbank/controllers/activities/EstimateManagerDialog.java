@@ -164,7 +164,7 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
     protected void prepareToPersist() throws Exception {
 
         if (TextUtils.isEmpty(editCategory.getText().toString())
-                || TextUtils.isEmpty(editCategorySecondary.getText().toString())
+                //|| TextUtils.isEmpty(editCategorySecondary.getText().toString())
                 || TextUtils.isEmpty(editQuinzena.getText().toString())
                 || TextUtils.isEmpty(editValue.getText().toString())) {
             throw new Exception("Campo obrigatório!");

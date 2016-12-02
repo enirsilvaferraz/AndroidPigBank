@@ -138,11 +138,28 @@ public class HomeBusiness {
         squad2Undated.add(new TitleVO("Estimativa Variável - 2a Quinzena"));
         squad2Undated.add(new WhiteSpaceVO());
 
+        Collections.sort(estimates, new Comparator<EstimateVO>() {
+            @Override
+            public int compare(EstimateVO o1, EstimateVO o2) {
+                if (o1.getDay() == null){
+                    return -1;
+                } else if (o2.getDay() == null) {
+                    return 1;
+                } else {
+                    return o1.getDay().compareTo(o2.getDay());
+                }
+            }
+        });
+
         for (EstimateVO vo : estimates) {
 
             for (CategoryVO cvo : categories) {
                 if (vo.getCategory().getKey().equals(cvo.getKey())) {
                     vo.setCategory(cvo);
+
+                    if (vo.getCategorySecondary() == null) {
+                        vo.setSpentValue(cvo.getAmount());
+                    }
                 } else if (vo.getCategorySecondary().getKey().equals(cvo.getKey())) {
                     vo.setCategorySecondary(cvo);
                     vo.setSpentValue(cvo.getAmount());

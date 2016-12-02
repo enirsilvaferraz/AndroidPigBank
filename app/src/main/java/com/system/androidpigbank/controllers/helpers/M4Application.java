@@ -14,6 +14,6 @@ public class M4Application extends Application {
     public void onCreate() {
         super.onCreate();
 
-        FirebaseAbs.enableOffline();
+        //FirebaseAbs.enableOffline();
     }
 }

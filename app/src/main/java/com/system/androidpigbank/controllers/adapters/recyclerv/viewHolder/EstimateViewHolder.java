@@ -57,6 +57,8 @@ public class EstimateViewHolder extends CardViewHolder {
 
         if (item.getDay() != null) {
             roudedDate.setTextView(item.getDay().toString());
+        } else {
+            roudedDate.setTextView("");
         }
         roudedDate.setTextColor(Colors.BLUE);
 

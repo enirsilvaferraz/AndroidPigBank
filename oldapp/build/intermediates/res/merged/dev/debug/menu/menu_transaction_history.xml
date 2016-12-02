@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:activity="com.system.androidpigbank.TransactionHistoryActivity">
+
+    <item
+        android:id="@+id/transaction_history_act_recover"
+        android:icon="@drawable/ic_delete_white"
+        android:orderInCategory="100"
+        android:title="Recover"
+        app:showAsAction="never" />
+
+</menu>

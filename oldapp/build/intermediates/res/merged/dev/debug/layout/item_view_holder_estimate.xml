@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:background="@android:color/white"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardCornerRadius="0dp">
+
+    <LinearLayout
+        android:id="@+id/item_transaction_container_context"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:minHeight="72dp">
+
+        <com.system.androidpigbank.views.RoundedTextView
+            android:id="@+id/item_transaction_rounded_view"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/item_transaction_category"
+                style="@style/AppTheme.TextView.Card.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                tools:text="Aluguel (Moradia)" />
+
+            <TextView
+                android:id="@+id/item_transaction_percent_spent_value"
+                style="@style/AppTheme.TextView.Card.SubContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/item_transaction_category"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@id/item_transaction_category"
+                android:gravity="center"
+                tools:text="(90%)" />
+
+            <LinearLayout
+                android:id="@+id/item_transaction_planned_value_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_transaction_category"
+                android:layout_marginTop="8dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/item_transaction_planned_value"
+                    style="@style/AppTheme.TextView.Card.Content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/material_green"
+                    tools:text="R$ 1300,00" />
+
+                <TextView
+                    style="@style/AppTheme.TextView.Card.SubContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginStart="6dp"
+                    android:text="de" />
+
+                <TextView
+                    android:id="@+id/item_transaction_spent_value"
+                    style="@style/AppTheme.TextView.Card.Content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:textColor="@color/material_amber"
+                    tools:text="R$ 1500,00" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/item_transaction_saved_value"
+                style="@style/AppTheme.TextView.Card.Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/item_transaction_planned_value_container"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@id/item_transaction_planned_value_container"
+                android:textColor="@color/material_green"
+                tools:text="RS 200,00" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

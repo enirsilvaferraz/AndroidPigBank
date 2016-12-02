@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_event_black"
+            android:title="2016"
+            android:visible="false" />
+    </group>
+
+    <item android:title="Menu">
+        <menu>
+
+            <item
+                android:id="@+id/nav_act_category"
+                android:icon="@drawable/ic_palette_black"
+                android:title="@string/title_activity_category_manager" />
+
+        </menu>
+    </item>
+
+</menu>

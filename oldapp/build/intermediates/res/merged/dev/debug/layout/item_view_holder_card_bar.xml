@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="end"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/custom_bar_copy_action"
+        android:layout_width="wrap_content"
+        android:background="?selectableItemBackgroundBorderless"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:src="@drawable/ic_content_copy_black" />
+
+    <ImageButton
+        android:id="@+id/custom_bar_edit_action"
+        android:layout_width="wrap_content"
+        android:background="?selectableItemBackgroundBorderless"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:src="@drawable/ic_mode_edit_black" />
+
+    <ImageButton
+        android:id="@+id/custom_bar_delete_action"
+        android:padding="16dp"
+        android:layout_width="wrap_content"
+        android:background="?selectableItemBackgroundBorderless"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete_black" />
+
+</LinearLayout>

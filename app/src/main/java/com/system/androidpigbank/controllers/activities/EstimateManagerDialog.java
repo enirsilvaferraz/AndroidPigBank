@@ -127,7 +127,7 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!TextUtils.isEmpty(charSequence)){
                     Integer day = Integer.valueOf(charSequence.toString());
-                    Integer dayAux = (day >= 5 && day < 20 ? Quinzena.PRIMEIRA.getId() : Quinzena.SEGUNDA.getId());
+                    Integer dayAux = (day < 20 ? Quinzena.PRIMEIRA.getId() : Quinzena.SEGUNDA.getId());
                     editQuinzena.setText(dayAux.toString());
                 } else {
                     editQuinzena.setText(String.valueOf(Quinzena.PRIMEIRA.getId()));

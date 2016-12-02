@@ -193,18 +193,18 @@ public class HomeBusiness {
                         // se as categorias secundarias forem iguais
                         if (tvo.getCategorySecondary() != null && vo.getCategorySecondary().equals(tvo.getCategorySecondary())) {
 
-                            if (vo.getQuinzena().equals(Quinzena.PRIMEIRA) && day >= 5 && day < 20) {
+                            if (vo.getQuinzena().equals(Quinzena.PRIMEIRA) && day < 20) {
                                 vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
-                            } else if (vo.getQuinzena().equals(Quinzena.SEGUNDA) && !(day >= 5 && day < 20)) {
+                            } else if (vo.getQuinzena().equals(Quinzena.SEGUNDA) && day >= 20) {
                                 vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
                             }
                         }
 
                     } else if (vo.getCategorySecondary() == null && tvo.getCategorySecondary() == null) {
 
-                        if (vo.getQuinzena().equals(Quinzena.PRIMEIRA) && day >= 5 && day < 20) {
+                        if (vo.getQuinzena().equals(Quinzena.PRIMEIRA) && day < 20) {
                             vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
-                        } else if (vo.getQuinzena().equals(Quinzena.SEGUNDA) && !(day >= 5 && day < 20)) {
+                        } else if (vo.getQuinzena().equals(Quinzena.SEGUNDA) && day >= 20) {
                             vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
                         }
 

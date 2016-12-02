@@ -55,7 +55,9 @@ public class EstimateViewHolder extends CardViewHolder {
         txtSpentValue.setText(JavaUtils.NumberUtil.currencyFormat(item.getSpentValue()));
         txtPercentSpentValue.setText(JavaUtils.NumberUtil.percentFormat(item.getPercentualVelue()));
 
-        roudedDate.setTextView(item.getDay().toString());
+        if (item.getDay() != null) {
+            roudedDate.setTextView(item.getDay().toString());
+        }
         roudedDate.setTextColor(Colors.BLUE);
 
         if (item.getSavedValue() > 0) {

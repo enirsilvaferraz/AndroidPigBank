@@ -3,6 +3,7 @@ package com.system.androidpigbank.models.firebase.business;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.system.androidpigbank.controllers.helpers.Quinzena;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.EstimateVO;
 import com.system.androidpigbank.controllers.vos.HomeObjectVO;
@@ -116,27 +117,78 @@ public class HomeBusiness {
 
     private List<CardAdapterAbs.CardModel> organizeEstimates(List<EstimateVO> estimates, List<CategoryVO> categories) {
 
-        List<CardAdapterAbs.CardModel> itens = new ArrayList<>();
+        List<CardAdapterAbs.CardModel> squad1Dated = new ArrayList<>();
+        List<CardAdapterAbs.CardModel> squad1Undated = new ArrayList<>();
+        List<CardAdapterAbs.CardModel> squad2Dated = new ArrayList<>();
+        List<CardAdapterAbs.CardModel> squad2Undated = new ArrayList<>();
 
-        for (EstimateVO vo : estimates){
-            vo.setSpentValue(1000D);
-            vo.setSavedValue(vo.getPlannedValue() - vo.getSpentValue());
-            vo.setPercentualVelue(JavaUtils.NumberUtil.calcPercent(vo.getPlannedValue(), vo.getSpentValue()));
+        squad1Dated.add(new WhiteSpaceVO());
+        squad1Dated.add(new TitleVO("Estimativa Fixa - 1a Quinzena"));
+        squad1Dated.add(new WhiteSpaceVO());
+
+        squad1Undated.add(new WhiteSpaceVO());
+        squad1Undated.add(new TitleVO("Estimativa Variável - 1a Quinzena"));
+        squad1Undated.add(new WhiteSpaceVO());
+
+        squad2Dated.add(new WhiteSpaceVO());
+        squad2Dated.add(new TitleVO("Estimativa Fixa - 2a Quinzena"));
+        squad2Dated.add(new WhiteSpaceVO());
+
+        squad2Undated.add(new WhiteSpaceVO());
+        squad2Undated.add(new TitleVO("Estimativa Variável - 2a Quinzena"));
+        squad2Undated.add(new WhiteSpaceVO());
+
+        for (EstimateVO vo : estimates) {
 
             for (CategoryVO cvo : categories) {
-                if (vo.getCategory().getKey().equals(cvo.getKey())){
+                if (vo.getCategory().getKey().equals(cvo.getKey())) {
                     vo.setCategory(cvo);
-                } else if (vo.getCategorySecondary().getKey().equals(cvo.getKey())){
+                    vo.setSpentValue(cvo.getAmount());
+                } else if (vo.getCategorySecondary().getKey().equals(cvo.getKey())) {
                     vo.setCategorySecondary(cvo);
                 }
 
-                if (!TextUtils.isEmpty(vo.getCategory().getName()) && !TextUtils.isEmpty(vo.getCategorySecondary().getName())){
+                if (!TextUtils.isEmpty(vo.getCategory().getName()) && !TextUtils.isEmpty(vo.getCategorySecondary().getName())) {
                     break;
                 }
             }
 
-            itens.add(vo);
+            vo.setSavedValue(vo.getPlannedValue() - vo.getSpentValue());
+            vo.setPercentualVelue(JavaUtils.NumberUtil.calcPercent(vo.getPlannedValue(), vo.getSpentValue()));
+
+            if (vo.getQuinzena().equals(Quinzena.PRIMEIRA)) {
+
+                if (vo.getDay() != null) {
+                    squad1Dated.add(vo);
+                } else {
+                    squad1Undated.add(vo);
+                }
+
+            } else {
+
+                if (vo.getDay() != null) {
+                    squad2Dated.add(vo);
+                } else {
+                    squad2Undated.add(vo);
+                }
+            }
         }
+
+        List<CardAdapterAbs.CardModel> itens = new ArrayList<>();
+
+        if (squad1Dated.size() > 3) {
+            itens.addAll(squad1Dated);
+        }
+        if (squad1Undated.size() > 3) {
+            itens.addAll(squad1Undated);
+        }
+        if (squad2Dated.size() > 3) {
+            itens.addAll(squad2Dated);
+        }
+        if (squad2Undated.size() > 3) {
+            itens.addAll(squad2Undated);
+        }
+
         return itens;
     }
 

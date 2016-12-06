@@ -483,20 +483,21 @@ public class HomeBusiness {
         @Override
         public int compare(EstimateVO o1, EstimateVO o2) {
 
-            if (o1.getDay() == null) return BEFORE;
-            if (o2.getDay() == null) return AFTER;
-            if (o1.getDay().compareTo(o2.getDay()) == BEFORE) return BEFORE;
-            if (o1.getDay().compareTo(o2.getDay()) == AFTER) return AFTER;
+            int o1Day = 0;
+            int o2Day = 0;
 
-            if (o1.getCategory().getName().compareTo(o2.getCategory().getName()) == BEFORE) return BEFORE;
-            if (o1.getCategory().getName().compareTo(o2.getCategory().getName()) == AFTER) return AFTER;
+            if (o1.getDay() != null) o1Day = o1.getDay();
+            if (o2.getDay() != null) o2Day = o2.getDay();
+
+            int compare = Integer.compare(o1Day, o2Day);
+            if (compare != EQUAL) return compare;
+
+            compare = o1.getCategory().getName().compareTo(o2.getCategory().getName());
+            if (compare != EQUAL) return compare;
 
             if (o1.getCategorySecondary() == null) return BEFORE;
             if (o2.getCategorySecondary() == null) return AFTER;
-            if (o1.getCategorySecondary().getName().compareTo(o2.getCategorySecondary().getName()) == BEFORE) return BEFORE;
-            if (o1.getCategorySecondary().getName().compareTo(o2.getCategorySecondary().getName()) == AFTER) return AFTER;
-
-            return EQUAL;
+            return o1.getCategorySecondary().getName().compareTo(o2.getCategorySecondary().getName());
 
             /*// Se o1 nao tem dia ele vem depois
             if (o1.getDay() == null) {
@@ -511,10 +512,10 @@ public class HomeBusiness {
             // Caso contrario, verificar a comparacao
             else {
 
-                int compare = o1.getDay().compareTo(o2.getDay());
+                int compare = o1.getDay().compare(o2.getDay());
                 if (compare == 0){
 
-                    compare = o1.getCategory().getName().compareTo(o2.getCategory().getName());
+                    compare = o1.getCategory().getName().compare(o2.getCategory().getName());
                     if (compare == 0){
 
                         if (o1.getCategorySecondary() != null){
@@ -522,7 +523,7 @@ public class HomeBusiness {
                         } else if (o2.getCategorySecondary() != null){
                             return 1;
                         } else {
-                            return o1.getCategorySecondary().getName().compareTo(o2.getCategorySecondary().getName());
+                            return o1.getCategorySecondary().getName().compare(o2.getCategorySecondary().getName());
                         }
 
                     } else {

@@ -40,7 +40,7 @@
                 tools:text="Aluguel (Moradia)" />
 
             <TextView
-                android:id="@+id/item_transaction_percent_spent_value"
+                android:id="@+id/item_transaction_percent_total_value"
                 style="@style/AppTheme.TextView.Card.SubContent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignTop="@id/item_transaction_category"
                 android:gravity="center"
-                tools:text="(90%)" />
+                tools:text="R$ 2500,00" />
 
             <LinearLayout
                 android:id="@+id/item_transaction_planned_value_container"
@@ -63,15 +63,14 @@
                     style="@style/AppTheme.TextView.Card.Content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/material_green"
                     tools:text="R$ 1300,00" />
 
                 <TextView
                     style="@style/AppTheme.TextView.Card.SubContent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="6dp"
-                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginStart="4dp"
                     android:text="de" />
 
                 <TextView
@@ -79,9 +78,16 @@
                     style="@style/AppTheme.TextView.Card.Content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:textColor="@color/material_amber"
+                    android:layout_marginEnd="4dp"
                     tools:text="R$ 1500,00" />
+
+                <TextView
+                    android:id="@+id/item_transaction_percent_spent_value"
+                    style="@style/AppTheme.TextView.Card.SubContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    tools:text="(90%)" />
 
             </LinearLayout>
 

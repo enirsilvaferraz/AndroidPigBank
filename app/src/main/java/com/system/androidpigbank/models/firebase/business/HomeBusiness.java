@@ -143,19 +143,6 @@ public class HomeBusiness {
         squad2Undated.add(new TitleVO("Estimativa Variável - 2a Quinzena"));
         squad2Undated.add(new WhiteSpaceVO());
 
-        Collections.sort(estimates, new Comparator<EstimateVO>() {
-            @Override
-            public int compare(EstimateVO o1, EstimateVO o2) {
-                if (o1.getDay() == null) {
-                    return -1;
-                } else if (o2.getDay() == null) {
-                    return 1;
-                } else {
-                    return o1.getDay().compareTo(o2.getDay());
-                }
-            }
-        });
-
         Double sq1DValue = 0D;
         Double sq1UValue = 0D;
         Double sq2DValue = 0D;
@@ -181,6 +168,11 @@ public class HomeBusiness {
                     break;
                 }
             }
+        }
+
+        Collections.sort(estimates, new EstimateSort());
+
+        for (EstimateVO vo : estimates) {
 
             vo.setSpentValue(0D);
 
@@ -479,6 +471,68 @@ public class HomeBusiness {
             } else {
                 return o1.getCategorySecondary().getName().compareTo(o2.getCategorySecondary().getName());
             }
+        }
+    }
+
+    private class EstimateSort implements Comparator<EstimateVO> {
+
+        final int BEFORE = -1;
+        final int EQUAL = 0;
+        final int AFTER = 1;
+
+        @Override
+        public int compare(EstimateVO o1, EstimateVO o2) {
+
+            if (o1.getDay() == null) return BEFORE;
+            if (o2.getDay() == null) return AFTER;
+            if (o1.getDay().compareTo(o2.getDay()) == BEFORE) return BEFORE;
+            if (o1.getDay().compareTo(o2.getDay()) == AFTER) return AFTER;
+
+            if (o1.getCategory().getName().compareTo(o2.getCategory().getName()) == BEFORE) return BEFORE;
+            if (o1.getCategory().getName().compareTo(o2.getCategory().getName()) == AFTER) return AFTER;
+
+            if (o1.getCategorySecondary() == null) return BEFORE;
+            if (o2.getCategorySecondary() == null) return AFTER;
+            if (o1.getCategorySecondary().getName().compareTo(o2.getCategorySecondary().getName()) == BEFORE) return BEFORE;
+            if (o1.getCategorySecondary().getName().compareTo(o2.getCategorySecondary().getName()) == AFTER) return AFTER;
+
+            return EQUAL;
+
+            /*// Se o1 nao tem dia ele vem depois
+            if (o1.getDay() == null) {
+                return -1;
+            }
+
+            // Se o2 não tem data vem primeiro
+            else if (o2.getDay() == null) {
+                return 1;
+            }
+
+            // Caso contrario, verificar a comparacao
+            else {
+
+                int compare = o1.getDay().compareTo(o2.getDay());
+                if (compare == 0){
+
+                    compare = o1.getCategory().getName().compareTo(o2.getCategory().getName());
+                    if (compare == 0){
+
+                        if (o1.getCategorySecondary() != null){
+                            return -1;
+                        } else if (o2.getCategorySecondary() != null){
+                            return 1;
+                        } else {
+                            return o1.getCategorySecondary().getName().compareTo(o2.getCategorySecondary().getName());
+                        }
+
+                    } else {
+                        return compare;
+                    }
+
+                } else {
+                    return compare;
+                }
+            }*/
         }
     }
 }

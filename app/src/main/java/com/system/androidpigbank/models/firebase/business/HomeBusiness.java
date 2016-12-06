@@ -2,8 +2,8 @@ package com.system.androidpigbank.models.firebase.business;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 
+import com.system.androidpigbank.controllers.helpers.AppUtil;
 import com.system.androidpigbank.controllers.helpers.Quinzena;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.EstimateVO;
@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Enir on 13/09/2016.
@@ -118,6 +120,8 @@ public class HomeBusiness {
 
     private List<CardAdapterAbs.CardModel> organizeEstimates(List<EstimateVO> estimates, List<CategoryVO> categories, List<TransactionVO> transactions) {
 
+        estimates.addAll(getNotEstimatedItems(transactions, estimates));
+
         List<CardAdapterAbs.CardModel> squad1Dated = new ArrayList<>();
         List<CardAdapterAbs.CardModel> squad1Undated = new ArrayList<>();
         List<CardAdapterAbs.CardModel> squad2Dated = new ArrayList<>();
@@ -188,26 +192,35 @@ public class HomeBusiness {
                 if (vo.getCategory().equals(tvo.getCategory())) {
 
                     // se houverem categorias secundarias estimadas
-                    if (vo.getCategorySecondary() != null){
+                    if (vo.getCategorySecondary() != null) {
 
                         // se as categorias secundarias forem iguais
                         if (tvo.getCategorySecondary() != null && vo.getCategorySecondary().equals(tvo.getCategorySecondary())) {
 
-                            if (vo.getQuinzena().equals(Quinzena.PRIMEIRA) && day < 20) {
-                                vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
-                            } else if (vo.getQuinzena().equals(Quinzena.SEGUNDA) && day >= 20) {
-                                vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
+                            if (vo.getDay() != null) {
+                                if (vo.getDay().equals(JavaUtils.DateUtil.get(Calendar.DATE, tvo.getDatePayment()))) {
+                                    vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
+                                }
+                            } else {
+                                if ((vo.getDay() == null && vo.getQuinzena().equals(Quinzena.PRIMEIRA) && day < 20) ||
+                                        (vo.getDay() == null && vo.getQuinzena().equals(Quinzena.SEGUNDA) && day >= 20)) {
+                                    vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
+                                }
                             }
                         }
 
                     } else if (vo.getCategorySecondary() == null && tvo.getCategorySecondary() == null) {
 
-                        if (vo.getQuinzena().equals(Quinzena.PRIMEIRA) && day < 20) {
-                            vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
-                        } else if (vo.getQuinzena().equals(Quinzena.SEGUNDA) && day >= 20) {
-                            vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
+                        if (vo.getDay() != null) {
+                            if (vo.getDay().equals(JavaUtils.DateUtil.get(Calendar.DATE, tvo.getDatePayment()))) {
+                                vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
+                            }
+                        } else {
+                            if ((vo.getDay() == null && vo.getQuinzena().equals(Quinzena.PRIMEIRA) && day < 20) ||
+                                    (vo.getDay() == null && vo.getQuinzena().equals(Quinzena.SEGUNDA) && day >= 20)) {
+                                vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
+                            }
                         }
-
                     }
                 }
             }
@@ -261,6 +274,27 @@ public class HomeBusiness {
         }
 
         return itens;
+    }
+
+    private List<EstimateVO> getNotEstimatedItems(List<TransactionVO> transactions, List<EstimateVO> estimates) {
+
+
+        Set<EstimateVO> notEstimated = new HashSet<>();
+
+        for (TransactionVO tvo : transactions) {
+
+            EstimateVO vo = new EstimateVO();
+            vo.setCategory(tvo.getCategory());
+            vo.setCategorySecondary(tvo.getCategorySecondary());
+            vo.setQuinzena(AppUtil.getQuinzena(tvo.getDatePayment()));
+
+            if (!estimates.contains(vo) && !notEstimated.contains(vo)) {
+                vo.setRegistred(true);
+                notEstimated.add(vo);
+            }
+        }
+
+        return new ArrayList<>(notEstimated);
     }
 
     private List<TransactionVO> fillTransactions(List<CategoryVO> categories, List<TransactionVO> transactions) {

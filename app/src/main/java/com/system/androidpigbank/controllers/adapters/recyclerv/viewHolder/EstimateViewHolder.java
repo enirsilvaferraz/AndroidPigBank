@@ -74,5 +74,9 @@ public class EstimateViewHolder extends CardViewHolder {
         } else {
             txtSavedValue.setTextColor(context.getColor(R.color.material_gray));
         }
+
+        if (item.isRegistred()){
+            txtCategory.setTextColor(context.getColor(R.color.material_red));
+        }
     }
 }

@@ -20,7 +20,6 @@ import com.system.androidpigbank.controllers.helpers.Constants;
 import com.system.androidpigbank.controllers.helpers.Quinzena;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.EstimateVO;
-import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.androidpigbank.models.firebase.business.CategoryFirebaseBusiness;
 import com.system.androidpigbank.models.firebase.business.EstimateFirebaseBusiness;
 import com.system.architecture.activities.BaseActivity;
@@ -125,7 +124,7 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!TextUtils.isEmpty(charSequence)){
+                if (!TextUtils.isEmpty(charSequence)) {
                     Integer day = Integer.valueOf(charSequence.toString());
                     Integer dayAux = (day < 20 ? Quinzena.PRIMEIRA.getId() : Quinzena.SEGUNDA.getId());
                     editQuinzena.setText(dayAux.toString());

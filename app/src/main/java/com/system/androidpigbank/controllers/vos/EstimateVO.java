@@ -28,6 +28,7 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
             return new EstimateVO[size];
         }
     };
+
     @Expose
     private String key;
     @Expose
@@ -37,15 +38,21 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
     @Expose
     private Integer day;
     @Expose
-    private Double plannedValue;
-    @Expose
     private Quinzena quinzena;
+    @Expose
+    private Double plannedValue;
 
     private Double savedValue;
     private Double spentValue;
     private Double percentualVelue;
 
+    private boolean registred;
+
     public EstimateVO() {
+        plannedValue = 0D;
+        savedValue = 0D;
+        spentValue = 0D;
+        percentualVelue = 0D;
     }
 
     protected EstimateVO(Parcel in) {
@@ -56,6 +63,7 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
         this.plannedValue = (Double) in.readValue(Double.class.getClassLoader());
         int tmpQuinzena = in.readInt();
         this.quinzena = tmpQuinzena == -1 ? null : Quinzena.values()[tmpQuinzena];
+        this.registred = in.readByte() != 0;
         this.savedValue = (Double) in.readValue(Double.class.getClassLoader());
         this.spentValue = (Double) in.readValue(Double.class.getClassLoader());
         this.percentualVelue = (Double) in.readValue(Double.class.getClassLoader());
@@ -141,6 +149,37 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EstimateVO that = (EstimateVO) o;
+
+        if (category != null ? !category.equals(that.category) : that.category != null)
+            return false;
+        if (categorySecondary != null ? !categorySecondary.equals(that.categorySecondary) : that.categorySecondary != null)
+            return false;
+        if (day != null ? !day.equals(that.day) : that.day != null) return false;
+        return quinzena == that.quinzena;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = category != null ? category.hashCode() : 0;
+        result = 31 * result + (quinzena != null ? quinzena.hashCode() : 0);
+        return result;
+    }
+
+    public boolean isRegistred() {
+        return registred;
+    }
+
+    public void setRegistred(boolean registred) {
+        this.registred = registred;
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
@@ -153,6 +192,7 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
         dest.writeValue(this.day);
         dest.writeValue(this.plannedValue);
         dest.writeInt(this.quinzena == null ? -1 : this.quinzena.ordinal());
+        dest.writeByte(this.registred ? (byte) 1 : (byte) 0);
         dest.writeValue(this.savedValue);
         dest.writeValue(this.spentValue);
         dest.writeValue(this.percentualVelue);

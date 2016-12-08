@@ -45,7 +45,7 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
     private Double savedValue;
     private Double spentValue;
     private Double percentualVelue;
-
+    private Double acumulateValue;
     private boolean registred;
 
     public EstimateVO() {
@@ -60,13 +60,14 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
         this.category = in.readParcelable(CategoryVO.class.getClassLoader());
         this.categorySecondary = in.readParcelable(CategoryVO.class.getClassLoader());
         this.day = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.plannedValue = (Double) in.readValue(Double.class.getClassLoader());
         int tmpQuinzena = in.readInt();
         this.quinzena = tmpQuinzena == -1 ? null : Quinzena.values()[tmpQuinzena];
-        this.registred = in.readByte() != 0;
+        this.plannedValue = (Double) in.readValue(Double.class.getClassLoader());
         this.savedValue = (Double) in.readValue(Double.class.getClassLoader());
         this.spentValue = (Double) in.readValue(Double.class.getClassLoader());
         this.percentualVelue = (Double) in.readValue(Double.class.getClassLoader());
+        this.acumulateValue = (Double) in.readValue(Double.class.getClassLoader());
+        this.registred = in.readByte() != 0;
     }
 
     public CategoryVO getCategory() {
@@ -164,6 +165,14 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
 
     }
 
+    public Double getAcumulateValue() {
+        return acumulateValue;
+    }
+
+    public void setAcumulateValue(Double acumulateValue) {
+        this.acumulateValue = acumulateValue;
+    }
+
     @Override
     public int hashCode() {
         int result = category != null ? category.hashCode() : 0;
@@ -190,11 +199,12 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
         dest.writeParcelable(this.category, flags);
         dest.writeParcelable(this.categorySecondary, flags);
         dest.writeValue(this.day);
-        dest.writeValue(this.plannedValue);
         dest.writeInt(this.quinzena == null ? -1 : this.quinzena.ordinal());
-        dest.writeByte(this.registred ? (byte) 1 : (byte) 0);
+        dest.writeValue(this.plannedValue);
         dest.writeValue(this.savedValue);
         dest.writeValue(this.spentValue);
         dest.writeValue(this.percentualVelue);
+        dest.writeValue(this.acumulateValue);
+        dest.writeByte(this.registred ? (byte) 1 : (byte) 0);
     }
 }

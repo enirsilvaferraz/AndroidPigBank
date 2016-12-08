@@ -35,6 +35,9 @@ public class EstimateViewHolder extends CardViewHolder {
     @BindView(R.id.item_transaction_percent_spent_value)
     TextView txtPercentSpentValue;
 
+    @BindView(R.id.item_transaction_acumulate_value)
+    TextView txtAcumulateValue;
+
     private Context context;
 
     public EstimateViewHolder(View itemView) {
@@ -59,6 +62,7 @@ public class EstimateViewHolder extends CardViewHolder {
         txtPlannedValue.setText(JavaUtils.NumberUtil.currencyFormat(item.getPlannedValue()));
         txtSpentValue.setText(JavaUtils.NumberUtil.currencyFormat(item.getSpentValue()));
         txtPercentSpentValue.setText(JavaUtils.NumberUtil.percentFormat(item.getPercentualVelue()));
+//        txtAcumulateValue.setText(JavaUtils.NumberUtil.currencyFormat(item.getAcumulateValue()));
 
         if (item.getDay() != null) {
             roudedDate.setTextView(item.getDay().toString());

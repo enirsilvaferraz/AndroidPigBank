@@ -40,8 +40,8 @@
                 tools:text="Aluguel (Moradia)" />
 
             <TextView
-                android:id="@+id/item_transaction_percent_total_value"
-                style="@style/AppTheme.TextView.Card.SubContent"
+                android:id="@+id/item_transaction_acumulate_value"
+                style="@style/AppTheme.TextView.Card.Content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/item_transaction_category"
@@ -63,10 +63,11 @@
                     style="@style/AppTheme.TextView.Card.Content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     tools:text="R$ 1300,00" />
 
                 <TextView
-                    style="@style/AppTheme.TextView.Card.SubContent"
+                    style="@style/AppTheme.TextView.Card.Content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
@@ -79,11 +80,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
+                    android:textStyle="bold"
                     tools:text="R$ 1500,00" />
 
                 <TextView
                     android:id="@+id/item_transaction_percent_spent_value"
-                    style="@style/AppTheme.TextView.Card.SubContent"
+                    style="@style/AppTheme.TextView.Card.Content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"

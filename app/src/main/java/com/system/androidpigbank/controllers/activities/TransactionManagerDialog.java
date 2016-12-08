@@ -270,6 +270,7 @@ public class TransactionManagerDialog extends BaseManagerDialog<TransactionVO> {
         }
 
         for (CategoryVO category : categories) {
+            model.setCategory(null);
             if (category.getName().equals(editCategory.getText().toString())) {
                 model.setCategory(category);
                 break;

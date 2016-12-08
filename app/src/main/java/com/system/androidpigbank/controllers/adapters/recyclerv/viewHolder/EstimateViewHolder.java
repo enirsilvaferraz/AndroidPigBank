@@ -62,7 +62,7 @@ public class EstimateViewHolder extends CardViewHolder {
         txtPlannedValue.setText(JavaUtils.NumberUtil.currencyFormat(item.getPlannedValue()));
         txtSpentValue.setText(JavaUtils.NumberUtil.currencyFormat(item.getSpentValue()));
         txtPercentSpentValue.setText(JavaUtils.NumberUtil.percentFormat(item.getPercentualVelue()));
-        txtAcumulateValue.setText(JavaUtils.NumberUtil.currencyFormat(item.getAcumulateValue()));
+//        txtAcumulateValue.setText(JavaUtils.NumberUtil.currencyFormat(item.getAcumulateValue()));
 
         if (item.getDay() != null) {
             roudedDate.setTextView(item.getDay().toString());

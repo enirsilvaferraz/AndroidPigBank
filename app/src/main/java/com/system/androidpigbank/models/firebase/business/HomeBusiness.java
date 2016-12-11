@@ -132,9 +132,6 @@ public class HomeBusiness {
         Double sq2DSavedValue = 0D;
         Double sq2USavedValue = 0D;
 
-        Double sq1GeralValue = 0D;
-        Double sq2GeralValue = 0D;
-
         Double sq1DValue = 0D;
         Double sq1UValue = 0D;
         Double sq2DValue = 0D;
@@ -210,9 +207,6 @@ public class HomeBusiness {
                     sq1USavedValue += vo.getSavedValue();
                 }
 
-                sq1GeralValue += vo.getSpentValue();
-                vo.setAcumulateValue(sq1GeralValue);
-
             } else {
 
                 if (vo.getDay() != null) {
@@ -226,9 +220,6 @@ public class HomeBusiness {
                     sq2UValuePlann += vo.getPlannedValue();
                     sq2USavedValue += vo.getSavedValue();
                 }
-
-                sq2GeralValue += vo.getSpentValue();
-                vo.setAcumulateValue(sq2GeralValue);
             }
         }
 

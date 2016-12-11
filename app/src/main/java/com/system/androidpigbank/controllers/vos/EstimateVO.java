@@ -41,6 +41,10 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
     private Quinzena quinzena;
     @Expose
     private Double plannedValue;
+    @Expose
+    private Integer month;
+    @Expose
+    private Integer year;
 
     private Double savedValue;
     private Double spentValue;
@@ -63,11 +67,29 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
         int tmpQuinzena = in.readInt();
         this.quinzena = tmpQuinzena == -1 ? null : Quinzena.values()[tmpQuinzena];
         this.plannedValue = (Double) in.readValue(Double.class.getClassLoader());
+        this.month = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.year = (Integer) in.readValue(Integer.class.getClassLoader());
         this.savedValue = (Double) in.readValue(Double.class.getClassLoader());
         this.spentValue = (Double) in.readValue(Double.class.getClassLoader());
         this.percentualVelue = (Double) in.readValue(Double.class.getClassLoader());
         this.acumulateValue = (Double) in.readValue(Double.class.getClassLoader());
         this.registred = in.readByte() != 0;
+    }
+
+    public Integer getMonth() {
+        return month;
+    }
+
+    public void setMonth(Integer month) {
+        this.month = month;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
     public CategoryVO getCategory() {
@@ -201,10 +223,24 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
         dest.writeValue(this.day);
         dest.writeInt(this.quinzena == null ? -1 : this.quinzena.ordinal());
         dest.writeValue(this.plannedValue);
+        dest.writeValue(this.month);
+        dest.writeValue(this.year);
         dest.writeValue(this.savedValue);
         dest.writeValue(this.spentValue);
         dest.writeValue(this.percentualVelue);
         dest.writeValue(this.acumulateValue);
         dest.writeByte(this.registred ? (byte) 1 : (byte) 0);
+    }
+
+    @Override
+    public String toString() {
+        return "EstimateVO{" +
+                "key='" + key + '\'' +
+                ", category=" + category +
+                ", categorySecondary=" + categorySecondary +
+                ", quinzena=" + quinzena +
+                ", month=" + month +
+                ", year=" + year +
+                '}';
     }
 }

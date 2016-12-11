@@ -48,6 +48,12 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
     @BindView(R.id.estimate_manager_date_lanc)
     EditText editDay;
 
+    @BindView(R.id.estimate_manager_month)
+    EditText editMonth;
+
+    @BindView(R.id.estimate_manager_year)
+    EditText editYear;
+
     @BindView(R.id.estimate_manager_value)
     EditText editValue;
 
@@ -108,6 +114,9 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
             }
 
             editDay.setText(model.getDay() != null ? model.getDay().toString() : "");
+            editMonth.setText(model.getMonth().toString());
+            editYear.setText(model.getYear().toString());
+
             editQuinzena.setText(String.valueOf(model.getQuinzena().getId()));
             editValue.setText(String.valueOf(model.getPlannedValue()));
             editCategory.setText(model.getCategory().getName());
@@ -165,6 +174,8 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
         if (TextUtils.isEmpty(editCategory.getText().toString())
                 //|| TextUtils.isEmpty(editCategorySecondary.getText().toString())
                 || TextUtils.isEmpty(editQuinzena.getText().toString())
+                || TextUtils.isEmpty(editMonth.getText().toString())
+                || TextUtils.isEmpty(editYear.getText().toString())
                 || TextUtils.isEmpty(editValue.getText().toString())) {
             throw new Exception("Campo obrigatório!");
         }
@@ -175,6 +186,9 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
         }
 
         model.setDay(!TextUtils.isEmpty(editDay.getText().toString()) ? Integer.valueOf(editDay.getText().toString()) : null);
+        model.setMonth(Integer.valueOf(editMonth.getText().toString()));
+        model.setYear(Integer.valueOf(editYear.getText().toString()));
+
         model.setPlannedValue(Double.parseDouble(editValue.getText().toString()));
 
         model.setQuinzena(Quinzena.getEnum(Integer.valueOf(editQuinzena.getText().toString())));

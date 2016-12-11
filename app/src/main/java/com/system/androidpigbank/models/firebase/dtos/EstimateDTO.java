@@ -36,6 +36,14 @@ public class EstimateDTO extends DTOAbs {
     @Expose
     private String quinzena;
 
+    @SerializedName("month")
+    @Expose
+    private Integer month;
+
+    @SerializedName("year")
+    @Expose
+    private Integer year;
+
     public String getKey() {
         return key;
     }
@@ -83,6 +91,22 @@ public class EstimateDTO extends DTOAbs {
 
     public void setPlannedValue(String plannedValue) {
         this.plannedValue = plannedValue;
+    }
+
+    public Integer getMonth() {
+        return month;
+    }
+
+    public void setMonth(Integer month) {
+        this.month = month;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
     @Override

@@ -135,4 +135,12 @@ public class CategoryVO extends VOAbs implements CardAdapterAbs.CardModel {
         dest.writeByte(this.primary ? (byte) 1 : (byte) 0);
         dest.writeValue(this.amount);
     }
+
+    @Override
+    public String toString() {
+        return "CategoryVO{" +
+                "key='" + key + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

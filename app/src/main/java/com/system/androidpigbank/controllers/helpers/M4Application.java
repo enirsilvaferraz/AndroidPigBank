@@ -3,6 +3,7 @@ package com.system.androidpigbank.controllers.helpers;
 import android.app.Application;
 
 import com.system.androidpigbank.BuildConfig;
+import com.system.androidpigbank.models.firebase.routines.RoutineService;
 import com.system.architecture.models.FirebaseAbs;
 
 /**
@@ -16,5 +17,7 @@ public class M4Application extends Application {
         super.onCreate();
 
         FirebaseAbs.enableOffline(BuildConfig.FLAVOR);
+
+        //RoutineService.updateEstimates();
     }
 }

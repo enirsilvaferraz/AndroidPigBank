@@ -1,5 +1,10 @@
 package com.system.androidpigbank.models.firebase.business;
 
+import android.support.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.system.androidpigbank.BuildConfig;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.EstimateVO;
@@ -7,8 +12,12 @@ import com.system.androidpigbank.controllers.vos.TransactionVO;
 import com.system.androidpigbank.models.firebase.dtos.EstimateDTO;
 import com.system.architecture.models.DTOAbs;
 import com.system.architecture.models.FirebaseAbs;
+import com.system.architecture.utils.JavaUtils;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,8 +42,51 @@ public class EstimateFirebaseBusiness extends FirebaseAbs<EstimateVO> {
         map.put("day", dto.getDay());
         map.put("plannedValue", dto.getPlannedValue());
         map.put("quinzena", dto.getQuinzena());
+        map.put("month", dto.getMonth());
+        map.put("year", dto.getYear());
 
         return map;
+    }
+
+    void findByMonth(final int month, final int year, @NonNull final FirebaseMultiReturnListener<EstimateVO> listener) {
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                ValueEventListener valueEventListener1 = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        List<EstimateVO> list = new ArrayList<>();
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            EstimateVO tInstance = getTInstance(postSnapshot);
+                            tInstance.setKey(postSnapshot.getKey());
+                            list.add(tInstance);
+                        }
+                        listener.onFindAll(list);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        listener.onError(databaseError.getMessage());
+                    }
+                };
+
+                dataSnapshot.getRef().orderByChild("year").equalTo(year)
+                        .addListenerForSingleValueEvent(valueEventListener1);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onError(databaseError.getMessage());
+            }
+        };
+
+        getDatabaseReference().orderByChild("month").equalTo(month)
+                .addListenerForSingleValueEvent(valueEventListener);
     }
 
     @Override

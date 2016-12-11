@@ -79,7 +79,7 @@ public class HomeBusiness {
             }
         });
 
-        new EstimateFirebaseBusiness().findAll(new FirebaseAbs.FirebaseMultiReturnListener<EstimateVO>() {
+        new EstimateFirebaseBusiness().findByMonth(month, year, new FirebaseAbs.FirebaseMultiReturnListener<EstimateVO>() {
 
             @Override
             public void onFindAll(List<EstimateVO> list) {

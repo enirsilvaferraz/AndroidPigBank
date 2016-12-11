@@ -1,5 +1,6 @@
 package com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -29,12 +30,12 @@ public class TotalViewHolder extends CardViewHolder {
 
         TotalVO totalFooter = (TotalVO) model;
 
-        if (totalFooter.getValueStart() != null && totalFooter.getValueStart() != 0D) {
-            tvValueStart.setText(JavaUtils.NumberUtil.currencyFormat(totalFooter.getValueStart()));
+        if (!TextUtils.isEmpty(totalFooter.getValueStart())) {
+            tvValueStart.setText(totalFooter.getValueStart());
         }
 
-        if (totalFooter.getValueEnd() != null && totalFooter.getValueEnd() != 0D) {
-            tvValueEnd.setText(JavaUtils.NumberUtil.currencyFormat(totalFooter.getValueEnd()));
+        if (!TextUtils.isEmpty(totalFooter.getValueEnd())) {
+            tvValueEnd.setText(totalFooter.getValueEnd());
         }
     }
 }

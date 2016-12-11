@@ -127,21 +127,13 @@ public class HomeBusiness {
         List<CardAdapterAbs.CardModel> squad2Dated = new ArrayList<>();
         List<CardAdapterAbs.CardModel> squad2Undated = new ArrayList<>();
 
-        squad1Dated.add(new WhiteSpaceVO());
-        squad1Dated.add(new TitleVO("Estimativa Fixa - 1a Quinzena"));
-        squad1Dated.add(new WhiteSpaceVO());
+        Double sq1DSavedValue = 0D;
+        Double sq1USavedValue = 0D;
+        Double sq2DSavedValue = 0D;
+        Double sq2USavedValue = 0D;
 
-        squad1Undated.add(new WhiteSpaceVO());
-        squad1Undated.add(new TitleVO("Estimativa Variável - 1a Quinzena"));
-        squad1Undated.add(new WhiteSpaceVO());
-
-        squad2Dated.add(new WhiteSpaceVO());
-        squad2Dated.add(new TitleVO("Estimativa Fixa - 2a Quinzena"));
-        squad2Dated.add(new WhiteSpaceVO());
-
-        squad2Undated.add(new WhiteSpaceVO());
-        squad2Undated.add(new TitleVO("Estimativa Variável - 2a Quinzena"));
-        squad2Undated.add(new WhiteSpaceVO());
+        Double sq1GeralValue = 0D;
+        Double sq2GeralValue = 0D;
 
         Double sq1DValue = 0D;
         Double sq1UValue = 0D;
@@ -210,11 +202,16 @@ public class HomeBusiness {
                     squad1Dated.add(vo);
                     sq1DValue += vo.getSpentValue();
                     sq1DValuePlann += vo.getPlannedValue();
+                    sq1DSavedValue += vo.getSavedValue();
                 } else {
                     squad1Undated.add(vo);
                     sq1UValue += vo.getSpentValue();
                     sq1UValuePlann += vo.getPlannedValue();
+                    sq1USavedValue += vo.getSavedValue();
                 }
+
+                sq1GeralValue += vo.getSpentValue();
+                vo.setAcumulateValue(sq1GeralValue);
 
             } else {
 
@@ -222,31 +219,52 @@ public class HomeBusiness {
                     squad2Dated.add(vo);
                     sq2DValue += vo.getSpentValue();
                     sq2DValuePlann += vo.getPlannedValue();
+                    sq2DSavedValue += vo.getSavedValue();
                 } else {
                     squad2Undated.add(vo);
                     sq2UValue += vo.getSpentValue();
                     sq2UValuePlann += vo.getPlannedValue();
+                    sq2USavedValue += vo.getSavedValue();
                 }
+
+                sq2GeralValue += vo.getSpentValue();
+                vo.setAcumulateValue(sq2GeralValue);
             }
         }
 
         List<CardAdapterAbs.CardModel> itens = new ArrayList<>();
 
-        if (squad1Dated.size() > 3) {
+        if (!squad1Dated.isEmpty()) {
+            itens.add(new WhiteSpaceVO());
+            itens.add(new TitleVO("Estimativa Fixa - 1a Quinzena"));
+            itens.add(new WhiteSpaceVO());
             itens.addAll(squad1Dated);
-            itens.add(new TotalVO(sq1DValuePlann, sq1DValue));
+            //itens.add(new TotalVO(JavaUtils.NumberUtil.currencyFormat(sq1DValue) + " de " + JavaUtils.NumberUtil.currencyFormat(sq1DValuePlann), JavaUtils.NumberUtil.currencyFormat(sq1DSavedValue)));
         }
-        if (squad1Undated.size() > 3) {
+        if (!squad1Undated.isEmpty()) {
+            itens.add(new WhiteSpaceVO());
+            itens.add(new TitleVO("Estimativa Variável - 1a Quinzena"));
+            itens.add(new WhiteSpaceVO());
             itens.addAll(squad1Undated);
-            itens.add(new TotalVO(sq1UValuePlann, sq1UValue));
+            //itens.add(new TotalVO(JavaUtils.NumberUtil.currencyFormat(sq1UValue) + " de " + JavaUtils.NumberUtil.currencyFormat(sq1UValuePlann), JavaUtils.NumberUtil.currencyFormat(sq1USavedValue)));
+            //itens.add(new WhiteSpaceVO());
+            itens.add(new TotalVO(JavaUtils.NumberUtil.currencyFormat(sq1DValue + sq1UValue) + " de " + JavaUtils.NumberUtil.currencyFormat(sq1DValuePlann + sq1UValuePlann), JavaUtils.NumberUtil.currencyFormat(sq1DSavedValue + sq1USavedValue)));
         }
-        if (squad2Dated.size() > 3) {
+        if (!squad2Dated.isEmpty()) {
+            itens.add(new WhiteSpaceVO());
+            itens.add(new TitleVO("Estimativa Fixa - 2a Quinzena"));
+            itens.add(new WhiteSpaceVO());
             itens.addAll(squad2Dated);
-            itens.add(new TotalVO(sq2DValuePlann, sq2DValue));
+            //itens.add(new TotalVO(JavaUtils.NumberUtil.currencyFormat(sq2DValue) + " de " + JavaUtils.NumberUtil.currencyFormat(sq2DValuePlann), JavaUtils.NumberUtil.currencyFormat(sq2DSavedValue)));
         }
-        if (squad2Undated.size() > 3) {
+        if (!squad2Undated.isEmpty()) {
+            itens.add(new WhiteSpaceVO());
+            itens.add(new TitleVO("Estimativa Variável - 2a Quinzena"));
+            itens.add(new WhiteSpaceVO());
             itens.addAll(squad2Undated);
-            itens.add(new TotalVO(sq2UValuePlann, sq2UValue));
+            //itens.add(new TotalVO(JavaUtils.NumberUtil.currencyFormat(sq2UValue) + " de " + JavaUtils.NumberUtil.currencyFormat(sq2UValuePlann), JavaUtils.NumberUtil.currencyFormat(sq2USavedValue)));
+            //itens.add(new WhiteSpaceVO());
+            itens.add(new TotalVO(JavaUtils.NumberUtil.currencyFormat(sq2DValue + sq2UValue) + " de " + JavaUtils.NumberUtil.currencyFormat(sq2DValuePlann + sq2UValuePlann), JavaUtils.NumberUtil.currencyFormat(sq2DSavedValue + sq2USavedValue)));
         }
 
         return itens;
@@ -485,13 +503,16 @@ public class HomeBusiness {
         @Override
         public int compare(EstimateVO o1, EstimateVO o2) {
 
+            int compare = Integer.compare(o1.getQuinzena().ordinal(), o2.getQuinzena().ordinal());
+            if (compare != EQUAL) return compare;
+
             int o1Day = 100;
             int o2Day = 100;
 
             if (o1.getDay() != null) o1Day = o1.getDay();
             if (o2.getDay() != null) o2Day = o2.getDay();
 
-            int compare = Integer.compare(o1Day, o2Day);
+            compare = Integer.compare(o1Day, o2Day);
             if (compare != EQUAL) return compare;
 
             compare = o1.getCategory().getName().compareTo(o2.getCategory().getName());

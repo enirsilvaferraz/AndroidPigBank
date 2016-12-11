@@ -48,6 +48,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignTop="@id/item_transaction_category"
                 android:gravity="center"
+                android:textColor="@color/material_amber"
                 tools:text="R$ 2500,00" />
 
             <LinearLayout

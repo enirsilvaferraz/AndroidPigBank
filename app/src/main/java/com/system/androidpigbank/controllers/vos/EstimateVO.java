@@ -160,7 +160,7 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
             return false;
         if (categorySecondary != null ? !categorySecondary.equals(that.categorySecondary) : that.categorySecondary != null)
             return false;
-        if (day != null ? !day.equals(that.day) : /*that.day != null*/ false) return false;
+        if (day != null ? !day.equals(that.day) : that.day != null) return false;
         return quinzena == that.quinzena;
 
     }

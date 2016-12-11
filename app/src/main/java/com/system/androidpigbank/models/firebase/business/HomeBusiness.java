@@ -178,6 +178,10 @@ public class HomeBusiness {
 
             for (TransactionVO tvo : transactions) {
 
+                if (tvo.isAlreadyEstimated()){
+                    continue;
+                }
+
                 int day = JavaUtils.DateUtil.get(Calendar.DATE, tvo.getDatePayment());
 
                 // Se a categoria principal for igual
@@ -188,31 +192,11 @@ public class HomeBusiness {
 
                         // se as categorias secundarias forem iguais
                         if (tvo.getCategorySecondary() != null && vo.getCategorySecondary().equals(tvo.getCategorySecondary())) {
-
-                            if (vo.getDay() != null) {
-                                if (vo.getDay().equals(JavaUtils.DateUtil.get(Calendar.DATE, tvo.getDatePayment()))) {
-                                    vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
-                                }
-                            } else {
-                                if ((vo.getDay() == null && vo.getQuinzena().equals(Quinzena.PRIMEIRA) && day < 20) ||
-                                        (vo.getDay() == null && vo.getQuinzena().equals(Quinzena.SEGUNDA) && day >= 20)) {
-                                    vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
-                                }
-                            }
+                            setEstimatedValue(vo, tvo, day);
                         }
 
                     } else if (vo.getCategorySecondary() == null && tvo.getCategorySecondary() == null) {
-
-                        if (vo.getDay() != null) {
-                            if (vo.getDay().equals(JavaUtils.DateUtil.get(Calendar.DATE, tvo.getDatePayment()))) {
-                                vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
-                            }
-                        } else {
-                            if ((vo.getDay() == null && vo.getQuinzena().equals(Quinzena.PRIMEIRA) && day < 20) ||
-                                    (vo.getDay() == null && vo.getQuinzena().equals(Quinzena.SEGUNDA) && day >= 20)) {
-                                vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
-                            }
-                        }
+                        setEstimatedValue(vo, tvo, day);
                     }
                 }
             }
@@ -268,6 +252,19 @@ public class HomeBusiness {
         return itens;
     }
 
+    private void setEstimatedValue(EstimateVO vo, TransactionVO tvo, int day) {
+        if (vo.getDay() != null) {
+            if (vo.getDay().equals(JavaUtils.DateUtil.get(Calendar.DATE, tvo.getDatePayment()))) {
+                vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
+                tvo.setAlreadyEstimated(true);
+            }
+        } else if ((vo.getQuinzena().equals(Quinzena.PRIMEIRA) && day < 20) ||
+                (vo.getDay() == null && vo.getQuinzena().equals(Quinzena.SEGUNDA) && day >= 20)) {
+            vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
+            tvo.setAlreadyEstimated(true);
+        }
+    }
+
     private List<EstimateVO> getNotEstimatedItems(List<TransactionVO> transactions, List<EstimateVO> estimates) {
 
 
@@ -279,10 +276,15 @@ public class HomeBusiness {
             vo.setCategory(tvo.getCategory());
             vo.setCategorySecondary(tvo.getCategorySecondary());
             vo.setQuinzena(AppUtil.getQuinzena(tvo.getDatePayment()));
+            vo.setDay(JavaUtils.DateUtil.get(Calendar.DATE, tvo.getDatePayment()));
 
-            if (!estimates.contains(vo) && !notEstimated.contains(vo)) {
-                vo.setRegistred(true);
-                notEstimated.add(vo);
+            if (!estimates.contains(vo)) {
+
+                vo.setDay(null);
+                if (!estimates.contains(vo) && !notEstimated.contains(vo)) {
+                    vo.setRegistred(true);
+                    notEstimated.add(vo);
+                }
             }
         }
 
@@ -483,8 +485,8 @@ public class HomeBusiness {
         @Override
         public int compare(EstimateVO o1, EstimateVO o2) {
 
-            int o1Day = 0;
-            int o2Day = 0;
+            int o1Day = 100;
+            int o2Day = 100;
 
             if (o1.getDay() != null) o1Day = o1.getDay();
             if (o2.getDay() != null) o2Day = o2.getDay();
@@ -498,42 +500,6 @@ public class HomeBusiness {
             if (o1.getCategorySecondary() == null) return BEFORE;
             if (o2.getCategorySecondary() == null) return AFTER;
             return o1.getCategorySecondary().getName().compareTo(o2.getCategorySecondary().getName());
-
-            /*// Se o1 nao tem dia ele vem depois
-            if (o1.getDay() == null) {
-                return -1;
-            }
-
-            // Se o2 não tem data vem primeiro
-            else if (o2.getDay() == null) {
-                return 1;
-            }
-
-            // Caso contrario, verificar a comparacao
-            else {
-
-                int compare = o1.getDay().compare(o2.getDay());
-                if (compare == 0){
-
-                    compare = o1.getCategory().getName().compare(o2.getCategory().getName());
-                    if (compare == 0){
-
-                        if (o1.getCategorySecondary() != null){
-                            return -1;
-                        } else if (o2.getCategorySecondary() != null){
-                            return 1;
-                        } else {
-                            return o1.getCategorySecondary().getName().compare(o2.getCategorySecondary().getName());
-                        }
-
-                    } else {
-                        return compare;
-                    }
-
-                } else {
-                    return compare;
-                }
-            }*/
         }
     }
 }

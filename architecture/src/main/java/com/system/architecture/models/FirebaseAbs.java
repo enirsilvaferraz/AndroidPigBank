@@ -25,8 +25,9 @@ public abstract class FirebaseAbs<T extends VOAbs> {
         this.flavor = flavor;
     }
 
-    public static void enableOffline() {
+    public static void enableOffline(String flavor) {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        FirebaseDatabase.getInstance().getReference(flavor + "-database/").keepSynced(true);
     }
 
     public void save(T entity, FirebaseSingleReturnListener<T> listener) {

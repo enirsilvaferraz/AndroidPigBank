@@ -50,6 +50,8 @@ public class TransactionVO extends VOAbs implements Parcelable, CardAdapterAbs.C
     @Expose
     private PaymentType paymentType;
 
+    private boolean alreadyEstimated;
+
     public TransactionVO() {
     }
 
@@ -143,7 +145,16 @@ public class TransactionVO extends VOAbs implements Parcelable, CardAdapterAbs.C
         return categorySecondary;
     }
 
+    public boolean isAlreadyEstimated() {
+        return alreadyEstimated;
+    }
+
+    public void setAlreadyEstimated(boolean alreadyEstimated) {
+        this.alreadyEstimated = alreadyEstimated;
+    }
+
     public void setCategorySecondary(CategoryVO categorySecondary) {
+
         this.categorySecondary = categorySecondary;
     }
 

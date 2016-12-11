@@ -2,6 +2,7 @@ package com.system.androidpigbank.controllers.helpers;
 
 import android.app.Application;
 
+import com.system.androidpigbank.BuildConfig;
 import com.system.architecture.models.FirebaseAbs;
 
 /**
@@ -14,6 +15,6 @@ public class M4Application extends Application {
     public void onCreate() {
         super.onCreate();
 
-        //FirebaseAbs.enableOffline();
+        FirebaseAbs.enableOffline(BuildConfig.FLAVOR);
     }
 }

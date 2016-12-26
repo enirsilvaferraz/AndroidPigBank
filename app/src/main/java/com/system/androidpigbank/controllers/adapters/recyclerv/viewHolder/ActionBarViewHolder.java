@@ -27,6 +27,9 @@ public class ActionBarViewHolder extends CardViewHolder {
     @BindView(R.id.custom_bar_copy_action)
     ImageButton btCopyAction;
 
+    @BindView(R.id.custom_bar_view_action)
+    ImageButton btViewAction;
+
     public ActionBarViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -48,6 +51,9 @@ public class ActionBarViewHolder extends CardViewHolder {
 
             contains = vo.getActionsToShow().contains(ActionBarVO.Actions.DELETE);
             btDeleteAction.setVisibility(contains ? View.VISIBLE : View.GONE);
+
+            contains = vo.getActionsToShow().contains(ActionBarVO.Actions.HIGHLIGHT);
+            btViewAction.setVisibility(contains ? View.VISIBLE : View.GONE);
         }
 
         if (onClickListener != null) {
@@ -70,6 +76,13 @@ public class ActionBarViewHolder extends CardViewHolder {
                 @Override
                 public void onClick(View view) {
                     onClickListener.onContainerClicked(Constants.ACTION_COPY, vo.getCardReferency());
+                }
+            });
+
+            btViewAction.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onClickListener.onContainerClicked(Constants.ACTION_HIGHLIGHT, vo.getCardReferency());
                 }
             });
         }

@@ -34,6 +34,6 @@ public class ActionBarVO implements CardAdapterAbs.CardModel, Cloneable {
      *
      */
     public enum Actions {
-        COPY, EDIT, DELETE
+        COPY, EDIT, DELETE, HIGHLIGHT
     }
 }

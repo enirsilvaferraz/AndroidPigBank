@@ -75,6 +75,10 @@ public abstract class CardAdapterAbs extends RecyclerView.Adapter<RecyclerView.V
 
     public abstract int getViewType(CardModel cardModel);
 
+    public int findCard(CardModel card) {
+        return itens.indexOf(card);
+    }
+
     /**
      *
      */

@@ -14,13 +14,16 @@ import android.view.View;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.SectionsCurrentMonthPagerAdapter;
+import com.system.androidpigbank.controllers.fragments.CardFragmentImpl;
 import com.system.androidpigbank.controllers.helpers.Constants;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
+import com.system.androidpigbank.controllers.vos.EstimateVO;
 import com.system.androidpigbank.controllers.vos.HomeObjectVO;
 import com.system.androidpigbank.models.firebase.business.HomeBusiness;
 import com.system.androidpigbank.views.CustomHeaderSummary;
 import com.system.architecture.activities.BaseActivity;
 import com.system.androidpigbank.controllers.fragments.CardFragmentAbs;
+import com.system.architecture.activities.CardAdapterAbs;
 import com.system.architecture.utils.JavaUtils;
 import com.system.architecture.utils.behaviors.ScrollAwareFABBehavior;
 
@@ -104,6 +107,7 @@ public class HomeActivity extends BaseActivity {
             switch (((CardFragmentAbs) fragment).getFragmentID()) {
                 case Constants.FRAGMENT_ID_SUMMARY_CATEGORY:
                     ((CardFragmentAbs) fragment).setData(data.getListCategorySummary());
+                    this.fragment = (CardFragmentImpl) fragment;
                     break;
 
                 case Constants.FRAGMENT_ID_ESTIMATE:
@@ -180,5 +184,12 @@ public class HomeActivity extends BaseActivity {
         mViewPager.setOffscreenPageLimit(4);
         mViewPager.setCurrentItem(HOME_INDICATOR);
         mViewPager.getAdapter().notifyDataSetChanged();
+    }
+
+    private CardFragmentImpl fragment;
+
+    public void highlightCard(CardAdapterAbs.CardModel card) {
+        mViewPager.setCurrentItem(0);
+        fragment.highlightCard(card);
     }
 }

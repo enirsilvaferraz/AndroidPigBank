@@ -6,6 +6,14 @@
     android:orientation="horizontal">
 
     <ImageButton
+        android:id="@+id/custom_bar_view_action"
+        android:layout_width="wrap_content"
+        android:background="?selectableItemBackgroundBorderless"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:src="@drawable/ic_search_black" />
+
+    <ImageButton
         android:id="@+id/custom_bar_copy_action"
         android:layout_width="wrap_content"
         android:background="?selectableItemBackgroundBorderless"

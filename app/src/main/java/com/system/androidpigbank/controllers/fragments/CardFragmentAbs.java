@@ -62,6 +62,11 @@ public abstract class CardFragmentAbs extends Fragment {
         return data;
     }
 
+    public void highlightCard(CardAdapterAbs.CardModel card){
+        CardAdapterAbs adapter = (CardAdapterAbs) recyclerview.getAdapter();
+        ((GridLayoutManager)recyclerview.getLayoutManager()).scrollToPositionWithOffset(adapter.findCard(card), 16);
+    }
+
     public void setData(List<CardAdapterAbs.CardModel> data) {
         this.data = data;
     }

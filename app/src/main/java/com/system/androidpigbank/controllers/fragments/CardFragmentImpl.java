@@ -70,9 +70,9 @@ public class CardFragmentImpl extends CardFragmentAbs {
                 if (toolbar == null) {
                     toolbar = new ActionBarVO(model);
                     if (model.isAuxItem()){
-                        toolbar.setActionsToShow(ActionBarVO.Actions.EDIT);
+                        toolbar.setActionsToShow(ActionBarVO.Actions.EDIT, ActionBarVO.Actions.HIGHLIGHT);
                     } else {
-                        toolbar.setActionsToShow(ActionBarVO.Actions.DELETE, ActionBarVO.Actions.COPY, ActionBarVO.Actions.EDIT);
+                        toolbar.setActionsToShow(ActionBarVO.Actions.DELETE, ActionBarVO.Actions.COPY, ActionBarVO.Actions.EDIT, ActionBarVO.Actions.HIGHLIGHT);
                     }
                     cardAdapter.add(toolbar, cardAdapter.getItens().indexOf(model) + 1);
                 } else {
@@ -81,9 +81,9 @@ public class CardFragmentImpl extends CardFragmentAbs {
                     if (mustAdd) {
                         toolbar = new ActionBarVO(model);
                         if (model.isAuxItem()){
-                            toolbar.setActionsToShow(ActionBarVO.Actions.EDIT);
+                            toolbar.setActionsToShow(ActionBarVO.Actions.EDIT, ActionBarVO.Actions.HIGHLIGHT);
                         } else {
-                            toolbar.setActionsToShow(ActionBarVO.Actions.DELETE, ActionBarVO.Actions.COPY, ActionBarVO.Actions.EDIT);
+                            toolbar.setActionsToShow(ActionBarVO.Actions.DELETE, ActionBarVO.Actions.COPY, ActionBarVO.Actions.EDIT, ActionBarVO.Actions.HIGHLIGHT);
                         }
                         cardAdapter.add(toolbar, cardAdapter.getItens().indexOf(model) + 1);
                     }
@@ -99,6 +99,12 @@ public class CardFragmentImpl extends CardFragmentAbs {
                 removeToolbar(cardAdapter);
                 model.setKey(null);
                 IntentRouter.startEstimateManager((AppCompatActivity) getActivity(), model);
+                break;
+
+            case Constants.ACTION_HIGHLIGHT:
+                removeToolbar(cardAdapter);
+                //CategoryVO card = model.getCategorySecondary() != null ? model.getCategorySecondary() : model.getCategory();
+                ((HomeActivity)getActivity()).highlightCard( model.getCategory());
                 break;
 
             case Constants.ACTION_DELETE:

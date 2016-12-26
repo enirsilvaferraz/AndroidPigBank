@@ -305,7 +305,10 @@ public class HomeBusiness {
 
             // Adiciona o total
             if (transactionProx == null || JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), transactionProx.getDatePayment()) != 0) {
-                itens.add(new TotalVO(null, valorAcumular));
+
+                if (valorAcumular > 0)
+                    itens.add(new TotalVO(null, valorAcumular));
+
                 itens.add(new WhiteSpaceVO());
             }
         }
@@ -341,6 +344,8 @@ public class HomeBusiness {
     @NonNull
     private List<CardAdapterAbs.CardModel> organizeCategorySummaryList(MonthVO monthVO, List<CategoryVO> categories, List<TransactionVO> transactions) {
 
+        Collections.sort(categories, new CategorySort());
+
         boolean hasTitleSecondary = false;
         List<CardAdapterAbs.CardModel> itens = new ArrayList<>();
 
@@ -356,9 +361,6 @@ public class HomeBusiness {
                 hasTitleSecondary = true;
             }
 
-            itens.add(new WhiteSpaceVO());
-            itens.add(category);
-
             List<TransactionVO> listVo = new ArrayList<>();
             for (TransactionVO tvo : transactions) {
 
@@ -372,6 +374,12 @@ public class HomeBusiness {
                     category.setAmount(category.getAmount() + tvo.getValue());
                 }
             }
+
+            if (itens.isEmpty() || !(itens.get(itens.size() - 1) instanceof WhiteSpaceVO))
+                itens.add(new WhiteSpaceVO());
+
+            if (category.getAmount() > 0)
+                itens.add(category);
 
             if (!listVo.isEmpty()) {
                 Collections.sort(listVo, new TransactionSort());
@@ -463,6 +471,22 @@ public class HomeBusiness {
             if (o1.getCategorySecondary() == null) return BEFORE;
             if (o2.getCategorySecondary() == null) return AFTER;
             return o1.getCategorySecondary().getName().compareTo(o2.getCategorySecondary().getName());
+        }
+    }
+
+    private class CategorySort implements Comparator<CategoryVO>{
+
+        final int BEFORE = -1;
+        final int EQUAL = 0;
+        final int AFTER = 1;
+
+        @Override
+        public int compare(CategoryVO o1, CategoryVO o2) {
+
+            if (o1.isPrimary() && !o2.isPrimary()) return BEFORE;
+            if (!o1.isPrimary() && o2.isPrimary()) return AFTER;
+
+            return o1.getName().compareTo(o2.getName());
         }
     }
 }

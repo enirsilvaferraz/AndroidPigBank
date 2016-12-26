@@ -36,4 +36,5 @@ public interface Constants {
     int FRAGMENT_ID_TRANSACTION = 2;
     int FRAGMENT_ID_MONTH = 3;
     int FRAGMENT_ID_ESTIMATE = 4;
+    int ACTION_HIGHLIGHT = 5;
 }

@@ -250,7 +250,7 @@ public class HomeBusiness {
             vo.setQuinzena(AppUtil.getQuinzena(tvo.getDatePayment()));
 
             if (!estimates.contains(vo)) {
-                vo.setRegistred(true);
+                vo.setAuxItem(true);
                 notEstimated.add(vo);
             }
         }

@@ -5,7 +5,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import com.system.androidpigbank.controllers.activities.HomeActivity;
-import com.system.androidpigbank.controllers.helpers.AppUtil;
 import com.system.androidpigbank.controllers.helpers.Constants;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
 import com.system.androidpigbank.controllers.vos.ActionBarVO;
@@ -70,10 +69,10 @@ public class CardFragmentImpl extends CardFragmentAbs {
             case Constants.ACTION_VIEW:
                 if (toolbar == null) {
                     toolbar = new ActionBarVO(model);
-                    if (model.isRegistred()){
+                    if (model.isAuxItem()){
                         toolbar.setActionsToHide(ActionBarVO.Actions.DELETE, ActionBarVO.Actions.COPY);
                     } else {
-                        toolbar.setActionsToHide(ActionBarVO.Actions.COPY);
+                        toolbar.setActionsToHide();
                     }
                     cardAdapter.add(toolbar, cardAdapter.getItens().indexOf(model) + 1);
                 } else {
@@ -81,7 +80,11 @@ public class CardFragmentImpl extends CardFragmentAbs {
                     removeToolbar(cardAdapter);
                     if (mustAdd) {
                         toolbar = new ActionBarVO(model);
-                        toolbar.setActionsToHide(ActionBarVO.Actions.COPY);
+                        if (model.isAuxItem()){
+                            toolbar.setActionsToHide(ActionBarVO.Actions.DELETE, ActionBarVO.Actions.COPY);
+                        } else {
+                            toolbar.setActionsToHide();
+                        }
                         cardAdapter.add(toolbar, cardAdapter.getItens().indexOf(model) + 1);
                     }
                 }

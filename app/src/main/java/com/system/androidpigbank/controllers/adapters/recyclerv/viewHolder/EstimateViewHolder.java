@@ -5,9 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
-import com.system.androidpigbank.controllers.helpers.Colors;
 import com.system.androidpigbank.controllers.vos.EstimateVO;
-import com.system.androidpigbank.views.RoundedTextView;
 import com.system.architecture.activities.CardAdapterAbs;
 import com.system.architecture.activities.CardViewHolder;
 import com.system.architecture.utils.JavaUtils;
@@ -69,7 +67,7 @@ public class EstimateViewHolder extends CardViewHolder {
             txtSavedValue.setTextColor(context.getColor(R.color.material_gray));
         }
 
-        if (item.isRegistred()){
+        if (item.isAuxItem()){
             txtCategory.setTextColor(context.getColor(R.color.material_red));
         } else {
             txtCategory.setTextColor(context.getColor(R.color.material_black));

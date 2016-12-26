@@ -5,6 +5,11 @@ import android.os.Parcelable;
 
 import com.system.architecture.activities.CardAdapterAbs;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Created by Enir on 11/09/2016.
  */
@@ -12,18 +17,18 @@ import com.system.architecture.activities.CardAdapterAbs;
 public class ActionBarVO implements CardAdapterAbs.CardModel, Cloneable {
 
     private CardAdapterAbs.CardModel cardReferency;
-    private Actions[] actionsToHide;
+    private List<Actions> actionsToHide;
 
     public ActionBarVO(CardAdapterAbs.CardModel cardReferency) {
         this.cardReferency = cardReferency;
     }
 
-    public Actions[] getActionsToHide() {
+    public List<Actions> getActionsToHide() {
         return actionsToHide;
     }
 
     public void setActionsToHide(Actions... actionsToHide) {
-        this.actionsToHide = actionsToHide;
+        this.actionsToHide = Arrays.asList(actionsToHide);
     }
 
     public CardAdapterAbs.CardModel getCardReferency() {

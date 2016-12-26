@@ -41,7 +41,7 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
     private Double spentValue;
     private Double percentualVelue;
     private Double acumulateValue;
-    private boolean registred;
+    private boolean auxItem;
 
     public EstimateVO() {
         plannedValue = 0D;
@@ -191,12 +191,12 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
         return result;
     }
 
-    public boolean isRegistred() {
-        return registred;
+    public boolean isAuxItem() {
+        return auxItem;
     }
 
-    public void setRegistred(boolean registred) {
-        this.registred = registred;
+    public void setAuxItem(boolean auxItem) {
+        this.auxItem = auxItem;
     }
 
     @Override
@@ -230,7 +230,7 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
         dest.writeValue(this.spentValue);
         dest.writeValue(this.percentualVelue);
         dest.writeValue(this.acumulateValue);
-        dest.writeByte(this.registred ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.auxItem ? (byte) 1 : (byte) 0);
     }
 
     protected EstimateVO(Parcel in) {
@@ -248,7 +248,7 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
         this.spentValue = (Double) in.readValue(Double.class.getClassLoader());
         this.percentualVelue = (Double) in.readValue(Double.class.getClassLoader());
         this.acumulateValue = (Double) in.readValue(Double.class.getClassLoader());
-        this.registred = in.readByte() != 0;
+        this.auxItem = in.readByte() != 0;
     }
 
     public static final Creator<EstimateVO> CREATOR = new Creator<EstimateVO>() {

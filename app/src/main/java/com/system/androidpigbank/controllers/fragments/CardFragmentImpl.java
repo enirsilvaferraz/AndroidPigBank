@@ -70,9 +70,9 @@ public class CardFragmentImpl extends CardFragmentAbs {
                 if (toolbar == null) {
                     toolbar = new ActionBarVO(model);
                     if (model.isAuxItem()){
-                        toolbar.setActionsToHide(ActionBarVO.Actions.DELETE, ActionBarVO.Actions.COPY);
+                        toolbar.setActionsToShow(ActionBarVO.Actions.EDIT);
                     } else {
-                        toolbar.setActionsToHide();
+                        toolbar.setActionsToShow(ActionBarVO.Actions.DELETE, ActionBarVO.Actions.COPY, ActionBarVO.Actions.EDIT);
                     }
                     cardAdapter.add(toolbar, cardAdapter.getItens().indexOf(model) + 1);
                 } else {
@@ -81,9 +81,9 @@ public class CardFragmentImpl extends CardFragmentAbs {
                     if (mustAdd) {
                         toolbar = new ActionBarVO(model);
                         if (model.isAuxItem()){
-                            toolbar.setActionsToHide(ActionBarVO.Actions.DELETE, ActionBarVO.Actions.COPY);
+                            toolbar.setActionsToShow(ActionBarVO.Actions.EDIT);
                         } else {
-                            toolbar.setActionsToHide();
+                            toolbar.setActionsToShow(ActionBarVO.Actions.DELETE, ActionBarVO.Actions.COPY, ActionBarVO.Actions.EDIT);
                         }
                         cardAdapter.add(toolbar, cardAdapter.getItens().indexOf(model) + 1);
                     }
@@ -143,14 +143,14 @@ public class CardFragmentImpl extends CardFragmentAbs {
             case Constants.ACTION_VIEW:
                 if (toolbar == null) {
                     toolbar = new ActionBarVO(model);
-                    toolbar.setActionsToHide(ActionBarVO.Actions.COPY);
+                    toolbar.setActionsToShow(ActionBarVO.Actions.DELETE, ActionBarVO.Actions.EDIT);
                     cardAdapter.add(toolbar, cardAdapter.getItens().indexOf(model) + 1);
                 } else {
                     boolean mustAdd = !toolbar.getCardReferency().equals(model);
                     removeToolbar(cardAdapter);
                     if (mustAdd) {
                         toolbar = new ActionBarVO(model);
-                        toolbar.setActionsToHide(ActionBarVO.Actions.COPY);
+                        toolbar.setActionsToShow(ActionBarVO.Actions.DELETE, ActionBarVO.Actions.EDIT);
                         cardAdapter.add(toolbar, cardAdapter.getItens().indexOf(model) + 1);
                     }
                 }
@@ -194,12 +194,14 @@ public class CardFragmentImpl extends CardFragmentAbs {
             case Constants.ACTION_VIEW:
                 if (toolbar == null) {
                     toolbar = new ActionBarVO(model);
+                    toolbar.setActionsToShow(ActionBarVO.Actions.DELETE, ActionBarVO.Actions.COPY, ActionBarVO.Actions.EDIT);
                     cardAdapter.add(toolbar, cardAdapter.getItens().indexOf(model) + 1);
                 } else {
                     boolean mustAdd = !toolbar.getCardReferency().equals(model);
                     removeToolbar(cardAdapter);
                     if (mustAdd) {
                         toolbar = new ActionBarVO(model);
+                        toolbar.setActionsToShow(ActionBarVO.Actions.DELETE, ActionBarVO.Actions.COPY, ActionBarVO.Actions.EDIT);
                         cardAdapter.add(toolbar, cardAdapter.getItens().indexOf(model) + 1);
                     }
                 }

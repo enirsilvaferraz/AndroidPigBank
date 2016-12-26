@@ -1,13 +1,8 @@
 package com.system.androidpigbank.controllers.vos;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.system.architecture.activities.CardAdapterAbs;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,18 +12,18 @@ import java.util.List;
 public class ActionBarVO implements CardAdapterAbs.CardModel, Cloneable {
 
     private CardAdapterAbs.CardModel cardReferency;
-    private List<Actions> actionsToHide;
+    private List<Actions> actionsToShow;
 
     public ActionBarVO(CardAdapterAbs.CardModel cardReferency) {
         this.cardReferency = cardReferency;
     }
 
-    public List<Actions> getActionsToHide() {
-        return actionsToHide;
+    public List<Actions> getActionsToShow() {
+        return actionsToShow;
     }
 
-    public void setActionsToHide(Actions... actionsToHide) {
-        this.actionsToHide = Arrays.asList(actionsToHide);
+    public void setActionsToShow(Actions... actionsToShow) {
+        this.actionsToShow = Arrays.asList(actionsToShow);
     }
 
     public CardAdapterAbs.CardModel getCardReferency() {

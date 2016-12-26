@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.system.androidpigbank.controllers.helpers.AppUtil;
 import com.system.androidpigbank.controllers.helpers.Quinzena;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
+import com.system.androidpigbank.controllers.vos.EndWhiteSpaceVO;
 import com.system.androidpigbank.controllers.vos.EstimateVO;
 import com.system.androidpigbank.controllers.vos.HomeObjectVO;
 import com.system.androidpigbank.controllers.vos.MonthVO;
@@ -225,6 +226,7 @@ public class HomeBusiness {
             itens.add(new TotalVO(JavaUtils.NumberUtil.currencyFormat(sq2DValue + sq2UValue) + " de " + JavaUtils.NumberUtil.currencyFormat(sq2DValuePlann + sq2UValuePlann), JavaUtils.NumberUtil.currencyFormat(sq2DSavedValue + sq2USavedValue)));
         }
 
+        itens.add(new EndWhiteSpaceVO());
         return itens;
     }
 
@@ -308,6 +310,7 @@ public class HomeBusiness {
             }
         }
 
+        itens.add(new EndWhiteSpaceVO());
         return itens;
     }
 
@@ -315,11 +318,12 @@ public class HomeBusiness {
 
         Collections.sort(months, new MonthSort());
 
-        List<CardAdapterAbs.CardModel> list = new ArrayList<>();
-        list.add(new WhiteSpaceVO());
-        list.addAll(months);
-        list.add(new WhiteSpaceVO());
-        return list;
+        List<CardAdapterAbs.CardModel> itens = new ArrayList<>();
+        itens.add(new WhiteSpaceVO());
+        itens.addAll(months);
+        itens.add(new WhiteSpaceVO());
+        itens.add(new EndWhiteSpaceVO());
+        return itens;
     }
 
     private MonthVO getCurrentMonth(int month, int year, List<MonthVO> months, List<EstimateVO> estimates) {
@@ -376,7 +380,7 @@ public class HomeBusiness {
         }
 
         itens.add(new WhiteSpaceVO());
-
+        itens.add(new EndWhiteSpaceVO());
         return itens;
     }
 

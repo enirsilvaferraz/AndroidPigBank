@@ -68,7 +68,7 @@ public class HomeActivity extends BaseActivity {
         appbar.setExpanded(false);
 
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
-        params.setBehavior(new ScrollAwareFABBehavior(this, null));
+        //params.setBehavior(new ScrollAwareFABBehavior(this, null));
         fab.requestLayout();
 
         fab.setOnClickListener(new View.OnClickListener() {

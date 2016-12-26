@@ -18,6 +18,6 @@ public class M4Application extends Application {
 
         FirebaseAbs.enableOffline(BuildConfig.FLAVOR);
 
-        //RoutineService.updateEstimates();
+        RoutineService.updateEstimates();
     }
 }

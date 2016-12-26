@@ -45,14 +45,8 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
     @BindView(R.id.estimate_manager_category_secondary)
     AutoCompleteTextView editCategorySecondary;
 
-    @BindView(R.id.estimate_manager_date_lanc)
-    EditText editDay;
-
     @BindView(R.id.estimate_manager_month)
-    EditText editMonth;
-
-    @BindView(R.id.estimate_manager_year)
-    EditText editYear;
+    EditText editDate;
 
     @BindView(R.id.estimate_manager_value)
     EditText editValue;
@@ -113,9 +107,7 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
                 throw new RuntimeException(e);
             }
 
-            editDay.setText(model.getDay() != null ? model.getDay().toString() : "");
-            editMonth.setText(model.getMonth().toString());
-            editYear.setText(model.getYear().toString());
+            editDate.setText(JavaUtils.DateUtil.format(model.getDate(),JavaUtils.DateUtil.MM_YYYY));
 
             editQuinzena.setText(String.valueOf(model.getQuinzena().getId()));
             editValue.setText(String.valueOf(model.getPlannedValue()));
@@ -125,28 +117,6 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
         } else {
             model = new EstimateVO();
         }
-
-        editDay.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!TextUtils.isEmpty(charSequence)) {
-                    Integer day = Integer.valueOf(charSequence.toString());
-                    Integer dayAux = (day < 20 ? Quinzena.PRIMEIRA.getId() : Quinzena.SEGUNDA.getId());
-                    editQuinzena.setText(dayAux.toString());
-                } else {
-                    editQuinzena.setText(String.valueOf(Quinzena.PRIMEIRA.getId()));
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
 
         new CategoryFirebaseBusiness().findAll(new FirebaseAbs.FirebaseMultiReturnListener<CategoryVO>() {
             @Override
@@ -174,8 +144,7 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
         if (TextUtils.isEmpty(editCategory.getText().toString())
                 //|| TextUtils.isEmpty(editCategorySecondary.getText().toString())
                 || TextUtils.isEmpty(editQuinzena.getText().toString())
-                || TextUtils.isEmpty(editMonth.getText().toString())
-                || TextUtils.isEmpty(editYear.getText().toString())
+                || TextUtils.isEmpty(editDate.getText().toString())
                 || TextUtils.isEmpty(editValue.getText().toString())) {
             throw new Exception("Campo obrigatório!");
         }
@@ -185,9 +154,7 @@ public class EstimateManagerDialog extends BaseManagerDialog<EstimateVO> {
             model.setPlannedValue(0D);
         }
 
-        model.setDay(!TextUtils.isEmpty(editDay.getText().toString()) ? Integer.valueOf(editDay.getText().toString()) : null);
-        model.setMonth(Integer.valueOf(editMonth.getText().toString()));
-        model.setYear(Integer.valueOf(editYear.getText().toString()));
+        model.setDate(JavaUtils.DateUtil.parse(editDate.getText().toString(), JavaUtils.DateUtil.MM_YYYY));
 
         model.setPlannedValue(Double.parseDouble(editValue.getText().toString()));
 

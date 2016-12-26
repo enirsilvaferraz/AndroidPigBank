@@ -44,6 +44,10 @@ public class EstimateDTO extends DTOAbs {
     @Expose
     private Integer year;
 
+    @SerializedName("date")
+    @Expose
+    private String date;
+
     public String getKey() {
         return key;
     }
@@ -107,6 +111,14 @@ public class EstimateDTO extends DTOAbs {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @Override

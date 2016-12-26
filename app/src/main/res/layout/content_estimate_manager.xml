@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight=".5"
-            android:hint="Month"
+            android:hint="Month/Year"
             android:inputType="date"
             android:isScrollContainer="true" />
 
@@ -39,14 +39,16 @@
             android:tint="@color/material_amber" />
 
         <EditText
-            android:id="@+id/estimate_manager_year"
+            android:id="@+id/estimate_manager_quinzena"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight=".5"
-            android:hint="Year"
             android:inputType="number"
-            android:isScrollContainer="true" />
+            android:isScrollContainer="true"
+            android:maxLength="1"
+            android:hint="Quinzena"
+            />
 
     </LinearLayout>
 
@@ -89,49 +91,6 @@
             android:inputType="textAutoCorrect|textCapWords"
             android:isScrollContainer="true"
             tools:text="Secondary" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/ic_today_black"
-            android:tint="@color/material_amber" />
-
-        <EditText
-            android:id="@+id/estimate_manager_date_lanc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight=".5"
-            android:inputType="date"
-            android:isScrollContainer="true"
-            tools:text="01" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/ic_today_black"
-            android:tint="@color/material_amber" />
-
-        <EditText
-            android:id="@+id/estimate_manager_quinzena"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight=".5"
-            android:inputType="number"
-            android:isScrollContainer="true"
-            android:maxLength="1"
-            tools:text="1" />
 
     </LinearLayout>
 

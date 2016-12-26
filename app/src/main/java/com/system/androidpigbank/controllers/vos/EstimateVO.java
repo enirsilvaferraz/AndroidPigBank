@@ -11,23 +11,13 @@ import com.system.architecture.activities.CardAdapterAbs;
 import com.system.architecture.models.DTOAbs;
 import com.system.architecture.models.VOAbs;
 
+import java.util.Date;
+
 /**
  * Created by Enir on 27/11/2016.
  */
 
 public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.CardModel {
-
-    public static final Creator<EstimateVO> CREATOR = new Creator<EstimateVO>() {
-        @Override
-        public EstimateVO createFromParcel(Parcel source) {
-            return new EstimateVO(source);
-        }
-
-        @Override
-        public EstimateVO[] newArray(int size) {
-            return new EstimateVO[size];
-        }
-    };
 
     @Expose
     private String key;
@@ -36,8 +26,6 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
     @Expose
     private CategoryVO categorySecondary;
     @Expose
-    private Integer day;
-    @Expose
     private Quinzena quinzena;
     @Expose
     private Double plannedValue;
@@ -45,6 +33,9 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
     private Integer month;
     @Expose
     private Integer year;
+
+    @Expose
+    private Date date;
 
     private Double savedValue;
     private Double spentValue;
@@ -57,23 +48,6 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
         savedValue = 0D;
         spentValue = 0D;
         percentualVelue = 0D;
-    }
-
-    protected EstimateVO(Parcel in) {
-        this.key = in.readString();
-        this.category = in.readParcelable(CategoryVO.class.getClassLoader());
-        this.categorySecondary = in.readParcelable(CategoryVO.class.getClassLoader());
-        this.day = (Integer) in.readValue(Integer.class.getClassLoader());
-        int tmpQuinzena = in.readInt();
-        this.quinzena = tmpQuinzena == -1 ? null : Quinzena.values()[tmpQuinzena];
-        this.plannedValue = (Double) in.readValue(Double.class.getClassLoader());
-        this.month = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.year = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.savedValue = (Double) in.readValue(Double.class.getClassLoader());
-        this.spentValue = (Double) in.readValue(Double.class.getClassLoader());
-        this.percentualVelue = (Double) in.readValue(Double.class.getClassLoader());
-        this.acumulateValue = (Double) in.readValue(Double.class.getClassLoader());
-        this.registred = in.readByte() != 0;
     }
 
     public Integer getMonth() {
@@ -131,14 +105,6 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
         this.categorySecondary = categorySecondary;
     }
 
-    public Integer getDay() {
-        return day;
-    }
-
-    public void setDay(Integer day) {
-        this.day = day;
-    }
-
     public Double getPlannedValue() {
         return plannedValue;
     }
@@ -167,10 +133,19 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
         return percentualVelue;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public void setPercentualVelue(Double percentualVelue) {
         this.percentualVelue = percentualVelue;
     }
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -183,6 +158,20 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
         if (categorySecondary != null ? !categorySecondary.equals(that.categorySecondary) : that.categorySecondary != null)
             return false;
         if (day != null ? !day.equals(that.day) : that.day != null) return false;
+        return quinzena == that.quinzena;
+
+    }*/
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EstimateVO that = (EstimateVO) o;
+
+        if (!category.equals(that.category)) return false;
+        if (categorySecondary != null ? !categorySecondary.equals(that.categorySecondary) : that.categorySecondary != null)
+            return false;
         return quinzena == that.quinzena;
 
     }
@@ -211,28 +200,6 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
     }
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.key);
-        dest.writeParcelable(this.category, flags);
-        dest.writeParcelable(this.categorySecondary, flags);
-        dest.writeValue(this.day);
-        dest.writeInt(this.quinzena == null ? -1 : this.quinzena.ordinal());
-        dest.writeValue(this.plannedValue);
-        dest.writeValue(this.month);
-        dest.writeValue(this.year);
-        dest.writeValue(this.savedValue);
-        dest.writeValue(this.spentValue);
-        dest.writeValue(this.percentualVelue);
-        dest.writeValue(this.acumulateValue);
-        dest.writeByte(this.registred ? (byte) 1 : (byte) 0);
-    }
-
-    @Override
     public String toString() {
         return "EstimateVO{" +
                 "key='" + key + '\'' +
@@ -243,4 +210,56 @@ public class EstimateVO extends VOAbs implements Parcelable, CardAdapterAbs.Card
                 ", year=" + year +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.key);
+        dest.writeParcelable(this.category, flags);
+        dest.writeParcelable(this.categorySecondary, flags);
+        dest.writeInt(this.quinzena == null ? -1 : this.quinzena.ordinal());
+        dest.writeValue(this.plannedValue);
+        dest.writeValue(this.month);
+        dest.writeValue(this.year);
+        dest.writeLong(this.date != null ? this.date.getTime() : -1);
+        dest.writeValue(this.savedValue);
+        dest.writeValue(this.spentValue);
+        dest.writeValue(this.percentualVelue);
+        dest.writeValue(this.acumulateValue);
+        dest.writeByte(this.registred ? (byte) 1 : (byte) 0);
+    }
+
+    protected EstimateVO(Parcel in) {
+        this.key = in.readString();
+        this.category = in.readParcelable(CategoryVO.class.getClassLoader());
+        this.categorySecondary = in.readParcelable(CategoryVO.class.getClassLoader());
+        int tmpQuinzena = in.readInt();
+        this.quinzena = tmpQuinzena == -1 ? null : Quinzena.values()[tmpQuinzena];
+        this.plannedValue = (Double) in.readValue(Double.class.getClassLoader());
+        this.month = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.year = (Integer) in.readValue(Integer.class.getClassLoader());
+        long tmpDate = in.readLong();
+        this.date = tmpDate == -1 ? null : new Date(tmpDate);
+        this.savedValue = (Double) in.readValue(Double.class.getClassLoader());
+        this.spentValue = (Double) in.readValue(Double.class.getClassLoader());
+        this.percentualVelue = (Double) in.readValue(Double.class.getClassLoader());
+        this.acumulateValue = (Double) in.readValue(Double.class.getClassLoader());
+        this.registred = in.readByte() != 0;
+    }
+
+    public static final Creator<EstimateVO> CREATOR = new Creator<EstimateVO>() {
+        @Override
+        public EstimateVO createFromParcel(Parcel source) {
+            return new EstimateVO(source);
+        }
+
+        @Override
+        public EstimateVO[] newArray(int size) {
+            return new EstimateVO[size];
+        }
+    };
 }

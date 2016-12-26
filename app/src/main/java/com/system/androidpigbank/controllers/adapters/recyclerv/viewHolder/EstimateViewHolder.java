@@ -20,9 +20,6 @@ public class EstimateViewHolder extends CardViewHolder {
     @BindView(R.id.item_transaction_category)
     TextView txtCategory;
 
-    @BindView(R.id.item_transaction_rounded_view)
-    RoundedTextView roudedDate;
-
     @BindView(R.id.item_transaction_planned_value)
     TextView txtPlannedValue;
 
@@ -63,13 +60,6 @@ public class EstimateViewHolder extends CardViewHolder {
         txtSpentValue.setText(JavaUtils.NumberUtil.currencyFormat(item.getSpentValue()));
         txtPercentSpentValue.setText(JavaUtils.NumberUtil.percentFormat(item.getPercentualVelue()));
         //txtAcumulateValue.setText(JavaUtils.NumberUtil.currencyFormat(item.getAcumulateValue()));
-
-        if (item.getDay() != null) {
-            roudedDate.setTextView(item.getDay().toString());
-        } else {
-            roudedDate.setTextView("");
-        }
-        roudedDate.setTextColor(Colors.BLUE);
 
         if (item.getSavedValue() > 0) {
             txtSavedValue.setTextColor(context.getColor(R.color.material_green));

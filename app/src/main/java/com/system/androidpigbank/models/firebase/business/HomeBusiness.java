@@ -122,9 +122,7 @@ public class HomeBusiness {
 
         estimates.addAll(getNotEstimatedItems(transactions, estimates));
 
-        List<CardAdapterAbs.CardModel> squad1Dated = new ArrayList<>();
         List<CardAdapterAbs.CardModel> squad1Undated = new ArrayList<>();
-        List<CardAdapterAbs.CardModel> squad2Dated = new ArrayList<>();
         List<CardAdapterAbs.CardModel> squad2Undated = new ArrayList<>();
 
         Double sq1DSavedValue = 0D;
@@ -167,7 +165,7 @@ public class HomeBusiness {
 
             for (TransactionVO tvo : transactions) {
 
-                if (tvo.isAlreadyEstimated()){
+                if (tvo.isAlreadyEstimated()) {
                     continue;
                 }
 
@@ -195,66 +193,35 @@ public class HomeBusiness {
 
             if (vo.getQuinzena().equals(Quinzena.PRIMEIRA)) {
 
-                if (vo.getDay() != null) {
-                    squad1Dated.add(vo);
-                    sq1DValue += vo.getSpentValue();
-                    sq1DValuePlann += vo.getPlannedValue();
-                    sq1DSavedValue += vo.getSavedValue();
-                } else {
-                    squad1Undated.add(vo);
-                    sq1UValue += vo.getSpentValue();
-                    sq1UValuePlann += vo.getPlannedValue();
-                    sq1USavedValue += vo.getSavedValue();
-                }
+                squad1Undated.add(vo);
+                sq1UValue += vo.getSpentValue();
+                sq1UValuePlann += vo.getPlannedValue();
+                sq1USavedValue += vo.getSavedValue();
 
             } else {
 
-                if (vo.getDay() != null) {
-                    squad2Dated.add(vo);
-                    sq2DValue += vo.getSpentValue();
-                    sq2DValuePlann += vo.getPlannedValue();
-                    sq2DSavedValue += vo.getSavedValue();
-                } else {
-                    squad2Undated.add(vo);
-                    sq2UValue += vo.getSpentValue();
-                    sq2UValuePlann += vo.getPlannedValue();
-                    sq2USavedValue += vo.getSavedValue();
-                }
+                squad2Undated.add(vo);
+                sq2UValue += vo.getSpentValue();
+                sq2UValuePlann += vo.getPlannedValue();
+                sq2USavedValue += vo.getSavedValue();
             }
         }
 
         List<CardAdapterAbs.CardModel> itens = new ArrayList<>();
 
-        if (!squad1Dated.isEmpty()) {
-            itens.add(new WhiteSpaceVO());
-            itens.add(new TitleVO("Estimativa Fixa - 1a Quinzena"));
-            itens.add(new WhiteSpaceVO());
-            itens.addAll(squad1Dated);
-            //itens.add(new TotalVO(JavaUtils.NumberUtil.currencyFormat(sq1DValue) + " de " + JavaUtils.NumberUtil.currencyFormat(sq1DValuePlann), JavaUtils.NumberUtil.currencyFormat(sq1DSavedValue)));
-        }
         if (!squad1Undated.isEmpty()) {
             itens.add(new WhiteSpaceVO());
-            itens.add(new TitleVO("Estimativa Variável - 1a Quinzena"));
+            itens.add(new TitleVO("Estimativa - 1a Quinzena"));
             itens.add(new WhiteSpaceVO());
             itens.addAll(squad1Undated);
-            //itens.add(new TotalVO(JavaUtils.NumberUtil.currencyFormat(sq1UValue) + " de " + JavaUtils.NumberUtil.currencyFormat(sq1UValuePlann), JavaUtils.NumberUtil.currencyFormat(sq1USavedValue)));
-            //itens.add(new WhiteSpaceVO());
             itens.add(new TotalVO(JavaUtils.NumberUtil.currencyFormat(sq1DValue + sq1UValue) + " de " + JavaUtils.NumberUtil.currencyFormat(sq1DValuePlann + sq1UValuePlann), JavaUtils.NumberUtil.currencyFormat(sq1DSavedValue + sq1USavedValue)));
         }
-        if (!squad2Dated.isEmpty()) {
-            itens.add(new WhiteSpaceVO());
-            itens.add(new TitleVO("Estimativa Fixa - 2a Quinzena"));
-            itens.add(new WhiteSpaceVO());
-            itens.addAll(squad2Dated);
-            //itens.add(new TotalVO(JavaUtils.NumberUtil.currencyFormat(sq2DValue) + " de " + JavaUtils.NumberUtil.currencyFormat(sq2DValuePlann), JavaUtils.NumberUtil.currencyFormat(sq2DSavedValue)));
-        }
+
         if (!squad2Undated.isEmpty()) {
             itens.add(new WhiteSpaceVO());
-            itens.add(new TitleVO("Estimativa Variável - 2a Quinzena"));
+            itens.add(new TitleVO("Estimativa - 2a Quinzena"));
             itens.add(new WhiteSpaceVO());
             itens.addAll(squad2Undated);
-            //itens.add(new TotalVO(JavaUtils.NumberUtil.currencyFormat(sq2UValue) + " de " + JavaUtils.NumberUtil.currencyFormat(sq2UValuePlann), JavaUtils.NumberUtil.currencyFormat(sq2USavedValue)));
-            //itens.add(new WhiteSpaceVO());
             itens.add(new TotalVO(JavaUtils.NumberUtil.currencyFormat(sq2DValue + sq2UValue) + " de " + JavaUtils.NumberUtil.currencyFormat(sq2DValuePlann + sq2UValuePlann), JavaUtils.NumberUtil.currencyFormat(sq2DSavedValue + sq2USavedValue)));
         }
 
@@ -262,13 +229,7 @@ public class HomeBusiness {
     }
 
     private void setEstimatedValue(EstimateVO vo, TransactionVO tvo, int day) {
-        if (vo.getDay() != null) {
-            if (vo.getDay().equals(JavaUtils.DateUtil.get(Calendar.DATE, tvo.getDatePayment()))) {
-                vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
-                tvo.setAlreadyEstimated(true);
-            }
-        } else if ((vo.getQuinzena().equals(Quinzena.PRIMEIRA) && day < 20) ||
-                (vo.getDay() == null && vo.getQuinzena().equals(Quinzena.SEGUNDA) && day >= 20)) {
+        if ((vo.getQuinzena().equals(Quinzena.PRIMEIRA) && day < 20) || (vo.getQuinzena().equals(Quinzena.SEGUNDA) && day >= 20)) {
             vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
             tvo.setAlreadyEstimated(true);
         }
@@ -285,15 +246,10 @@ public class HomeBusiness {
             vo.setCategory(tvo.getCategory());
             vo.setCategorySecondary(tvo.getCategorySecondary());
             vo.setQuinzena(AppUtil.getQuinzena(tvo.getDatePayment()));
-            vo.setDay(JavaUtils.DateUtil.get(Calendar.DATE, tvo.getDatePayment()));
 
             if (!estimates.contains(vo)) {
-
-                vo.setDay(null);
-                if (!estimates.contains(vo) && !notEstimated.contains(vo)) {
-                    vo.setRegistred(true);
-                    notEstimated.add(vo);
-                }
+                vo.setRegistred(true);
+                notEstimated.add(vo);
             }
         }
 
@@ -495,15 +451,6 @@ public class HomeBusiness {
         public int compare(EstimateVO o1, EstimateVO o2) {
 
             int compare = Integer.compare(o1.getQuinzena().ordinal(), o2.getQuinzena().ordinal());
-            if (compare != EQUAL) return compare;
-
-            int o1Day = 100;
-            int o2Day = 100;
-
-            if (o1.getDay() != null) o1Day = o1.getDay();
-            if (o2.getDay() != null) o2Day = o2.getDay();
-
-            compare = Integer.compare(o1Day, o2Day);
             if (compare != EQUAL) return compare;
 
             compare = o1.getCategory().getName().compareTo(o2.getCategory().getName());

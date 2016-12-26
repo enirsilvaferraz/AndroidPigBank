@@ -18,13 +18,19 @@ import java.util.Date;
 
 public class GsonDateSerializer implements JsonSerializer<Date>, JsonDeserializer<Date> {
 
+    private String format;
+
+    public GsonDateSerializer(String format) {
+        this.format = format;
+    }
+
     @Override
     public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
-        return new JsonPrimitive(JavaUtils.DateUtil.format(src, JavaUtils.DateUtil.YYYY_MM_DD));
+        return new JsonPrimitive(JavaUtils.DateUtil.format(src, format));
     }
 
     @Override
     public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return JavaUtils.DateUtil.parse(json.getAsJsonPrimitive().getAsString(), JavaUtils.DateUtil.YYYY_MM_DD);
+        return JavaUtils.DateUtil.parse(json.getAsJsonPrimitive().getAsString(), format);
     }
 }

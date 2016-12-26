@@ -92,6 +92,12 @@ public class CardFragmentImpl extends CardFragmentAbs {
                 IntentRouter.startEstimateManager((AppCompatActivity) getActivity(), model);
                 break;
 
+            case Constants.ACTION_COPY:
+                removeToolbar(cardAdapter);
+                model.setKey(null);
+                IntentRouter.startEstimateManager((AppCompatActivity) getActivity(), model);
+                break;
+
             case Constants.ACTION_DELETE:
 
                 removeToolbar(cardAdapter);

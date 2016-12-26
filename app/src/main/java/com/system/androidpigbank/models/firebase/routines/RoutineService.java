@@ -5,6 +5,7 @@ import android.util.Log;
 import com.system.androidpigbank.controllers.vos.EstimateVO;
 import com.system.androidpigbank.models.firebase.business.EstimateFirebaseBusiness;
 import com.system.architecture.models.FirebaseAbs;
+import com.system.architecture.utils.JavaUtils;
 
 import java.util.Calendar;
 import java.util.List;
@@ -24,12 +25,15 @@ public class RoutineService {
 
                 for (EstimateVO vo : list) {
 
-                    if (vo.getMonth() != null){
+                    if (vo.getDate() != null){
                         continue;
                     }
 
-                    vo.setMonth(Calendar.getInstance().get(Calendar.MONTH));
-                    vo.setYear(Calendar.getInstance().get(Calendar.YEAR));
+                    vo.setMonth(null);
+                    vo.setYear(null);
+
+                    String format = JavaUtils.DateUtil.format(Calendar.getInstance().getTime(), JavaUtils.DateUtil.MM_YYYY);
+                    vo.setDate(JavaUtils.DateUtil.parse(format, JavaUtils.DateUtil.MM_YYYY));
 
                     new EstimateFirebaseBusiness().save(vo, new FirebaseAbs.FirebaseSingleReturnListener<EstimateVO>() {
 

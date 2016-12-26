@@ -20,13 +20,8 @@
         android:gravity="center"
         android:minHeight="72dp">
 
-        <com.system.androidpigbank.views.RoundedTextView
-            android:id="@+id/item_transaction_rounded_view"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="16dp" />
-
         <RelativeLayout
+            android:layout_marginStart="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 

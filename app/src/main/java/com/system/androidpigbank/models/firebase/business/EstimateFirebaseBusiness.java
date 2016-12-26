@@ -44,39 +44,27 @@ public class EstimateFirebaseBusiness extends FirebaseAbs<EstimateVO> {
         map.put("quinzena", dto.getQuinzena());
         map.put("month", dto.getMonth());
         map.put("year", dto.getYear());
+        map.put("date", dto.getDate());
 
         return map;
     }
 
-    void findByMonth(final int month, final int year, @NonNull final FirebaseMultiReturnListener<EstimateVO> listener) {
+    void findByMonth(int month, int year, @NonNull final FirebaseMultiReturnListener<EstimateVO> listener) {
+
+        Date cInit = JavaUtils.DateUtil.getActualMinimum(year, month);
+        Date cEnd = JavaUtils.DateUtil.getActualMaximum(year, month);
 
         ValueEventListener valueEventListener = new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                ValueEventListener valueEventListener1 = new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        List<EstimateVO> list = new ArrayList<>();
-                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                            EstimateVO tInstance = getTInstance(postSnapshot);
-                            tInstance.setKey(postSnapshot.getKey());
-                            list.add(tInstance);
-                        }
-                        listener.onFindAll(list);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        listener.onError(databaseError.getMessage());
-                    }
-                };
-
-                dataSnapshot.getRef().orderByChild("year").equalTo(year)
-                        .addListenerForSingleValueEvent(valueEventListener1);
-
+                List<EstimateVO> list = new ArrayList<>();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    EstimateVO tInstance = getTInstance(postSnapshot);
+                    tInstance.setKey(postSnapshot.getKey());
+                    list.add(tInstance);
+                }
+                listener.onFindAll(list);
             }
 
             @Override
@@ -85,7 +73,9 @@ public class EstimateFirebaseBusiness extends FirebaseAbs<EstimateVO> {
             }
         };
 
-        getDatabaseReference().orderByChild("month").equalTo(month)
+        getDatabaseReference().orderByChild("date")
+                .startAt(JavaUtils.DateUtil.format(cInit, JavaUtils.DateUtil.MM_YYYY))
+                .endAt(JavaUtils.DateUtil.format(cEnd, JavaUtils.DateUtil.MM_YYYY))
                 .addListenerForSingleValueEvent(valueEventListener);
     }
 

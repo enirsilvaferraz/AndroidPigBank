@@ -7,6 +7,7 @@ import com.system.androidpigbank.controllers.helpers.Quinzena;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.architecture.models.VOAbs;
 import com.system.architecture.models.DTOAbs;
+import com.system.architecture.utils.JavaUtils;
 
 import java.util.Date;
 
@@ -24,7 +25,7 @@ public class GsonUtil {
     public GsonUtil fromTransaction() {
         build = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
-                .registerTypeAdapter(Date.class, new GsonDateSerializer())
+                .registerTypeAdapter(Date.class, new GsonDateSerializer(JavaUtils.DateUtil.YYYY_MM_DD))
                 .registerTypeAdapter(PaymentType.class, new GsonPaymentTypeSerializer())
                 .registerTypeAdapter(CategoryVO.class, new GsonCategorySerializer())
                 .create();
@@ -36,6 +37,7 @@ public class GsonUtil {
                 .excludeFieldsWithoutExposeAnnotation()
                 .registerTypeAdapter(CategoryVO.class, new GsonCategorySerializer())
                 .registerTypeAdapter(Quinzena.class, new GsonQuinzenaSerializer())
+                .registerTypeAdapter(Date.class, new GsonDateSerializer(JavaUtils.DateUtil.MM_YYYY))
                 .create();
         return this;
     }

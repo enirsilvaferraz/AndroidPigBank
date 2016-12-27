@@ -15,10 +15,9 @@
     <LinearLayout
         android:id="@+id/item_transaction_container_context"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/card_height"
         android:layout_marginEnd="16dp"
-        android:gravity="center"
-        android:minHeight="72dp">
+        android:gravity="center">
 
         <RelativeLayout
             android:layout_marginStart="16dp"

@@ -2,13 +2,12 @@ package com.system.androidpigbank.controllers.adapters.recyclerv.viewHolder;
 
 import android.support.v7.widget.CardView;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.vos.TransactionVO;
-import com.system.architecture.activities.CardAdapterAbs;
 import com.system.androidpigbank.views.RoundedImageView;
+import com.system.architecture.activities.CardAdapterAbs;
 import com.system.architecture.activities.CardViewHolder;
 import com.system.architecture.utils.JavaUtils;
 
@@ -16,9 +15,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TransactionViewHolder extends CardViewHolder {
-
-    @BindView(R.id.item_bar_container)
-    LinearLayout llContainer;
 
     @BindView(R.id.card_view_container)
     CardView cvContainer;

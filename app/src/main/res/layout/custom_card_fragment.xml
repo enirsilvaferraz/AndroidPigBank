@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
-    android:paddingBottom="6dp"
-    android:paddingTop="6dp"
+    android:paddingBottom="@dimen/margin_card"
+    android:paddingTop="@dimen/margin_card"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:activity="com.system.androidpigbank.controllers.fragments.CardFragmentAbs" />

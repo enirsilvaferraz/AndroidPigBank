@@ -4,7 +4,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.system.architecture.utils.JavaUtils;
+import com.system.architecture.R;
 
 /**
  *
@@ -21,9 +21,9 @@ public abstract class CardViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final CardAdapterAbs.CardModel model, final OnClickListener onClickListener) {
-        int pixelHorizontal = JavaUtils.AndroidUtil.getPixel(itemView.getContext(), 12);
+        Float pixelHorizontal = itemView.getResources().getDimension(R.dimen.margin_card);
         GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) itemView.getLayoutParams();
-        params.setMargins(pixelHorizontal, 0, pixelHorizontal, 0);
+        params.setMargins(pixelHorizontal.intValue(), 0, pixelHorizontal.intValue(), 0);
         itemView.setLayoutParams(params);
 
         if (onClickListener != null) {

@@ -94,7 +94,7 @@ public class CardAdapterImpl extends CardAdapterAbs {
             case CARD_ESTIMATE:
                 return R.layout.item_view_holder_estimate;
             case CARD_END_WHITESPACE:
-                return R.layout.item_view_holder_end_white_space;
+                return R.layout.item_view_holder_white_space_end;
             default:
                 throw new IllegalArgumentException("View Holder não encontrado!");
         }

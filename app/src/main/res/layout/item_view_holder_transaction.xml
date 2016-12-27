@@ -14,78 +14,63 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:layout_height="@dimen/card_height"
+        android:layout_marginStart="4dp"
+        android:gravity="center_vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:minHeight="72dp">
+        <com.system.androidpigbank.views.RoundedImageView
+            android:id="@+id/item_transaction_rounded_view"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp" />
 
-            <com.system.androidpigbank.views.RoundedImageView
-                android:id="@+id/item_transaction_rounded_view"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="16dp" />
+        <RelativeLayout
+            android:id="@+id/item_transaction_container_context"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="4dp">
 
-            <RelativeLayout
-                android:id="@+id/item_transaction_container_context"
+            <TextView
+                android:id="@+id/item_transaction_content"
+                style="@style/AppTheme.TextView.Card.Subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/item_transaction_date"
+                android:ellipsize="end"
+                android:lines="1"
+                tools:text="Lanche na padaria do Zé" />
+
+            <TextView
+                android:id="@+id/item_transaction_date"
+                style="@style/AppTheme.TextView.Card.Content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp">
+                android:layout_alignBottom="@id/item_transaction_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="3dp"
+                android:textColor="@color/material_amber"
+                tools:text="04/01/2016" />
 
-                <TextView
-                    android:id="@+id/item_transaction_content"
-                    style="@style/AppTheme.TextView.Card.Subtitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/item_transaction_date"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    tools:text="Lanche na padaria do Zé" />
+            <TextView
+                android:id="@+id/item_transaction_category"
+                style="@style/AppTheme.TextView.Card.Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_transaction_content"
+                android:layout_marginTop="3dp"
+                tools:text="Lunch" />
 
-                <TextView
-                    android:id="@+id/item_transaction_date"
-                    style="@style/AppTheme.TextView.Card.Content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/item_transaction_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="3dp"
-                    android:textColor="@color/material_amber"
-                    tools:text="04/01/2016" />
+            <TextView
+                android:id="@+id/item_transaction_value"
+                style="@style/AppTheme.TextView.Card.Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/item_transaction_category"
+                android:layout_alignParentEnd="true"
+                tools:text="R$ 10,00" />
 
-                <TextView
-                    android:id="@+id/item_transaction_category"
-                    style="@style/AppTheme.TextView.Card.Content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/item_transaction_content"
-                    android:layout_marginTop="3dp"
-                    tools:text="Lunch" />
-
-                <TextView
-                    android:id="@+id/item_transaction_value"
-                    style="@style/AppTheme.TextView.Card.Content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/item_transaction_category"
-                    android:layout_alignParentEnd="true"
-                    tools:text="R$ 10,00" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/item_bar_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            android:orientation="vertical" />
+        </RelativeLayout>
 
     </LinearLayout>
 

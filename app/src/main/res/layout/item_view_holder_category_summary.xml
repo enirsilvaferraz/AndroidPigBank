@@ -13,53 +13,35 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/accet_50"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp">
+            android:gravity="center_vertical"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="12dp"
+            android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/item_category_label_container"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/item_category_name"
+                style="@style/AppTheme.TextView.Card.Subtitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="8dp"
-                android:layout_toStartOf="@+id/item_category_progress_component"
-                android:gravity="center_vertical">
+                tools:text="Category Name" />
 
-                <TextView
-                    android:id="@+id/item_category_name"
-                    style="@style/AppTheme.TextView.Card.Subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="Category Name" />
-
-                <TextView
-                    android:id="@+id/item_category_range"
-                    style="@style/AppTheme.TextView.Card.Content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/item_category_name"
-                    android:layout_marginTop="4dp"
-                    tools:text="R$ 500,00 de R$ 780.00" />
-
-            </RelativeLayout>
-
-            <com.system.androidpigbank.views.CustomPercentualProgress
-                android:id="@+id/item_category_progress_component"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+            <TextView
+                android:id="@+id/item_category_range"
+                style="@style/AppTheme.TextView.Card.Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                card_view:percentProgressDrawable="@drawable/custom_circular_progress"
-                card_view:percentTextColor="@color/primary_dark"
-                card_view:percentTextSize="16sp" />
+                android:layout_marginTop="4dp"
+                tools:text="R$ 500,00 de R$ 780.00" />
 
         </RelativeLayout>
 

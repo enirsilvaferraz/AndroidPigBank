@@ -26,9 +26,6 @@ public class CategoryViewHolder extends CardViewHolder {
     @BindView(R.id.item_category_range)
     TextView tvRange;
 
-    @BindView(R.id.item_category_progress_component)
-    CustomPercentualProgress progress;
-
     Context context;
 
     public CategoryViewHolder(View itemView) {
@@ -46,9 +43,5 @@ public class CategoryViewHolder extends CardViewHolder {
         tvName.setText(item.getName());
 
         tvRange.setText(JavaUtils.NumberUtil.currencyFormat(item.getAmount()));
-
-        progress.setVisibility(View.GONE);
-        progress.bind(item.getMonthVO().getValue(), item.getAmount());
-
     }
 }

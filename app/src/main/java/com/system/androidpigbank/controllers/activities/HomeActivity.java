@@ -1,12 +1,10 @@
 package com.system.androidpigbank.controllers.activities;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -14,29 +12,24 @@ import android.view.View;
 
 import com.system.androidpigbank.R;
 import com.system.androidpigbank.controllers.adapters.SectionsCurrentMonthPagerAdapter;
+import com.system.androidpigbank.controllers.fragments.CardFragmentAbs;
 import com.system.androidpigbank.controllers.fragments.CardFragmentImpl;
 import com.system.androidpigbank.controllers.helpers.Constants;
 import com.system.androidpigbank.controllers.helpers.IntentRouter;
-import com.system.androidpigbank.controllers.vos.EstimateVO;
 import com.system.androidpigbank.controllers.vos.HomeObjectVO;
 import com.system.androidpigbank.models.firebase.business.HomeBusiness;
 import com.system.androidpigbank.views.CustomHeaderSummary;
 import com.system.architecture.activities.BaseActivity;
-import com.system.androidpigbank.controllers.fragments.CardFragmentAbs;
 import com.system.architecture.activities.CardAdapterAbs;
 import com.system.architecture.utils.JavaUtils;
-import com.system.architecture.utils.behaviors.ScrollAwareFABBehavior;
 
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseActivity {
 
-    private static final List<String> ACCESS_PERMISSIONS = Arrays.asList(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     private static final int HOME_INDICATOR = Constants.FRAGMENT_ID_ESTIMATE;
 
     @BindView(R.id.container)
@@ -55,6 +48,7 @@ public class HomeActivity extends BaseActivity {
     AppBarLayout appbar;
 
     private HomeObjectVO data;
+    private CardFragmentImpl fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,14 +58,14 @@ public class HomeActivity extends BaseActivity {
 
         appbar.setExpanded(false);
 
-        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+        //CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
         //params.setBehavior(new ScrollAwareFABBehavior(this, null));
         fab.requestLayout();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mViewPager.getCurrentItem() == 1){
+                if (mViewPager.getCurrentItem() == 1) {
                     IntentRouter.startEstimateManager(HomeActivity.this, null);
                 } else {
                     IntentRouter.startTransactionManager(HomeActivity.this, null);
@@ -179,8 +173,6 @@ public class HomeActivity extends BaseActivity {
         mViewPager.setCurrentItem(HOME_INDICATOR);
         mViewPager.getAdapter().notifyDataSetChanged();
     }
-
-    private CardFragmentImpl fragment;
 
     public void highlightCard(int page, CardAdapterAbs.CardModel card) {
         mViewPager.setCurrentItem(page);

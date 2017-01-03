@@ -21,7 +21,7 @@ public abstract class BaseManagerDialog<T extends VOAbs> extends DialogFragment 
             @Override
             public void onFind(T list) {
                 final AppCompatActivity activity = (AppCompatActivity) getActivity();
-                ((HomeActivity) activity).callApi(model);
+                ((HomeActivity) activity).callApi();
                 dismiss();
             }
 

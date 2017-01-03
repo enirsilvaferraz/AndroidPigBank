@@ -1,9 +1,7 @@
 package com.system.androidpigbank.models.firebase.business;
 
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
-import com.system.androidpigbank.controllers.helpers.AppUtil;
 import com.system.androidpigbank.controllers.helpers.Quinzena;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.EndWhiteSpaceVO;
@@ -22,9 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Enir on 13/09/2016.
@@ -121,90 +117,33 @@ public class HomeBusiness {
 
     private List<CardAdapterAbs.CardModel> organizeEstimates(List<EstimateVO> estimates, List<CategoryVO> categories, List<TransactionVO> transactions) {
 
-        estimates.addAll(getNotEstimatedItems(transactions, estimates));
+        estimates.addAll(EstimateFirebaseBusiness.getNotEstimatedItems(transactions, estimates));
+        estimates = EstimateFirebaseBusiness.populateValues(estimates, categories, transactions);
 
         List<CardAdapterAbs.CardModel> squad1Undated = new ArrayList<>();
         List<CardAdapterAbs.CardModel> squad2Undated = new ArrayList<>();
 
-        Double sq1DSavedValue = 0D;
-        Double sq1USavedValue = 0D;
-        Double sq2DSavedValue = 0D;
-        Double sq2USavedValue = 0D;
+        Double sq1Value = 0D;
+        Double sq1ValuePlann = 0D;
+        Double sq1SavedValue = 0D;
 
-        Double sq1DValue = 0D;
-        Double sq1UValue = 0D;
-        Double sq2DValue = 0D;
-        Double sq2UValue = 0D;
-
-        Double sq1DValuePlann = 0D;
-        Double sq1UValuePlann = 0D;
-        Double sq2DValuePlann = 0D;
-        Double sq2UValuePlann = 0D;
+        Double sq2Value = 0D;
+        Double sq2ValuePlann = 0D;
+        Double sq2SavedValue = 0D;
 
         for (EstimateVO vo : estimates) {
-
-            for (CategoryVO cvo : categories) {
-
-                if (vo.getCategory().getKey().equals(cvo.getKey())) {
-                    vo.setCategory(cvo);
-                } else if (vo.getCategorySecondary() != null && vo.getCategorySecondary().getKey().equals(cvo.getKey())) {
-                    vo.setCategorySecondary(cvo);
-                }
-
-                if (!TextUtils.isEmpty(vo.getCategory().getName()) &&
-                        (vo.getCategorySecondary() == null || !TextUtils.isEmpty(vo.getCategorySecondary().getName()))) {
-                    break;
-                }
-            }
-        }
-
-        Collections.sort(estimates, new EstimateSort());
-
-        for (EstimateVO vo : estimates) {
-
-            vo.setSpentValue(0D);
-
-            for (TransactionVO tvo : transactions) {
-
-                if (tvo.isAlreadyEstimated()) {
-                    continue;
-                }
-
-                int day = JavaUtils.DateUtil.get(Calendar.DATE, tvo.getDatePayment());
-
-                // Se a categoria principal for igual
-                if (vo.getCategory().equals(tvo.getCategory())) {
-
-                    // se houverem categorias secundarias estimadas
-                    if (vo.getCategorySecondary() != null) {
-
-                        // se as categorias secundarias forem iguais
-                        if (tvo.getCategorySecondary() != null && vo.getCategorySecondary().equals(tvo.getCategorySecondary())) {
-                            setEstimatedValue(vo, tvo, day);
-                        }
-
-                    } else if (vo.getCategorySecondary() == null && tvo.getCategorySecondary() == null) {
-                        setEstimatedValue(vo, tvo, day);
-                    }
-                }
-            }
-
-            vo.setSavedValue(vo.getPlannedValue() - vo.getSpentValue());
-            vo.setPercentualVelue(JavaUtils.NumberUtil.calcPercent(vo.getPlannedValue(), vo.getSpentValue()));
 
             if (vo.getQuinzena().equals(Quinzena.PRIMEIRA)) {
-
                 squad1Undated.add(vo);
-                sq1UValue += vo.getSpentValue();
-                sq1UValuePlann += vo.getPlannedValue();
-                sq1USavedValue += vo.getSavedValue();
+                sq1Value += vo.getSpentValue();
+                sq1ValuePlann += vo.getPlannedValue();
+                sq1SavedValue += vo.getSavedValue();
 
             } else {
-
                 squad2Undated.add(vo);
-                sq2UValue += vo.getSpentValue();
-                sq2UValuePlann += vo.getPlannedValue();
-                sq2USavedValue += vo.getSavedValue();
+                sq2Value += vo.getSpentValue();
+                sq2ValuePlann += vo.getPlannedValue();
+                sq2SavedValue += vo.getSavedValue();
             }
         }
 
@@ -215,7 +154,10 @@ public class HomeBusiness {
             itens.add(new TitleVO("Estimativa - 1a Quinzena"));
             itens.add(new WhiteSpaceVO());
             itens.addAll(squad1Undated);
-            itens.add(new TotalVO(JavaUtils.NumberUtil.currencyFormat(sq1DValue + sq1UValue) + " de " + JavaUtils.NumberUtil.currencyFormat(sq1DValuePlann + sq1UValuePlann), JavaUtils.NumberUtil.currencyFormat(sq1DSavedValue + sq1USavedValue)));
+            itens.add(new TotalVO(
+                    JavaUtils.NumberUtil.currencyFormat(sq1Value) + " de " +
+                            JavaUtils.NumberUtil.currencyFormat(sq1ValuePlann),
+                    JavaUtils.NumberUtil.currencyFormat(sq1SavedValue)));
         }
 
         if (!squad2Undated.isEmpty()) {
@@ -223,39 +165,14 @@ public class HomeBusiness {
             itens.add(new TitleVO("Estimativa - 2a Quinzena"));
             itens.add(new WhiteSpaceVO());
             itens.addAll(squad2Undated);
-            itens.add(new TotalVO(JavaUtils.NumberUtil.currencyFormat(sq2DValue + sq2UValue) + " de " + JavaUtils.NumberUtil.currencyFormat(sq2DValuePlann + sq2UValuePlann), JavaUtils.NumberUtil.currencyFormat(sq2DSavedValue + sq2USavedValue)));
+            itens.add(new TotalVO(
+                    JavaUtils.NumberUtil.currencyFormat(sq2Value) + " de " +
+                            JavaUtils.NumberUtil.currencyFormat(sq2ValuePlann),
+                    JavaUtils.NumberUtil.currencyFormat(sq2SavedValue)));
         }
 
         itens.add(new EndWhiteSpaceVO());
         return itens;
-    }
-
-    private void setEstimatedValue(EstimateVO vo, TransactionVO tvo, int day) {
-        if ((vo.getQuinzena().equals(Quinzena.PRIMEIRA) && day < 20) || (vo.getQuinzena().equals(Quinzena.SEGUNDA) && day >= 20)) {
-            vo.setSpentValue(vo.getSpentValue() + tvo.getValue());
-            tvo.setAlreadyEstimated(true);
-        }
-    }
-
-    private List<EstimateVO> getNotEstimatedItems(List<TransactionVO> transactions, List<EstimateVO> estimates) {
-
-
-        Set<EstimateVO> notEstimated = new HashSet<>();
-
-        for (TransactionVO tvo : transactions) {
-
-            EstimateVO vo = new EstimateVO();
-            vo.setCategory(tvo.getCategory());
-            vo.setCategorySecondary(tvo.getCategorySecondary());
-            vo.setQuinzena(AppUtil.getQuinzena(tvo.getDatePayment()));
-
-            if (!estimates.contains(vo)) {
-                vo.setAuxItem(true);
-                notEstimated.add(vo);
-            }
-        }
-
-        return new ArrayList<>(notEstimated);
     }
 
     private List<TransactionVO> fillTransactions(List<CategoryVO> categories, List<TransactionVO> transactions) {
@@ -460,28 +377,7 @@ public class HomeBusiness {
         }
     }
 
-    private class EstimateSort implements Comparator<EstimateVO> {
-
-        final int BEFORE = -1;
-        final int EQUAL = 0;
-        final int AFTER = 1;
-
-        @Override
-        public int compare(EstimateVO o1, EstimateVO o2) {
-
-            int compare = Integer.compare(o1.getQuinzena().ordinal(), o2.getQuinzena().ordinal());
-            if (compare != EQUAL) return compare;
-
-            compare = o1.getCategory().getName().compareTo(o2.getCategory().getName());
-            if (compare != EQUAL) return compare;
-
-            if (o1.getCategorySecondary() == null) return BEFORE;
-            if (o2.getCategorySecondary() == null) return AFTER;
-            return o1.getCategorySecondary().getName().compareTo(o2.getCategorySecondary().getName());
-        }
-    }
-
-    private class CategorySort implements Comparator<CategoryVO>{
+    private class CategorySort implements Comparator<CategoryVO> {
 
         final int BEFORE = -1;
         final int EQUAL = 0;

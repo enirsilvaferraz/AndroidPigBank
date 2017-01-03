@@ -22,6 +22,7 @@ public interface Constants {
     int ACTION_EDIT = 2;
     int ACTION_DELETE = 3;
     int ACTION_COPY = 4;
+    int ACTION_HIGHLIGHT = 5;
 
     String BUNDLE_MODEL_DEFAULT = "BUNDLE_MODEL_DEFAULT";
     String BUNDLE_MESSAGE_ID = "BUNDLE_MESSAGE_ID";
@@ -32,9 +33,8 @@ public interface Constants {
     int DATE_NUBANK_CARD_VENCIMENTO = 10;
     int DATE_NUBANK_CARD_FECHAMENTO = 3;
 
-    int FRAGMENT_ID_SUMMARY_CATEGORY = 1;
+    int FRAGMENT_ID_SUMMARY_CATEGORY = 0;
+    int FRAGMENT_ID_ESTIMATE = 1;
     int FRAGMENT_ID_TRANSACTION = 2;
     int FRAGMENT_ID_MONTH = 3;
-    int FRAGMENT_ID_ESTIMATE = 4;
-    int ACTION_HIGHLIGHT = 5;
 }

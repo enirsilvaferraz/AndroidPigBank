@@ -33,7 +33,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginBottom="2dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="12dp"
             android:layout_marginTop="2dp"
             tools:text="@string/item_transaction_footer_value" />
 

@@ -37,16 +37,13 @@ import butterknife.ButterKnife;
 public class HomeActivity extends BaseActivity {
 
     private static final List<String> ACCESS_PERMISSIONS = Arrays.asList(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-    private static final int HOME_INDICATOR = 1;
+    private static final int HOME_INDICATOR = Constants.FRAGMENT_ID_ESTIMATE;
 
     @BindView(R.id.container)
     ViewPager mViewPager;
 
     @BindView(R.id.fab)
     FloatingActionButton fab;
-
-//    @BindView(R.id.toolbar)
-//    Toolbar toolbar;
 
     @BindView(R.id.home_header)
     CustomHeaderSummary homeHeader;
@@ -64,9 +61,6 @@ public class HomeActivity extends BaseActivity {
 
         setContentView(R.layout.activity_home_tab);
         ButterKnife.bind(this);
-
-        //toolbar.setTitle("");
-        //setSupportActionBar(toolbar);
 
         appbar.setExpanded(false);
 
@@ -188,8 +182,8 @@ public class HomeActivity extends BaseActivity {
 
     private CardFragmentImpl fragment;
 
-    public void highlightCard(CardAdapterAbs.CardModel card) {
-        mViewPager.setCurrentItem(0);
+    public void highlightCard(int page, CardAdapterAbs.CardModel card) {
+        mViewPager.setCurrentItem(page);
         fragment.highlightCard(card);
     }
 }

@@ -104,7 +104,7 @@ public class CardFragmentImpl extends CardFragmentAbs {
             case Constants.ACTION_HIGHLIGHT:
                 removeToolbar(cardAdapter);
                 //CategoryVO card = model.getCategorySecondary() != null ? model.getCategorySecondary() : model.getCategory();
-                ((HomeActivity)getActivity()).highlightCard( model.getCategory());
+                ((HomeActivity)getActivity()).highlightCard(Constants.FRAGMENT_ID_SUMMARY_CATEGORY, model.getCategory());
                 break;
 
             case Constants.ACTION_DELETE:

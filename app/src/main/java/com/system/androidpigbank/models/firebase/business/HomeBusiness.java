@@ -276,6 +276,7 @@ public class HomeBusiness {
 
         Double valorAcumular = 0D;
         boolean hasTitleFutureLanc = false;
+        boolean hasTitleLancToday = false;
 
         itens.add(new WhiteSpaceVO());
 
@@ -289,9 +290,15 @@ public class HomeBusiness {
             transactionAct.setCategory(categories.get(categories.indexOf(transactionAct.getCategory())));
 
             // Calcula o valor a acumular das transacoes futuras
-            if (JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), Calendar.getInstance().getTime()) == 0) {
+            int compare = JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), Calendar.getInstance().getTime());
+            if (compare == 0) {
+                if (!hasTitleLancToday) {
+                    itens.add(new TitleVO("Lançamentos para Hoje"));
+                    itens.add(new WhiteSpaceVO());
+                    hasTitleLancToday = true;
+                }
                 valorAcumular += transactionAct.getValue();
-            } else if (JavaUtils.DateUtil.compare(transactionAct.getDatePayment(), Calendar.getInstance().getTime()) > 0) {
+            } else if (compare > 0) {
                 if (!hasTitleFutureLanc) {
                     itens.add(new TitleVO("Lançamentos Futuros"));
                     itens.add(new WhiteSpaceVO());

@@ -21,19 +21,19 @@ public class SectionsCurrentMonthPagerAdapter extends FragmentStatePagerAdapter 
 
         switch (position) {
 
-            case 0:
+            case Constants.FRAGMENT_ID_SUMMARY_CATEGORY:
                 fragment = CardFragmentImpl.newInstance(Constants.FRAGMENT_ID_SUMMARY_CATEGORY);
                 break;
 
-            case 1:
+            case Constants.FRAGMENT_ID_ESTIMATE:
                 fragment = CardFragmentImpl.newInstance(Constants.FRAGMENT_ID_ESTIMATE);
                 break;
 
-            case 2:
+            case Constants.FRAGMENT_ID_TRANSACTION:
                 fragment = CardFragmentImpl.newInstance(Constants.FRAGMENT_ID_TRANSACTION);
                 break;
 
-            case 3:
+            case Constants.FRAGMENT_ID_MONTH:
                 fragment =  CardFragmentImpl.newInstance(Constants.FRAGMENT_ID_MONTH);
                 break;
 

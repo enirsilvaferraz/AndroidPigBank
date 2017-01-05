@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.system.androidpigbank.controllers.activities.CategoryManagerDialog;
 import com.system.androidpigbank.controllers.activities.EstimateManagerDialog;
+import com.system.androidpigbank.controllers.activities.TransactionManagerActivity;
 import com.system.androidpigbank.controllers.activities.TransactionManagerDialog;
 import com.system.androidpigbank.controllers.vos.CategoryVO;
 import com.system.androidpigbank.controllers.vos.EstimateVO;
@@ -21,10 +22,12 @@ public final class IntentRouter {
     private static DialogFragment dialog;
 
     public static void startTransactionManager(AppCompatActivity context, TransactionVO model) {
-        hideDialog();
-        FragmentManager fm = context.getSupportFragmentManager();
-        dialog = TransactionManagerDialog.newInstance(model);
-        dialog.show(fm, TransactionManagerDialog.class.getSimpleName());
+//        hideDialog();
+//        FragmentManager fm = context.getSupportFragmentManager();
+//        dialog = TransactionManagerDialog.newInstance(model);
+//        dialog.show(fm, TransactionManagerDialog.class.getSimpleName());
+
+        context.startActivity(new Intent(context, TransactionManagerActivity.class));
     }
 
     public static void startCategoryManager(AppCompatActivity context, CategoryVO model) {

@@ -15,24 +15,12 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <LinearLayout
-            style="@style/AppTheme.Linear"
-            android:layout_width="match_parent"
+        <TextView
+            style="@style/AppTheme.TextView.Card.Subtitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/AppTheme.TextView.Card.Subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Transaction Date" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="01/01/2000" />
-
-        </LinearLayout>
+            android:layout_margin="16dp"
+            android:text="Transaction Date" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,24 +46,12 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <LinearLayout
-            style="@style/AppTheme.Linear"
-            android:layout_width="match_parent"
+        <TextView
+            style="@style/AppTheme.TextView.Card.Subtitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/AppTheme.TextView.Card.Subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Payment Date" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="01/01/2000" />
-
-        </LinearLayout>
+            android:layout_margin="16dp"
+            android:text="Payment Date" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -101,24 +77,12 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <LinearLayout
-            style="@style/AppTheme.Linear"
-            android:layout_width="match_parent"
+        <TextView
+            style="@style/AppTheme.TextView.Card.Subtitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/AppTheme.TextView.Card.Subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Value" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="R$ 1000,00" />
-
-        </LinearLayout>
+            android:layout_margin="16dp"
+            android:text="Value" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -146,25 +110,13 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <LinearLayout
-            style="@style/AppTheme.Linear"
-            android:layout_width="match_parent"
+        <TextView
+            style="@style/AppTheme.TextView.Card.Subtitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/material_white"
-            android:orientation="vertical">
+            android:layout_margin="16dp"
+            android:text="Payment type" />
 
-            <TextView
-                style="@style/AppTheme.TextView.Card.Subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Payment type" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Credit Card" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -188,24 +140,12 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <LinearLayout
-            style="@style/AppTheme.Linear"
-            android:layout_width="match_parent"
+        <TextView
+            style="@style/AppTheme.TextView.Card.Subtitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/AppTheme.TextView.Card.Subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Primary Category" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Moradia" />
-
-        </LinearLayout>
+            android:layout_margin="16dp"
+            android:text="Primary Category" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -229,24 +169,12 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <LinearLayout
-            style="@style/AppTheme.Linear"
-            android:layout_width="match_parent"
+        <TextView
+            style="@style/AppTheme.TextView.Card.Subtitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/AppTheme.TextView.Card.Subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Secundary Category" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Aluguel" />
-
-        </LinearLayout>
+            android:layout_margin="16dp"
+            android:text="Secundary Category" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -270,27 +198,12 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <LinearLayout
-            style="@style/AppTheme.Linear"
-            android:layout_width="match_parent"
+        <TextView
+            style="@style/AppTheme.TextView.Card.Subtitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/material_white"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/AppTheme.TextView.Card.Subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Description" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:lines="1"
-                tools:text="Loren ipson alpha beta gama delta" />
-
-        </LinearLayout>
+            android:layout_margin="16dp"
+            android:text="Description" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -309,7 +222,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/layout_linear_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -318,9 +231,19 @@
         android:gravity="center_vertical|end">
 
         <Button
-            android:id="@+id/transaction_manager_bt_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="16dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:minWidth="64dp"
+            android:padding="16dp"
+            android:text="Back" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_marginBottom="4dp"
             android:layout_marginEnd="16dp"
             android:background="?selectableItemBackgroundBorderless"
@@ -328,6 +251,6 @@
             android:padding="16dp"
             android:text="Next" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

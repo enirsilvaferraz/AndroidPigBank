@@ -47,6 +47,14 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="AppTheme.TextView.Card.Subtitle.Padding" parent="AppTheme.TextView.Card.Subtitle">
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <!-- OLD -->
     <style name="AppTheme.Linear">
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingEnd">16dp</item>

@@ -99,7 +99,7 @@
             android:layout_height="100dp"
             android:background="@color/material_gray_200"
             android:gravity="center"
-            android:visibility="gone">
+            >
 
             <EditText
                 android:layout_width="250dp"
